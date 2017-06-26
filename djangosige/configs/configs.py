@@ -18,15 +18,15 @@ DATABASES = {
         'NAME': '',
         
         #Usuário
-		'USER':'',
+        'USER':'',
         
         #Senha
-		'PASSWORD':'',
+        'PASSWORD':'',
         
         #Host
-		'HOST':'127.0.0.1',
+        'HOST':'127.0.0.1',
         
-		#Port
+        #Port
         'PORT':'3306',
     }
 }
