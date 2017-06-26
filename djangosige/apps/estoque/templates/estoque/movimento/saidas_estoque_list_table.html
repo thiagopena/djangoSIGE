@@ -1,0 +1,33 @@
+<div class="table-responsive">
+  <table id="lista-database" class="table table-bordered table-striped lista-table">
+    <thead>
+      <tr>
+        <th>#ID</th>                   
+        <th>Data</th>
+        <th>Tipo</th>
+        <th>N° de itens</th>
+        <th>Valor total</th>
+        <th>Remover</th>
+      </tr>
+    </thead>
+
+    <tbody>
+     {% if all_saidas %}
+     {% for saida in all_saidas %}
+     <tr class="clickable-row" data-href="{{saida.get_edit_url}}">
+      <td>{{saida.id}}</td>
+      <td>{{saida.format_data_movimento}}</td>
+      <td>{{saida.get_tipo_movimento_display}}</td>
+      <td>{{saida.format_quantidade_itens}}</td>
+      <td>{{saida.format_valor_total}}</td>
+      <td class="lista-remove">
+        <input type="checkbox" name="{{saida.id}}" id="remover-movimento-{{saida.id}}"/>
+        <label class="remove-entry-label" for="remover-movimento-{{saida.id}}"></label>
+      </td>
+    </tr>
+    {% endfor %}
+    {%else%}
+    {%endif%}
+  </tbody>
+</table>
+</div>

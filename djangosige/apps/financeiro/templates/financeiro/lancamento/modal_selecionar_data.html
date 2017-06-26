@@ -1,0 +1,41 @@
+<!-- Modal selecionar data do pagamento -->
+<div class="modal fade modal_selecionar_data">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">SELECIONE A DATA DO PAGAMENTO</h4>
+        <small style="color:red;">Salve as modificações antes de confirmar</small>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+          <!-- Campos -->
+          <div class="row">
+
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Data do pagamento</label>
+                  <input type="text" class="form-control datepicker" id="id_data_pagamento"/>
+                </div>
+              </div>
+            </div>
+
+            <input type="hidden" name="tipo_conta" id="id_tipo_conta"/>
+
+            <input type="hidden" name="conta_id" id="id_conta_id" value="{{object.id}}"/>
+
+          </div>
+          <!-- #Campos -->
+          
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="baixar_conta_confirma">CONFIRMA</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- #Modal selecionar data do pagamento -->

@@ -1,0 +1,51 @@
+<!-- Modal escolher arquivo xml para importacao de nfes -->
+<div class="modal fade importar_nota_modal">
+  <div class="modal-dialog modal-lg">
+    <form id="form_importar_nota" action="{{importar_nota_url}}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">IMPORTAÇÃO DE NOTA FISCAL {% if entrada %} DE FORNECEDOR{% endif %}</h4>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+
+            <!-- SELECIONAR ARQUIVO XML -->
+            <div class="row">
+              <h4 style="border-bottom: 1px solid #afabab;">Selecione o arquivo da Nota Fiscal</h4>
+            </div>
+            
+            <div class="row">
+
+              <div class="col-sm-12">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>Arquivo XML</label>
+                    <input class="form-control" id="id_arquivo_xml_nfe" name="arquivo_xml" type="file" accept="text/xml" required/>
+                  </div>
+                </div>
+              </div>
+
+              {% if saida %}
+              <input class="hidden" name="fornecedor" type="checkbox"/>
+              {% elif entrada %}
+              <input class="hidden" name="fornecedor" type="checkbox" checked="true"/>
+              {% endif %}
+
+            </div>
+            <!-- #SELECIONAR ARQUIVO XML -->
+
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">FECHAR</button>
+          <button type="submit" class="btn btn-primary" id="importar_nota_btn">IMPORTAR</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- #-->

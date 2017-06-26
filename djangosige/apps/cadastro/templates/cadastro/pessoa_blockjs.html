@@ -1,0 +1,15 @@
+{% block js %}
+    
+  {% load staticfiles %}
+  <script type="text/javascript">
+  	var cmun_path = '{% static 'tabelas/municipios/' %}'
+
+  	var mun_inicial = [];
+  	{% for form in endereco_form %}
+  	mun_inicial.push("{{form.municipio.initial}}");
+  	{% endfor %}
+
+    $.Admin.pessoaForm.init(cmun_path, mun_inicial);
+  </script>  
+  
+{% endblock %}

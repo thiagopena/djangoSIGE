@@ -1,0 +1,28 @@
+<h4 style="border-bottom: 1px solid #afabab;">Pedidos/Orçamentos de compra de <b>{{object.nome_razao_social}}</b></h4>
+{% include 'base/search.html' %}
+
+ <div class="table-responsive lista-content">
+  <table id="lista-database" class="table table-bordered table-striped lista-table">
+    <thead>
+      <tr>
+        <th>#ID</th>
+        <th>Tipo</th>                   
+        <th>Status</th>
+        <th>Data de vencimento</th>
+        <th>Total</th>
+      </tr>
+    </thead>
+
+    <tbody>
+     {% for compra in object.compra_fornecedor.all %}
+     <tr class="clickable-row" data-href="{{compra.get_child.edit_url}}">
+        <td>{{compra.id}}</td>
+        <td><b>{{compra.get_child.tipo_compra}}</b></td>
+        <td><b>{{compra.get_child.get_status_display}}</b></td>
+        <td>{% if  compra.data_vencimento %}{{compra.format_data_vencimento}}{% endif %}</td>
+        <td>{{compra.format_valor_total}}</td>        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>

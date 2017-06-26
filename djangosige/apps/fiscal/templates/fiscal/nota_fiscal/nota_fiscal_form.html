@@ -1,0 +1,1007 @@
+<!-- Body-->
+<div class="body">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#tab_dados_nfe" data-toggle="tab">DADOS NF-E</a></li>
+      {% if saida %}
+      <li role="presentation"><a href="#tab_venda" data-toggle="tab">VENDA</a></li>
+      <li role="presentation"><a href="#tab_emit_dest" data-toggle="tab">EMITENTE/DESTINATÁRIO</a></li>
+      <li role="presentation"><a href="#tab_cobr" data-toggle="tab">COBRANÇA</a></li>
+      <li role="presentation"><a href="#tab_aut" data-toggle="tab">AUTORIZAÇÃO DOWNLOAD</a></li>
+        {% if edit_nfe %}
+      <li role="presentation"><a href="#validacao" data-toggle="tab">VALIDAÇÃO</a></li>
+      <li role="presentation"><a href="#sefaz" data-toggle="tab">SEFAZ</a></li>
+        {% endif %}
+      {% elif entrada %}
+      <li role="presentation"><a href="#tab_compra" data-toggle="tab">COMPRA</a></li>
+      <li role="presentation"><a href="#tab_emit_dest" data-toggle="tab">EMITENTE/DESTINATÁRIO</a></li>
+      {% endif %}
+      <li role="presentation"><a href="#tab_inf_ad" data-toggle="tab">INFORMAÇÕES ADICIONAIS</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- Tab dados -->
+      <div role="tabpanel" class="tab-pane active" id="tab_dados_nfe">
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.versao.label}}</label>{% if form.versao.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.versao.errors %}<label class="error">{% for error in form.versao.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.versao}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.status_nfe.label}}</label>{% if form.status_nfe.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.status_nfe.errors %}<label class="error">{% for error in form.status_nfe.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.status_nfe}}
+              <input type="hidden" id="id_status_nfe" name="status_nfe" value="{{form.status_nfe.initial}}" />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.tp_amb.label}}</label>{% if form.tp_amb.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.tp_amb.errors %}<label class="error">{% for error in form.tp_amb.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.tp_amb}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.mod.label}}</label>{% if form.mod.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.mod.errors %}<label class="error">{% for error in form.mod.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.mod}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-{% if saida %}3{% else %}4{% endif %}">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.serie.label}}</label>{% if form.serie.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.serie.errors %}<label class="error">{% for error in form.serie.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.serie}}
+            </div>
+          </div>
+        </div>
+
+        {% if saida %}
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.n_nf_saida.label}}</label>{% if form.n_nf_saida.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.n_nf_saida.errors %}<label class="error">{% for error in form.n_nf_saida.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.n_nf_saida}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.tpnf.label}}</label>{% if form.tpnf.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.tpnf.errors %}<label class="error">{% for error in form.tpnf.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.tpnf}}
+            </div>
+          </div>
+        </div>
+        {% elif entrada %}
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.n_nf_entrada.label}}</label>{% if form.n_nf_entrada.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.n_nf_entrada.errors %}<label class="error">{% for error in form.n_nf_entrada.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.n_nf_entrada}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.indpag.label}}</label>{% if form.indpag.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.indpag.errors %}<label class="error">{% for error in form.indpag.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.indpag}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.ind_pres.label}}</label>{% if form.ind_pres.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.ind_pres.errors %}<label class="error">{% for error in form.ind_pres.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.ind_pres}}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="col-sm-{% if saida %}3{% else %}6{% endif %}">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.ind_final.label}}</label>{% if form.ind_final.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.ind_final.errors %}<label class="error">{% for error in form.ind_final.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.ind_final}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.dhemi.label}}</label>{% if form.dhemi.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.dhemi.errors %}<label class="error">{% for error in form.dhemi.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.dhemi}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.dhsaient.label}}</label>{% if form.dhsaient.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.dhsaient.errors %}<label class="error">{% for error in form.dhsaient.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.dhsaient}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.tp_emis.label}}</label>{% if form.tp_emis.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.tp_emis.errors %}<label class="error">{% for error in form.tp_emis.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.tp_emis}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.fin_nfe.label}}</label>{% if form.fin_nfe.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.fin_nfe.errors %}<label class="error">{% for error in form.fin_nfe.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.fin_nfe}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-4">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.tp_imp.label}}</label>{% if form.tp_imp.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.tp_imp.errors %}<label class="error">{% for error in form.tp_imp.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.tp_imp}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.iddest.label}}</label>{% if form.iddest.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.iddest.errors %}<label class="error">{% for error in form.iddest.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.iddest}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.natop.label}}</label>{% if form.natop.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.natop.errors %}<label class="error">{% for error in form.natop.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.natop}}
+            </div>
+          </div>
+        </div>
+
+        {% if edit_nfe %}
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.arquivo_proc.label}}</label>{% if form.arquivo_proc.field.required %}<strong style="color:red;"> *</strong>{% endif %}{% if object.arquivo_proc %}<i class="material-icons" style="font-size: 18px;margin-left: 10px;color: green;" title="Arquivo de processamento encontrado.">&#xE876;</i>{% else %}<i class="material-icons" style="font-size: 18px;margin-left: 10px;color: red;" title="Arquivo de processamento não encontrado.">&#xE14C;</i>{% endif %}
+              {% if form.arquivo_proc.errors %}<label class="error">{% for error in form.arquivo_proc.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.arquivo_proc}}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+      </div>
+      <!-- #Tab dados -->
+
+
+      <!-- Tab EMIT/DEST -->
+      <div role="tabpanel" class="tab-pane" id="tab_emit_dest">
+
+        <div class="col-sm-12">
+
+          <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Emitente</h4>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+
+              {% if saida %}
+
+              <label>{{form.emit_saida.label}}</label>{% if form.emit_saida.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.emit_saida.errors %}<label class="error">{% for error in form.emit_saida.errors %}{{error}}{% endfor %}</label>{% endif %}
+              <div class="input-group">
+                <div class="form-line">
+                  {{form.emit_saida}}
+                </div>
+                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Empresa" href="{% url 'cadastro:addempresaview' %}"><i class="material-icons add-new-icon" title="Adicionar Empresa">&#xE147;</i></a>
+              </div>
+
+              {% elif entrada %}
+
+              <label>{{form.emit_entrada.label}}</label>{% if form.emit_entrada.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.emit_entrada.errors %}<label class="error">{% for error in form.emit_entrada.errors %}{{error}}{% endfor %}</label>{% endif %}
+              <div class="input-group">
+                <div class="form-line">
+                  {{form.emit_entrada}}
+                </div>
+                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Fornecedor" href="{% url 'cadastro:addfornecedorview' %}"><i class="material-icons add-new-icon" title="Adicionar Fornecedor">&#xE147;</i></a>
+              </div>
+
+              {% endif %}
+
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>CPF/CNPJ</label>
+                <span class="form-control display-emit-field" id="cpf_cnpj_emit"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Inscrição Estadual/RG</label>
+                <span class="form-control display-emit-field" id="ie_rg_emit"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Endereço</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-emit-field" id="endereco_emit"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>CEP</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-emit-field" id="cep_emit"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Número</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-emit-field" id="nro_emit"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Complemento</label>
+                <span class="form-control display-emit-field" id="cpl_emit"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Bairro</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-emit-field" id="bairro_emit"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Cidade</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-emit-field" id="cidade_emit"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Código município</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-emit-field" id="cmun_emit"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Estado</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-emit-field" id="estado_emit"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Telefone</label>
+                <span class="form-control display-emit-field" id="tel_emit"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Email</label>
+                <span class="form-control display-emit-field" id="email_emit"></span>
+              </div>
+            </div>
+          </div>
+
+        <div class="col-sm-12">
+
+          <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Destinatário</h4>
+          <div class="col-sm-12">
+            <div class="col-sm-4">
+              <div class="form-group">
+
+                {% if saida %}
+
+                <label>{{form.dest_saida.label}}</label>{% if form.dest_saida.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                {% if form.dest_saida.errors %}<label class="error">{% for error in form.dest_saida.errors %}{{error}}{% endfor %}</label>{% endif %}
+                <div class="input-group">
+                  <div class="form-line">
+                    {{form.dest_saida}}
+                  </div>
+                  <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Cliente" href="{% url 'cadastro:addclienteview' %}"><i class="material-icons add-new-icon" title="Adicionar Cliente">&#xE147;</i></a>
+                </div>
+
+                {% elif entrada %}
+
+                <label>{{form.ddest_entradaest.label}}</label>{% if form.dest_entrada.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                {% if form.dest_entrada.errors %}<label class="error">{% for error in form.dest_entrada.errors %}{{error}}{% endfor %}</label>{% endif %}
+                <div class="input-group">
+                  <div class="form-line">
+                    {{form.dest_entrada}}
+                  </div>
+                  <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Empresa" href="{% url 'cadastro:addempresaview' %}"><i class="material-icons add-new-icon" title="Adicionar Empresa">&#xE147;</i></a>
+                </div>
+
+                {% endif %}
+
+              </div>
+            </div>
+            
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>CPF/CNPJ/ID Estrangeiro</label>
+                  <span class="form-control display-dest-field" id="cpf_cnpj_id_dest"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Inscrição Estadual/RG</label>
+                  <span class="form-control display-dest-field" id="ie_rg_dest"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Indicador da IE do Destinatário</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-dest-field" id="ind_ie_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-5">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Endereço</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-dest-field" id="endereco_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>CEP</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-dest-field" id="cep_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Número</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-dest-field" id="nro_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-5">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Complemento</label>
+                <span class="form-control display-dest-field" id="cpl_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Bairro</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-dest-field" id="bairro_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Cidade</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-dest-field" id="cidade_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Código município</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-dest-field" id="cmun_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Estado</label><strong style="color:red;"> *</strong>
+                <span class="form-control display-dest-field" id="estado_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>País</label>
+                <span class="form-control display-dest-field" id="pais_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Telefone</label>
+                <span class="form-control display-dest-field" id="tel_dest"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Email</label>
+                <span class="form-control display-dest-field" id="email_dest"></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- #Tab EMIT/DEST -->
+
+      {% if saida %}
+      <!-- Tab VENDA -->
+      <div role="tabpanel" class="tab-pane" id="tab_venda">
+
+        <div class="col-sm-12">
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>{{form.venda.label}}</label>{% if form.venda.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.venda.errors %}<label class="error">{% for error in form.venda.errors %}{{error}}{% endfor %}</label>{% endif %}
+              <div class="input-group">
+                <div class="form-line">
+                  {{form.venda}}
+                </div>
+                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Venda" href="{% url 'vendas:addpedidovendaview' %}"><i class="material-icons add-new-icon" title="Adicionar Venda">&#xE147;</i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Status</label>
+                <span class="form-control display-venda-field" id="status_venda"></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Totais</h4>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Desconto (R$)</label>
+                <span class="form-control display-venda-field" id="desconto_venda"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Frete (R$)</label>
+                <span class="form-control display-venda-field" id="frete_venda"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Despesas (R$)</label>
+                <span class="form-control display-venda-field" id="despesas_venda"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Seguro (R$)</label>
+                <span class="form-control display-venda-field" id="seguro_venda"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Impostos (R$)</label>
+                <span class="form-control display-venda-field" id="impostos_venda"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <div class="form-line">
+                <label>TOTAL (R$)</label>
+                <span class="form-control display-venda-field" id="total_venda"></span>
+              </div>
+            </div>
+          </div>
+
+
+        <div class="col-sm-12 lista">
+
+          <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Itens</h4>
+          <table id="itens_table" class="table table-bordered lista-table">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Qtd.</th>
+                <th>Vl. Unit.</th>
+                <th>Desconto</th>
+                <th>Impostos</th>
+                <th>Total</th>
+                <th>Detalhes</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+
+      </div>
+      <!-- #Tab VENDA -->
+
+      <!-- Tab COBRANÇA -->
+      <div role="tabpanel" class="tab-pane" id="tab_cobr">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.indpag.label}}</label>{% if form.indpag.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.indpag.errors %}<label class="error">{% for error in form.indpag.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.indpag}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.ind_pres.label}}</label>{% if form.ind_pres.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.ind_pres.errors %}<label class="error">{% for error in form.ind_pres.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.ind_pres}}
+            </div>
+          </div>
+        </div>
+
+        <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Fatura (NF-e)</h4>
+
+        <div class="col-sm-12" style="margin-bottom: 17px;margin-top: 5px;">
+          {{form.grupo_cobr}}
+          <label for="id_grupo_cobr" style="font-weight: bold;" title="Selecionar para manter os dados da fatura e duplicatas na nota fiscal.">{{ form.grupo_cobr.label }}</label>
+        </div>
+
+        <div class="fatura_input_div">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>{{form.n_fat.label}}</label>{% if form.n_fat.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                {% if form.n_fat.errors %}<label class="error">{% for error in form.n_fat.errors %}{{error}}{% endfor %}</label>{% endif %}
+                {{form.n_fat}}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>{{form.v_orig.label}}</label>{% if form.v_orig.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                {% if form.v_orig.errors %}<label class="error">{% for error in form.v_orig.errors %}{{error}}{% endfor %}</label>{% endif %}
+                {{form.v_orig}}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>{{form.v_desc.label}}</label>{% if form.v_desc.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                {% if form.v_desc.errors %}<label class="error">{% for error in form.v_desc.errors %}{{error}}{% endfor %}</label>{% endif %}
+                {{form.v_desc}}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>{{form.v_liq.label}}</label>{% if form.v_liq.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                {% if form.v_liq.errors %}<label class="error">{% for error in form.v_liq.errors %}{{error}}{% endfor %}</label>{% endif %}
+                {{form.v_liq}}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Duplicatas (NF-e)</h4>
+
+        <div class="col-sm-12 lista">
+          <table id="pagamentos_tabela" class="table table-bordered lista-table">
+            <thead>
+              <tr>
+                <th>#ID</th>
+                <th>Vencimento</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+        <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Pagamento (NFC-e)</h4>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>Forma de pagamento</label>
+              <span class="form-control display-cobr-field" id="id_forma_pag"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>Valor do pagamento</label>
+              <span class="form-control display-cobr-field" id="id_valor_pag"></span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- #Tab COBRANÇA -->
+      
+      {% elif entrada %}
+      <!-- Tab COMPRA -->
+      <div role="tabpanel" class="tab-pane" id="tab_compra">
+
+        <div class="col-sm-12">
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label>{{form.compra.label}}</label>{% if form.compra.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.compra.errors %}<label class="error">{% for error in form.compra.errors %}{{error}}{% endfor %}</label>{% endif %}
+              <div class="input-group">
+                <div class="form-line">
+                  {{form.compra}}
+                </div>
+                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Compra" href="{% url 'compras:addpedidocompraview' %}"><i class="material-icons add-new-icon" title="Adicionar Compra">&#xE147;</i></a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Status</label>
+                <span class="form-control display-compra-field" id="status_compra"></span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Totais</h4>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Desconto (R$)</label>
+                <span class="form-control display-compra-field" id="desconto_compra"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Frete (R$)</label>
+                <span class="form-control display-compra-field" id="frete_compra"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Despesas (R$)</label>
+                <span class="form-control display-compra-field" id="despesas_compra"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Seguro (R$)</label>
+                <span class="form-control display-compra-field" id="seguro_compra"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Total ICMS (R$)</label>
+                <span class="form-control display-compra-field" id="vicms_compra"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-3">
+            <div class="form-group">
+              <div class="form-line">
+                <label>Total IPI (R$)</label>
+                <span class="form-control display-compra-field" id="vipi_compra"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-6">
+            <div class="form-group">
+              <div class="form-line">
+                <label>TOTAL (R$)</label>
+                <span class="form-control display-compra-field" id="total_compra"></span>
+              </div>
+            </div>
+          </div>
+
+
+        <div class="col-sm-12 lista">
+
+          <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Itens</h4>
+          <table id="itens_table" class="table table-bordered lista-table">
+            <thead>
+              <tr>
+                <th>Produto</th>
+                <th>Qtd.</th>
+                <th>Vl. Unit.</th>
+                <th>Desconto</th>
+                <th>Impostos</th>
+                <th>Total</th>
+                <th>Detalhes</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr>
+                
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+      <!-- #Tab COMPRA -->
+      {% endif %}
+
+      <!-- Tab INFORMAÇÕES ADICIONAIS -->
+      <div role="tabpanel" class="tab-pane" id="tab_inf_ad">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.inf_ad_fisco.label}}</label>{% if form.inf_ad_fisco.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.inf_ad_fisco.errors %}<label class="error">{% for error in form.inf_ad_fisco.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.inf_ad_fisco}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.inf_cpl.label}}</label>{% if form.inf_cpl.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.inf_cpl.errors %}<label class="error">{% for error in form.inf_cpl.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.inf_cpl}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- #Tab INFORMAÇÕES ADICIONAIS -->
+
+      {% if saida %}
+      <!-- Tab AUT -->
+      <div role="tabpanel" class="tab-pane formset-tab" id="tab_aut">
+
+        {% include 'cadastro/formset_fields_sem_padrao.html' with formset=aut_form title='Autorização download' %}
+
+      </div>
+      <!-- #Tab AUT -->
+      {% endif %}
+
+      {% if edit_nfe and saida %}
+      <!-- Tab VALIDAÇÃO -->
+      <div role="tabpanel" class="tab-pane formset-tab active" id="validacao">
+
+        <div class="col-sm-12 lista">
+
+          <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Validação do XML Erros/Alertas {% if errors_validacao %}({{errors_validacao|length}} encontrados){% endif %}</h4>
+          <table id="erros_validacao_tabela" class="table table-bordered lista-table">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for erro in errors_validacao %}
+              <tr {% if erro.tipo == '0' %}style="background-color:#ffaaaa;"{% else %}style="background-color:#d5cd83;"{% endif %}>
+                <td style="font-weight: bolder;">{% if erro.tipo %}{{erro.get_tipo_display}}{% endif %}</td>
+                <td style="font-weight: bolder;">{% if erro.descricao %}{{erro.descricao}}{% endif %}</td>
+              </tr>
+              {% endfor %}
+              <tr>
+                
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+      <!-- #Tab VALIDAÇÃO -->
+
+      <!-- Tab SEFAZ -->
+      <div role="tabpanel" class="tab-pane formset-tab active" id="sefaz">
+
+        <div class="col-sm-12 lista">
+
+          <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Resposta do SEFAZ {% if resposta_sefaz %}({{resposta_sefaz|length}} encontrados){% endif %}</h4>
+          <table id="resposta_sefaz_tabela" class="table table-bordered lista-table">
+            <thead>
+              <tr>
+                <th>Tipo</th>
+                <th>Código</th>
+                <th>Descrição</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for resposta in resposta_sefaz %}
+              <tr {% if resposta.tipo == '0' or resposta.tipo == '2' %}style="background-color:#ffaaaa;"{% elif resposta.tipo == '4' or resposta.tipo == '3' %}style="background-color:#d5cd83;"{% else %}style="background-color:#d5efd6;"{% endif %}>
+                <td style="font-weight: bolder;">{% if resposta.tipo %}{{resposta.get_tipo_display}}{% endif %}</td>
+                <td style="font-weight: bolder;">{% if resposta.codigo %}{{resposta.codigo}}{% endif %}</td>
+                <td style="font-weight: bolder;">{% if resposta.descricao %}{{resposta.descricao}}{% endif %}</td>
+              </tr>
+              {% endfor %}
+              <tr>
+                
+              </tr>
+            </tbody>
+          </table>
+
+        </div>
+
+      </div>
+      <!-- #Tab SEFAZ -->
+
+      {% endif %}
+
+    </div>
+      
+  </div>
+
+  {% if object.status_nfe != '1' and object.status_nfe != '2' and object.status_nfe != '8' or not object%}
+  <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+  {% endif %}
+</div>
+<!--#Body-->

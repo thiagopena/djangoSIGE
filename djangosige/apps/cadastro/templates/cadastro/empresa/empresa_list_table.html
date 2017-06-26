@@ -1,0 +1,36 @@
+
+<div class="table-responsive">
+  <table id="lista-database" class="table table-bordered table-striped lista-table">
+    <thead>
+      <tr>
+        <th>#ID</th>                   
+        <th>Padrão</th>
+        <th>Razão Social</th>
+        <th>CNPJ</th>
+        <th>Insc. Estadual</th>
+        <th>Responsável</th>
+        <th>Remover</th>
+      </tr>
+    </thead>
+
+    <tbody>
+     {% if all_empresas%}
+     {% for empresa in all_empresas %}
+     <tr class="clickable-row" data-href="{% url 'cadastro:editarempresaview' empresa.id %}">
+      <td>{{empresa.id}}</td>
+      <td>{% ifequal empresa.id user_empresa.id %}Sim{% endifequal %}</td>
+      <td>{{empresa.nome_razao_social}}</td>
+      <td>{{empresa.pessoa_jur_info.cnpj|default_if_none:""}}</td>
+      <td>{{empresa.pessoa_jur_info.inscricao_estadual|default_if_none:""}}</td>
+      <td>{{empresa.pessoa_jur_info.responsavel|default_if_none:""}}</td>
+      <td class="lista-remove">
+        <input type="checkbox" name="{{empresa.id}}" id="remover-entrada-{{empresa.id}}"/>
+        <label class="remove-entry-label" for="remover-entrada-{{empresa.id}}"></label>
+      </td>
+    </tr>
+    {% endfor %}
+    {%else%}
+    {%endif%}
+  </tbody>
+</table>
+</div>

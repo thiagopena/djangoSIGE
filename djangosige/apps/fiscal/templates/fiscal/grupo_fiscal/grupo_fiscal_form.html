@@ -1,0 +1,194 @@
+<!-- Body-->
+<div class="body">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#tab_definicao" data-toggle="tab">GERAIS</a></li>
+      <li role="presentation"><a href="#tab_icms" data-toggle="tab">ICMS</a></li>
+      <li role="presentation"><a href="#tab_ipi" data-toggle="tab">IPI</a></li>
+      <li role="presentation"><a href="#tab_pis" data-toggle="tab">PIS</a></li>
+      <li role="presentation"><a href="#tab_cofins" data-toggle="tab">COFINS</a></li>
+      <li role="presentation"><a href="#tab_icms_dest" data-toggle="tab">ICMS em Operações interestaduais</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- Tab definicao -->
+      <div role="tabpanel" class="tab-pane active" id="tab_definicao">
+
+        {% for field in form %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{field.label}}</label>{% if field.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{field}}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+      <!-- #Tab definicao -->
+
+
+      <!-- Tab ICMS -->
+      <div role="tabpanel" class="tab-pane" id="tab_icms">
+
+        {% for field in icms_form %}
+        {% if field.label != icms_form.icms_incluido_preco.label and field.label != icms_form.icmsst_incluido_preco.label %}
+        <div class="col-sm-6 {{icms_form.prefix}} {{field.help_text}}">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{field.label}}</label>{% if field.field.required or field.label == 'CST ICMS'  %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{field}}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        {% for field in icmssn_form %}
+        {% if field.label != icmssn_form.icmssn_incluido_preco.label and field.label != icmssn_form.icmssnst_incluido_preco.label %}
+        <div class="col-sm-6 {{icmssn_form.prefix}} {{field.help_text}}">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{field.label}}</label>{% if field.field.required or field.label == 'CSOSN' %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{field}}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <div class="col-sm-12">
+
+          <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Cálculo do imposto</h4>
+          <div class="col-sm-3 {{icms_form.prefix}} {{icms_form.icms_incluido_preco.help_text}}">
+            {{icms_form.icms_incluido_preco}}
+            <label for="id_icms_form-icms_incluido_preco" style="font-weight: bold;" title="Selecionar caso o valor do ICMS já esteja incluso no preço da mercadoria cadastrada.">{{ icms_form.icms_incluido_preco.label }}</label>
+          </div>
+          <div class="col-sm-3 {{icms_form.prefix}} {{icms_form.icmsst_incluido_preco.help_text}}">
+            {{icms_form.icmsst_incluido_preco}}
+            <label for="id_icms_form-icmsst_incluido_preco" style="font-weight: bold;" title="Selecionar caso o valor do ICMS-ST já esteja incluso no preço da mercadoria cadastrada.">{{ icms_form.icmsst_incluido_preco.label }}</label>
+          </div>
+
+          <div class="col-sm-3 {{icmssn_form.prefix}} {{icmssn_form.icmssn_incluido_preco.help_text}}">
+            {{icmssn_form.icmssn_incluido_preco}}
+            <label for="id_icmssn_form-icmssn_incluido_preco" style="font-weight: bold;" title="Selecionar caso o valor do ICMS já esteja incluso no preço da mercadoria cadastrada.">{{ icmssn_form.icmssn_incluido_preco.label }}</label>
+          </div>
+          <div class="col-sm-3 {{icmssn_form.prefix}} {{icmssn_form.icmssnst_incluido_preco.help_text}}">
+            {{icmssn_form.icmssnst_incluido_preco}}
+            <label for="id_icmssn_form-icmssnst_incluido_preco" style="font-weight: bold;" title="Selecionar caso o valor do ICMS-ST já esteja incluso no preço da mercadoria cadastrada.">{{ icmssn_form.icmssnst_incluido_preco.label }}</label>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- #Tab ICMS -->
+
+      <!-- Tab IPI -->
+      <div role="tabpanel" class="tab-pane" id="tab_ipi">
+
+        {% for field in ipi_form %}
+        {% if field.label != ipi_form.ipi_incluido_preco.label and field.label != ipi_form.incluir_bc_icms.label and field.label != ipi_form.incluir_bc_icmsst.label %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{field.label}}</label>{% if field.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{field}}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        <div class="col-sm-12">
+
+          <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Cálculo do imposto</h4>
+
+          <div class="col-sm-3 {{ipi_form.prefix}} {{ipi_form.ipi_incluido_preco.help_text}}">
+            {{ipi_form.ipi_incluido_preco}}
+            <label for="id_ipi_form-ipi_incluido_preco" style="font-weight: bold;" title="Selecionar caso o valor do IPI já esteja incluso no preço da mercadoria cadastrada.">{{ ipi_form.ipi_incluido_preco.label }}</label>
+          </div>
+
+          <div class="col-sm-3 {{ipi_form.prefix}} {{ipi_form.incluir_bc_icms.help_text}}">
+            {{ipi_form.incluir_bc_icms}}
+            <label for="id_ipi_form-incluir_bc_icms" style="font-weight: bold;" title="Selecionar caso o IPI seja adicionado à base de cálculo do ICMS.">{{ ipi_form.incluir_bc_icms.label }}</label>
+          </div>
+
+          <div class="col-sm-3 {{ipi_form.prefix}} {{ipi_form.incluir_bc_icmsst.help_text}}">
+            {{ipi_form.incluir_bc_icmsst}}
+            <label for="id_ipi_form-incluir_bc_icmsst" style="font-weight: bold;" title="Selecionar caso o IPI seja adicionado à base de cálculo do ICMS-ST.">{{ ipi_form.incluir_bc_icmsst.label }}</label>
+          </div>
+          
+        </div>
+
+
+      </div>
+      <!-- #Tab IPI -->
+
+      <!-- Tab PIS -->
+      <div role="tabpanel" class="tab-pane" id="tab_pis">
+
+        {% for field in pis_form %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{field.label}}</label>{% if field.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{field}}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+      <!-- #Tab PIS -->
+
+      <!-- Tab COFINS -->
+      <div role="tabpanel" class="tab-pane" id="tab_cofins">
+
+        {% for field in cofins_form %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{field.label}}</label>{% if field.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{field}}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+      <!-- #Tab COFINS -->
+
+      <!-- Tab ICMS UF DEST -->
+      <div role="tabpanel" class="tab-pane" id="tab_icms_dest">
+
+        {% for field in icms_dest_form %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{field.label}}</label>{% if field.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{field}}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+      </div>
+      <!-- #Tab ICMS UF DEST -->
+
+    </div>
+      
+  </div>
+
+  <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+</div>
+<!--#Body-->

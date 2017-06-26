@@ -1,0 +1,33 @@
+<div class="formset-box">
+
+	{% for form in formset %}
+	<div id="{{formset.prefix}}-{{forloop.counter0}}" class="formset" style="border:none;margin-bottom:0px;padding-bottom:0px;">
+
+	  {% for field in form.visible_fields %}
+	  <div class="col-sm-5" style="float:left;">
+	    <div class="form-group">
+	      <div class="form-line">
+	        <label>{% if field.label %}{{field.label}}{%else%}&nbsp;{%endif%}</label>
+	        {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+	        {{field}}
+	      </div>
+	    </div>
+	  </div>
+	  {% endfor %}
+	  <a class="remove-formset" style="float:left;"></a>
+
+	  {{ form.id }}
+	  {% for hidden in form.hidden_fields %}
+	  	{{ hidden }}
+	  {% endfor %}
+
+	  <div class="col-sm-12">
+	    <a class="btn btn-xs add-formset">Adicionar novo</a>
+	  </div>
+	</div>
+
+	{% endfor %}
+
+	{{formset.management_form}}
+
+</div>

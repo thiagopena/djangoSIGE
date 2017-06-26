@@ -1,0 +1,15 @@
+{% block js %}
+    
+  {% load staticfiles %}
+  <!-- JQuery Mask Input Js -->
+  <script src="{% static 'js/jquery.mask.js' %}"></script>
+
+  {% include 'base/load_jqueryui.html' %}
+
+  {% include 'base/tooltip_js.html' %}
+
+  <script type="text/javascript">
+    $.Admin.maskInput.maskEmpresa();
+  </script>
+  
+{% endblock %}

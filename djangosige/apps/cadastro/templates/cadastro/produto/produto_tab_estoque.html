@@ -1,0 +1,70 @@
+
+<div id="estoque_fields">
+  <div class="col-sm-12" style="margin-bottom: 17px;margin-top: 5px;">
+    {{form.controlar_estoque}}
+    <label for="id_controlar_estoque" style="font-weight: bold;" title="Caso selecionado, toda venda/compra deste produto irá gerar automaticamente uma movimentação de estoque.">{{ form.controlar_estoque.label }}</label>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="form-group">
+      <div class="form-line">
+        <label>{{form.estoque_minimo.label}}</label>
+        {% if form.estoque_minimo.errors %}<label class="error">{% for error in form.estoque_minimo.errors %}{{error}}{% endfor %}</label>{% endif %}
+        <div class="select-container">
+        {{form.estoque_minimo}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    <div class="form-group">
+      <label>Qtd. em estoque atual</label>
+      <span  style="display:block;font-size:x-large;padding-left:10px;color:#03a9f4;">{% if object.estoque_atual %}{{object.estoque_atual}}{% else %}0,00{% endif %}</span>
+    </div>
+  </div>
+
+  {% if not object %}
+  <div class="col-sm-12">
+    <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">Ajuste de estoque inicial<i class="material-icons" style="font-size:medium;padding-left:10px;" title="Realizar uma movimentação de estoque inicial para este produto, a movimentação poderá ser visualizada no módulo de Estoque > Movimentações de estoque > Entradas">&#xE887;</i></h4>
+  </div>
+  <div class="col-sm-6">
+    <div class="form-group">
+      <div class="form-line">
+        <label>{{form.estoque_inicial.label}}</label>
+        {% if form.estoque_inicial.errors %}<label class="error">{% for error in form.estoque_inicial.errors %}{{error}}{% endfor %}</label>{% endif %}
+        <div class="select-container">
+        {{form.estoque_inicial}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <div class="col-sm-6">
+      <div class="form-group">
+        <label>{{form.fornecedor.label}}</label>
+        {% if form.fornecedor.errors %}<label class="error">{% for error in form.fornecedor.errors %}{{error}}{% endfor %}</label>{% endif %}
+        <div class="input-group" style="margin-bottom: 0px;">
+          <div class="form-line">
+            {{form.fornecedor}}
+          </div>
+          <a class="input-group-addon newwindow" style="color: green;" title="Adicionar fornecedor" href="{% url 'cadastro:addfornecedorview' %}"><i class="material-icons add-new-icon" title="Adicionar fornecedor">&#xE147;</i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label>{{form.local_dest.label}}</label>
+        {% if form.local_dest.errors %}<label class="error">{% for error in form.local_dest.errors %}{{error}}{% endfor %}</label>{% endif %}
+        <div class="input-group" style="margin-bottom: 0px;">
+          <div class="form-line">
+            {{form.local_dest}}
+          </div>
+          <a class="input-group-addon popup" style="color: green;" title="Adicionar localização de estoque" href="{% url 'estoque:addlocalview' %}"><i class="material-icons add-new-icon" title="Adicionar localização de estoque">&#xE147;</i></a>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+</div>

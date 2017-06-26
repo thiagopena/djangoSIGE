@@ -1,0 +1,34 @@
+
+<div class="table-responsive">
+  <table id="lista-database" class="table table-bordered table-striped lista-table">
+    <thead>
+      <tr>
+        <th>#ID</th>                   
+        <th>Nome/Razão Social</th>
+        <th>CPF/CNPJ</th>
+        <th>Estado</th>
+        <th>Município</th>
+        <th>Remover</th>
+      </tr>
+    </thead>
+
+    <tbody>
+     {% if all_fornecedores %}
+     {% for fornecedor in all_fornecedores %}
+     <tr class="clickable-row" data-href="{% url 'cadastro:editarfornecedorview' fornecedor.id %}">
+      <td>{{fornecedor.id}}</td>
+      <td>{{fornecedor.nome_razao_social}}</td>
+      <td>{% ifequal fornecedor.tipo_pessoa "PJ" %}{{fornecedor.pessoa_jur_info.cnpj|default_if_none:""}}{% else %}{{fornecedor.pessoa_fis_info.cpf|default_if_none:""}}{% endifequal %}</td>
+      <td>{% if fornecedor.endereco.all.0.uf %}{{fornecedor.endereco.all.0.get_uf_display}}{% endif %}</td>
+      <td>{{fornecedor.endereco.all.0.municipio|default_if_none:""}}</td>
+      <td class="lista-remove">
+        <input type="checkbox" name="{{fornecedor.id}}" id="remover-entrada-{{fornecedor.id}}"/>
+        <label class="remove-entry-label" for="remover-entrada-{{fornecedor.id}}"></label>
+      </td>
+    </tr>
+    {% endfor %}
+    {%else%}
+    {%endif%}
+  </tbody>
+</table>
+</div>

@@ -1,0 +1,40 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{titulo}}{%endblock%}
+
+{%block side_top_bars%}{%endblock%}
+
+{%block content%}
+	
+	<div class="card">
+		<div class="header">
+			<h2>{{titulo}}</h2>
+		</div>
+		<div class="body">
+			<form id="popupform" role="form" action="" method="post">
+			{% csrf_token %}
+				{% for field in form %}
+				<div class="form-group">
+					<label>{{field.label}}</label>
+					{% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+					<div class="input-group">
+						<div class="form-line">
+			      			{{field}}
+			      		</div>
+		      		</div>
+		      	</div>
+		    	{% endfor %}
+		    	<button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+	    	</form>
+    	</div>
+   	</div>
+	
+{%endblock%}
+
+{% block js %}
+<script>
+
+	$.Admin.popupwindow.init();
+
+</script>
+{% endblock %}

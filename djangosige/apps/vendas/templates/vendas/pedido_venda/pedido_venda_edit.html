@@ -1,0 +1,57 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid">
+
+    {% include 'cadastro/title_header.html' %}
+    {% include 'base/msg_aviso.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="row">
+        <div class="card">
+
+          <!--Header-->
+          <div class="header">
+
+            <h2>
+              <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>{{title_complete}}
+            </h2>
+            <div class="header-btn">
+              <a id="gerar_copia_pedido_venda" href="{% url 'vendas:copiarvenda' object.id %}" class="btn btn-primary">GERAR CÓPIA DO PEDIDO</a>
+              <a id="gerar_pdf_venda" href="{% url 'vendas:gerarpdfpedidovenda' object.id %}" class="btn btn-primary">GERAR PDF</a>
+              {% if object.status == '0' or object.status == '3' %}
+              <a id="faturar_pedido" href="{% url 'financeiro:faturarpedidovenda' object.id %}" class="btn btn-success">FATURAR PEDIDO</a>
+              <a id="cancelar_pedido_venda" href="{% url 'vendas:cancelarvenda' object.id %}" class="btn btn-red">CANCELAR</a>
+              {% elif object.status == '1'%}
+              <a id="gerar_nota_fiscal" href="{% url 'fiscal:gerarnotafiscalsaida' object.id %}" class="btn btn-success">GERAR NOTA FISCAL</a>
+              {% endif %}
+            </div>
+            <div><small>Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>
+
+          </div>
+          <!--# Header-->
+
+          <form id="venda_form_edit" role="form" action="" method="post">
+            {% csrf_token %}
+            
+            {% include 'vendas/venda_form.html' %}
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+    
+  {% include 'vendas/venda_jsblock.html' %} 
+  
+{% endblock %}

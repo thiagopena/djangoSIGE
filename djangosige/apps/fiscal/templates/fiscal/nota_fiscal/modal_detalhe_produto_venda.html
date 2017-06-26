@@ -1,0 +1,342 @@
+<!-- Modal detalhes do produto venda -->
+<div class="modal fade detalhes_modal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">INFORMAÇÕES DO PRODUTO</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container-fluid">
+
+          <!-- DADOS GERAIS -->
+          <div class="row">
+            <h4 style="border-bottom: 1px solid #afabab;">Dados gerais</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Código do produto</label>
+                  <span class="form-control" id="id_codigo_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Unidade</label>
+                  <span class="form-control" id="id_unidade_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>NCM</label>
+                  <span class="form-control" id="id_ncm_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>CFOP</label>
+                  <span class="form-control" id="id_cfop_modal"></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- #DADOS GERAIS -->
+
+          <!-- DADOS DA VENDA -->
+          <div class="row">
+            <h4 style="border-bottom: 1px solid #afabab;">Dados da venda</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Quantidade</label>
+                  <span class="form-control" id="id_quantidade_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Valor unitário</label>
+                  <span class="form-control" id="id_valor_unit_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Desconto (R$)</label>
+                  <span class="form-control" id="id_desconto_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Frete (R$)</label>
+                  <span class="form-control" id="id_frete_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Outras despesas (R$)</label>
+                  <span class="form-control" id="id_outras_despesas_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Seguro (R$)</label>
+                  <span class="form-control" id="id_seguro_modal"></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- #DADOS DA VENDA -->
+
+          <!-- IMPOSTOS -->
+          <div class="row">
+            <h4 style="border-bottom: 1px solid #afabab;">Impostos</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Vl. ICMS (R$)</label>
+                  <span class="form-control" id="id_vicms_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Vl. ICMS-ST (R$)</label>
+                  <span class="form-control" id="id_vicms_st_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Vl. IPI (R$)</label>
+                  <span class="form-control" id="id_vipi_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Vl. FCP (R$)</label>
+                  <span class="form-control" id="id_vfcp_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Vl. ICMS UF do remetente(R$)</label>
+                  <span class="form-control" id="id_vicmsufdest_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Vl. ICMS UF do destino(R$)</label>
+                  <span class="form-control" id="id_vicmsufremet_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Motivo da desoneração do ICMS</label>
+                  <span class="form-control" id="id_mot_des_icms_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Vl. do ICMS desonerado(R$)</label>
+                  <input type="text" class="form-control decimal-mask-no-dot" id="id_vicms_deson_modal"/>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+          <!-- #IMPOSTOS -->
+
+          <!-- PIS/COFINS -->
+          <div class="row">
+            <h4 style="border-bottom: 1px solid #afabab;">PIS/COFINS</h4>
+          </div>
+
+          <div class="row">
+            <div class="row">
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>BC do PIS ou Qtd. vendida</label><i class="material-icons" style="font-size: medium;padding-left: 7px;" title="Caso o valor do PIS seja dado pelo valor da operação (CST=01, 02), preencha este campo com a base de cálculo do imposto, caso o valor seja cálculado por unidade de produto (CST=03), preencha este campo com a quantidade de produtos vendidos.">&#xE887;</i>
+                    <input type="text" class="form-control decimal-mask-no-dot" id="id_vq_bcpis_modal"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>Alíquota do PIS em % ou por produto</label>
+                    <span class="form-control" id="id_aliq_pis_modal"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>Vl. PIS</label>
+                    <input type="text" class="form-control decimal-mask-no-dot" id="id_vpis_modal"/>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>BC do COFINS ou Qtd. vendida</label><i class="material-icons" style="font-size: medium;padding-left: 7px;" title="Caso o valor do COFINS seja dado pelo valor da operação (CST=01, 02), preencha este campo com a base de cálculo do imposto, caso o valor seja cálculado por unidade de produto (CST=03), preencha este campo com a quantidade de produtos vendidos.">&#xE887;</i>
+                    <input type="text" class="form-control decimal-mask-no-dot" id="id_vq_bccofins_modal"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>Alíquota do COFINS em % ou por produto</label>
+                    <span class="form-control" id="id_aliq_cofins_modal"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>Vl. COFINS</label>
+                    <input type="text" class="form-control decimal-mask-no-dot" id="id_vcofins_modal"/>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+          <!-- #PIS/COFINS -->
+
+          <!-- Total -->
+          <div class="row">
+            <h4 style="border-bottom: 1px solid #afabab;">TOTAL</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Subtotal (R$)</label>
+                  <span class="form-control" id="id_subtotal_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Total impostos (R$)</label>
+                  <span class="form-control" id="id_total_impostos_modal"></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Total (R$)</label>
+                  <span class="form-control" id="id_total_modal"></span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- #Total -->
+
+
+          <!-- Informacoes adicionais -->
+          <div class="row">
+            <h4 style="border-bottom: 1px solid #afabab;">Informações adicionais</h4>
+          </div>
+
+          <div class="row">
+
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="form-line">
+                  <label>Informações Adicionais do Produto</label>
+                  <textarea class="form-control" id="id_inf_ad_prod_modal"></textarea>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <!-- #Total -->
+          
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">FECHAR</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" id="salvar_detalhes_modal">SALVAR</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- #Modal detalhes do produto venda -->

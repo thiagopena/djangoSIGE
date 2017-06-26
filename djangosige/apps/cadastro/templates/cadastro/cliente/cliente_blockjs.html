@@ -1,0 +1,17 @@
+{% block js %}
+    
+  {% load staticfiles %}
+  <!-- JQuery Mask Input Js -->
+  <script src="{% static 'js/jquery.mask.js' %}"></script>
+
+  {% include 'base/load_jqueryui.html' %}
+
+  {% include 'base/datepicker_js.html' %}
+
+  {% include 'base/tooltip_js.html' %}
+
+  <script type="text/javascript">
+    $.Admin.maskInput.maskPessoa();
+  </script>
+  
+{% endblock %}

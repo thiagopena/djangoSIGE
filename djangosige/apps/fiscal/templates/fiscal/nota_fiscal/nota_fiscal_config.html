@@ -1,0 +1,152 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid">
+
+    {% include 'cadastro/title_header.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="row">
+        <div class="card">
+
+          <!--Header-->
+          <div class="header">
+
+            <h2>
+              {{title_complete}}
+            </h2>
+
+          </div>
+          <!--# Header-->
+
+          <form role="form" action="" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>{{form.serie_atual.label}}</label>{% if form.serie_atual.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                    {% if form.serie_atual.errors %}<label class="error">{% for error in form.serie_atual.errors %}{{error}}{% endfor %}</label>{% endif %}
+                    {{form.serie_atual}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>{{form.ambiente.label}}</label>{% if form.ambiente.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                    {% if form.ambiente.errors %}<label class="error">{% for error in form.ambiente.errors %}{{error}}{% endfor %}</label>{% endif %}
+                    {{form.ambiente}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>{{form.imp_danfe.label}}</label>{% if form.imp_danfe.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                    {% if form.imp_danfe.errors %}<label class="error">{% for error in form.imp_danfe.errors %}{{error}}{% endfor %}</label>{% endif %}
+                    {{form.imp_danfe}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>{{form.arquivo_certificado_a1.label}}</label>{% if form.arquivo_certificado_a1.field.required %}<strong style="color:red;"> *</strong>{% endif %}{% if object.arquivo_certificado_a1 %}<i class="material-icons" style="font-size: 18px;margin-left: 10px;color: green;" title="Certificado armazenado.">&#xE876;</i>{% else %}<i class="material-icons" style="font-size: 18px;margin-left: 10px;color: red;" title="Certificado não armazenado.">&#xE14C;</i>{% endif %}
+                    {% if form.arquivo_certificado_a1.errors %}<label class="error">{% for error in form.arquivo_certificado_a1.errors %}{{error}}{% endfor %}</label>{% endif %}
+                    {{form.arquivo_certificado_a1}}
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4">
+                <div class="form-group">
+                  <div class="form-line">
+                    <label>{{form.senha_certificado.label}}</label>{% if form.senha_certificado.field.required %}<strong style="color:red;"> *</strong>{% endif %}<i class="material-icons" style="font-size: 18px;margin-left: 10px;color: #bcb045;" title="AVISO: A senha do certificado ficará armazenada na base de dados local em texto simples.">&#xE002;</i>
+                    {% if form.senha_certificado.errors %}<label class="error">{% for error in form.senha_certificado.errors %}{{error}}{% endfor %}</label>{% endif %}
+                    {{form.senha_certificado}}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">DANFE</h4>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="form-line">
+                      {{form.inserir_logo_danfe}}
+                      <label for="id_inserir_logo_danfe" style="font-weight: bold;" title="O logo da empresa será inserido no topo do DANFE">{{ form.inserir_logo_danfe.label }}</label>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="form-line">
+                      <label>{{form.orientacao_logo_danfe.label}}</label>{% if form.orientacao_logo_danfe.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                      {% if form.orientacao_logo_danfe.errors %}<label class="error">{% for error in form.orientacao_logo_danfe.errors %}{{error}}{% endfor %}</label>{% endif %}
+                      {{form.orientacao_logo_danfe}}
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+
+            <h4 style="border-bottom: 1px solid #afabab;margin-bottom: 25px;">DANFCE</h4>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="form-line">
+                      <label>{{form.csc.label}}</label>{% if form.csc.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                      {% if form.csc.errors %}<label class="error">{% for error in form.csc.errors %}{{error}}{% endfor %}</label>{% endif %}
+                      {{form.csc}}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="form-line">
+                      <label>{{form.cidtoken.label}}</label>{% if form.cidtoken.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                      {% if form.cidtoken.errors %}<label class="error">{% for error in form.cidtoken.errors %}{{error}}{% endfor %}</label>{% endif %}
+                      {{form.cidtoken}}
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+
+            <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+
+          </div>
+          </form>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+    
+  {% include 'fiscal/nota_fiscal/nota_fiscal_jsblock.html' %}
+  
+{% endblock %}

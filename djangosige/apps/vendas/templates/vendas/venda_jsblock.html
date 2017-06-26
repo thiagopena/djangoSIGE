@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<!-- JQuery Mask Input Js -->
+<script src="{% static 'js/jquery.mask.js' %}"></script>
+
+{% include 'base/load_jqueryui.html' %}
+
+{% include 'base/datepicker_js.html' %}
+
+{% include 'base/tooltip_js.html' %}
+
+ <script type="text/javascript">
+    var req_urls = {}
+    req_urls.info_cliente_url = "{% url 'vendas:infocliente' %}"
+    req_urls.info_transportadora_url = "{% url 'vendas:infotransportadora' %}"
+    req_urls.info_produto_url = "{% url 'vendas:infoproduto' %}"
+    req_urls.info_pagamento_url = "{% url 'vendas:infocondpagamento' %}"
+    $.Admin.vendaForm.init(req_urls, {% if invalid %}true{% endif %});
+  </script>

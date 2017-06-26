@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    {% load staticfiles %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <!-- Favicon-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <!--<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">-->
+
+    <!-- Bootstrap Css -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Css -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <title>DjangoSIGE | 500</title>
+</head>
+
+<body class="four-zero-four">
+    <div class="four-zero-four-container">
+        <div class="error-code">500</div>
+        <div class="error-message">Erro interno do servidor</div>
+        <div class="button-place">
+            <a href="{% url 'base:index'%}" class="btn btn-primary">VOLTAR AO INÍCIO</a>
+        </div>
+    </div>
+
+    <!-- Jquery 3.0.0 Js -->
+    <script src="{% static 'js/jquery/jquery-3.0.0.min.js' %}"></script>
+
+    <!-- Bootstrap Js -->
+    <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
+
+</body>
+
+</html>

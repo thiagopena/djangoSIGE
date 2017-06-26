@@ -1,0 +1,109 @@
+<div class="col-sm-6">
+  <div class="form-group">
+    <div class="form-line">
+      <label>{{form.codigo.label}}</label><strong style="color:red;"> *</strong>
+      {% if form.codigo.errors %}<label class="error">{% for error in form.codigo.errors %}{{error}}{% endfor %}</label>{% endif %}
+      {{form.codigo}}
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6">
+  <div class="form-group">
+    <div class="form-line">
+      <label>{{form.descricao.label}}</label><strong style="color:red;"> *</strong>
+      {% if form.descricao.errors %}<label class="error">{% for error in form.descricao.errors %}{{error}}{% endfor %}</label>{% endif %}
+      {{form.descricao}}
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6">
+  <div class="form-group">
+    <div class="form-line">
+      <label>{{form.codigo_barras.label}}</label>
+      {% if form.codigo_barras.errors %}<label class="error">{% for error in form.codigo_barras.errors %}{{error}}{% endfor %}</label>{% endif %}
+      {{form.codigo_barras}}
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6">
+  <div class="form-group">
+    <label>{{form.categoria.label}}</label>
+      {% if form.categoria.errors %}<label class="error">{% for error in form.categoria.errors %}{{error}}{% endfor %}</label>{% endif %}
+    <div class="input-group">
+      <div class="form-line">
+        {{form.categoria}}
+      </div>
+      <a class="input-group-addon popup" style="color: green;" title="Adicionar categoria" href="{% url 'cadastro:addcategoriaview' %}"><i class="material-icons add-new-icon" title="Adicionar">&#xE147;</i></a>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6">
+  <div class="form-group">
+    <label>{{form.marca.label}}</label>
+    {% if form.marca.errors %}<label class="error">{% for error in form.marca.errors %}{{error}}{% endfor %}</label>{% endif %}
+    <div class="input-group">
+      <div class="form-line">
+        {{form.marca}}
+      </div>
+      <a class="input-group-addon popup" style="color: green;" title="Adicionar marca" href="{% url 'cadastro:addmarcaview' %}"><i class="material-icons add-new-icon" title="Adicionar">&#xE147;</i></a>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6">
+  <div class="form-group">
+    <label>{{form.unidade.label}}</label>
+    {% if form.unidade.errors %}<label class="error">{% for error in form.unidade.errors %}{{error}}{% endfor %}</label>{% endif %}
+    <div class="input-group">
+      <div class="form-line">
+        {{form.unidade}}
+      </div>
+      <a class="input-group-addon popup" style="color: green;" title="Adicionar unidade" href="{% url 'cadastro:addunidadeview' %}"><i class="material-icons add-new-icon" title="Adicionar">&#xE147;</i></a>
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-12">
+  <div class="col-sm-3">
+    <div class="form-group">
+      <div class="form-line">
+        <label>{{form.venda.label}}</label>
+        {% if form.venda.errors %}<label class="error">{% for error in form.venda.errors %}{{error}}{% endfor %}</label>{% endif %}
+        {{form.venda}}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="form-group">
+      <div class="form-line">
+        <label>{{form.custo.label}}</label>
+        {% if form.custo.errors %}<label class="error">{% for error in form.custo.errors %}{{error}}{% endfor %}</label>{% endif %}
+        {{form.custo}}
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-3">
+    <div class="form-group">
+      
+        <label>Margem de lucro (aprox.)</label>
+        <span id="margem-lucro" style="display:block;font-size: x-large;padding-left: 10px;color: yellowgreen;">0%</span>
+      
+    </div>
+  </div>
+</div>
+
+<div class="col-sm-6">
+  <div class="form-group">
+    <div class="form-line">
+      <label>{{form.inf_adicionais.label}}</label>
+      {% if form.inf_adicionais.errors %}<label class="error">{% for error in form.inf_adicionais.errors %}{{error}}{% endfor %}</label>{% endif %}
+      {{form.inf_adicionais}}
+    </div>
+  </div>
+</div>

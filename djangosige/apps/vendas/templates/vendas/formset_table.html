@@ -1,0 +1,37 @@
+<div class="formset-box">
+
+  {% for form in formset %}
+  <div id="{{formset.prefix}}-{{forloop.counter0}}" class="formset" style="overflow-x: scroll;">
+
+    <table class="table table-responsive table-bordered table-striped form-table">
+      <thead>
+        <tr>
+          {% for field in form.visible_fields %}
+          <th>{{field.label}}{% if field.errors %}<label class="error error-table">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}</th>      
+          {% endfor %}
+          <th><a class="remove-formset"></a></th>
+        </tr>
+      </thead>
+
+      <tbody>
+       <tr>
+          {% for field in form.visible_fields %}
+          <td class="field-td">{{field}}</td>
+          {% endfor %}
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+    {{ form.id }}
+
+    <div class="col-sm-12">
+      <a class="btn btn-xs add-formset" style="margin-bottom: 0px;">Adicionar novo</a>
+    </div>
+  </div>
+
+  {% endfor %}
+
+  {{formset.management_form}}
+
+</div>

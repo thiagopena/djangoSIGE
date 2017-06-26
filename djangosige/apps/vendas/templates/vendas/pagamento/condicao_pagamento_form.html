@@ -1,0 +1,21 @@
+<!-- Body-->
+<div class="body">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    
+        {% for field in form %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{field.label}}</label>{% if field.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{field}}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+
+  </div>
+
+  <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+</div>
+<!--#Body-->

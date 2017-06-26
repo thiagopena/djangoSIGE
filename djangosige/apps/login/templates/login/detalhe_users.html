@@ -1,0 +1,73 @@
+{%extends 'base/base.html'%}
+
+{%block title%}Sobre usuário{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid block">
+    <div class="block-header">
+      <h2>USUÁRIO</h2>
+    </div>
+    <div class="block-content">
+      <div class="card">
+        <div class="header">
+          <h2>
+            <a href="{%url 'login:usuariosview'%}"><i class="material-icons">&#xE5C4;</i></a>
+            <span><b>Usuário: </b>{%if user_match %}{{user_match.username}}{%endif%}</span>
+          </h2>
+          <div class="header-btn">
+            {%if not user_match.is_superuser%} 
+            <form action="{% url 'login:deletarusuarioview' user_match.id %}" method="post">
+              {% csrf_token %}
+              <input type="hidden" name="user_id" value="{{user_match.id}}">
+              <button class="btn btn-red" type="submit"><i class="material-icons">&#xE872;</i><span> REMOVER</span></button>
+            </form>
+            {%endif%}
+          </div>
+        </div>
+        <div class="body perfil-user">
+            <div class="col-md-3 foto-perfil">  
+              {% if user_foto %}
+              <img src="/media/{{user_foto}}"/>
+              {%else%}
+              <img src="/media/imagens/user.png"/>
+              {%endif%}
+            </div>
+            <div class="col-md-8">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Status:</td>
+                    <td>{% if user_match.is_superuser %}Administrador{%else%}Usuário{%endif%}</td>
+                  </tr>
+                  <tr>
+                    <td>Nome:</td>
+                    <td>{{user_match.first_name}}</td>
+                  </tr>
+                  <tr>
+                    <td>Sobrenome:</td>
+                    <td>{{user_match.last_name}}</td>
+                  </tr>
+                  <tr>
+                    <td>Nome de usuário:</td>
+                    <td>{{user_match.username}}</td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td>{{user_match.email}}</td>
+                  </tr>
+
+                </tbody>
+              </table>
+
+            </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+</section>
+
+
+{%endblock%}

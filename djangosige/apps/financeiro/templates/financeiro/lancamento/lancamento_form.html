@@ -1,0 +1,151 @@
+<!-- Body-->
+<div class="body">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <label>{{form.descricao.label}}</label>{% if form.descricao.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+          {% if form.descricao.errors %}<label class="error">{% for error in form.descricao.errors %}{{error}}{% endfor %}</label>{% endif %}
+          {{form.descricao}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <label>{{form.status.label}}</label>{% if form.status.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+          {% if form.status.errors %}<label class="error">{% for error in form.status.errors %}{{error}}{% endfor %}</label>{% endif %}
+          {{form.status}}
+          <input type="hidden" id="id_status" name="status" value="{{form.status.initial}}" />
+        </div>
+      </div>
+    </div>
+
+    {% if form.fornecedor %}
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label>{{form.fornecedor.label}}</label>{% if form.fornecedor.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+        {% if form.fornecedor.errors %}<label class="error">{% for error in form.fornecedor.errors %}{{error}}{% endfor %}</label>{% endif %}
+        <div class="input-group" style="margin-bottom: 0px;">
+          <div class="form-line">
+            {{form.fornecedor}}
+          </div>
+          <a class="input-group-addon newwindow" style="color: green;" title="Adicionar fornecedor" href="{% url 'cadastro:addfornecedorview' %}"><i class="material-icons add-new-icon" title="Adicionar fornecedor">&#xE147;</i></a>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label>{{form.cliente.label}}</label>{% if form.cliente.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+        {% if form.cliente.errors %}<label class="error">{% for error in form.cliente.errors %}{{error}}{% endfor %}</label>{% endif %}
+        <div class="input-group" style="margin-bottom: 0px;">
+          <div class="form-line">
+            {{form.cliente}}
+          </div>
+          <a class="input-group-addon newwindow" style="color: green;" title="Adicionar cliente" href="{% url 'cadastro:addclienteview' %}"><i class="material-icons add-new-icon" title="Adicionar cliente">&#xE147;</i></a>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <label>{{form.grupo_plano.label}}</label>{% if form.grupo_plano.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+        {% if form.grupo_plano.errors %}<label class="error">{% for error in form.grupo_plano.errors %}{{error}}{% endfor %}</label>{% endif %}
+        <div class="input-group" style="margin-bottom: 0px;">
+          <div class="form-line">
+            {{form.grupo_plano}}
+          </div>
+          <a class="input-group-addon newwindow" style="color: green;" title="Adicionar classificação de saída" href="{% url 'financeiro:addgrupoview' %}"><i class="material-icons add-new-icon" title="Adicionar classificação de entrada/saída">&#xE147;</i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <label>{{form.conta_corrente.label}}</label>{% if form.conta_corrente.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+          {% if form.conta_corrente.errors %}<label class="error">{% for error in form.conta_corrente.errors %}{{error}}{% endfor %}</label>{% endif %}
+          {{form.conta_corrente}}
+        </div>
+      </div>
+    </div>
+
+    {% if form.status.initial == '0' %}
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <label>{{form.data_pagamento.label}}</label>{% if form.data_pagamento.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+          {% if form.data_pagamento.errors %}<label class="error">{% for error in form.data_pagamento.errors %}{{error}}{% endfor %}</label>{% endif %}
+          {{form.data_pagamento}}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <label>{{form.data_vencimento.label}}</label>{% if form.data_vencimento.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+          {% if form.data_vencimento.errors %}<label class="error">{% for error in form.data_vencimento.errors %}{{error}}{% endfor %}</label>{% endif %}
+          {{form.data_vencimento}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <label>{{form.valor_total.label}}</label>{% if form.valor_total.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+          {% if form.valor_total.errors %}<label class="error">{% for error in form.valor_total.errors %}{{error}}{% endfor %}</label>{% endif %}
+          {{form.valor_total}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <label>{{form.abatimento.label}}</label>{% if form.abatimento.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+          {% if form.abatimento.errors %}<label class="error">{% for error in form.abatimento.errors %}{{error}}{% endfor %}</label>{% endif %}
+          {{form.abatimento}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <label>{{form.juros.label}}</label>{% if form.juros.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+          {% if form.juros.errors %}<label class="error">{% for error in form.juros.errors %}{{error}}{% endfor %}</label>{% endif %}
+          {{form.juros}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          <label>{{form.valor_liquido.label}}</label>{% if form.valor_liquido.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+          {% if form.valor_liquido.errors %}<label class="error">{% for error in form.valor_liquido.errors %}{{error}}{% endfor %}</label>{% endif %}
+          {{form.valor_liquido}}
+        </div>
+      </div>
+    </div>
+
+    <div class="col-sm-6">
+      <div class="form-group">
+        <div class="form-line">
+          {{form.movimentar_caixa}}
+          <label for="id_movimentar_caixa" style="font-weight: bold;" title="Selecionar para debitar/creditar no fluxo de caixa.">{{form.movimentar_caixa.label}}</label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  
+  <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+</div>
+<!--#Body-->

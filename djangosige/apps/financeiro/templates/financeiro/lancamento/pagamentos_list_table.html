@@ -1,0 +1,35 @@
+<div class="table-responsive">
+  <table id="lista-database" class="table table-bordered table-striped lista-table">
+    <thead>
+      <tr>
+        <th>#ID</th>                   
+        <th>Descrição</th>
+        <th>Data do Pagamento</th>
+        <th>Grupo</th>
+        <th>Cliente</th>
+        <th>Valor líquido</th>
+        <th>Remover</th>
+      </tr>
+    </thead>
+
+    <tbody>
+     {% if all_saidas %}
+     {% for saida in all_saidas %}
+     <tr class="clickable-row" data-href="{% url 'financeiro:editarpagamentoview' saida.id %}">
+      <td>{{saida.id}}</td>
+      <td>{{saida.descricao}}</td>
+      <td>{{saida.format_data_pagamento|default_if_none:""}}</td>
+      <td>{{saida.classificacao|default_if_none:""}}</td>
+      <td>{{saida.fornecedor|default_if_none:""}}</td>
+      <td>{{saida.format_valor_liquido}}</td>
+      <td class="lista-remove">
+        <input type="checkbox" name="{{saida.id}}" id="remover-entrada-{{saida.id}}"/>
+        <label class="remove-entry-label" for="remover-entrada-{{saida.id}}"></label>
+      </td>
+    </tr>
+    {% endfor %}
+    {%else%}
+    {%endif%}
+  </tbody>
+</table>
+</div>

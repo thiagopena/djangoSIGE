@@ -1,0 +1,10 @@
+{%if messages %}
+{%for message in messages%}
+{% if 'warning' in message.tags %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+  <b>{{message|safe}}</b>
+</div>
+{%endif%}
+{%endfor%}
+{%endif%}

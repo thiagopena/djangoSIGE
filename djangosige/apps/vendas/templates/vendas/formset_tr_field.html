@@ -1,0 +1,33 @@
+<div class="formset-tr-field">
+
+  <table class="table table-responsive table-bordered table-striped form-table {{table_class}}">
+    {% for form in formset %}
+    {% if forloop.first %}
+    <thead>
+      <tr>
+        {% for field in form.visible_fields %}
+        <th>{{field.label}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    {%endif%}
+    {% endfor %}
+
+    <tbody>
+    {% for form in formset %}
+     <tr id="{{formset.prefix}}-{{forloop.counter0}}">
+        {% for field in form.visible_fields %}
+        <td {% if field.errors %}class="field-td form-td-error"{% for error in field.errors %}title="{{error}}"{% endfor %}{% else %}class="field-td"{% endif %}>{{field}}</td>
+        {% endfor %}
+
+        {{ form.id }}
+
+      </tr>
+    {% endfor %}
+    </tbody>
+
+  </table>
+
+  {{formset.management_form}}
+
+</div>

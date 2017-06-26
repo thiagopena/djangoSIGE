@@ -1,0 +1,74 @@
+{%extends 'base/base.html'%}
+
+{%block title%}Perfil{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid block">
+    <div class="block-header">
+      <h2>PERFIL</h2>
+    </div>
+    
+    {% include 'base/msg_sucesso.html' %}
+
+    <div class="block-content">
+      <div class="card">
+        <div class="header">
+          <h2>
+            <i class="material-icons">&#xE55A;</i>
+            MEU PERFIL
+          </h2>
+          <div class="header-btn">
+            <a href="{% url 'login:editarperfilview' %}" class="btn btn-primary"><i class="material-icons">&#xE254;</i><span> EDITAR</span></a>
+          </div>
+        </div>
+        <div class="body perfil-user">
+          <div class="row">
+            <div class="col-md-3 foto-perfil">  
+              {% if user_foto_sidebar %}
+              <img src="/media/{{user_foto_sidebar}}"/>
+              {%else%}
+              <img src="/media/imagens/user.png"/>
+              {%endif%}
+            </div>
+            <div class="col-md-8">
+              <table class="table">
+                <tbody>
+                  <tr>
+                    <td>Status:</td>
+                    <td>{% if request.user.is_superuser %}Administrador{%else%}Usuário{%endif%}</td>
+                  </tr>
+                  <tr>
+                    <td>Nome:</td>
+                    <td>{{request.user.first_name}}</td>
+                  </tr>
+                  <tr>
+                    <td>Sobrenome:</td>
+                    <td>{{request.user.last_name}}</td>
+                  </tr>
+                  <tr>
+                    <td>Nome de usuário:</td>
+                    <td>{{request.user.username}}</td>
+                  </tr>
+                  <tr>
+                    <td>Email:</td>
+                    <td>{{request.user.email}}</td>
+                  </tr>
+                  <tr>
+                    <td>Minha Empresa:</td>
+                    <td>{{user_empresa}}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+          </div>              
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
