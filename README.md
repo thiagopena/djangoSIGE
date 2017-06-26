@@ -53,4 +53,5 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 ## Ajuda
 
 Para relatar bugs ou fazer perguntas utilize o [Issues](https://github.com/thiagopena/djangoSIGE/issues) ou via email thiagopena01@gmail.com
+
 Como este é um projeto em desenvolvimento, qualquer feedback será bem-vindo.
