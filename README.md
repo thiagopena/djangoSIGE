@@ -15,7 +15,12 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 
 ## Instalação:
 
-1. pip install -r requirements.txt
+1. Instalar requirements:
+
+    ```bash
+    pip install -r requirements.txt
+    ```
+
 2. Edite o conteúdo do arquivo **djangosige/configs/configs.py**
 3. Sincronize a base de dados:
 
