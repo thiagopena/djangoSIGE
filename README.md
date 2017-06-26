@@ -6,7 +6,7 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 
 
 ## Dependências
-----------
+
 - **django** >= 1.10.1 - http://www.djangoproject.com
 - **geraldo** - Geração de PDF para pedidos de venda/compra
 - **PySIGNFe** (Opcional) - Necessário para a geração de NF-e, NFC-e, comunicação com SEFAZ, geração do DANFE, etc.
@@ -14,7 +14,7 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 - **mod_wsgi** (Opcional) - https://modwsgi.readthedocs.io/en/develop/
 
 ## Instalação:
-----------
+
 1. pip install -r requirements.txt
 2. Edite o conteúdo do arquivo **djangosige/configs/configs.py**
 3. Sincronize a base de dados:
@@ -36,7 +36,7 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
     ```
 
 ## Implementações
-----------
+
 - Cadastro de produtos, clientes, empresas, fornecedores e transportadoras
 - Login/Logout
 - Criação de perfil para cada usuário.
@@ -51,6 +51,6 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 - Interface simples e em português
 
 ## Ajuda
-----------
+
 Para relatar bugs ou fazer perguntas utilize o [Issues](https://github.com/thiagopena/djangoSIGE/issues) ou via email thiagopena01@gmail.com
 Como este é um projeto em desenvolvimento, qualquer feedback será bem-vindo.
