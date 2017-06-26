@@ -1,2 +1,56 @@
 # DjangoSIGE
+
 Sistema Integrado de Gestão Empresarial baseado em Django
+
+Projeto independente open-source desenvolvido em Python 3 no Windows, testado no GNU/Linux e Windows.
+
+
+## Dependências
+----------
+- **django** >= 1.10.1 - http://www.djangoproject.com
+- **geraldo** - Geração de PDF para pedidos de venda/compra
+- **PySIGNFe** (Opcional) - Necessário para a geração de NF-e, NFC-e, comunicação com SEFAZ, geração do DANFE, etc.
+- **apache2** (Opcional) - https://www.apache.org/
+- **mod_wsgi** (Opcional) - https://modwsgi.readthedocs.io/en/develop/
+
+## Instalação:
+----------
+1. pip install -r requirements.txt
+2. Edite o conteúdo do arquivo **djangosige/configs/configs.py**
+3. Sincronize a base de dados:
+
+    ```bash
+    python manage.py migrate
+    ```
+
+4. Crie um usuário (Administrador do sistema):
+
+    ```bash
+    python manage.py createsuperuser
+    ```
+
+5. Teste a instalação carregando o servidor de desenvolvimento (http://localhost:8000 no navegador):
+
+    ```bash
+    python manage.py runserver
+    ```
+
+## Implementações
+----------
+- Cadastro de produtos, clientes, empresas, fornecedores e transportadoras
+- Login/Logout
+- Criação de perfil para cada usuário.
+- Criação e geração de PDF para orçamentos e pedidos de compra/venda
+- Módulo financeiro (Plano de Contas, Fluxo de Caixa e Lançamentos)
+- Módulo para controle de estoque
+- Módulo fiscal:
+    - Geração e armazenamento de notas fiscais
+    - Validação do XML de NF-e/NFC-es
+    - Emissão, download, consulta e cancelamento de NF-e/NFC-es **(Testar em ambiente de homologação)**
+    - Comunicação com SEFAZ (Consulta de cadastro, inutilização de notas, manifestação do destinatário)
+- Interface simples e em português
+
+## Ajuda
+----------
+Para relatar bugs ou fazer perguntas utilize o [Issues](https://github.com/thiagopena/djangoSIGE/issues) ou via email thiagopena01@gmail.com
+Como este é um projeto em desenvolvimento, qualquer feedback será bem-vindo.
