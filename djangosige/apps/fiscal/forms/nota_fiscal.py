@@ -3,12 +3,9 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
-from django.db.models import Max
 
-from djangosige.apps.fiscal.models import NotaFiscal, NotaFiscalSaida, NotaFiscalEntrada, AutXML, ConfiguracaoNotaFiscal, TP_AMB_ESCOLHAS, MOD_NFE_ESCOLHAS
+from djangosige.apps.fiscal.models import NotaFiscalSaida, NotaFiscalEntrada, AutXML, ConfiguracaoNotaFiscal, TP_AMB_ESCOLHAS, MOD_NFE_ESCOLHAS
 from djangosige.apps.cadastro.models import Empresa
-
-from datetime import datetime
 
 try:
     from pysignfe.nfe.manifestacao_destinatario import MD_CONFIRMACAO_OPERACAO, MD_DESCONHECIMENTO_OPERACAO, MD_OPERACAO_NAO_REALIZADA, MD_CIENCIA_OPERACAO
@@ -30,11 +27,7 @@ class NotaFiscalForm(forms.ModelForm):
         super(NotaFiscalForm, self).__init__(*args, **kwargs)
         self.fields['dhemi'].input_formats = ('%d/%m/%Y %H:%M',)
         
-        #self.fields['v_orig'].localize = True
-        #self.fields['v_desc'].localize = True
-        #self.fields['v_liq'].localize = True
     class Meta:
-        #model = NotaFiscal
         fields = ('versao', 'status_nfe', 'natop', 'indpag', 'mod', 'serie', 'dhemi', 'dhsaient', 'iddest',
             'tp_imp', 'tp_emis', 'tp_amb', 'fin_nfe', 'ind_final', 'ind_pres', 'inf_ad_fisco', 'inf_cpl',)
         
@@ -183,7 +176,6 @@ class CancelamentoNotaFiscalForm(forms.ModelForm):
         }
         
 class ConsultarCadastroForm(forms.Form):
-    #cpf_cnpj = forms.CharField(max_length=16, widget=forms.TextInput(attrs={'class':'form-control',}), label='CPF ou CNPJ (apenas digitos)', required=True)
     empresa = forms.ModelChoiceField(queryset=Empresa.objects.all(), widget=forms.Select(attrs={'class':'form-control',}), label='Selecionar empresa', required=True)
     salvar_arquivos = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-control',}), label='Salvar arquivos XML gerados?', required=False)
         

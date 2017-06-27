@@ -16,7 +16,6 @@ from pysignfe.nfe.manual_600.nfe_310 import Det as Det_310
 from pysignfe.nfe.manual_600.nfe_310 import autXML as autXML_310
 from pysignfe.nfe.manual_600.nfe_310 import Dup as Dup_310
 
-from datetime import datetime
 from ssl import SSLError
 
 class ProcessadorNotaFiscal(object):
@@ -41,7 +40,7 @@ class ProcessadorNotaFiscal(object):
         nfe.infNFe.ide.indPag.valor = nota_obj.indpag
         nfe.infNFe.ide.serie.valor = nota_obj.serie
         nfe.infNFe.ide.nNF.valor = nota_obj.n_nf_saida
-        #nfe.infNFe.ide.dhEmi.valor = datetime.strptime(nota_obj.dhemi, "%Y-%m-%d %H:%M")
+        
         if nota_obj.dhemi:
             nfe.infNFe.ide.dhEmi.valor = nota_obj.dhemi.replace(tzinfo=None)
         if nota_obj.dhsaient:

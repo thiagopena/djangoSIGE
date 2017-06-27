@@ -3,7 +3,6 @@
 from django.views.generic import TemplateView
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import F
 
@@ -13,7 +12,6 @@ from djangosige.apps.compras.models import OrcamentoCompra, PedidoCompra
 from djangosige.apps.financeiro.models import MovimentoCaixa, Entrada, Saida
 
 from datetime import datetime
-from decimal import Decimal
 
 class IndexView(TemplateView):
     template_name = 'base/index.html'
@@ -54,7 +52,7 @@ class IndexView(TemplateView):
         
         try:
             context['movimento_dia'] = MovimentoCaixa.objects.get(data_movimento=data_atual)
-        except (MovimentoCaixa.DoesNotExist, ObjectDoesNotExist) as e:
+        except (MovimentoCaixa.DoesNotExist, ObjectDoesNotExist):
             ultimo_mvmt = MovimentoCaixa.objects.filter(data_movimento__lt=data_atual)
             if ultimo_mvmt:
                 context['saldo'] = ultimo_mvmt.latest('data_movimento').saldo_final

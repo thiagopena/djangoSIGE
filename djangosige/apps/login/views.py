@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from datetime import datetime
-
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, get_user_model
-from django.views.generic import View, TemplateView, FormView, ListView, DeleteView, DetailView
-from django.views.generic.edit import UpdateView, CreateView
+from django.views.generic import View, TemplateView, FormView, ListView, DeleteView
+from django.views.generic.edit import UpdateView
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
@@ -32,7 +30,6 @@ from djangosige.apps.cadastro.forms import MinhaEmpresaForm
 from djangosige.apps.cadastro.models import MinhaEmpresa
 
 
-#Mixin para views restritas ao superuser(administrador)
 class SuperUserRequiredMixin(object):
     @method_decorator(login_required(login_url = 'login:loginview'))
     def dispatch(self, request, *args, **kwargs):
@@ -45,14 +42,14 @@ class SuperUserRequiredMixin(object):
             return redirect(request.META.get('HTTP_REFERER'))
         return super(SuperUserRequiredMixin, self).dispatch(request, *args, **kwargs)
 
-#Pagina de login
+
 class UserFormView(View):
     form_class = UserLoginForm
     template_name = 'login/login.html'
     
     def get(self, request):
         form = self.form_class(None)
-        #Se usuario ja esta logado redireciona-lo a pagina inicial
+        
         if request.user.is_authenticated():
             return redirect('base:index')
         return render(request, self.template_name, {'form':form})
@@ -64,7 +61,6 @@ class UserFormView(View):
             password = form.cleaned_data['password']
             user = form.authenticate_user(username=username, password=password)
             if user:
-                #Nao manter o usuario logado caso Lembrar nao esteja selecionado
                 if not request.POST.get('remember_me', None):
                     SESSION_EXPIRE_AT_BROWSER_CLOSE = True
                     request.session.set_expiry(0)
@@ -73,7 +69,7 @@ class UserFormView(View):
                     
         return render(request, self.template_name, {'form':form})
     
-#Pagina para registrar novos usuarios, apenas para o administrador.
+
 class UserRegistrationFormView(SuperUserRequiredMixin, SuccessMessageMixin, FormView):
     form_class = UserRegistrationForm
     template_name = 'login/registrar.html'
@@ -107,14 +103,12 @@ class UserRegistrationFormView(SuperUserRequiredMixin, SuccessMessageMixin, Form
         return render(request, self.template_name, {'form':form})    
     
     
-#Fazer logout e retornar a pagina de login
 class UserLogoutView(View):
     def get(self, request):
         logout(request)
         return redirect("login:loginview")
         
 
-#Pagina para recuperacao de senha
 class ForgotPasswordView(FormView):
     template_name = "login/esqueceu_senha.html"
     success_url = reverse_lazy('login:loginview')
@@ -125,7 +119,7 @@ class ForgotPasswordView(FormView):
         if form.is_valid():
             data = form.cleaned_data["email_or_username"]
             associated_users = User.objects.filter(Q(email=data)|Q(username=data))
-            #Caso usuario encontrado na DB enviar um email com link para a troca de senha
+            
             if associated_users.exists():
                 sended_to = []
                 for user in associated_users:
@@ -157,7 +151,6 @@ class ForgotPasswordView(FormView):
         form.add_error(field=None, error="Entrada inválida.")
         return self.form_invalid(form)
         
-#Pagina para a troca de senha
 class PasswordResetConfirmView(FormView):
     template_name = "login/trocar_senha.html"
     success_url = reverse_lazy('login:loginview')
@@ -194,12 +187,11 @@ class PasswordResetConfirmView(FormView):
             return self.form_invalid(form)
             
             
-#Visualizar perfil usuario
 class MeuPerfilView(TemplateView):
     model = Usuario
     template_name = 'login/perfil.html'
     
-#Editar perfil
+
 class EditarPerfilView(UpdateView):
     form_class = PerfilUsuarioForm
     template_name = 'login/editar_perfil.html'
@@ -222,7 +214,6 @@ class EditarPerfilView(UpdateView):
         form = self.get_form(form_class)
         
         try:
-            #empresa_instance = MinhaEmpresa.objects.get(m_usuario=request.user.id)
             empresa_instance = MinhaEmpresa.objects.get(m_usuario=self.object.id)
             minha_empresa_form = MinhaEmpresaForm(instance=empresa_instance, prefix='m_empresa_form')
         except MinhaEmpresa.DoesNotExist:
@@ -240,7 +231,6 @@ class EditarPerfilView(UpdateView):
             form = self.form_class(request.POST, request.FILES, instance=None)
         
         try:
-            #empresa_instance = MinhaEmpresa.objects.get(m_usuario=request.user.id)
             empresa_instance = MinhaEmpresa.objects.get(m_usuario=self.object.id)
             minha_empresa_form = MinhaEmpresaForm(request.POST, prefix='m_empresa_form', instance=empresa_instance)
         except MinhaEmpresa.DoesNotExist:
@@ -261,18 +251,13 @@ class EditarPerfilView(UpdateView):
                 if 'user_foto' in request.FILES:
                     perfil.user_foto = request.FILES['user_foto']
                 perfil.save()
-                ##Salvar minha empresa
-                #if request.POST.get('m_empresa_form-m_empresa'):
+                
                 minha_empresa = minha_empresa_form.save(commit=False)
                 minha_empresa.m_usuario = perfil
                 minha_empresa.save()
-                #else:
-                #    try:
-                #        MinhaEmpresa.objects.get(m_usuario=perfil.id).delete()
-                #    except:
-                #        pass
                         
                 return self.form_valid(form, minha_empresa_form)
+                
             except DatabaseError:
                 form.add_error(field=None, error=u"Verifique se sua database foi ativada corretamente.")
             except ValidationError:
@@ -331,7 +316,6 @@ class SelecionarMinhaEmpresaView(FormView):
         return redirect(self.success_url)
         
         
-#Listar todos usuarios (apenas para superusers/administrador)
 class UsuariosListView(SuperUserRequiredMixin, ListView):
     template_name = 'login/lista_users.html'
     model = User
@@ -341,7 +325,6 @@ class UsuariosListView(SuperUserRequiredMixin, ListView):
     def get_queryset(self):
         return User.objects.all()
     
-    #Remover usuarios selecionados da database
     def post(self, request, *args, **kwargs):
         for key, value in request.POST.items():
             if value=="on":
@@ -349,7 +332,7 @@ class UsuariosListView(SuperUserRequiredMixin, ListView):
                 instance.delete()
         return redirect(self.success_url)
         
-#Visualizar detalhes do usuario 
+
 class UsuarioDetailView(SuperUserRequiredMixin, TemplateView):
     model = User
     template_name = 'login/detalhe_users.html'
@@ -364,7 +347,7 @@ class UsuarioDetailView(SuperUserRequiredMixin, TemplateView):
             pass
         return context
         
-#Deletar usuario(apenas administrador)
+        
 class DeletarUsuarioView(SuperUserRequiredMixin, DeleteView):
     model = User
     success_url = reverse_lazy('login:usuariosview')

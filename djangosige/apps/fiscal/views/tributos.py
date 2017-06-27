@@ -2,12 +2,12 @@
 
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import ListView, View
+from django.views.generic import ListView
 from django.contrib import messages
 from django.shortcuts import redirect
 
 from djangosige.apps.fiscal.forms import GrupoFiscalForm, ICMSForm, ICMSSNForm, ICMSUFDestForm, IPIForm, PISForm, COFINSForm
-from djangosige.apps.fiscal.models import GrupoFiscal, ICMS, ICMSSN, ICMSUFDest, IPI, PIS, COFINS
+from djangosige.apps.fiscal.models import GrupoFiscal, ICMS, ICMSSN, ICMSUFDest, IPI, COFINS
 from djangosige.apps.cadastro.models import MinhaEmpresa
 from djangosige.apps.login.models import Usuario
 
@@ -29,8 +29,8 @@ class AdicionarGrupoFiscalView(CreateView):
     
     def get(self, request, *args, **kwargs):
         self.object = None
-        
         form = GrupoFiscalForm()
+        
         ##Dados iniciais da situação fiscal da MinhaEmpresa
         try:
             user_empresa = MinhaEmpresa.objects.get(m_usuario=Usuario.objects.get(user=request.user)).m_empresa

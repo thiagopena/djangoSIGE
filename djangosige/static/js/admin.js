@@ -51,8 +51,8 @@ $.Admin.barraLateral = {
         $('a.popup, tr.popup').on('click', function(event){
             
             if(!$(event.target).is("input, label")){
-                w = '600'
-                h = '500'
+                var w = '600'
+                var h = '500'
                 var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
                 var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
 

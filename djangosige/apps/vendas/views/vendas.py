@@ -7,20 +7,19 @@ from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.core import serializers
-from itertools import chain
-import json
 
 from djangosige.apps.vendas.forms import OrcamentoVendaForm, PedidoVendaForm, ItensVendaFormSet, PagamentoFormSet
-from djangosige.apps.vendas.models import Venda, OrcamentoVenda, PedidoVenda, ItensVenda, Pagamento
+from djangosige.apps.vendas.models import OrcamentoVenda, PedidoVenda, ItensVenda, Pagamento
 from djangosige.apps.cadastro.models import Pessoa, Cliente, Transportadora, Produto, MinhaEmpresa
 from djangosige.apps.fiscal.models import ICMS, ICMSSN, IPI, ICMSUFDest
-from djangosige.apps.estoque.models import EntradaEstoque, SaidaEstoque, ProdutoEstocado
+from djangosige.apps.estoque.models import SaidaEstoque, ProdutoEstocado
 from djangosige.apps.login.models import Usuario
 from djangosige.configs.settings import MEDIA_ROOT
 
 from geraldo.generators import PDFGenerator
-import io
 from datetime import datetime
+import io
+import json
 
 from .report_vendas import VendaReport
 

@@ -11,7 +11,7 @@ from itertools import chain
 from datetime import datetime
 
 from djangosige.apps.financeiro.forms import ContaPagarForm, ContaReceberForm, SaidaForm, EntradaForm
-from djangosige.apps.financeiro.models import Lancamento, Saida, Entrada, MovimentoCaixa
+from djangosige.apps.financeiro.models import Saida, Entrada, MovimentoCaixa
 from djangosige.apps.vendas.models import PedidoVenda
 from djangosige.apps.compras.models import PedidoCompra
 from djangosige.apps.estoque.models import SaidaEstoque, ItensMovimento, ProdutoEstocado

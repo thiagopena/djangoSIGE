@@ -2,12 +2,10 @@
 
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.list import ListView
-from django.contrib import messages
 
 from djangosige.apps.cadastro.models import Produto
 from djangosige.apps.estoque.models import LocalEstoque
 
-from datetime import datetime
 
 class ConsultaEstoqueView(ListView):
     template_name = "estoque/consulta/consulta_estoque.html"

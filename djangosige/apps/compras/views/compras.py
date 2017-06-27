@@ -9,8 +9,8 @@ from django.http import HttpResponse
 from django.core import serializers
 
 from djangosige.apps.compras.forms import OrcamentoCompraForm, PedidoCompraForm, ItensCompraFormSet, PagamentoFormSet
-from djangosige.apps.compras.models import Compra, OrcamentoCompra, PedidoCompra, ItensCompra, Pagamento
-from djangosige.apps.cadastro.models import Pessoa, Fornecedor, Transportadora, Produto, MinhaEmpresa
+from djangosige.apps.compras.models import OrcamentoCompra, PedidoCompra, ItensCompra, Pagamento
+from djangosige.apps.cadastro.models import Pessoa, Fornecedor, Produto, MinhaEmpresa
 from djangosige.apps.estoque.models import ProdutoEstocado, EntradaEstoque, ItensMovimento
 from djangosige.apps.login.models import Usuario
 from djangosige.configs.settings import MEDIA_ROOT
@@ -18,7 +18,6 @@ from .report_compras import CompraReport
 
 from geraldo.generators import PDFGenerator
 from datetime import datetime
-from itertools import chain
 import io
 import json
 

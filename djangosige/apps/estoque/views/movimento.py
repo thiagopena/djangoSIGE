@@ -3,7 +3,7 @@
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import CreateView
 from django.views.generic.detail import DetailView
-from django.views.generic import ListView, View
+from django.views.generic import ListView
 from django.contrib import messages
 from django.shortcuts import redirect
 
@@ -12,8 +12,7 @@ from datetime import datetime
 from decimal import Decimal
 
 from djangosige.apps.estoque.forms import EntradaEstoqueForm, SaidaEstoqueForm, TransferenciaEstoqueForm, ItensMovimentoFormSet
-from djangosige.apps.estoque.models import EntradaEstoque, SaidaEstoque, TransferenciaEstoque, ItensMovimento, ProdutoEstocado
-from djangosige.apps.cadastro.models import Produto
+from djangosige.apps.estoque.models import EntradaEstoque, SaidaEstoque, TransferenciaEstoque, ProdutoEstocado
 
 
 class MovimentoEstoqueMixin(object):

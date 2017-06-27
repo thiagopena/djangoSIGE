@@ -29,7 +29,7 @@ class LancamentoForm(forms.ModelForm):
                         self.fields['conta_corrente'].choices += ((conta.id, str(conta)) for conta in Banco.objects.filter(pessoa_banco=m_empresa))
                     else:
                         self.fields['conta_corrente'].choices = ((None, '----------'),)
-            except Exception as e:
+            except:
                 self.fields['conta_corrente'].choices = ((None, '----------'),)
         else:
             self.fields['conta_corrente'].choices = ((None, '----------'),)

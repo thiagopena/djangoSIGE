@@ -139,7 +139,7 @@ class ItensVenda(models.Model):
                 return icms_obj.get_mot_des_icms_display()
             else:
                 return ''
-        except Exception as e:
+        except:
             return ''
             
     def get_total_impostos(self):
@@ -175,7 +175,7 @@ class ItensVenda(models.Model):
                 else:
                     return pis_padrao.p_pis
             
-        except PIS.DoesNotExist as e:
+        except PIS.DoesNotExist:
             return
     
     def get_aliquota_cofins(self, format=True):
@@ -193,7 +193,7 @@ class ItensVenda(models.Model):
                 else:
                     return cofins_padrao.p_cofins
             
-        except COFINS.DoesNotExist as e:
+        except COFINS.DoesNotExist:
             return
     
     def calcular_pis_cofins(self):
@@ -226,7 +226,7 @@ class ItensVenda(models.Model):
                     self.vcofins = vbc * (cofins_padrao.p_cofins/100)
                 
                             
-            except (PIS.DoesNotExist, COFINS.DoesNotExist) as e:
+            except (PIS.DoesNotExist, COFINS.DoesNotExist):
                 pass
     
     

@@ -5,14 +5,12 @@ import os
 
 from django.db import models
 from django.contrib.auth.models import User
-
-#Deletar imagens quando model for deletado
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 
 
 def user_directory_path(instance, filename):
-    fname, extension = os.path.splitext(filename)
+    extension = os.path.splitext(filename)[1]
     return 'imagens/usuarios/fotos_perfil/{0}_{1}{2}'.format(instance.user.username, instance.user.id, extension)
 
 class Usuario(models.Model):
@@ -37,7 +35,6 @@ class Usuario(models.Model):
         return u'%s' % self.user
         
 
-#Deletar foto de perfil quando usuario for deletado
 @receiver(post_delete, sender=Usuario)
 def foto_post_delete_handler(sender, instance, **kwargs):
     #Nao deletar a imagem default 'user.png'

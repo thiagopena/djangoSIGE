@@ -14,16 +14,14 @@ from djangosige.apps.fiscal.models import NotaFiscalSaida, NotaFiscalEntrada, No
 from djangosige.apps.cadastro.models import MinhaEmpresa
 from djangosige.apps.login.models import Usuario
 from djangosige.apps.vendas.models import PedidoVenda, ItensVenda
-#from .processador_nf import ProcessadorNotaFiscal
+
 try:
     from .processador_nf import ProcessadorNotaFiscal
 except ImportError:
     pass
     
-    
 from decimal import Decimal
 from datetime import datetime
-import re
 
 
 class NotaFiscalViewMixin(object):
@@ -124,7 +122,7 @@ class AdicionarNotaFiscalSaidaView(AdicionarNotaFiscalView):
         
         try:
             form.initial['emit_saida'] = MinhaEmpresa.objects.get(m_usuario=Usuario.objects.get(user=user)).m_empresa
-        except Exception as e:
+        except:
             pass
         
         try:
