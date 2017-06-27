@@ -16,7 +16,7 @@ def user_directory_path(instance, filename):
 class Usuario(models.Model):
     user        = models.OneToOneField(User, on_delete=models.CASCADE)
     user_foto   = models.ImageField(upload_to=user_directory_path, default='imagens/user.png', blank=True)
-    
+
     def save(self, *args, **kwargs):
         #Deletar user_foto se ja existir uma
         try:
@@ -25,19 +25,18 @@ class Usuario(models.Model):
                 obj.user_foto.delete(save=False)
         except:
             pass
-            
+
         super(Usuario, self).save(*args, **kwargs)
-    
+
     def __unicode__(self):
         return u'%s' % self.user
-        
+
     def __str__(self):
         return u'%s' % self.user
-        
+
 
 @receiver(post_delete, sender=Usuario)
 def foto_post_delete_handler(sender, instance, **kwargs):
     #Nao deletar a imagem default 'user.png'
     if instance.user_foto != 'imagens/user.png':
         instance.user_foto.delete(False)
-        

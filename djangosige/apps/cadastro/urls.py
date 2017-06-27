@@ -4,7 +4,7 @@ from django.conf.urls import url
 from . import views
 
 app_name = 'cadastro'
-urlpatterns = [	
+urlpatterns = [
 	##Empresa
 	#/cadastro/empresa/adicionar/
 	url(r'empresa/adicionar/$', views.AdicionarEmpresaView.as_view(), name='addempresaview'),
@@ -12,7 +12,7 @@ urlpatterns = [
 	url(r'empresa/listaempresas/$', views.EmpresasListView.as_view(), name='listaempresasview'),
 	#/cadastro/empresa/editar/
 	url(r'empresa/editar/(?P<pk>[0-9]+)/$', views.EditarEmpresaView.as_view(), name='editarempresaview'),
-    
+
     ##Cliente
 	#/cadastro/cliente/adicionar/
 	url(r'cliente/adicionar/$', views.AdicionarClienteView.as_view(), name='addclienteview'),
@@ -20,7 +20,7 @@ urlpatterns = [
 	url(r'cliente/listaclientes/$', views.ClientesListView.as_view(), name='listaclientesview'),
 	#/cadastro/cliente/editar/
 	url(r'cliente/editar/(?P<pk>[0-9]+)/$', views.EditarClienteView.as_view(), name='editarclienteview'),
-	
+
     ##Fornecedor
 	#/cadastro/fornecedor/adicionar/
 	url(r'fornecedor/adicionar/$', views.AdicionarFornecedorView.as_view(), name='addfornecedorview'),
@@ -28,7 +28,7 @@ urlpatterns = [
 	url(r'fornecedor/listafornecedores/$', views.FornecedoresListView.as_view(), name='listafornecedoresview'),
 	#/cadastro/fornecedor/editar/
 	url(r'fornecedor/editar/(?P<pk>[0-9]+)/$', views.EditarFornecedorView.as_view(), name='editarfornecedorview'),
-    
+
     ##Transportadora
     #/cadastro/transportadora/adicionar/
 	url(r'transportadora/adicionar/$', views.AdicionarTransportadoraView.as_view(), name='addtransportadoraview'),
@@ -36,7 +36,7 @@ urlpatterns = [
 	url(r'transportadora/listatransportadoras/$', views.TransportadorasListView.as_view(), name='listatransportadorasview'),
 	#/cadastro/transportadora/editar/
 	url(r'transportadora/editar/(?P<pk>[0-9]+)/$', views.EditarTransportadoraView.as_view(), name='editartransportadoraview'),
-    
+
     ##Produto
     #/cadastro/produto/adicionar/
 	url(r'produto/adicionar/$', views.AdicionarProdutoView.as_view(), name='addprodutoview'),
@@ -46,7 +46,7 @@ urlpatterns = [
 	url(r'produto/listaprodutos/baixoestoque/$', views.ProdutosBaixoEstoqueListView.as_view(), name='listaprodutosbaixoestoqueview'),
     #/cadastro/produto/editar/
 	url(r'produto/editar/(?P<pk>[0-9]+)/$', views.EditarProdutoView.as_view(), name='editarprodutoview'),
-    
+
     ##Outros
     #Categorias
     #/cadastro/outros/adicionarcategoria/
@@ -55,7 +55,7 @@ urlpatterns = [
 	url(r'outros/listacategorias/$', views.CategoriasListView.as_view(), name='listacategoriasview'),
     #/cadastro/outros/editarcategoria/
 	url(r'outros/editarcategoria/(?P<pk>[0-9]+)/$', views.EditarCategoriaView.as_view(), name='editarcategoriaview'),
-    
+
     #Unidades
     #/cadastro/outros/adicionarunidade/
 	url(r'outros/adicionarunidade/$', views.AdicionarUnidadeView.as_view(), name='addunidadeview'),
@@ -63,7 +63,7 @@ urlpatterns = [
 	url(r'outros/listaunidades/$', views.UnidadesListView.as_view(), name='listaunidadesview'),
     #/cadastro/outros/editarcunidade/
 	url(r'outros/editarunidade/(?P<pk>[0-9]+)/$', views.EditarUnidadeView.as_view(), name='editarunidadeview'),
-    
+
     #Marcas
     #/cadastro/outros/adicionarmarca/
 	url(r'outros/adicionarmarca/$', views.AdicionarMarcaView.as_view(), name='addmarcaview'),
@@ -71,7 +71,7 @@ urlpatterns = [
 	url(r'outros/listamarcas/$', views.MarcasListView.as_view(), name='listamarcasview'),
     #/cadastro/outros/editarmarca/
 	url(r'outros/editarmarca/(?P<pk>[0-9]+)/$', views.EditarMarcaView.as_view(), name='editarmarcaview'),
-    
+
     #Informacoes de dada empresa (Ajax request)
-    url(r'infoempresa/$', views.InfoEmpresa.as_view(), name='infoempresa'),    
+    url(r'infoempresa/$', views.InfoEmpresa.as_view(), name='infoempresa'),
 ]

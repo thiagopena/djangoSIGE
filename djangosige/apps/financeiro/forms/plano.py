@@ -6,7 +6,7 @@ from django.forms import inlineformset_factory
 
 from djangosige.apps.financeiro.models import PlanoContasGrupo, PlanoContasSubgrupo
 
-        
+
 class PlanoContasGrupoForm(forms.ModelForm):
     class Meta:
         model = PlanoContasGrupo
@@ -30,5 +30,5 @@ class PlanoContasSubgrupoForm(forms.ModelForm):
         labels = {
             'descricao': _('Descrição'),
         }
-        
+
 PlanoContasSubgrupoFormSet = inlineformset_factory(PlanoContasGrupo, PlanoContasSubgrupo, form=PlanoContasSubgrupoForm, fk_name='grupo', extra=1, can_delete=True)

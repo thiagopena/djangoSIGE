@@ -4,7 +4,7 @@ from django.conf.urls import url
 from . import views
 
 app_name = 'fiscal'
-urlpatterns = [	
+urlpatterns = [
     ##Nota fiscal saida
     #/fiscal/notafiscal/saida/adicionar/
 	url(r'notafiscal/saida/adicionar/$', views.AdicionarNotaFiscalSaidaView.as_view(), name='addnotafiscalsaidaview'),
@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'notafiscal/saida/importar/$', views.ImportarNotaSaidaView.as_view(), name='importarnotafiscalsaida'),
     #/fiscal/notafiscal/saida/gerar/
     url(r'notafiscal/saida/gerar/(?P<pk>[0-9]+)/$', views.GerarNotaFiscalSaidaView.as_view(), name='gerarnotafiscalsaida'),
-    
+
     ##Nota fiscal entrada
 	#/fiscal/notafiscal/entrada/listanotafiscal
 	url(r'notafiscal/entrada/listanotafiscal/$', views.NotaFiscalEntradaListView.as_view(), name='listanotafiscalentradaview'),
@@ -24,10 +24,10 @@ urlpatterns = [
 	url(r'notafiscal/entrada/editar/(?P<pk>[0-9]+)/$', views.EditarNotaFiscalEntradaView.as_view(), name='editarnotafiscalentradaview'),
     #/fiscal/notafiscal/entrada/importar/
     url(r'notafiscal/entrada/importar/$', views.ImportarNotaEntradaView.as_view(), name='importarnotafiscalentrada'),
-    
+
     ##Configuracao NF-e
     url(r'notafiscal/configuracaonotafiscal/$', views.ConfiguracaoNotaFiscalView.as_view(), name='configuracaonotafiscal'),
-    
+
 	##Natureza operacao
 	#/fiscal/naturezaoperacao/adicionar/
 	url(r'naturezaoperacao/adicionar/$', views.AdicionarNaturezaOperacaoView.as_view(), name='addnaturezaoperacaoview'),
@@ -35,7 +35,7 @@ urlpatterns = [
 	url(r'naturezaoperacao/listanaturezaoperacao/$', views.NaturezaOperacaoListView.as_view(), name='listanaturezaoperacaoview'),
 	#/fiscal/naturezaoperacao/editar/
 	url(r'naturezaoperacao/editar/(?P<pk>[0-9]+)/$', views.EditarNaturezaOperacaoView.as_view(), name='editarnaturezaoperacaoview'),
-    
+
     ##Grupo fiscal
     #/fiscal/grupofiscal/adicionar/
 	url(r'grupofiscal/adicionar/$', views.AdicionarGrupoFiscalView.as_view(), name='addgrupofiscalview'),
@@ -43,7 +43,7 @@ urlpatterns = [
 	url(r'grupofiscal/listagrupofiscal/$', views.GrupoFiscalListView.as_view(), name='listagrupofiscalview'),
 	#/fiscal/grupofiscal/editar/
 	url(r'grupofiscal/editar/(?P<pk>[0-9]+)/$', views.EditarGrupoFiscalView.as_view(), name='editargrupofiscalview'),
-    
+
     ##Acoes Nota Fiscal
     #Validar XML nota
     url(r'notafiscal/validar/(?P<pk>[0-9]+)/$', views.ValidarNotaView.as_view(), name='validarnotafiscal'),
@@ -57,7 +57,7 @@ urlpatterns = [
     url(r'notafiscal/gerardanfe/(?P<pk>[0-9]+)/$', views.GerarDanfeView.as_view(), name='gerardanfe'),
     #Gerar DANFCE
     url(r'notafiscal/gerardanfce/(?P<pk>[0-9]+)/$', views.GerarDanfceView.as_view(), name='gerardanfce'),
-    
+
     ##Comunicacao SEFAZ
     #Consultar cadastro
     url(r'notafiscal/consultarcadastro/$', views.ConsultarCadastroView.as_view(), name='consultarcadastro'),

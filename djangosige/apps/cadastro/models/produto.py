@@ -45,7 +45,7 @@ class Marca(models.Model):
     def __str__(self):
         s = u'%s' %(self.marca_desc)
         return s
-        
+
 class Unidade(models.Model):
     sigla_unidade   = models.CharField(max_length=3)
     unidade_desc    = models.CharField(max_length=16)
@@ -67,42 +67,42 @@ class Produto(models.Model):
     custo           = models.DecimalField(max_digits=16, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     venda           = models.DecimalField(max_digits=16, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     inf_adicionais  = models.CharField(max_length=255, null=True, blank=True)
-    
+
     #Fiscal
     ncm          = models.CharField(max_length=11, null=True, blank=True) #NCM + EXTIPI
     origem       = models.CharField(max_length=1 ,choices=ORIGEM_ESCOLHAS, default='0')
     cest         = models.CharField(max_length=7 , null=True, blank=True) #Código Especificador da Substituição Tributária
     cfop_padrao  = models.ForeignKey('fiscal.NaturezaOperacao', null=True, blank=True)
     grupo_fiscal = models.ForeignKey('fiscal.GrupoFiscal', null=True, blank=True)
-    
+
     #Estoque
     estoque_minimo = models.DecimalField(max_digits=16, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     estoque_atual  = models.DecimalField(max_digits=16, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     controlar_estoque = models.BooleanField(default=True)
-    
+
     @property
     def format_unidade(self):
         if self.unidade:
             return self.unidade.sigla_unidade
         else:
             return ''
-    
+
     def get_sigla_unidade(self):
         if self.unidade:
             return self.unidade.sigla_unidade
         else:
             return ''
-    
+
     def get_cfop_padrao(self):
         if self.cfop_padrao:
             return self.cfop_padrao.cfop
         else:
             return ''
-    
+
     def __unicode__(self):
         s = u'%s' %(self.descricao)
         return s
     def __str__(self):
         s = u'%s' %(self.descricao)
         return s
-    
+

@@ -5,26 +5,26 @@ from django.utils.translation import ugettext_lazy as _
 
 from djangosige.apps.cadastro.models import Produto, Unidade, Marca, Categoria, Fornecedor
 from djangosige.apps.estoque.models import LocalEstoque
-   
+
 from decimal import Decimal
-        
+
 class ProdutoForm(forms.ModelForm):
     custo = forms.DecimalField(max_digits=16, decimal_places=2, localize=True, widget=forms.TextInput(attrs={'class':'form-control decimal-mask', 'placeholder':'R$ 0,00'}), initial=Decimal('0.00'), label='Custo', required=False)
     venda = forms.DecimalField(max_digits=16, decimal_places=2, localize=True, widget=forms.TextInput(attrs={'class':'form-control decimal-mask', 'placeholder':'R$ 0,00'}), initial=Decimal('0.00'), label='Venda', required=False)
-    
+
     #Estoque
     estoque_inicial = forms.DecimalField(max_digits=16, decimal_places=2, localize=True, widget=forms.TextInput(attrs={'class':'form-control decimal-mask'}), label='Qtd. em estoque inicial', initial=Decimal('0.00'), required=False)
     fornecedor      = forms.ChoiceField(choices=[(None, '----------')], widget=forms.Select(attrs={'class':'form-control'}), label='Fornecedor', required=False)
     local_dest      = forms.ModelChoiceField(queryset=LocalEstoque.objects.all(), widget=forms.Select(attrs={'class':'form-control'}), empty_label=None, label='Localização do estoque de destino', required=False)
-    
+
     def __init__(self, *args, **kwargs):
         super(ProdutoForm, self).__init__(*args, **kwargs)
         self.fields['estoque_minimo'].localize = True
         self.fields['fornecedor'].choices = list(self.fields['fornecedor'].choices) + [(fornecedor.id, fornecedor) for fornecedor in Fornecedor.objects.all()]
-    
+
     class Meta:
         model = Produto
-        fields = ('codigo', 'codigo_barras', 'descricao', 'categoria', 'marca', 'unidade', 'ncm', 'venda', 'custo', 'inf_adicionais', 
+        fields = ('codigo', 'codigo_barras', 'descricao', 'categoria', 'marca', 'unidade', 'ncm', 'venda', 'custo', 'inf_adicionais',
                   'origem', 'cest', 'cfop_padrao', 'grupo_fiscal', 'estoque_minimo', 'controlar_estoque',)
         widgets = {
             'codigo':forms.TextInput(attrs={'class':'form-control'}),
@@ -59,8 +59,8 @@ class ProdutoForm(forms.ModelForm):
             'controlar_estoque': _('Controlar estoque deste produto?'),
         }
 
-        
-        
+
+
 class CategoriaForm(forms.ModelForm):
     class Meta:
         model = Categoria
@@ -71,8 +71,8 @@ class CategoriaForm(forms.ModelForm):
         labels = {
             'categoria_desc': _('Categoria'),
         }
-        
-        
+
+
 class MarcaForm(forms.ModelForm):
     class Meta:
         model = Marca
@@ -83,8 +83,8 @@ class MarcaForm(forms.ModelForm):
         labels = {
             'marca_desc': _('Marca'),
         }
-    
-    
+
+
 class UnidadeForm(forms.ModelForm):
     class Meta:
         model = Unidade
@@ -97,4 +97,4 @@ class UnidadeForm(forms.ModelForm):
             'unidade_desc': _('Nome descritivo'),
             'sigla_unidade': _('Sigla'),
         }
-        
+

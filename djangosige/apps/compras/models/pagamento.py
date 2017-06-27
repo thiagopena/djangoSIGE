@@ -13,11 +13,11 @@ class Pagamento(models.Model):
     indice_parcela  = models.IntegerField()
     vencimento      = models.DateField()
     valor_parcela   = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
-    
+
     @property
     def format_valor_parcela(self):
         return locale.format(u'%.2f', self.valor_parcela, 1)
-        
+
     @property
     def format_vencimento(self):
         return self.vencimento.strftime('%d/%m/%Y')

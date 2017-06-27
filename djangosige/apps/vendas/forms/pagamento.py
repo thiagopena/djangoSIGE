@@ -5,13 +5,13 @@ from django.utils.translation import ugettext_lazy as _
 from django.forms import inlineformset_factory
 
 from djangosige.apps.vendas.models import Venda, Pagamento, CondicaoPagamento
-        
-        
+
+
 class PagamentoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PagamentoForm, self).__init__(*args, **kwargs)
         self.fields['valor_parcela'].localize = True
-                
+
     class Meta:
         model = Pagamento
         fields = ('indice_parcela', 'vencimento', 'valor_parcela',)
@@ -25,8 +25,8 @@ class PagamentoForm(forms.ModelForm):
             'vencimento': _('Vencimento'),
             'valor_parcela': _('Valor'),
         }
-        
-        
+
+
 class CondicaoPagamentoForm(forms.ModelForm):
     class Meta:
         model = CondicaoPagamento
@@ -45,6 +45,6 @@ class CondicaoPagamentoForm(forms.ModelForm):
             'dias_recorrencia': _('Recorrência (dias)'),
             'parcela_inicial': _('1ª parcela em (dias)'),
         }
-        
-    
+
+
 PagamentoFormSet  = inlineformset_factory(Venda, Pagamento, form=PagamentoForm, extra=1, can_delete=True)

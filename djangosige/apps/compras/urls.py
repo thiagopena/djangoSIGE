@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'orcamentocompra/listaorcamentocompra/vencidos/$', views.OrcamentoCompraVencidosListView.as_view(), name='listaorcamentocompravencidosview'),
     #/compras/orcamentocompra/listaorcamentocompra/hoje/
     url(r'orcamentocompra/listaorcamentocompra/hoje/$', views.OrcamentoCompraVencimentoHojeListView.as_view(), name='listaorcamentocomprahojeview'),
-    
+
     ##Pedidos de compra
     #/compras/pedidocompra/adicionar/
     url(r'pedidocompra/adicionar/$', views.AdicionarPedidoCompraView.as_view(), name='addpedidocompraview'),
@@ -28,11 +28,11 @@ urlpatterns = [
     url(r'pedidocompra/listapedidocompra/atrasados/$', views.PedidoCompraAtrasadosListView.as_view(), name='listapedidocompraatrasadosview'),
     #/compras/pedidocompra/listapedidocompra/hoje/
     url(r'pedidocompra/listapedidocompra/hoje/$', views.PedidoCompraEntregaHojeListView.as_view(), name='listapedidocomprahojeview'),
-    
+
     #Request ajax
     url(r'infofornecedor/$', views.InfoFornecedor.as_view(), name='infofornecedor'),
     url(r'infocompra/$', views.InfoCompra.as_view(), name='infocompra'),
-    
+
     #Gerar pdf orcamento
     url(r'gerarpdforcamentocompra/(?P<pk>[0-9]+)/$', views.GerarPDFOrcamentoCompra.as_view(), name='gerarpdforcamentocompra'),
     #Gerar pdf pedido

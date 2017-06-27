@@ -13,19 +13,19 @@ DATABASES = {
         #'ENGINE': 'django.db.backends.postgresql',
         #'ENGINE': 'django.db.backends.sqlite3',
         #'ENGINE': 'django.db.backends.oracle',
-        
+
         #Nome da base de dados
         'NAME': '',
-        
+
         #Usuário
         'USER':'',
-        
+
         #Senha
         'PASSWORD':'',
-        
+
         #Host
         'HOST':'127.0.0.1',
-        
+
         #Port
         'PORT':'3306',
     }

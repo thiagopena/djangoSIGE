@@ -10,7 +10,7 @@ class TransportadoraForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(TransportadoraForm, self).__init__(*args, **kwargs)
-    
+
     class Meta:
         model = Transportadora
         fields = ('nome_razao_social', 'tipo_pessoa', 'informacoes_adicionais',)
@@ -24,14 +24,14 @@ class TransportadoraForm(forms.ModelForm):
             'tipo_pessoa': _(''),
             'informacoes_adicionais': _('Informações Adicionais'),
         }
-    
+
     def save(self, commit=True):
         instance = super(TransportadoraForm, self).save(commit=False)
         instance.criado_por = self.request.user
         if commit:
             instance.save()
         return instance
-        
+
 class VeiculoForm(forms.ModelForm):
     class Meta:
         model = Veiculo
@@ -46,5 +46,5 @@ class VeiculoForm(forms.ModelForm):
             'placa':_('Placa'),
             'uf':_('UF'),
         }
-    
+
 VeiculoFormSet = inlineformset_factory(Transportadora, Veiculo, form=VeiculoForm, extra=1, can_delete=True)

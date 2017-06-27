@@ -10,7 +10,7 @@ class ClienteForm(forms.ModelForm):
         self.request = kwargs.pop('request', None)
         super(ClienteForm, self).__init__(*args, **kwargs)
         self.fields['limite_de_credito'].localize = True
-    
+
     class Meta:
         model = Cliente
         fields = ('nome_razao_social', 'tipo_pessoa', 'inscricao_municipal', 'limite_de_credito', 'indicador_ie', 'id_estrangeiro', 'informacoes_adicionais', )
@@ -32,7 +32,7 @@ class ClienteForm(forms.ModelForm):
             'id_estrangeiro': _('Documento legal (Estrangeiro)'),
             'informacoes_adicionais': _('Informações Adicionais'),
         }
-    
+
     def save(self, commit=True):
         instance = super(ClienteForm, self).save(commit=False)
         instance.criado_por = self.request.user

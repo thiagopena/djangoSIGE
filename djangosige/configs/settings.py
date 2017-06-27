@@ -9,7 +9,7 @@ PROJECT_ROOT = os.path.abspath(os.path.dirname(APP_ROOT))
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'ytfxoz(4%5l_4h%70(p&!8ta-w(jv&b8#8ckwfzuruah!ekrv6'   
+SECRET_KEY = 'ytfxoz(4%5l_4h%70(p&!8ta-w(jv&b8#8ckwfzuruah!ekrv6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     #djangosige apps:
     'djangosige.apps.base',
     'djangosige.apps.login',
@@ -49,7 +49,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
+
     #Middleware para paginas que exigem login
 	'djangosige.middleware.LoginRequiredMiddleware',
 ]

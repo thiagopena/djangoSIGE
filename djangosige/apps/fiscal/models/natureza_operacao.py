@@ -18,7 +18,7 @@ class NaturezaOperacao(models.Model):
     descricao   = models.CharField(max_length=255, null=True, blank=True)
     tp_operacao = models.CharField(max_length=1, choices=TP_OPERACAO_OPCOES, null=True, blank=True)
     id_dest     = models.CharField(max_length=1, choices=ID_DEST_OPCOES, null=True, blank=True)
-    
+
     def set_values_by_cfop(self):
         if self.cfop:
             if self.cfop[0] == '1':
@@ -39,7 +39,7 @@ class NaturezaOperacao(models.Model):
             elif self.cfop[0] == '6':
                 self.tp_operacao = u'1'
                 self.id_dest = u'3'
-    
+
     def __unicode__(self):
         if self.descricao:
             s = u'%s - %s' %(self.cfop, self.descricao)
@@ -52,4 +52,4 @@ class NaturezaOperacao(models.Model):
         else:
             s = u'%s' %(self.cfop)
         return s
-        
+

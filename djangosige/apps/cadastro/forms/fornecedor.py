@@ -9,7 +9,7 @@ class FornecedorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(FornecedorForm, self).__init__(*args, **kwargs)
-    
+
     class Meta:
         model = Fornecedor
         fields = ('nome_razao_social', 'tipo_pessoa', 'inscricao_municipal', 'ramo', 'informacoes_adicionais', )
@@ -27,7 +27,7 @@ class FornecedorForm(forms.ModelForm):
             'inscricao_municipal': _('Inscrição Municipal'),
             'informacoes_adicionais': _('Informações Adicionais'),
         }
-    
+
     def save(self, commit=True):
         instance = super(FornecedorForm, self).save(commit=False)
         instance.criado_por = self.request.user

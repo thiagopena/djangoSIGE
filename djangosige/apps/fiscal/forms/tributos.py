@@ -20,7 +20,7 @@ class GrupoFiscalForm(forms.ModelForm):
             'regime_trib': _('Regime Tributário'),
         }
 
-        
+
 class ICMSForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
@@ -29,9 +29,9 @@ class ICMSForm(forms.ModelForm):
             super(ICMSForm, self).__init__(instance=instance, *args, **kwargs)
         else:
             super(ICMSForm, self).__init__(*args, **kwargs)
-            
+
         self.fields['cst'].required = False
-        
+
         self.fields['p_icms'].localize = True
         self.fields['p_red_bc'].localize = True
         self.fields['p_mvast'].localize = True
@@ -39,10 +39,10 @@ class ICMSForm(forms.ModelForm):
         self.fields['p_icmsst'].localize = True
         self.fields['p_dif'].localize = True
         self.fields['p_bc_op'].localize = True
-        
+
     class Meta:
         model = ICMS
-        fields = ('cst', 'mod_bc', 'p_icms', 'p_red_bc', 'mod_bcst', 'p_mvast', 'p_red_bcst', 'p_icmsst', 'mot_des_icms', 
+        fields = ('cst', 'mod_bc', 'p_icms', 'p_red_bc', 'mod_bcst', 'p_mvast', 'p_red_bcst', 'p_icmsst', 'mot_des_icms',
                   'p_dif', 'p_bc_op', 'ufst', 'icms_incluido_preco', 'icmsst_incluido_preco', )
         widgets = {
             'cst':forms.Select(attrs={'class':'form-control'}),
@@ -59,7 +59,7 @@ class ICMSForm(forms.ModelForm):
             'ufst':forms.Select(attrs={'class':'form-control'}),
             'icms_incluido_preco':forms.CheckboxInput(attrs={'class':'form-control'}),
             'icmsst_incluido_preco':forms.CheckboxInput(attrs={'class':'form-control'}),
-            
+
         }
         labels = {
             'cst': _('CST ICMS'),
@@ -77,8 +77,8 @@ class ICMSForm(forms.ModelForm):
             'icms_incluido_preco': _('ICMS incluso no preço'),
             'icmsst_incluido_preco': _('ICMS-ST incluso no preço'),
         }
-        
-        
+
+
 class ICMSSNForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
@@ -87,20 +87,20 @@ class ICMSSNForm(forms.ModelForm):
             super(ICMSSNForm, self).__init__(instance=instance, *args, **kwargs)
         else:
             super(ICMSSNForm, self).__init__(*args, **kwargs)
-            
+
         self.fields['csosn'].required = False
-        
+
         self.fields['p_cred_sn'].localize = True
         self.fields['p_icms'].localize = True
         self.fields['p_red_bc'].localize = True
         self.fields['p_mvast'].localize = True
         self.fields['p_red_bcst'].localize = True
         self.fields['p_icmsst'].localize = True
-        
-        
+
+
     class Meta:
         model = ICMSSN
-        fields = ('csosn', 'p_cred_sn', 'p_icms', 'mod_bcst', 'mod_bc', 'p_red_bc', 'p_mvast', 'p_red_bcst', 'p_icmsst', 
+        fields = ('csosn', 'p_cred_sn', 'p_icms', 'mod_bcst', 'mod_bc', 'p_red_bc', 'p_mvast', 'p_red_bcst', 'p_icmsst',
             'icmssn_incluido_preco', 'icmssnst_incluido_preco',)
         widgets = {
             'csosn':forms.Select(attrs={'class':'form-control'}),
@@ -128,8 +128,8 @@ class ICMSSNForm(forms.ModelForm):
             'icmssn_incluido_preco': _('ICMS incluso no preço'),
             'icmssnst_incluido_preco': _('ICMS-ST incluso no preço'),
         }
-        
-        
+
+
 class ICMSUFDestForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
@@ -138,12 +138,12 @@ class ICMSUFDestForm(forms.ModelForm):
             super(ICMSUFDestForm, self).__init__(instance=instance, *args, **kwargs)
         else:
             super(ICMSUFDestForm, self).__init__(*args, **kwargs)
-        
+
         self.fields['p_fcp_dest'].localize = True
         self.fields['p_icms_dest'].localize = True
         self.fields['p_icms_inter'].localize = True
         self.fields['p_icms_inter_part'].localize = True
-            
+
     class Meta:
         model = ICMSUFDest
         fields = ('p_fcp_dest', 'p_icms_dest', 'p_icms_inter', 'p_icms_inter_part', )
@@ -159,8 +159,8 @@ class ICMSUFDestForm(forms.ModelForm):
             'p_icms_inter': _('Alíquota interestadual das UF envolvidas'),
             'p_icms_inter_part': _('% provisório de partilha do ICMS Interestadual'),
         }
-        
-        
+
+
 class IPIForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
@@ -169,10 +169,10 @@ class IPIForm(forms.ModelForm):
             super(IPIForm, self).__init__(instance=instance, *args, **kwargs)
         else:
             super(IPIForm, self).__init__(*args, **kwargs)
-        
+
         self.fields['p_ipi'].localize = True
         self.fields['valor_fixo'].localize = True
-            
+
     class Meta:
         model = IPI
         fields = ('cst', 'cl_enq', 'c_enq', 'cnpj_prod', 'tipo_ipi', 'p_ipi', 'valor_fixo', 'ipi_incluido_preco', 'incluir_bc_icms', 'incluir_bc_icmsst',)
@@ -200,7 +200,7 @@ class IPIForm(forms.ModelForm):
             'incluir_bc_icms': _('Incluir IPI na BC do ICMS'),
             'incluir_bc_icmsst': _('Incluir IPI na BC do ICMS-ST'),
         }
-        
+
 
 class PISForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
@@ -210,10 +210,10 @@ class PISForm(forms.ModelForm):
             super(PISForm, self).__init__(instance=instance, *args, **kwargs)
         else:
             super(PISForm, self).__init__(*args, **kwargs)
-        
+
         self.fields['p_pis'].localize = True
         self.fields['valiq_pis'].localize = True
-            
+
     class Meta:
         model = PIS
         fields = ('cst', 'p_pis', 'valiq_pis',)
@@ -227,8 +227,8 @@ class PISForm(forms.ModelForm):
             'p_pis': _('Alíquota do PIS (em %)'),
             'valiq_pis': _('Alíquota do PIS por produto (em R$)'),
         }
-        
-        
+
+
 class COFINSForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
@@ -237,10 +237,10 @@ class COFINSForm(forms.ModelForm):
             super(COFINSForm, self).__init__(instance=instance, *args, **kwargs)
         else:
             super(COFINSForm, self).__init__(*args, **kwargs)
-        
+
         self.fields['p_cofins'].localize = True
         self.fields['valiq_cofins'].localize = True
-            
+
     class Meta:
         model = COFINS
         fields = ('cst', 'p_cofins', 'valiq_cofins',)

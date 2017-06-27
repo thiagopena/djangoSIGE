@@ -16,7 +16,7 @@ urlpatterns = [
     url(r'orcamentovenda/listaorcamentovenda/vencidos/$', views.OrcamentoVendaVencidosListView.as_view(), name='listaorcamentovendavencidoview'),
     #/vendas/orcamentovenda/listaorcamentovenda/hoje
     url(r'orcamentovenda/listaorcamentovenda/hoje/$', views.OrcamentoVendaVencimentoHojeListView.as_view(), name='listaorcamentovendahojeview'),
-    
+
     ##Pedidos de venda
     #/vendas/pedidovenda/adicionar/
     url(r'pedidovenda/adicionar/$', views.AdicionarPedidoVendaView.as_view(), name='addpedidovendaview'),
@@ -28,7 +28,7 @@ urlpatterns = [
     url(r'pedidovenda/listapedidovenda/atrasados/$', views.PedidoVendaAtrasadosListView.as_view(), name='listapedidovendaatrasadosview'),
     #/vendas/pedidovenda/listapedidovenda/hoje
     url(r'pedidovenda/listapedidovenda/hoje/$', views.PedidoVendaEntregaHojeListView.as_view(), name='listapedidovendahojeview'),
-    
+
     ##Condicao pagamento
     #/vendas/pagamento/adicionar/
     url(r'pagamento/adicionar/$', views.AdicionarCondicaoPagamentoView.as_view(), name='addcondicaopagamentoview'),
@@ -36,14 +36,14 @@ urlpatterns = [
     url(r'pagamento/listacondicaopagamento/$', views.CondicaoPagamentoListView.as_view(), name='listacondicaopagamentoview'),
     #/vendas/pagamento/editar/
     url(r'pagamento/editar/(?P<pk>[0-9]+)/$', views.EditarCondicaoPagamentoView.as_view(), name='editarcondicaopagamentoview'),
-    
+
     #Request ajax views
     url(r'infocliente/$', views.InfoCliente.as_view(), name='infocliente'),
     url(r'infotransportadora/$', views.InfoTransportadora.as_view(), name='infotransportadora'),
     url(r'infoproduto/$', views.InfoProduto.as_view(), name='infoproduto'),
     url(r'infocondpagamento/$', views.InfoCondicaoPagamento.as_view(), name='infocondpagamento'),
     url(r'infovenda/$', views.InfoVenda.as_view(), name='infovenda'),
-    
+
     #Gerar pdf orcamento
     url(r'gerarpdforcamentovenda/(?P<pk>[0-9]+)/$', views.GerarPDFOrcamentoVenda.as_view(), name='gerarpdforcamentovenda'),
     #Gerar pdf pedido

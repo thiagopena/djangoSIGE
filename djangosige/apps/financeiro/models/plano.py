@@ -11,13 +11,13 @@ class PlanoContasGrupo(models.Model):
     codigo     = models.CharField(max_length=6)
     tipo_grupo = models.CharField(max_length=1, choices=TIPO_GRUPO_ESCOLHAS)
     descricao  = models.CharField(max_length=255)
-    
+
     def __unicode__(self):
         s = u'%s' %(self.descricao)
         return s
     def __str__(self):
         s = u'%s' %(self.descricao)
         return s
-        
+
 class PlanoContasSubgrupo(PlanoContasGrupo):
     grupo = models.ForeignKey('financeiro.PlanoContasGrupo', related_name="plano_subgrupo", on_delete=models.CASCADE)

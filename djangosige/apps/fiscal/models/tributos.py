@@ -177,14 +177,14 @@ TIPO_IPI = (
 class GrupoFiscal(models.Model):
     descricao = models.CharField(max_length=255)
     regime_trib = models.CharField(max_length=1, choices=REGIME_TRIB_ESCOLHAS)
-    
+
     def __unicode__(self):
         s = u'%s' %(self.descricao)
         return s
     def __str__(self):
         s = u'%s' %(self.descricao)
         return s
-    
+
 
 class ICMS(models.Model):
     ##Nota Fiscal
@@ -212,21 +212,21 @@ class ICMS(models.Model):
     ufst            = models.CharField(max_length=2, choices=UF_SIGLA, null=True, blank=True,
                         help_text='icms10p icms90p')
     grupo_fiscal    = models.ForeignKey('fiscal.GrupoFiscal', related_name="icms_padrao", on_delete=models.CASCADE, null=True, blank=True)
-    
+
     ##Calculo do imposto
     icms_incluido_preco   = models.BooleanField(default=False, help_text='calculo-icms')
     icmsst_incluido_preco = models.BooleanField(default=False, help_text='calculo-icms')
-    
 
-    
+
+
 class ICMSUFDest(models.Model):
     p_fcp_dest        = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
     p_icms_dest       = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
     p_icms_inter      = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], choices=P_ICMS_INTER_ESCOLHAS, null=True, blank=True)
     p_icms_inter_part = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], choices=P_ICMS_INTER_PART_ESCOLHAS, null=True, blank=True)
     grupo_fiscal      = models.ForeignKey('fiscal.GrupoFiscal', related_name="icms_dest_padrao", on_delete=models.CASCADE, null=True, blank=True)
-    
-    
+
+
 class ICMSSN(models.Model):
     csosn        = models.CharField(max_length=3, choices=CSOSN_ESCOLHAS, help_text='icmssn-csosn')
     p_cred_sn    = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True,
@@ -246,7 +246,7 @@ class ICMSSN(models.Model):
     p_icms       = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True,
                     help_text='icmssn201 icmssn202 icmssn203 icmssn900')
     grupo_fiscal = models.ForeignKey('fiscal.GrupoFiscal', related_name="icms_sn_padrao", on_delete=models.CASCADE, null=True, blank=True)
-    
+
     ##Calculo do imposto
     icmssn_incluido_preco   = models.BooleanField(default=False, help_text='calculo-icmssn')
     icmssnst_incluido_preco = models.BooleanField(default=False, help_text='calculo-icmssn')
@@ -261,16 +261,16 @@ class IPI(models.Model):
     p_ipi        = models.DecimalField(max_digits=6, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
     valor_fixo   = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True) #Caso IPI for valor fixo
     grupo_fiscal = models.ForeignKey('fiscal.GrupoFiscal', related_name="ipi_padrao", on_delete=models.CASCADE, null=True, blank=True)
-    
+
     ##Calculo do imposto
     ipi_incluido_preco   = models.BooleanField(default=False, help_text='calculo-ipi')
     incluir_bc_icms      = models.BooleanField(default=False, help_text='calculo-ipi')
     incluir_bc_icmsst    = models.BooleanField(default=False, help_text='calculo-ipi')
-    
+
     def get_cnpj_prod_apenas_digitos(self):
         return re.sub('[./-]', '', self.cnpj_prod)
-    
-    
+
+
 class PIS(models.Model):
     cst          = models.CharField(max_length=2, choices=CST_PIS_COFINS_ESCOLHAS, null=True, blank=True)
     p_pis        = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
@@ -283,6 +283,6 @@ class COFINS(models.Model):
     p_cofins     = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
     valiq_cofins = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
     grupo_fiscal = models.ForeignKey('fiscal.GrupoFiscal', related_name="cofins_padrao", on_delete=models.CASCADE, null=True, blank=True)
-    
-    
-#class ISSQN(models.Model):  
+
+
+#class ISSQN(models.Model):

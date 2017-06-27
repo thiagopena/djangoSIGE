@@ -14,11 +14,11 @@ class LancamentoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super(LancamentoForm, self).__init__(*args, **kwargs)
-        self.fields['abatimento'].localize = True        
-        self.fields['juros'].localize = True        
+        self.fields['abatimento'].localize = True
+        self.fields['juros'].localize = True
         self.fields['valor_liquido'].localize = True
         self.fields['valor_total'].localize = True
-        
+
         if user:
             try:
                 usuario = Usuario.objects.get(user=user)
@@ -33,8 +33,8 @@ class LancamentoForm(forms.ModelForm):
                 self.fields['conta_corrente'].choices = ((None, '----------'),)
         else:
             self.fields['conta_corrente'].choices = ((None, '----------'),)
-        
-        
+
+
     class Meta:
         fields = ('descricao', 'grupo_plano', 'conta_corrente', 'data_pagamento', 'data_vencimento',
                   'valor_total', 'abatimento', 'juros', 'valor_liquido', 'movimentar_caixa',)
@@ -63,17 +63,17 @@ class LancamentoForm(forms.ModelForm):
             'movimentar_caixa': _('Movimentar Caixa?'),
         }
 
-        
+
 class EntradaForm(LancamentoForm):
     def __init__(self, *args, **kwargs):
         super(EntradaForm, self).__init__(*args, **kwargs)
         self.fields['status'].initial = '0'
-        
+
         if PlanoContasGrupo.objects.filter(tipo_grupo='1').count():
             self.fields['grupo_plano'].choices = ((grupo.id,  str(grupo.codigo) + ' - ' + str(grupo.descricao)) for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='0'))
         else:
             self.fields['grupo_plano'].choices = ((None, '----------'),)
-            
+
     class Meta(LancamentoForm.Meta):
         model = Entrada
         fields = LancamentoForm.Meta.fields + ('cliente', 'status',)
@@ -83,18 +83,18 @@ class EntradaForm(LancamentoForm):
         labels = LancamentoForm.Meta.labels
         labels['cliente'] = _('Cliente')
         labels['status'] = _('Status')
-        
-        
+
+
 class SaidaForm(LancamentoForm):
     def __init__(self, *args, **kwargs):
         super(SaidaForm, self).__init__(*args, **kwargs)
         self.fields['status'].initial = '0'
-        
+
         if PlanoContasGrupo.objects.filter(tipo_grupo='1').count():
             self.fields['grupo_plano'].choices = ((grupo.id,  str(grupo.codigo) + ' - ' + str(grupo.descricao)) for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='1'))
         else:
             self.fields['grupo_plano'].choices = ((None, '----------'),)
-            
+
     class Meta(LancamentoForm.Meta):
         model = Saida
         fields = LancamentoForm.Meta.fields + ('fornecedor', 'status',)
@@ -112,7 +112,7 @@ class ContaReceberForm(EntradaForm):
         self.fields['status'].choices = STATUS_CONTA_ENTRADA_ESCOLHAS
         self.fields['status'].initial = '1'
         self.fields['data_pagamento'].widget.attrs = {'class':'form-control hidden', 'disabled':True, 'style':'background-color:lightgrey;'}
-        
+
 
 class ContaPagarForm(SaidaForm):
     def __init__(self, *args, **kwargs):
@@ -120,4 +120,3 @@ class ContaPagarForm(SaidaForm):
         self.fields['status'].choices = STATUS_CONTA_SAIDA_ESCOLHAS
         self.fields['status'].initial = '1'
         self.fields['data_pagamento'].widget.attrs = {'class':'form-control hidden', 'disabled':True, 'style':'background-color:lightgrey;'}
-        

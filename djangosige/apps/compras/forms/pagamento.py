@@ -11,7 +11,7 @@ class PagamentoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PagamentoForm, self).__init__(*args, **kwargs)
         self.fields['valor_parcela'].localize = True
-                
+
     class Meta:
         model = Pagamento
         fields = ('indice_parcela', 'vencimento', 'valor_parcela',)
@@ -25,5 +25,5 @@ class PagamentoForm(forms.ModelForm):
             'vencimento': _('Vencimento'),
             'valor_parcela': _('Valor'),
         }
-        
+
 PagamentoFormSet  = inlineformset_factory(Compra, Pagamento, form=PagamentoForm, extra=1, can_delete=True)

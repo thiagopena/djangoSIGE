@@ -10,7 +10,7 @@ class EnderecoForm(forms.ModelForm):
     class Meta:
         model = Endereco
         fields = ('tipo_endereco', 'logradouro', 'numero', 'bairro', 'complemento', 'pais', 'cpais', 'uf', 'cep', 'municipio', 'cmun',)
-        
+
         labels = {
             'tipo_endereco':_('Tipo'),
             'logradouro':_("Logradouro"),
@@ -37,8 +37,8 @@ class EnderecoForm(forms.ModelForm):
             'cep':forms.TextInput(attrs={'class':'form-control'}),
             'uf':forms.Select(attrs={'class':'form-control'}),
         }
-        
-        
+
+
 class TelefoneForm(forms.ModelForm):
     class Meta:
         model = Telefone
@@ -51,8 +51,8 @@ class TelefoneForm(forms.ModelForm):
             'tipo_telefone':forms.Select(attrs={'class':'form-control'}),
             'telefone':forms.TextInput(attrs={'class':'form-control'}),
         }
-        
-        
+
+
 class EmailForm(forms.ModelForm):
     class Meta:
         model = Email
@@ -64,7 +64,7 @@ class EmailForm(forms.ModelForm):
             'email':forms.EmailInput(attrs={'class':'form-control'}),
         }
 
-        
+
 class SiteForm(forms.ModelForm):
     class Meta:
         model = Site
@@ -72,10 +72,10 @@ class SiteForm(forms.ModelForm):
         labels = {
             'site':_('Site'),
         }
-        widgets = {    
+        widgets = {
             'site':forms.TextInput(attrs={'class':'form-control'}),
         }
-        
+
 class BancoForm(forms.ModelForm):
     class Meta:
         model = Banco
@@ -86,13 +86,13 @@ class BancoForm(forms.ModelForm):
             'conta':_('Conta'),
             'digito':_('Dígito'),
         }
-        widgets = {    
+        widgets = {
             'banco':forms.Select(attrs={'class':'form-control'}),
             'agencia':forms.TextInput(attrs={'class':'form-control'}),
             'conta':forms.TextInput(attrs={'class':'form-control'}),
             'digito':forms.TextInput(attrs={'class':'form-control'}),
         }
-        
+
 class DocumentoForm(forms.ModelForm):
     class Meta:
         model = Documento
@@ -101,12 +101,12 @@ class DocumentoForm(forms.ModelForm):
             'tipo':_('Tipo'),
             'documento':_('Documento'),
         }
-        widgets = {    
+        widgets = {
             'tipo':forms.TextInput(attrs={'class':'form-control'}),
             'documento':forms.TextInput(attrs={'class':'form-control'}),
         }
-        
-        
+
+
 EnderecoFormSet = inlineformset_factory(Pessoa, Endereco, form=EnderecoForm, extra=1, can_delete=True)
 TelefoneFormSet = inlineformset_factory(Pessoa, Telefone, form=TelefoneForm, extra=1, can_delete=True)
 EmailFormSet = inlineformset_factory(Pessoa, Email, form=EmailForm, extra=1, can_delete=True)

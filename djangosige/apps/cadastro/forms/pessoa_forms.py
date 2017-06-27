@@ -13,11 +13,11 @@ class PessoaJuridicaForm(forms.ModelForm):
             super(PessoaJuridicaForm, self).__init__(instance=instance, *args, **kwargs)
         else:
             super(PessoaJuridicaForm, self).__init__(*args, **kwargs)
-        
+
     class Meta:
         model = PessoaJuridica
         fields = ('nome_fantasia', 'cnpj', 'inscricao_estadual', 'responsavel', 'sit_fiscal', 'suframa',)
-        
+
         widgets = {
             'nome_fantasia':forms.TextInput(attrs={'class':'form-control'}),
             'cnpj':forms.TextInput(attrs={'class':'form-control'}),
@@ -34,8 +34,8 @@ class PessoaJuridicaForm(forms.ModelForm):
             'sit_fiscal': _('Situação Fiscal'),
             'suframa': _('Inscrição SUFRAMA'),
         }
-        
-        
+
+
 class PessoaFisicaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         if 'instance' in kwargs:
@@ -44,11 +44,11 @@ class PessoaFisicaForm(forms.ModelForm):
             super(PessoaFisicaForm, self).__init__(instance=instance, *args, **kwargs)
         else:
             super(PessoaFisicaForm, self).__init__(*args, **kwargs)
-        
+
     class Meta:
         model = PessoaFisica
         fields = ('cpf', 'rg', 'nascimento', )
-        
+
         widgets = {
             'cpf':forms.TextInput(attrs={'class':'form-control'}),
             'rg':forms.TextInput(attrs={'class':'form-control'}),
