@@ -10,7 +10,7 @@ from django.core import serializers
 
 from djangosige.apps.compras.forms import OrcamentoCompraForm, PedidoCompraForm, ItensCompraFormSet, PagamentoFormSet
 from djangosige.apps.compras.models import OrcamentoCompra, PedidoCompra, ItensCompra, Pagamento
-from djangosige.apps.cadastro.models import Pessoa, Fornecedor, Produto, MinhaEmpresa
+from djangosige.apps.cadastro.models import Pessoa, Fornecedor, MinhaEmpresa
 from djangosige.apps.estoque.models import ProdutoEstocado, EntradaEstoque, ItensMovimento
 from djangosige.apps.login.models import Usuario
 from djangosige.configs.settings import MEDIA_ROOT

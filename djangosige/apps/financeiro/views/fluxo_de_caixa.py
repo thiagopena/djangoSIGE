@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic.list import ListView
 from django.contrib import messages
 
-from djangosige.apps.financeiro.models import PlanoContasSubgrupo, MovimentoCaixa
+from djangosige.apps.financeiro.models import MovimentoCaixa
 
 from datetime import datetime
 

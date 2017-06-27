@@ -26,11 +26,11 @@ class NotaFiscalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(NotaFiscalForm, self).__init__(*args, **kwargs)
         self.fields['dhemi'].input_formats = ('%d/%m/%Y %H:%M',)
-        
+
     class Meta:
         fields = ('versao', 'status_nfe', 'natop', 'indpag', 'mod', 'serie', 'dhemi', 'dhsaient', 'iddest',
             'tp_imp', 'tp_emis', 'tp_amb', 'fin_nfe', 'ind_final', 'ind_pres', 'inf_ad_fisco', 'inf_cpl',)
-        
+
         widgets = {
             'versao': forms.Select(attrs={'class':'form-control'}),
             'status_nfe': forms.Select(attrs={'class':'form-control', 'disabled':True}),
@@ -39,7 +39,7 @@ class NotaFiscalForm(forms.ModelForm):
             'mod': forms.Select(attrs={'class':'form-control'}),
             'serie': forms.TextInput(attrs={'class':'form-control'}),
             'dhemi': forms.DateTimeInput(attrs={'class':'form-control datetimepicker'}, format='%d/%m/%Y %H:%M'),
-            'dhsaient': forms.DateTimeInput(attrs={'class':'form-control datetimepicker'}, format='%d/%m/%Y %H:%M'), 
+            'dhsaient': forms.DateTimeInput(attrs={'class':'form-control datetimepicker'}, format='%d/%m/%Y %H:%M'),
             'iddest': forms.Select(attrs={'class':'form-control'}),
             'tp_imp': forms.Select(attrs={'class':'form-control'}),
             'tp_emis': forms.Select(attrs={'class':'form-control'}),
@@ -58,7 +58,7 @@ class NotaFiscalForm(forms.ModelForm):
             'mod': _('Modelo'),
             'serie': _('Série'),
             'dhemi': _('Data e hora de emissão'),
-            'dhsaient': _('Data e hora de Saída/Entrada'), 
+            'dhsaient': _('Data e hora de Saída/Entrada'),
             'iddest': _('Destino da operação'),
             'tp_imp': _('Tipo impressão da DANFE'),
             'tp_emis': _('Forma de emissão'),
@@ -69,21 +69,21 @@ class NotaFiscalForm(forms.ModelForm):
             'inf_ad_fisco': _('Informações Adicionais de Interesse do Fisco'),
             'inf_cpl': _('Informações Complementares de interesse do Contribuinte'),
         }
-        
+
         error_messages = {
             'n_nf': {
                 'unique': _("Nota fiscal com este número já existe"),
             },
         }
 
-        
+
 class NotaFiscalSaidaForm(NotaFiscalForm):
     def __init__(self, *args, **kwargs):
-        super(NotaFiscalSaidaForm, self).__init__(*args, **kwargs)        
+        super(NotaFiscalSaidaForm, self).__init__(*args, **kwargs)
         self.fields['v_orig'].localize = True
         self.fields['v_desc'].localize = True
         self.fields['v_liq'].localize = True
-        
+
     class Meta(NotaFiscalForm.Meta):
         model = NotaFiscalSaida
         fields = NotaFiscalForm.Meta.fields + ('n_nf_saida', 'tpnf', 'venda', 'emit_saida', 'dest_saida', 'n_fat', 'v_orig', 'v_desc', 'v_liq', 'grupo_cobr', 'arquivo_proc',)
@@ -111,8 +111,8 @@ class NotaFiscalSaidaForm(NotaFiscalForm):
         labels['v_liq'] = _('Valor líquido da fatura')
         labels['grupo_cobr'] = _('Inserir dados de cobrança (Fatura/Duplicatas) na NF-e?')
         labels['arquivo_proc'] = _('Arquivo de processamento (*_procNFe.xml)')
-        
-        
+
+
 class NotaFiscalEntradaForm(NotaFiscalForm):
     class Meta(NotaFiscalForm.Meta):
         model = NotaFiscalEntrada
@@ -127,9 +127,9 @@ class NotaFiscalEntradaForm(NotaFiscalForm):
         labels['compra'] = _('Compra')
         labels['emit_entrada'] = _('Emitente (Fornecedor)')
         labels['dest_entrada'] = _('Destinatário (Empresa)')
-        
-        
-        
+
+
+
 class EmissaoNotaFiscalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(EmissaoNotaFiscalForm, self).__init__(*args, **kwargs)
@@ -137,11 +137,11 @@ class EmissaoNotaFiscalForm(forms.ModelForm):
     class Meta:
         model = NotaFiscalSaida
         fields = ('versao', 'dhemi', 'dhsaient', 'tp_imp', 'tp_emis', 'tp_amb',)
-        
+
         widgets = {
             'versao': forms.Select(attrs={'class':'form-control', 'required':True}),
             'dhemi': forms.DateTimeInput(attrs={'class':'form-control datetimepicker', 'required':True}, format='%d/%m/%Y %H:%M'),
-            'dhsaient': forms.DateTimeInput(attrs={'class':'form-control datetimepicker'}, format='%d/%m/%Y %H:%M'), 
+            'dhsaient': forms.DateTimeInput(attrs={'class':'form-control datetimepicker'}, format='%d/%m/%Y %H:%M'),
             'tp_imp': forms.Select(attrs={'class':'form-control', 'required':True}),
             'tp_emis': forms.Select(attrs={'class':'form-control', 'required':True}),
             'tp_amb': forms.Select(attrs={'class':'form-control', 'required':True}),
@@ -149,17 +149,17 @@ class EmissaoNotaFiscalForm(forms.ModelForm):
         labels = {
             'versao': _('Versão'),
             'dhemi': _('Data e hora de emissão'),
-            'dhsaient': _('Data e hora de Saída/Entrada'), 
+            'dhsaient': _('Data e hora de Saída/Entrada'),
             'tp_imp': _('Tipo impressão da DANFE'),
             'tp_emis': _('Forma de emissão'),
             'tp_amb': _('Ambiente'),
         }
-        
+
 class CancelamentoNotaFiscalForm(forms.ModelForm):
     class Meta:
         model = NotaFiscalSaida
         fields = ('just_canc', 'chave', 'numero_protocolo', 'tp_emis', 'tp_amb',)
-        
+
         widgets = {
             'just_canc': forms.Textarea(attrs={'class':'form-control', 'required':True}),
             'chave': forms.TextInput(attrs={'class':'form-control', 'required':True}),
@@ -174,11 +174,11 @@ class CancelamentoNotaFiscalForm(forms.ModelForm):
             'tp_emis': _('Forma de emissão'),
             'tp_amb': _('Ambiente'),
         }
-        
+
 class ConsultarCadastroForm(forms.Form):
     empresa = forms.ModelChoiceField(queryset=Empresa.objects.all(), widget=forms.Select(attrs={'class':'form-control',}), label='Selecionar empresa', required=True)
     salvar_arquivos = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-control',}), label='Salvar arquivos XML gerados?', required=False)
-        
+
 
 class InutilizarNotasForm(forms.Form):
     ambiente = forms.ChoiceField(choices=TP_AMB_ESCOLHAS, widget=forms.Select(attrs={'class':'form-control',}), label='Ambiente', initial='2', required=True)
@@ -189,14 +189,14 @@ class InutilizarNotasForm(forms.Form):
     numero_final = forms.CharField(max_length=9, widget=forms.TextInput(attrs={'class':'form-control',}), label='Número final', required=False)
     justificativa = forms.CharField(max_length=255, widget=forms.Textarea(attrs={'class':'form-control',}), label='Justificativa', required=False)
     salvar_arquivos = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-control',}), label='Salvar arquivos XML gerados?', required=False)
-    
-    
+
+
 class ConsultarNotaForm(forms.Form):
     ambiente = forms.ChoiceField(choices=TP_AMB_ESCOLHAS, widget=forms.Select(attrs={'class':'form-control',}), label='Ambiente', initial='2', required=True)
     nota = forms.ModelChoiceField(queryset=NotaFiscalSaida.objects.all(), widget=forms.Select(attrs={'class':'form-control',}), label='Selecionar nota da base de dados', required=False)
     chave = forms.CharField(max_length=44, widget=forms.TextInput(attrs={'class':'form-control',}), label='Chave da nota', required=False)
     salvar_arquivos = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-control',}), label='Salvar arquivos XML gerados?', required=False)
-    
+
 
 class BaixarNotaForm(forms.Form):
     ambiente = forms.ChoiceField(choices=TP_AMB_ESCOLHAS, widget=forms.Select(attrs={'class':'form-control',}), label='Ambiente', initial='2', required=True)
@@ -204,7 +204,7 @@ class BaixarNotaForm(forms.Form):
     chave = forms.CharField(max_length=44, widget=forms.TextInput(attrs={'class':'form-control',}), label='Chave da nota', required=False)
     ambiente_nacional = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-control',}), label='Utilizar ambiente nacional?(Recomendado)', initial=True, required=False)
     salvar_arquivos = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-control',}), label='Salvar arquivos XML gerados?', required=False)
-    
+
 class ManifestacaoDestinatarioForm(forms.Form):
     cnpj = forms.CharField(max_length=16, widget=forms.TextInput(attrs={'class':'form-control',}), label='CNPJ do autor do Evento(apenas digitos)', required=True)
     tipo_manifesto = forms.ChoiceField(choices=TP_MANIFESTO_OPCOES, widget=forms.Select(attrs={'class':'form-control',}), label='Tipo de manifesto', required=True)
@@ -214,8 +214,8 @@ class ManifestacaoDestinatarioForm(forms.Form):
     ambiente_nacional = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-control',}), label='Utilizar ambiente nacional?(Recomendado)', initial=True, required=False)
     justificativa = forms.CharField(max_length=255, widget=forms.Textarea(attrs={'class':'form-control',}), label='Justificativa', required=False)
     salvar_arquivos = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-control',}), label='Salvar arquivos XML gerados?', required=False)
-    
-    
+
+
 class AutXMLForm(forms.ModelForm):
     class Meta:
         model = AutXML
@@ -223,11 +223,11 @@ class AutXMLForm(forms.ModelForm):
         labels = {
             'cpf_cnpj':_('CPF/CNPJ (Apenas digitos)'),
         }
-        widgets = {    
+        widgets = {
             'cpf_cnpj':forms.TextInput(attrs={'class':'form-control'}),
         }
-        
-        
+
+
 class ConfiguracaoNotaFiscalForm(forms.ModelForm):
     class Meta:
         model = ConfiguracaoNotaFiscal
@@ -243,7 +243,7 @@ class ConfiguracaoNotaFiscalForm(forms.ModelForm):
             'csc':_('Código de Segurança do Contribuinte'),
             'cidtoken':_('Identificador do CSC'),
         }
-        widgets = {    
+        widgets = {
             'arquivo_certificado_a1':forms.FileInput(attrs={'class':'form-control'}),
             'serie_atual':forms.TextInput(attrs={'class':'form-control'}),
             'ambiente':forms.Select(attrs={'class':'form-control'}),
@@ -254,5 +254,5 @@ class ConfiguracaoNotaFiscalForm(forms.ModelForm):
             'csc':forms.TextInput(attrs={'class':'form-control'}),
             'cidtoken':forms.TextInput(attrs={'class':'form-control'}),
         }
-        
+
 AutXMLFormSet = inlineformset_factory(NotaFiscalSaida, AutXML, form=AutXMLForm, extra=1, can_delete=True)

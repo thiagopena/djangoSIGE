@@ -12,7 +12,6 @@ from djangosige.apps.vendas.forms import OrcamentoVendaForm, PedidoVendaForm, It
 from djangosige.apps.vendas.models import OrcamentoVenda, PedidoVenda, ItensVenda, Pagamento
 from djangosige.apps.cadastro.models import Pessoa, Cliente, Transportadora, Produto, MinhaEmpresa
 from djangosige.apps.fiscal.models import ICMS, ICMSSN, IPI, ICMSUFDest
-from djangosige.apps.estoque.models import SaidaEstoque, ProdutoEstocado
 from djangosige.apps.login.models import Usuario
 from djangosige.configs.settings import MEDIA_ROOT
 

@@ -11,7 +11,7 @@ from djangosige.apps.login.models import Usuario
 from djangosige.configs.settings import MEDIA_ROOT
 
 def logo_directory_path(instance, filename):
-	fname, extension = os.path.splitext(filename)
+	extension = os.path.splitext(filename)[1]
 	return 'imagens/empresas/logo_{0}_{1}{2}'.format(instance.nome_razao_social, instance.id, extension)
 
 

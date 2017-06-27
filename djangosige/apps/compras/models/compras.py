@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse_lazy
 
 from decimal import Decimal
 
-from djangosige.apps.fiscal.models import PIS, COFINS
 from djangosige.apps.vendas.models import TIPOS_DESCONTO_ESCOLHAS, MOD_FRETE_ESCOLHAS, STATUS_ORCAMENTO_ESCOLHAS
 from djangosige.apps.estoque.models import DEFAULT_LOCAL_ID
 
