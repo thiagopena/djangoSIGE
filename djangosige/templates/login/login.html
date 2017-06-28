@@ -1,0 +1,78 @@
+{%extends 'base/base.html'%}
+
+
+{%block title%}Login{%endblock%}
+{%block side_top_bars%}{%endblock%}
+
+{%block body_class%}login-page ls-closed{%endblock%}
+
+{%block content%}
+<div class="login-box">
+
+    {% include 'login/logo.html' %}
+
+    <div class="card">
+        <div class="body">
+        	{% if not request.user.is_authenticated %}
+            <form id="login" method="POST">
+            	{% csrf_token %}
+                <div class="msg">Digite seu nome de usuário e a senha para entrar
+
+                {% include 'base/form_error_msg.html' %}
+
+                </div>
+
+                {% for field in form %}
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="material-icons">{{field.label}}</i>
+                    </span>
+                    <div class="form-line">
+                        {{field}}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="row">
+                    <div class="col-xs-8">
+                        <input type="checkbox" name="remember_me" id="remember_me" class="filled-in chk-col-light-blue">
+                        <label for="remember_me">Lembrar</label>
+                    </div>
+                    <div class="col-xs-4">
+                        <button class="btn btn-block btn-red" type="submit">ENTRAR</button>
+                    </div>
+                </div>
+
+                <div class="msg" style="margin-top:20px;">
+                    <a href="{% url 'login:esqueceuview' %}">Esqueceu a senha?</a><br/>
+                    <small>*caso seja seu primeiro login, leia a <a href="https://github.com/thiagopena/djangoSIGE" style="font-size:inherit;">documentação</a></small>
+                </div>
+
+            </form>
+            {%endif%}
+
+            {% include 'base/modal.html' %}
+
+        </div>
+    </div>
+</div>
+{%endblock%}
+
+
+{% block js %}
+
+    <!-- Mensagem caso sucesso ao solicitar troca de senha -->
+    {% if messages %}
+
+    {%for message in messages%}
+    {% if 'success' in message.tags %}
+
+    <script type="text/javascript">
+        $.Admin.messages.msgSucesso("{{message}}");
+    </script>
+    {%endif%}
+    {%endfor%}
+
+    {% endif %}
+
+{% endblock %}

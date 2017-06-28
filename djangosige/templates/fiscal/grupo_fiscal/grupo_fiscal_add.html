@@ -1,0 +1,46 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid">
+
+    {% include 'base/title_header.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="row">
+        <div class="card">
+
+          <!--Header-->
+          <div class="header">
+
+            <h2>
+              <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>{{title_complete}}
+            </h2>
+            <div><small>Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>
+
+          </div>
+          <!--# Header-->
+
+          <form role="form" action="" method="post">
+            {% csrf_token %}
+            
+            {% include 'fiscal/grupo_fiscal/grupo_fiscal_form.html' %}
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+    
+  {% include 'fiscal/grupo_fiscal/grupo_fiscal_jsblock.html' %}
+  
+{% endblock %}

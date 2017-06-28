@@ -268,7 +268,7 @@ class TransferenciaEstoqueListView(MovimentoEstoqueBaseListView):
 
 
 class DetalharMovimentoEstoqueBaseView(DetailView):
-    template_name = "estoque/movimento/movimento_estoque_edit.html"
+    template_name = "estoque/movimento/movimento_estoque_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super(DetalharMovimentoEstoqueBaseView, self).get_context_data(**kwargs)

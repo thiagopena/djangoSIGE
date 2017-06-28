@@ -1,0 +1,81 @@
+{%extends 'base/base.html'%}
+
+
+{%block title%} {{form.descricao.value}} {%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid">
+
+    {% include 'base/title_header.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="row">
+        <div class="card">
+
+          <!--Header-->
+          <div class="header">
+
+            <h2>
+              <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>{{form.descricao.value}}
+            </h2>
+            <div><small>Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>
+
+          </div>
+          <!--# Header-->
+
+          <form role="form" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Body-->
+            <div class="body">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                
+                {% include 'cadastro/produto/produto_tab_list.html' %}
+
+                <div class="tab-content">
+                  <!-- Tab dados gerais -->
+                  <div role="tabpanel" class="tab-pane active" id="tab_dados_gerais">
+
+                    {% include 'cadastro/produto/produto_tab_dados_gerais.html' %}
+
+                  </div>
+                  <!-- #Tab dados gerais -->
+
+                  <!-- Tab estoque -->
+                  <div role="tabpanel" class="tab-pane formset-tab" id="tab_estoque">
+
+                    {% include 'cadastro/produto/produto_tab_estoque.html' %}
+
+                  </div>
+                  <!-- #Tab estoque -->
+
+                  <!-- Tab fiscal -->
+                  <div role="tabpanel" class="tab-pane formset-tab" id="tab_fiscal">
+
+                    {% include 'cadastro/produto/produto_tab_fiscal.html' %}
+
+                  </div>
+                  <!-- #Tab fiscal -->
+                  
+                </div>
+
+              </div>
+              <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+            </div>
+            <!--#Body-->
+          </form>
+          
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+    
+  {% include 'cadastro/produto/produto_jsblock.html' %}
+
+{% endblock %}

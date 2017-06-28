@@ -1,0 +1,245 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid">
+
+    {% include 'base/title_header.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="row">
+        <div class="card">
+
+          <!--Header-->
+          <div class="header">
+
+            <h2>
+              <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>{{title_complete}}
+            </h2>
+
+          </div>
+          <!--# Header-->
+
+          <form id="compra_form_edit" role="form" action="" method="post">
+            {% csrf_token %}
+            
+            <!-- Body-->
+            <div class="body">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul class="nav nav-tabs" role="tablist">
+                  <li role="presentation" class="active"><a href="#tab_dados_gerais" data-toggle="tab">DADOS GERAIS</a></li>
+                  <li role="presentation"><a href="#tab_itens" data-toggle="tab">ITENS</a></li>
+                </ul>
+
+                <div class="tab-content">
+
+                  <!-- Tab DADOS GERAIS -->
+                  <div role="tabpanel" class="tab-pane active" id="tab_dados_gerais">
+
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <label>{% if object.get_tipo == 'Entrada' %}Data da entrada{% elif object.get_tipo == 'Saída' %}Data da saída{% elif object.get_tipo == 'Transferência'  %}Data da transferência{% endif %}</label>
+                          <span class="form-control">{{object.data_movimento}}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {% if object.tipo_movimento %}
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <label>Tipo</label>
+                          <span class="form-control">{{object.get_tipo_movimento_display}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                    {% if object.pedido_compra %}
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Pedido de compra</label>
+                        <div class="input-group" style="margin-bottom: 0px;">
+                          <div class="form-line">
+                            <span class="form-control">{{object.pedido_compra}}</span>
+                          </div>
+                          <a class="input-group-addon newwindow" title="Editar {{object.pedido_compra}}" href="{% url 'compras:editarpedidocompraview' object.pedido_compra.id %}"><i class="material-icons add-new-icon"  style="color: #248fbf;" title="Editar {{object.pedido_compra}}">&#xE8B6;</i></a>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                    {% if object.pedido_venda %}
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Pedido de venda</label>
+                        <div class="input-group" style="margin-bottom: 0px;">
+                          <div class="form-line">
+                            <span class="form-control">{{object.pedido_venda}}</span>
+                          </div>
+                          <a class="input-group-addon newwindow" title="Editar {{object.pedido_venda}}" href="{% url 'vendas:editarpedidovendaview' object.pedido_venda.id %}"><i class="material-icons add-new-icon"  style="color: #248fbf;" title="Editar {{object.pedido_venda}}">&#xE8B6;</i></a>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                    {% if object.local_orig %}
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Local de origem</label>
+                        <div class="input-group" style="margin-bottom: 0px;">
+                          <div class="form-line">
+                            <span class="form-control">{{object.local_orig}}</span>
+                          </div>
+                          <a class="input-group-addon popup" title="Editar {{object.local_orig}}" href="{% url 'estoque:editarlocalview' object.local_orig.id %}"><i class="material-icons add-new-icon" style="color: #248fbf;" title="Editar {{object.local_orig}}">&#xE8B6;</i></a>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                    {% if object.local_dest %}
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Local de destino</label>
+                        <div class="input-group" style="margin-bottom: 0px;">
+                          <div class="form-line">
+                            <span class="form-control">{{object.local_dest}}</span>
+                          </div>
+                          <a class="input-group-addon popup" title="Editar {{object.local_dest}}" href="{% url 'estoque:editarlocalview' object.local_dest.id %}"><i class="material-icons add-new-icon" style="color: #248fbf;" title="Editar {{object.local_dest}}">&#xE8B6;</i></a>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                    {% if object.fornecedor %}
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Fornecedor</label>
+                        <div class="input-group" style="margin-bottom: 0px;">
+                          <div class="form-line">
+                            <span class="form-control">{{object.fornecedor}}</span>
+                          </div>
+                          <a class="input-group-addon newwindow" title="Editar {{object.fornecedor}}" href="{% url 'cadastro:editarfornecedorview' object.fornecedor.id %}"><i class="material-icons add-new-icon" style="color: #248fbf;" title="Editar {{object.fornecedor}}">&#xE8B6;</i></a>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                    {% if object.local_estoque_orig %}
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Local de origem</label>
+                        <div class="input-group" style="margin-bottom: 0px;">
+                          <div class="form-line">
+                            <span class="form-control">{{object.local_estoque_orig}}</span>
+                          </div>
+                          <a class="input-group-addon popup" title="Editar {{object.local_estoque_orig}}" href="{% url 'estoque:editarlocalview' object.local_estoque_orig.id %}"><i class="material-icons add-new-icon" style="color: #248fbf;" title="Editar {{object.local_estoque_orig}}">&#xE8B6;</i></a>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+                    {% if object.local_estoque_dest %}
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Local de destino</label>
+                        <div class="input-group" style="margin-bottom: 0px;">
+                          <div class="form-line">
+                            <span class="form-control">{{object.local_estoque_dest}}</span>
+                          </div>
+                          <a class="input-group-addon popup" title="Editar {{object.local_estoque_dest}}" href="{% url 'estoque:editarlocalview' object.local_estoque_dest.id %}"><i class="material-icons add-new-icon" style="color: #248fbf;" title="Editar {{object.local_estoque_dest}}">&#xE8B6;</i></a>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+
+
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <label>Observações</label>
+                          <textarea class="form-control" style="background-color:#e1e4e8;" readonly="True">{% if object.observacoes %}{{object.observacoes}}{% endif %}</textarea>
+                        </div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                  <!-- #Tab DADOS GERAIS -->
+
+                  <!-- Tab ITENS -->
+                  <div role="tabpanel" class="tab-pane formset-tab" id="tab_itens">
+
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <label>Nº de itens</label>
+                          <span class="form-control">{{object.quantidade_itens}}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <div class="form-line">
+                          <label>Valor total dos produtos (R$)</label>
+                          <span class="form-control">{{object.valor_total}}</span>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-sm-12 lista" style="padding:0px;">
+
+                      <h4 style="border-bottom: 1px solid #afabab;">Itens movimentados</h4>
+                      <table class="table table-bordered lista-table">
+                        <thead>
+                          <tr>
+                            <th>Produto</th>
+                            <th>Quantidade</th>
+                            <th>Vl.unitário</th>
+                            <th>Subtotal</th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          {% for item in object.itens_movimento.all %}
+                          <tr>
+                            <td>{{item.produto}}</td>
+                            <td>{{item.quantidade}}</td>
+                            <td>{{item.valor_unit}}</td>
+                            <td>{{item.subtotal}}</td>
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+
+                    </div>
+
+                  </div>
+                  <!-- #Tab ITENS -->
+
+                </div>
+
+
+              </div>
+            </div>
+            <!--#Body-->
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+
+{% endblock %}

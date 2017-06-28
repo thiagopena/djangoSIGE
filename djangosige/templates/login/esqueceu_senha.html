@@ -1,0 +1,43 @@
+{%extends 'base/base.html'%}
+
+
+{%block title%}Trocar senha{%endblock%}
+{%block side_top_bars%}{%endblock%}
+
+{%block body_class%}login-page ls-closed{%endblock%}
+
+{%block content%}
+<div class="login-box">
+
+    {% include 'login/logo.html' %}
+    
+    <div class="card">
+        <div class="body">
+            <form method="POST">
+                <div class="msg">Escreva o endereço de email ou nome de usuário registrado. Um email será enviado contendo o link para a troca de senha.
+                
+                {% include 'base/form_error_msg.html' %}
+
+                </div>
+                
+                {% csrf_token %}
+                
+                <div class="input-group">
+                    <div class="form-line">
+                        {{form.email_or_username}}
+                    </div>
+                </div>
+
+                <div style="text-align:center;">
+                    <button class="btn btn-red" type="submit">ENVIAR</button>
+                </div>
+            </form>
+            <div class="msg" style="margin-top:40px;margin-bottom:15px;">
+                <a href="{% url 'login:loginview'%}">Voltar</a>
+            </div>
+          
+        </div>
+    </div>
+</div>
+
+{%endblock%}

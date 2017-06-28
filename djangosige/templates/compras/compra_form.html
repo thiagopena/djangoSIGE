@@ -1,0 +1,394 @@
+<!-- Body-->
+<div class="body">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#tab_informacoes" data-toggle="tab">INFORMAÇÕES</a></li>
+      <li role="presentation"><a href="#tab_fornecedor" data-toggle="tab">FORNECEDOR</a></li>
+      <li role="presentation"><a href="#tab_transporte" data-toggle="tab">TRANSPORTE</a></li>
+      <li role="presentation"><a href="#tab_produtos" data-toggle="tab">PRODUTOS</a></li>
+      <li role="presentation"><a href="#tab_pagamento" data-toggle="tab">PAGAMENTO</a></li>
+      <li role="presentation"><a href="#tab_estoque" data-toggle="tab">ESTOQUE</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- Tab INFORMAÇÕES -->
+      <div role="tabpanel" class="tab-pane active" id="tab_informacoes">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.data_emissao.label}}</label>
+              {% if form.data_emissao.errors %}<label class="error">{% for error in form.data_emissao.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.data_emissao}}
+            </div>
+          </div>
+        </div>
+
+        {% if form.data_vencimento %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.data_vencimento.label}}</label>
+              {% if form.data_vencimento.errors %}<label class="error">{% for error in form.data_vencimento.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.data_vencimento}}
+            </div>
+          </div>
+        </div>
+        {% else %}
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.orcamento.label}}</label>
+              {% if form.orcamento.errors %}<label class="error">{% for error in form.orcamento.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.orcamento}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.data_entrega.label}}</label>
+              {% if form.data_entrega.errors %}<label class="error">{% for error in form.data_entrega.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.data_entrega}}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.status.label}}</label>
+              {% if form.status.errors %}<label class="error">{% for error in form.status.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.status}}
+              <input type="hidden" id="id_status" name="status" value="{{form.status.initial}}" />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.observacoes.label}}</label>
+              {% if form.observacoes.errors %}<label class="error">{% for error in form.observacoes.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.observacoes}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- #Tab INFORMAÇÕES -->
+
+      <!-- Tab TRANSPORTE -->
+      <div role="tabpanel" class="tab-pane" id="tab_transporte">
+
+        <div class="col-sm-12">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.mod_frete.label}}</label>
+              {% if form.mod_frete.errors %}<label class="error">{% for error in form.mod_frete.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.mod_frete}}
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- #Tab TRANSPORTE -->
+
+      <!-- Tab FORNECEDOR -->
+      <div role="tabpanel" class="tab-pane" id="tab_fornecedor">
+
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label>{{form.fornecedor.label}}</label><strong style="color:red;"> *</strong>
+            {% if form.fornecedor.errors %}<label class="error">{% for error in form.fornecedor.errors %}{{error}}{% endfor %}</label>{% endif %}
+            <div class="input-group" style="margin-bottom: 0px;">
+              <div class="form-line">
+                {{form.fornecedor}}
+              </div>
+              <a class="input-group-addon newwindow" style="color: green;" title="Adicionar fornecedor" href="{% url 'cadastro:addfornecedorview' %}"><i class="material-icons add-new-icon" title="Adicionar fornecedor">&#xE147;</i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>CPF/CNPJ</label>
+              <span class="form-control display-fornecedor-field" id="cpf_cnpj_fornecedor"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>Inscrição estadual/RG</label>
+              <span class="form-control display-fornecedor-field" id="ie_rg_fornecedor"></span>
+            </div>
+          </div>
+        </div>
+
+         <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>Representante</label>
+              <span class="form-control display-fornecedor-field" id="representante_fornecedor"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>Endereço</label>
+              <span class="form-control display-fornecedor-field" id="endereco_fornecedor"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>Bairro</label>
+              <span class="form-control display-fornecedor-field" id="bairro_fornecedor"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>Município</label>
+              <span type="text" class="form-control display-fornecedor-field" id="municipio_fornecedor"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>UF</label>
+              <span type="text" class="form-control display-fornecedor-field" id="uf_fornecedor"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>CEP</label>
+              <span type="text" class="form-control display-fornecedor-field" id="cep_fornecedor"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>Email</label>
+              <span type="text" class="form-control display-fornecedor-field" id="email_fornecedor"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>Telefone</label>
+              <span type="text" class="form-control display-fornecedor-field" id="telefone_fornecedor"></span>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <!-- #Tab FORNECEDOR -->
+
+      <!-- Tab PRODUTOS -->
+      <div role="tabpanel" class="tab-pane formset-tab" id="tab_produtos">
+        <h4 style="border-bottom: 1px solid #afabab;">Total</h4>
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line">
+              <label {% for error in form.tipo_desconto.errors %}title="{{error}}"{% endfor %}>{{form.tipo_desconto.label}}</label>
+              {% if form.tipo_desconto.errors %}<label class="error"></label>{% endif %}
+              {{form.tipo_desconto}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line">
+              <label {% for error in form.desconto.errors %}title="{{error}}"{% endfor %}>{{form.desconto.label}}</label>
+              {% if form.desconto.errors %}<label class="error"></label>{% endif %}
+              {{form.desconto}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="form-line">
+              <label {% for error in form.frete.errors %}title="{{error}}"{% endfor %}>{{form.frete.label}}</label>
+              {% if form.frete.errors %}<label class="error"></label>{% endif %}
+              {{form.frete}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="form-line">
+              <label {% for error in form.despesas.errors %}title="{{error}}"{% endfor %}>{{form.despesas.label}}</label>
+              {% if form.despesas.errors %}<label class="error"></label>{% endif %}
+              {{form.despesas}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="form-group">
+            <div class="form-line">
+              <label {% for error in form.seguro.errors %}title="{{error}}"{% endfor %}>{{form.seguro.label}}</label>
+              {% if form.seguro.errors %}<label class="error"></label>{% endif %}
+              {{form.seguro}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-12" style="padding:0px;">
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label {% for error in form.total_icms.errors %}title="{{error}}"{% endfor %}>{{form.total_icms.label}}</label>
+                {% if form.total_icms.errors %}<label class="error"></label>{% endif %}
+                {{form.total_icms}}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label {% for error in form.total_ipi.errors %}title="{{error}}"{% endfor %}>{{form.total_ipi.label}}</label>
+                {% if form.total_ipi.errors %}<label class="error"></label>{% endif %}
+                {{form.total_ipi}}
+              </div>
+            </div>
+          </div>
+
+          <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-line">
+                <label {% for error in form.valor_total.errors %}title="{{error}}"{% endfor %}>{{form.valor_total.label}}</label>
+                {% if form.valor_total.errors %}<label class="error"></label>{% endif %}
+                {{form.valor_total}}
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-sm-12" style="padding:0px;">
+          
+        <h4 style="border-bottom: 1px solid #afabab;">Produtos</h4>
+
+        {% include 'formset/formset_table.html' with formset=produtos_form title='Itens' %}
+
+        </div>
+
+        {% include 'compras/modal_calculo_imposto.html' %}
+
+      </div>
+      <!-- #Tab PRODUTOS -->
+
+      <!-- Tab PAGAMENTO -->
+      <div role="tabpanel" class="tab-pane" id="tab_pagamento">
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <label>{{form.cond_pagamento.label}}</label>
+            {% if form.cond_pagamento.errors %}<label class="error">{% for error in form.cond_pagamento.errors %}{{error}}{% endfor %}</label>{% endif %}
+            <div class="input-group" style="margin-bottom: 0px;">
+              <div class="form-line">
+                {{form.cond_pagamento}}
+              </div>
+              <a class="input-group-addon newwindow" style="color: green;" title="Adicionar condição de pagamento" href="{% url 'vendas:addcondicaopagamentoview' %}"><i class="material-icons add-new-icon" title="Adicionar condição de pagamento">&#xE147;</i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line">
+              <label>Número de parcelas</label>
+              <span type="text" class="form-control" id="id_n_parcelas"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line total-display">
+              <label>Total</label><i class="material-icons hidden error-icon" style="font-size:15px;margin-left:5px;color:#cf3939;" title="Soma das parcelas difere do valor total.">&#xE000;</i>
+              <span type="text" class="form-control" id="id_valor_total_display"></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-3">
+          <div class="form-group">
+            <div class="form-line">
+              <a id="calcular-parcelas" class="btn btn-primary" style="margin-top: 25px;">Calcular parcelas</a>
+            </div>
+          </div>
+        </div>
+
+        {% include 'formset/formset_tr_field.html' with formset=pagamento_form table_class='pagamentos_table' %}
+
+      </div>
+      <!-- #Tab PAGAMENTO -->
+
+      <!-- Tab ESTOQUE -->
+      <div role="tabpanel" class="tab-pane" id="tab_estoque">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>{{form.local_dest.label}}</label>
+            {% if form.local_dest.errors %}<label class="error">{% for error in form.local_dest.errors %}{{error}}{% endfor %}</label>{% endif %}
+            <div class="input-group" style="margin-bottom: 0px;">
+              <div class="form-line">
+                {{form.local_dest}}
+              </div>
+              <a class="input-group-addon popup" style="color: green;" title="Adicionar localização de estoque" href="{% url 'estoque:addlocalview' %}"><i class="material-icons add-new-icon" title="Adicionar localização de estoque">&#xE147;</i></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              {{form.movimentar_estoque}}
+              <label for="id_movimentar_estoque" style="font-weight: bold;" title="Selecionar para movimentar o estoque dos produtos com estoque controlado ao receber o pedido.">{{form.movimentar_estoque.label}}</label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <!-- #Tab ESTOQUE -->
+        
+      
+    </div>
+      
+  </div>
+  {% if object.status == '0' or not object%}
+  <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+  {% endif %}
+</div>
+<!--#Body-->

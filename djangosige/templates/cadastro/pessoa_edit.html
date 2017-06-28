@@ -1,0 +1,162 @@
+{%extends 'base/base.html'%}
+
+
+{%block title%} {{object.nome_razao_social}} {%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid">
+
+    {% include 'base/title_header.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="row">
+        <div class="card">
+
+          <!--Header-->
+          <div class="header">
+
+            <h2>
+              <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>{{object.nome_razao_social}}
+            </h2>
+            <div><small>Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>
+
+          </div>
+          <!--# Header-->
+
+          <form role="form" action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <!-- Body-->
+            <div class="body">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                
+                {% include 'cadastro/pessoa_tab_list.html' %}
+
+                <div class="tab-content">
+                  <!-- Tab informacoes gerais -->
+                  <div role="tabpanel" class="tab-pane active" id="tab_inf_gerais">
+
+                    {% if tipo_pessoa == 'cliente' %}
+
+                    {% include 'cadastro/cliente/cliente_tab_inf_gerais.html' %}
+
+                    {% elif tipo_pessoa == 'empresa' %}
+
+                    {% include 'cadastro/empresa/empresa_tab_inf_gerais.html' %}
+
+                    {% elif tipo_pessoa == 'fornecedor' %}
+
+                    {% include 'cadastro/fornecedor/fornecedor_tab_inf_gerais.html' %}
+
+                    {% elif tipo_pessoa == 'transportadora' %}
+
+                    {% include 'cadastro/transportadora/transportadora_tab_inf_gerais.html' %}
+
+                    {% endif %}
+
+                  </div>
+                  <!-- #Tab informacoes gerais -->
+
+
+                  <!-- Tab endereco -->
+                  <div role="tabpanel" class="tab-pane formset-tab" id="tab_endereco">
+
+                    {% include 'formset/formset.html' with formset=endereco_form title='Endereço' %}
+                    
+                  </div>
+                  <!-- #Tab endereco -->
+
+                  {% if tipo_pessoa == 'transportadora' %}
+                  <div role="tabpanel" class="tab-pane formset-tab" id="tab_veiculo">
+                  {% include 'formset/formset.html' with formset=veiculo_form title='Veículo' %}
+                  </div>
+                  {% endif %}
+
+                  <!-- Tab contato -->
+                  <div role="tabpanel" class="tab-pane formset-tab" id="tab_contato">
+
+                    {% for formset in formsets %}
+                    {% include 'formset/formset_fields.html' %}
+                    {% endfor %}
+
+                  </div>
+                  <!-- #Tab contato -->
+
+                  <!-- Tab banco -->
+                  <div role="tabpanel" class="tab-pane formset-tab" id="tab_banco">
+
+                    {% include 'formset/formset.html' with formset=banco_form title='Dados Bancários' %}
+
+                  </div>
+                  <!-- #Tab banco -->
+
+                  <!-- Tab documentos adicionais -->
+                  <div role="tabpanel" class="tab-pane formset-tab" id="tab_documento">
+
+                    {% include 'formset/formset.html' with formset=documento_form title='Documentos Adicionais' %}
+
+                  </div>
+                  <!-- #Tab documentos adicionais -->
+
+                  {% if tipo_pessoa == 'cliente' and object %}
+                  <!-- #Tab VENDAS -->
+                  <div role="tabpanel" class="tab-pane lista" id="tab_vendas">
+
+                    {% include 'cadastro/cliente/cliente_tab_vendas.html' %}
+
+                  </div>
+                  <!-- #Tab VENDAS -->
+                  {% endif %}
+
+                  {% if tipo_pessoa == 'fornecedor' and object %}
+                  <!-- #Tab COMPRAS -->
+                  <div role="tabpanel" class="tab-pane lista" id="tab_compras">
+
+                    {% include 'cadastro/fornecedor/fornecedor_tab_compras.html' %}
+
+                  </div>
+                  <!-- #Tab VENDAS -->
+                  {% endif %}
+
+                </div>
+
+              </div>
+              <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+            </div>
+            <!--#Body-->
+          </form>
+          
+          {% include 'cadastro/obj_info.html' %}
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+    
+  {% if tipo_pessoa == 'cliente' %}
+
+  {% include 'cadastro/cliente/cliente_blockjs.html' %} 
+
+  {% elif tipo_pessoa == 'empresa' %}
+
+  {% include 'cadastro/empresa/empresa_blockjs.html' %}
+
+  {% elif tipo_pessoa == 'fornecedor' %}
+
+  {% include 'cadastro/fornecedor/fornecedor_blockjs.html' %}
+
+  {% elif tipo_pessoa == 'transportadora' %}
+
+  {% include 'cadastro/transportadora/transportadora_blockjs.html' %}
+
+  {% endif %}
+
+  {% include 'cadastro/pessoa_blockjs.html' %}
+  
+{% endblock %}

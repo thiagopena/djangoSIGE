@@ -1,0 +1,111 @@
+{%extends 'base/base.html'%}
+
+{%block title%}Fluxo de Caixa{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid lista">
+  
+    {% include 'base/title_header.html' %}
+    
+    {% include 'base/msg_sucesso.html' %}
+    {% include 'base/msg_error.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lista-content">
+      <div class="card">
+        
+        <div class="header">
+          <h2>
+            FLUXO DE CAIXA
+          </h2>
+        </div>
+
+        <!-- Body -->
+        <div class="body">
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="row" style="border-bottom: 1px solid #afabab;margin-bottom: 17px;">
+              <h4 style="border-bottom: 1px solid #afabab;">Filtrar</h4>
+              <form role="form" action="{% url 'financeiro:fluxodecaixaview' %}" method="get">
+              {% csrf_token %}
+
+                <div class="col-sm-5">
+                  <div class="form-group">
+                    <div class="form-line">
+                      <label>Período de</label>
+                      <input type="text" name="from" {% if request.GET.from %}value="{{request.GET.from}}"{% else %}value="{% now "d/m/Y" %}"{% endif %} class="form-control datepicker">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-5">
+                  <div class="form-group">
+                    <div class="form-line">
+                      <label>até</label>
+                      <input type="text" name="to" {% if request.GET.to %}value="{{request.GET.to}}"{% else %}value="{% now "d/m/Y" %}"{% endif %} class="form-control datepicker">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <button style="margin-top:25px;" class="btn btn-primary foot-btn" type="submit">BUSCAR</button>
+                </div>
+
+              </form>
+
+            </div>
+
+            <div class="table-responsive">
+              <table id="lista-database" class="table table-bordered table-striped lista-table">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Saldo inicial</th>
+                    <th>Entradas</th>
+                    <th>Saídas</th>
+                    <th>Lucro/Prejuízo</th>
+                    <th>Saldo final</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {% for m in movimentos %}
+                  <tr>
+                    <td>{{m.format_data_movimento}}</td>
+                    <td>{{m.saldo_inicial}}</td>
+                    <td>{{m.entradas}}</td>
+                    <td>{{m.saidas}}</td>
+                    <td {%if m.valor_lucro_prejuizo < 0 %}style="background-color:#f1b1b1;font-weight:bold;"{% else %}style="background-color:#b3e5b3;font-weight:bold;"{% endif %}>{{m.valor_lucro_prejuizo}}</td>
+                    <td>{{m.saldo_final}}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+  
+          </div>
+
+        </div>
+        <!-- #Body -->
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+    
+  {% include 'base/load_jqueryui.html' %}
+
+  {% include 'base/datepicker_js.html' %}
+
+  {% include 'base/tooltip_js.html' %}
+
+   <script type="text/javascript">
+    $.Admin.fluxoCaixa.init();
+  </script>
+  
+{% endblock %}

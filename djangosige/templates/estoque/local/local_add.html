@@ -1,0 +1,73 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid">
+
+    {% include 'base/title_header.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="row">
+        <div class="card">
+
+          <!--Header-->
+          <div class="header">
+
+            <h2>
+              <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>{{title_complete}}
+            </h2>
+            <div><small>Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>
+
+          </div>
+          <!--# Header-->
+
+          <form id="" role="form" action="" method="post">
+            {% csrf_token %}
+            <!-- Body-->
+            <div class="body">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">                
+
+                {% for field in form %}
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="form-line">
+                      <label>{{field.label}}</label>{% if field.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                      {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+                      {{field}}
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+                  
+              </div>
+
+              <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+            </div>
+            <!--#Body-->
+          </form>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+    
+  {% load staticfiles %}
+  <!-- JQuery UI Css/Js -->
+  <link href="{% static 'css/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet">
+  <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+
+  <script type="text/javascript">
+    var cfop_path = '{% static 'tabelas/cfop/cfop_2015_002.csv' %}'
+    $.Admin.autocompleteField.autocompleteCfop(cfop_path);
+    
+  </script>
+  
+{% endblock %}

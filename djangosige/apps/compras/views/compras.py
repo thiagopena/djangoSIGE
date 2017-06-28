@@ -211,10 +211,7 @@ class PedidoCompraListView(CompraListView):
         return super(PedidoCompraListView, self).post(request, PedidoCompra)
 
 
-class PedidoCompraAtrasadosListView(CompraListView):
-    template_name = 'compras/pedido_compra/pedido_compra_list.html'
-    model = PedidoCompra
-    context_object_name = 'all_pedidos'
+class PedidoCompraAtrasadosListView(PedidoCompraListView):
     success_url = reverse_lazy('compras:listapedidocompraatrasadosview')
 
     def view_context(self, context):
@@ -229,7 +226,7 @@ class PedidoCompraAtrasadosListView(CompraListView):
         return super(PedidoCompraAtrasadosListView, self).post(request, PedidoCompra)
 
 
-class PedidoCompraEntregaHojeListView(CompraListView):
+class PedidoCompraEntregaHojeListView(PedidoCompraListView):
     success_url = reverse_lazy('compras:listapedidocomprahojeview')
 
     def view_context(self, context):

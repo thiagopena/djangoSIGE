@@ -1,0 +1,88 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid lista">
+  
+    {% include 'base/title_header.html' %}
+    
+    {% include 'base/msg_sucesso.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lista-content">
+      <div class="card">
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="header" style="overflow:visible;">
+            <h2>
+              {{title_complete}}
+            </h2>
+              <div class="header-btn">
+                {% if add_url %}
+                <a href="{{add_url}}" class="btn btn-success"><i class="material-icons">&#xE148;</i><span> ADICIONAR</span></a>
+                {% else %}
+                <div class="dropdown" style="display: inline-block;float:right;">
+                  <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Adicionar
+                  <span class="caret"></span></button>
+                  <ul class="dropdown-menu pull-right">
+                    <li><a href="{% url 'estoque:addentradaestoqueview' %}">Entrada em estoque</a></li>
+                    <li><a href="{% url 'estoque:addsaidaestoqueview' %}">Saída de estoque</a></li>
+                    <li><a href="{% url 'estoque:addtransferenciaestoqueview' %}">Transferência de estoque</a></li>
+                  </ul>
+                </div>
+                {% endif %}
+                <button class="btn btn-red btn-remove"><i class="material-icons">&#xE872;</i></button>
+              </div>
+          </div>
+
+          <div class="body">
+
+           {% include 'base/search.html' %}
+
+           {% if all_movimentos %}
+           {% include 'estoque/movimento/todos_movimentos_list_table.html' %}
+           {% elif all_entradas %}
+           {% include 'estoque/movimento/entradas_estoque_list_table.html' %}
+           {% elif all_saidas %}
+           {% include 'estoque/movimento/saidas_estoque_list_table.html' %}
+           {% elif all_transferencias %}
+           {% include 'estoque/movimento/transferencias_estoque_list_table.html' %}
+           {% else %}
+           Nenhum registro encontrado
+           {% endif %}
+
+      </div>
+
+    </form>
+
+    {% include 'financeiro/lancamento/modal_selecionar_data.html' %}
+
+  </div>
+</div>
+
+</div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+  {% load staticfiles %}
+  <!-- JQuery Mask Input Js -->
+  <script src="{% static 'js/jquery.mask.js' %}"></script>
+  
+  {% include 'base/load_jqueryui.html' %}
+
+  {% include 'base/datepicker_js.html' %}
+
+  {% include 'base/tooltip_js.html' %}
+
+  <script type="text/javascript">
+    var req_urls = {}
+    req_urls.gerar_lancamento_url = "{% url 'financeiro:gerarlancamento' %}"
+
+    $.Admin.maskInput.maskLancamento();
+    $.Admin.lancamentoList.init(req_urls);
+  </script>
+  
+{% endblock %}

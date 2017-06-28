@@ -1,0 +1,71 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid lista">
+  
+    {% include 'base/title_header.html' %}
+    
+    {% include 'base/msg_sucesso.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lista-content">
+      <div class="card">
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="header">
+            <h2>
+              {{title_complete}}
+            </h2>
+              <div class="header-btn">
+                <a href="{{add_url}}" class="btn btn-success"><i class="material-icons">&#xE148;</i><span> ADICIONAR</span></a>
+                <button class="btn btn-red btn-remove"><i class="material-icons">&#xE872;</i></button>
+              </div>
+          </div>
+
+          <div class="body">
+
+           {% include 'base/search.html' %}
+
+           <div class="table-responsive">
+            <table id="lista-database" class="table table-bordered table-striped lista-table">
+              <thead>
+                <tr>
+                  <th>Código</th>                   
+                  <th>Descrição</th>
+                  <th>Categoria</th>
+                  <th>Remover</th>
+                </tr>
+              </thead>
+
+              <tbody>
+               {% if all_produtos%}
+               {% for produto in all_produtos %}
+               <tr class="clickable-row" data-href="{% url 'cadastro:editarprodutoview' produto.id %}">
+                <td>{{produto.codigo}}</td>
+                <td>{{produto.descricao}}</td>
+                <td>{%if produto.categoria%}{{produto.categoria}}{%else%}---{%endif%}</td>
+                <td class="lista-remove">
+                  <input type="checkbox" name="{{produto.id}}" id="remover-entrada-{{produto.id}}"/>
+                  <label class="remove-entry-label" for="remover-entrada-{{produto.id}}"></label>
+                </td>
+              </tr>
+              {% endfor %}
+              {%else%}
+              {%endif%}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+</div>
+</section>
+
+
+{%endblock%}

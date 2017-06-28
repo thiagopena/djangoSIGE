@@ -1,0 +1,112 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid lista">
+
+    {% include 'base/title_header.html' %}
+    
+    {% include 'base/msg_sucesso.html' %}
+    {% include 'base/msg_error.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lista-content">
+      <div class="card">
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="header">
+            <h2>
+              {{title_complete}}
+            </h2>
+            <div class="header-btn">
+              {% if saida %}
+              <a href="{{add_url}}" class="btn btn-success"><i class="material-icons">&#xE148;</i><span> NOVA NOTA</span></a>
+              {% endif %}
+              <a id="importar_nota" href="javascript:void(0);" class="btn btn-primary"><i class="material-icons">&#xE884;</i><span>IMPORTAR NOTA</span></a>
+              <button class="btn btn-red btn-remove"><i class="material-icons">&#xE872;</i></button>
+            </div>
+          </div>
+
+          <div class="body">
+
+           {% include 'base/search.html' %}
+
+           <div class="table-responsive">
+            <table id="lista-database" class="table table-bordered table-striped lista-table">
+              <thead>
+                <tr>
+                  <th>#ID</th>
+                  <th>Mod.</th>
+                  <th>Série/Número</th>
+                  <th>Data de emissão</th>
+                  {% if saida %}
+                  <th>Cliente</th>
+                  {% elif entrada %}
+                  <th>Fornecedor</th>
+                  {% endif %}
+                  <th>Status</th>
+                  <th>Remover</th>
+                </tr>
+              </thead>
+
+              <tbody>
+               {% if all_notas%}
+               {% for nota in all_notas %}
+               {% if saida %}
+               <tr class="clickable-row" data-href="{% url 'fiscal:editarnotafiscalsaidaview' nota.id %}">
+               {% elif entrada %}
+               <tr class="clickable-row" data-href="{% url 'fiscal:editarnotafiscalentradaview' nota.id %}">
+               {% endif %}
+                <td>{{nota.id}}</td>
+                <td>{{nota.get_mod_display}}</td>
+                <td>{{nota.serie}}/{% if saida %}{{nota.n_nf_saida}}{% elif entrada %}{{nota.n_nf_entrada}}{% endif %}</td>
+                <td>{{nota.format_data_emissao|default_if_none:""}}</td>
+                <td>{% if saida %}{{nota.dest_saida}}{% elif entrada %}{{nota.emit_entrada}}{% endif %}</td>
+                <td>{{nota.get_status_nfe_display}}</td>
+                <td class="lista-remove">
+                  <input type="checkbox" name="{{nota.id}}" id="remover-entrada-{{nota.id}}"/>
+                  <label class="remove-entry-label" for="remover-entrada-{{nota.id}}"></label>
+                </td>
+              </tr>
+              {% endfor %}
+              {%else%}
+              {%endif%}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </form>
+
+    {% include 'fiscal/nota_fiscal/modal_importar_nota.html' %}
+  </div>
+</div>
+
+</div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+  {% include 'base/load_jqueryui.html' %}
+
+  {% include 'base/tooltip_js.html' %}
+    
+   <script type="text/javascript">
+    $('body').on('click', '#importar_nota', function(){
+      $('.importar_nota_modal').modal('show');
+    });
+
+    $('form[id=form_importar_nota]').on('submit', function(){
+        $('.page-loader-wrapper').show();
+        {% if entrada %}
+        $('.loader .loader-message').text('Importando nota fiscal do fornecedor, aguarde...');
+        {% elif saida %}
+        $('.loader .loader-message').text('Importando nota fiscal, aguarde...');
+        {% endif %}
+    });
+  </script>
+  
+{% endblock %}

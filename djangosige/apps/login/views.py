@@ -74,7 +74,7 @@ class UserRegistrationFormView(SuperUserRequiredMixin, SuccessMessageMixin, Form
     form_class = UserRegistrationForm
     template_name = 'login/registrar.html'
     success_url = reverse_lazy('login:usuariosview')
-    success_message = "Novo usuário %(username)s criado com sucesso."
+    success_message = "Novo usuário <b>%(username)s</b> criado com sucesso."
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, username=cleaned_data['username'])
@@ -116,37 +116,49 @@ class ForgotPasswordView(FormView):
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
+
+        if not DEFAULT_FROM_EMAIL:
+            form.add_error(field=None, error=u"Envio de email não configurado.")
+            return self.form_invalid(form)
+
         if form.is_valid():
             data = form.cleaned_data["email_or_username"]
-            associated_users = User.objects.filter(Q(email=data)|Q(username=data))
+            associated_user = User.objects.filter(Q(email=data)|Q(username=data)).first()
 
-            if associated_users.exists():
-                sended_to = []
-                for user in associated_users:
-                    c = {
-                        'email':user.email,
-                        'domain':request.META['HTTP_HOST'],
-                        'site_name':'djangoSIGE',
-                        'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-                        'user':user,
-                        'token':default_token_generator.make_token(user),
-                        'protocol':'http',
+            if associated_user:
+                try:
+                    if associated_user.email:
+                        c = {
+                            'email':associated_user.email,
+                            'domain':request.META['HTTP_HOST'],
+                            'site_name':'djangoSIGE',
+                            'uid':urlsafe_base64_encode(force_bytes(associated_user.pk)),
+                            'user':associated_user,
+                            'token':default_token_generator.make_token(associated_user),
+                            'protocol':'http://',
                         }
-                    subject = u"Redefinir sua senha - DjangoSIGE"
-                    email_template_name = 'login/trocar_senha_email.html'
-                    email_mensagem = loader.render_to_string(email_template_name, c)
-                    sended = send_mail(subject, email_mensagem, DEFAULT_FROM_EMAIL, [user.email], fail_silently=False)
-                    if sended == 1:
-                        sended_to.append(user.email)
-                if not sended_to:
-                    form.add_error(field=None, error=u"Erro ao enviar email de verificação.")
-                    return self.form_invalid(form)
-                else:
-                    messages.success(request, u'Um email foi enviado para '+ data + u'. Aguarde o recebimento da mensagem para trocar sua senha.')
-                    return self.form_valid(form)
+                        subject = u"Redefinir sua senha - DjangoSIGE"
+                        email_template_name = 'login/trocar_senha_email.html'
+                        email_mensagem = loader.render_to_string(email_template_name, c)
+                        sended = send_mail(subject, email_mensagem, DEFAULT_FROM_EMAIL, [associated_user.email,], fail_silently=False)
 
-            form.add_error(field=None, error=u"Usuário/Email: {} não foi encontrado na database.".format(data))
-            return self.form_invalid(form)
+                        if sended == 1:
+                            messages.success(request, u'Um email foi enviado para '+ data + u'. Aguarde o recebimento da mensagem para trocar sua senha.')
+                            return self.form_valid(form)
+                        else:
+                            form.add_error(field=None, error=u"Erro ao enviar email de verificação.")
+                            return self.form_invalid(form)
+                    else:
+                        form.add_error(field=None, error=u"Este usuário não cadastrou um email.")
+                        return self.form_invalid(form)
+
+                except Exception as e:
+                    form.add_error(field=None, error=e)
+                    return self.form_invalid(form)
+
+            else:
+                form.add_error(field=None, error=u"Usuário/Email: {} não foi encontrado na database.".format(data))
+                return self.form_invalid(form)
 
         form.add_error(field=None, error="Entrada inválida.")
         return self.form_invalid(form)
@@ -159,7 +171,10 @@ class PasswordResetConfirmView(FormView):
     def post(self, request, uidb64=None, token=None, *args, **kwargs):
         userModel = get_user_model()
         form = self.form_class(request.POST)
-        assert uidb64 is not None and token is not None
+
+        if uidb64 is None or token is None:
+            form.add_error(field=None, error=u"O link usado para a troca de senha não é válido ou expirou, por favor tente enviar novamente.")
+            return self.form_invalid(form)
 
         try:
             uid = urlsafe_base64_decode(uidb64)
@@ -258,10 +273,8 @@ class EditarPerfilView(UpdateView):
 
                 return self.form_valid(form, minha_empresa_form)
 
-            except DatabaseError:
-                form.add_error(field=None, error=u"Verifique se sua database foi ativada corretamente.")
-            except ValidationError:
-                form.add_error(field=None, error=u"Verifique se todos os campos estão preenchidos corretamente ou se o nome de usuário já foi usado.")
+            except (DatabaseError, ValidationError) as e:
+                form.add_error(field=None, error=e)
 
         return render(request, self.template_name, {'form':form, 'minha_empresa_form':minha_empresa_form})
 

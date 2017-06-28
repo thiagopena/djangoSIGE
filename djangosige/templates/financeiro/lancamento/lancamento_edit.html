@@ -1,0 +1,56 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{object.descricao}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid">
+
+    {% include 'base/title_header.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="row">
+        <div class="card">
+
+          <!--Header-->
+          <div class="header">
+
+            <h2>
+              <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>{{object.descricao}}
+            </h2>
+            <div class="header-btn">
+              {% if object.status != '0' and form.fornecedor %}
+              <a id="pagar_conta" href="javascript:void(0);" class="btn btn-success">PAGAR CONTA</a>
+              {% elif object.status != '0' and form.cliente %}
+              <a id="receber_conta" href="javascript:void(0);" class="btn btn-success">RECEBER CONTA</a>
+              {% endif %}
+            </div>
+            <div><small>Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>
+
+          </div>
+          <!--# Header-->
+
+          <form role="form" action="" method="post">
+            {% csrf_token %}
+            
+            {% include 'financeiro/lancamento/lancamento_form.html' %}
+
+          </form>
+
+        </div>
+      </div>
+
+      {% include 'financeiro/lancamento/modal_selecionar_data.html' %}
+
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+    
+  {% include 'financeiro/lancamento/lancamento_jsblock.html' %}
+  
+{% endblock %}

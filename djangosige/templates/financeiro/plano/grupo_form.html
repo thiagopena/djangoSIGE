@@ -1,0 +1,42 @@
+<!-- Body-->
+<div class="body">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#tab_grupo" data-toggle="tab">GRUPO</a></li>
+      <li role="presentation"><a href="#tab_subgrupos" data-toggle="tab">SUBGRUPOS</a></li>
+    </ul>
+    <div class="tab-content">
+      <!-- Tab grupo -->
+      <div role="tabpanel" class="tab-pane active" id="tab_grupo">
+
+        {% for field in form %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{field.label}}</label>{% if field.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{field}}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <!-- #Tab grupo -->
+
+      <!-- Tab grupo -->
+        <div role="tabpanel" class="tab-pane formset-tab" id="tab_subgrupos">
+          <div class="row">
+            <h4 style="border-bottom: 1px solid #afabab;">Subgrupos<i class="material-icons" style="font-size: 17px;padding-left:7px;" title="Subgrupos são especificações dos grupos criados, a adição de subgrupos é opcional.">&#xE887;</i></h4>
+          </div>
+          <div class="row">
+          {% include 'formset/formset_fields_sem_padrao.html' %}
+          </div>
+        </div>
+
+      </div>
+      
+  </div>
+
+  <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+</div>
+<!--#Body-->

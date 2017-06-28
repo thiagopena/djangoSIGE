@@ -1,0 +1,172 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid">
+
+    {% include 'base/title_header.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div class="row">
+        <div class="card">
+          {% include 'base/msg_error.html' %}
+          <b>{% include 'base/msg_sucesso.html' %}</b>
+          <!--Header-->
+          <div class="header">
+
+            <h2>
+              <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>
+              {{title_complete}}
+            </h2>
+
+          </div>
+          <!--# Header-->
+
+          <form id="{{form_id}}" role="form" action="" method="post">
+          {% csrf_token %}
+          <div class="body">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+              {% if object %}
+              <div class="col-md-12">
+                <div class="row">
+                  <h4 style="border-bottom: 1px solid #afabab;">Dados da nota</h4>
+                </div>
+
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <div class="form-line">
+                      <label>Modelo:</label>
+                      <span>{{object.get_mod_display}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <div class="form-line">
+                      <label>Série:</label>
+                      <span>{{object.serie}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <div class="form-line">
+                      <label>Nº:</label>
+                      <span>{{object.n_nf_saida}}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-sm-3">
+                  <div class="form-group">
+                    <div class="form-line">
+                      <label>Total:</label>
+                      <span>R$ {{object.venda.format_valor_total}}</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              {% endif %}
+
+              <div class="row">
+                <h4 style="border-bottom: 1px solid #afabab;">Defina os parâmetros</h4>
+              </div>
+              {% load custom_tags %}
+              {% for field in form %}
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <div class="form-line">
+                      {% if field|is_checkbox %}
+
+                      {{field}}
+                      <label for="{{field.auto_id}}" style="font-weight: bold;">{{field.label}}</label>{% if field.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                      {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+
+                      {% else %}
+
+                      <label>{{field.label}}</label>{% if field.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+                      {% if field.errors %}<label class="error">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}
+                      {{field}}
+
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+             
+            </div>
+
+            <button class="btn btn-success foot-btn" type="submit"><span> {{btn_text}}</span></button>
+
+            {% if processo.resposta.retNFe %}
+            {% for ret in processo.resposta.retNFe %}
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <h4 style="border-bottom: 1px solid #afabab;">Resposta ao pedido de download:</h4>
+              </div>
+              <div class="col-sm-6">
+                <label>Código do Status:</label>
+                <span>{{ret.cStat.valor}}</span>
+              </div>
+              <div class="col-sm-6">
+                <label>Motivo do Status:</label>
+                <span>{{ret.xMotivo.valor}}</span>
+              </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            {% if processo.resposta.retEvento %}
+            {% for ret in processo.resposta.retEvento %}
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <h4 style="border-bottom: 1px solid #afabab;">Resposta do Evento: {{ret.infEvento.xEvento}}</h4>
+              </div>
+              <div class="col-sm-6">
+                <label>Código do Status:</label>
+                <span>{{ret.infEvento.cStat.valor}}</span>
+              </div>
+              <div class="col-sm-6">
+                <label>Motivo do Status:</label>
+                <span>{{ret.infEvento.xMotivo.valor}}</span>
+              </div>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+
+            {% if processo.resposta %}
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="row">
+                <h4 style="border-bottom: 1px solid #afabab;">Resposta do SEFAZ (XML)</h4>
+              </div>
+              <pre lang="xml" >{{processo.resposta.xml}}</pre>
+            </div>
+            {% endif %}
+
+          </div>
+          </form>
+
+          </div>
+
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+    
+  {% include 'fiscal/nota_fiscal/nota_fiscal_jsblock.html' %}
+  
+{% endblock %}

@@ -1,0 +1,197 @@
+<!-- Body-->
+<div class="body">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#tab_dados_gerais" data-toggle="tab">DADOS GERAIS</a></li>
+      <li role="presentation"><a href="#tab_itens" data-toggle="tab">ITENS</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <!-- Tab DADOS GERAIS -->
+      <div role="tabpanel" class="tab-pane active" id="tab_dados_gerais">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.data_movimento.label}}</label>{% if form.data_movimento.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.data_movimento.errors %}<label class="error">{% for error in form.data_movimento.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.data_movimento}}
+            </div>
+          </div>
+        </div>
+
+        {% if form.tipo_movimento %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.tipo_movimento.label}}</label>{% if form.tipo_movimento.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.tipo_movimento.errors %}<label class="error">{% for error in form.tipo_movimento.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.tipo_movimento}}
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if form.pedido_compra %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>{{form.pedido_compra.label}}</label>{% if form.pedido_compra.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+            {% if form.pedido_compra.errors %}<label class="error">{% for error in form.pedido_compra.errors %}{{error}}{% endfor %}</label>{% endif %}
+            <div class="input-group" style="margin-bottom: 0px;">
+              <div class="form-line">
+                {{form.pedido_compra}}
+              </div>
+              <a class="input-group-addon newwindow" style="color: green;" title="Adicionar pedido de compra" href="{% url 'compras:addpedidocompraview' %}"><i class="material-icons add-new-icon" title="Adicionar pedido de compra">&#xE147;</i></a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if form.pedido_venda %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>{{form.pedido_venda.label}}</label>{% if form.pedido_venda.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+            {% if form.pedido_venda.errors %}<label class="error">{% for error in form.pedido_venda.errors %}{{error}}{% endfor %}</label>{% endif %}
+            <div class="input-group" style="margin-bottom: 0px;">
+              <div class="form-line">
+                {{form.pedido_venda}}
+              </div>
+              <a class="input-group-addon newwindow" style="color: green;" title="Adicionar pedido de venda" href="{% url 'vendas:addpedidovendaview' %}"><i class="material-icons add-new-icon" title="Adicionar pedido de venda">&#xE147;</i></a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if form.local_orig %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>{{form.local_orig.label}}</label>{% if form.local_orig.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+            {% if form.local_orig.errors %}<label class="error">{% for error in form.local_orig.errors %}{{error}}{% endfor %}</label>{% endif %}
+            <div class="input-group" style="margin-bottom: 0px;">
+              <div class="form-line">
+                {{form.local_orig}}
+              </div>
+              <a class="input-group-addon popup" style="color: green;" title="Adicionar local" href="{% url 'estoque:addlocalview' %}"><i class="material-icons add-new-icon" title="Adicionar local">&#xE147;</i></a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if form.local_dest %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>{{form.local_dest.label}}</label>{% if form.local_dest.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+            {% if form.local_dest.errors %}<label class="error">{% for error in form.local_dest.errors %}{{error}}{% endfor %}</label>{% endif %}
+            <div class="input-group" style="margin-bottom: 0px;">
+              <div class="form-line">
+                {{form.local_dest}}
+              </div>
+              <a class="input-group-addon popup" style="color: green;" title="Adicionar local" href="{% url 'estoque:addlocalview' %}"><i class="material-icons add-new-icon" title="Adicionar local">&#xE147;</i></a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if form.fornecedor %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>{{form.fornecedor.label}}</label>{% if form.fornecedor.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+            {% if form.fornecedor.errors %}<label class="error">{% for error in form.fornecedor.errors %}{{error}}{% endfor %}</label>{% endif %}
+            <div class="input-group" style="margin-bottom: 0px;">
+              <div class="form-line">
+                {{form.fornecedor}}
+              </div>
+              <a class="input-group-addon newwindow" style="color: green;" title="Adicionar fornecedor" href="{% url 'cadastro:addfornecedorview' %}"><i class="material-icons add-new-icon" title="Adicionar fornecedor">&#xE147;</i></a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if form.local_estoque_orig %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>{{form.local_estoque_orig.label}}</label>{% if form.local_estoque_orig.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+            {% if form.local_estoque_orig.errors %}<label class="error">{% for error in form.local_estoque_orig.errors %}{{error}}{% endfor %}</label>{% endif %}
+            <div class="input-group" style="margin-bottom: 0px;">
+              <div class="form-line">
+                {{form.local_estoque_orig}}
+              </div>
+              <a class="input-group-addon popup" style="color: green;" title="Adicionar local" href="{% url 'estoque:addlocalview' %}"><i class="material-icons add-new-icon" title="Adicionar local">&#xE147;</i></a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if form.local_estoque_dest %}
+        <div class="col-sm-6">
+          <div class="form-group">
+            <label>{{form.local_estoque_dest.label}}</label>{% if form.local_estoque_dest.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+            {% if form.local_estoque_dest.errors %}<label class="error">{% for error in form.local_estoque_dest.errors %}{{error}}{% endfor %}</label>{% endif %}
+            <div class="input-group" style="margin-bottom: 0px;">
+              <div class="form-line">
+                {{form.local_estoque_dest}}
+              </div>
+              <a class="input-group-addon popup" style="color: green;" title="Adicionar local" href="{% url 'estoque:addlocalview' %}"><i class="material-icons add-new-icon" title="Adicionar local">&#xE147;</i></a>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.observacoes.label}}</label>{% if form.observacoes.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.observacoes.errors %}<label class="error">{% for error in form.observacoes.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.observacoes}}
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+      <!-- #Tab DADOS GERAIS -->
+
+      <!-- Tab ITENS -->
+      <div role="tabpanel" class="tab-pane formset-tab" id="tab_itens">
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.quantidade_itens.label}}</label>{% if form.quantidade_itens.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.quantidade_itens.errors %}<label class="error">{% for error in form.quantidade_itens.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.quantidade_itens}}
+            </div>
+          </div>
+        </div>
+
+        <div class="col-sm-6">
+          <div class="form-group">
+            <div class="form-line">
+              <label>{{form.valor_total.label}}</label>{% if form.valor_total.field.required %}<strong style="color:red;"> *</strong>{% endif %}
+              {% if form.valor_total.errors %}<label class="error">{% for error in form.valor_total.errors %}{{error}}{% endfor %}</label>{% endif %}
+              {{form.valor_total}}
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-sm-12" style="padding:0px;">
+
+          <h4 style="border-bottom: 1px solid #afabab;">Itens movimentados</h4>
+
+            {% include 'formset/formset_table.html' with formset=itens_form title='Itens' %}
+        </div>
+
+      </div>
+      <!-- #Tab ITENS -->
+
+    </div>
+
+
+  </div>
+  
+  <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+</div>
+<!--#Body-->

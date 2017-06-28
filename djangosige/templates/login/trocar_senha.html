@@ -1,0 +1,46 @@
+{%extends 'base/base.html'%}
+
+
+{%block title%}Trocar Senha{%endblock%}
+{%block side_top_bars%}{%endblock%}
+
+{%block body_class%}login-page ls-closed{%endblock%}
+
+{%block content%}
+<div class="login-box">
+
+    {% include 'login/logo.html' %}
+
+    <div class="card">
+        <div class="body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="msg">Escolha uma nova senha de acesso
+                
+                {% include 'base/form_error_msg.html' %}
+
+                </div>
+                                
+                {% for field in form %}
+                <div class="input-group">
+                    <div class="form-line">
+                        {{field}}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div style="text-align: center;">
+                    <button class="btn btn-red" type="submit">TROCAR SENHA</button>
+                </div>
+                
+                <div class="msg" style="margin-top:20px;margin-bottom:15px;">
+                    <a href="{% url 'login:usuariosview' %}">Voltar</a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{%endblock%}

@@ -1,0 +1,53 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid lista">
+  
+    {% include 'base/title_header.html' %}
+    
+    {% include 'base/msg_sucesso.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lista-content">
+      <div class="card">
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="header">
+            <h2>
+              {{title_complete}}
+            </h2>
+              <div class="header-btn">
+                <a href="{{add_url}}" class="btn btn-success"><i class="material-icons">&#xE148;</i><span> ADICIONAR</span></a>
+                <button class="btn btn-red btn-remove"><i class="material-icons">&#xE872;</i></button>
+              </div>
+          </div>
+
+          <div class="body">
+
+           {% include 'base/search.html' %}
+
+           {% if tipo_pessoa == 'cliente' %}
+           {% include 'cadastro/cliente/cliente_list_table.html' %}
+           {% elif tipo_pessoa == 'empresa' %}
+           {% include 'cadastro/empresa/empresa_list_table.html' %}
+           {% elif tipo_pessoa == 'fornecedor' %}
+           {% include 'cadastro/fornecedor/fornecedor_list_table.html' %}
+           {% elif tipo_pessoa == 'transportadora' %}
+           {% include 'cadastro/transportadora/transportadora_list_table.html' %}
+           {% else %}
+           Nenhum registro encontrado
+           {% endif %}
+
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+</section>
+
+
+{%endblock%}

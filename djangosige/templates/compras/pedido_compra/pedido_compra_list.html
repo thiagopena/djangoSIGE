@@ -1,0 +1,75 @@
+{%extends 'base/base.html'%}
+
+{%block title%}{{title_complete|title}}{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid lista">
+  
+    {% include 'base/title_header.html' %}
+    
+    {% include 'base/msg_sucesso.html' %}
+
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lista-content">
+      <div class="card">
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="header">
+            <h2>
+              {{title_complete}}
+            </h2>
+              <div class="header-btn">
+                <a href="{{add_url}}" class="btn btn-success"><i class="material-icons">&#xE148;</i><span> ADICIONAR</span></a>
+                <button class="btn btn-red btn-remove"><i class="material-icons">&#xE872;</i></button>
+              </div>
+          </div>
+
+          <div class="body">
+
+           {% include 'base/search.html' %}
+
+           <div class="table-responsive">
+            <table id="lista-database" class="table table-bordered table-striped lista-table">
+              <thead>
+                <tr>
+                  <th>#ID</th>                   
+                  <th>Status</th>
+                  <th>Fornecedor</th>
+                  <th>Data de entrega</th>
+                  <th>Total</th>
+                  <th>Remover</th>
+                </tr>
+              </thead>
+
+              <tbody>
+               {% if all_pedidos%}
+               {% for pedido in all_pedidos %}
+               <tr class="clickable-row" data-href="{% url 'compras:editarpedidocompraview' pedido.id %}">
+                <td>{{pedido.id}}</td>
+                <td><b>{{pedido.get_status_display}}</b></td>
+                <td>{{pedido.fornecedor|default_if_none:""}}</td>
+                <td>{{pedido.format_data_entrega|default_if_none:""}}</td>
+                <td>{{pedido.format_valor_total}}</td>
+                <td class="lista-remove">
+                  <input type="checkbox" name="{{pedido.id}}" id="remover-entrada-{{pedido.id}}"/>
+                  <label class="remove-entry-label" for="remover-entrada-{{pedido.id}}"></label>
+                </td>
+              </tr>
+              {% endfor %}
+              {%else%}
+              {%endif%}
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+</div>
+</section>
+
+
+{%endblock%}
