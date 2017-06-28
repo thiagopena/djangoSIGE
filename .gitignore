@@ -34,4 +34,4 @@ coverage.xml
 ArquivosXML/
 arquivos/
 setup.py
-configs.py
+djangosige/configs/configs.py
