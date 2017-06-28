@@ -59,7 +59,7 @@ ROOT_URLCONF = 'djangosige.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(APP_ROOT, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
