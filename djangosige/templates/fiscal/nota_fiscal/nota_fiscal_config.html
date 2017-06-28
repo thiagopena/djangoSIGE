@@ -147,6 +147,10 @@
 
 {% block js %}
     
-  {% include 'fiscal/nota_fiscal/nota_fiscal_jsblock.html' %}
-  
+  {% load staticfiles %}
+
+  {% include 'base/load_jqueryui.html' %}
+
+  {% include 'base/tooltip_js.html' %}
+
 {% endblock %}
