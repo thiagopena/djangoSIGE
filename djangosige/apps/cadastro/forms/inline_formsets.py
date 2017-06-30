@@ -21,7 +21,7 @@ class EnderecoForm(forms.ModelForm):
             'cpais':_("Código do País"),
             'municipio':_("Município (sem acentuação)"),
             'cmun':_("Código do município"),
-            'cep':_("CEP"),
+            'cep':_("CEP (Apenas dígitos)"),
             'uf':_("UF"),
         }
         widgets = {
