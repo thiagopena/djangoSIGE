@@ -279,7 +279,7 @@ class ProcessadorNotaFiscal(object):
                             det.imposto.COFINS.vBC.valor       = item.vq_bccofins
                             det.imposto.COFINS.pCOFINS.valor      = cofins_obj.p_cofins
 
-                        det.imposto.COFINS.vCOFINS.valor      = item.vpis
+                        det.imposto.COFINS.vCOFINS.valor      = item.vcofins
 
                     else:
                         det.imposto.COFINS.CST.valor = '99'
