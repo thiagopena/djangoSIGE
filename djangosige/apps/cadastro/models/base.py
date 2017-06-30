@@ -131,9 +131,13 @@ class Pessoa(models.Model):
     @property
     def cpf_cnpj_apenas_digitos(self):
         if self.tipo_pessoa == 'PF':
-            return re.sub('[./-]', '', self.pessoa_fis_info.cpf)
+            if self.pessoa_fis_info.cpf:
+                return re.sub('[./-]', '', self.pessoa_fis_info.cpf)
+                
         elif self.tipo_pessoa == 'PJ':
-            return re.sub('[./-]', '', self.pessoa_jur_info.cnpj)
+            if self.pessoa_jur_info.cnpj:
+                return re.sub('[./-]', '', self.pessoa_jur_info.cnpj)
+                
         else:
             return ''
 
@@ -142,7 +146,8 @@ class Pessoa(models.Model):
         if self.tipo_pessoa == 'PF':
             return 'ISENTO'
         elif self.tipo_pessoa == 'PJ':
-            return re.sub('[./-]', '', self.pessoa_jur_info.inscricao_estadual)
+            if self.pessoa_jur_info.inscricao_estadual:
+                return re.sub('[./-]', '', self.pessoa_jur_info.inscricao_estadual)
         else:
             return ''
 
