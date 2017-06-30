@@ -161,10 +161,13 @@ class NotaFiscal(models.Model):
 
     @property
     def caminho_proc_completo(self):
-        if APP_ROOT in self.arquivo_proc.name:
-            return self.arquivo_proc.name
+        if self.arquivo_proc:
+            if APP_ROOT in self.arquivo_proc.name:
+                return self.arquivo_proc.name
+            else:
+                return os.path.join(APP_ROOT, self.arquivo_proc.url)
         else:
-            return os.path.join(APP_ROOT, self.arquivo_proc.url)
+            return ''
 
     def format_data_emissao(self):
         return '%s' % date(self.dhemi.date(), "d/m/Y")
