@@ -22,7 +22,10 @@ class Empresa(Pessoa):
 
     @property
     def caminho_completo_logo(self):
-        return os.path.join(MEDIA_ROOT, self.logo_file.name)
+        if self.logo_file.name != 'imagens/logo.png':
+            return os.path.join(MEDIA_ROOT, self.logo_file.name)
+        else:
+            return ''
 
     def save(self, *args, **kwargs):
         #Deletar logo se ja existir um

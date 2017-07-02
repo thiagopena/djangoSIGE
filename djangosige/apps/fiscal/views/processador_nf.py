@@ -136,9 +136,11 @@ class ProcessadorNotaFiscal(object):
                 det.prod.cProd.valor    = item.produto.codigo
                 det.prod.cEAN.valor     = item.produto.codigo_barras
                 det.prod.xProd.valor    = item.produto.descricao
-                det.prod.NCM.valor      = item.produto.ncm[0:8]
-                if len(item.produto.ncm) > 8:
-                    det.prod.EXTIPI.valor = item.produto.ncm[8:]
+                if item.produto.ncm:
+                    det.prod.NCM.valor = item.produto.ncm[0:8]
+                    
+                    if len(item.produto.ncm) > 8:
+                        det.prod.EXTIPI.valor = item.produto.ncm[8:]
 
                 det.prod.CFOP.valor     = item.produto.get_cfop_padrao()
                 det.prod.uCom.valor     = item.produto.get_sigla_unidade()
@@ -1303,7 +1305,7 @@ class ProcessadorNotaFiscal(object):
                 else:
                     e = RespostaSefazNotaFiscal(nfe=nota_obj)
                     e.tipo = u'0'
-                    e.descricao = 'Erro ao enviar nota, verifique a versão do seu aplicativo e a validade de seu certificado.'
+                    e.descricao = 'Erro ao enviar nota, verifique a versão do seu aplicativo e a validade do seu certificado.'
                     e.save()
                     self.salvar_mensagem(message=e.descricao, erro=True)
 
@@ -1316,7 +1318,7 @@ class ProcessadorNotaFiscal(object):
                 e.tipo = u'0'
                 e.descricao = 'Erro de autenticação, verifique se seu certificado é válido.'
                 e.save()
-                self.salvar_mensagem(message=e.descricao)
+                self.salvar_mensagem(message=e.descricao, erro=True)
 
     def cancelar_nota(self, nota_obj):
         RespostaSefazNotaFiscal.objects.filter(nfe=nota_obj).delete()
@@ -1382,7 +1384,7 @@ class ProcessadorNotaFiscal(object):
                 else:
                     e = RespostaSefazNotaFiscal(nfe=nota_obj)
                     e.tipo = u'0'
-                    e.descricao = 'Erro ao enviar nota, verifique a versão do seu aplicativo e a validade de seu certificado.'
+                    e.descricao = 'Erro ao enviar nota, verifique a versão do seu aplicativo e a validade do seu certificado.'
                     e.save()
                     self.salvar_mensagem(message=e.descricao, erro=True)
 
@@ -1392,7 +1394,7 @@ class ProcessadorNotaFiscal(object):
                 e.tipo = u'0'
                 e.descricao = 'Erro de autenticação, verifique se seu certificado é válido.'
                 e.save()
-                self.salvar_mensagem(message=e.descricao)
+                self.salvar_mensagem(message=e.descricao, erro=True)
 
     def gerar_danfe(self, nota_obj):
         self.nova_nfe = nf_e()
@@ -1459,19 +1461,23 @@ class ProcessadorNotaFiscal(object):
         elif not empresa.cpf_cnpj_apenas_digitos:
             return self.salvar_mensagem(message=u'CNPJ do emitente não foi preenchido.', erro=True)
         else:
-            processo = self.nova_nfe.consultar_cadastro(cert=self.info_certificado['cert'], key=self.info_certificado['key'], cpf_cnpj=empresa.cpf_cnpj_apenas_digitos, versao=u'3.10',
-                ambiente=2, estado=empresa.uf_padrao, contingencia=False, salvar_arquivos=salvar_arquivos, caminho=MEDIA_ROOT)
+            try:
+                processo = self.nova_nfe.consultar_cadastro(cert=self.info_certificado['cert'], key=self.info_certificado['key'], cpf_cnpj=empresa.cpf_cnpj_apenas_digitos, versao=u'3.10',
+                    ambiente=2, estado=empresa.uf_padrao, contingencia=False, salvar_arquivos=salvar_arquivos, caminho=MEDIA_ROOT)
 
-            self.processo = processo
+                self.processo = processo
 
-            if processo.resposta.status in (u'200', 200):
-                if processo.resposta.infCons.cStat.valor and processo.resposta.infCons.cStat.valor < u'200':
-                    return self.salvar_mensagem(message=str(processo.resposta.infCons.xMotivo.valor), erro=False)
+                if processo.resposta.status in (u'200', 200):
+                    if processo.resposta.infCons.cStat.valor and processo.resposta.infCons.cStat.valor < u'200':
+                        return self.salvar_mensagem(message=str(processo.resposta.infCons.xMotivo.valor), erro=False)
+                    else:
+                        return self.salvar_mensagem(message=str(processo.resposta.infCons.xMotivo.valor), erro=True)
                 else:
-                    return self.salvar_mensagem(message=str(processo.resposta.infCons.xMotivo.valor), erro=True)
-            else:
-                return self.salvar_mensagem(message='Erro ao consultar cadastro, verifique a versão do seu aplicativo e a validade de seu certificado.', erro=True)
-
+                    return self.salvar_mensagem(message='Erro ao consultar cadastro, verifique a versão do seu aplicativo e a validade do seu certificado.', erro=True)
+            
+            except SSLError as e:
+                return self.salvar_mensagem(message=u'Erro de autenticação: {}'.format(e), erro=True)
+            
     def inutilizar_notas(self, empresa, ambiente, modelo, serie, numero_inicial, numero_final, justificativa, salvar_arquivos):
         self.nova_nfe = nf_e()
 
@@ -1500,7 +1506,7 @@ class ProcessadorNotaFiscal(object):
                 else:
                     return self.salvar_mensagem(message=str(processo.resposta.infInut.xMotivo.valor), erro=True)
             else:
-                return self.salvar_mensagem(message='Erro ao inutilizar notas, verifique a versão do seu aplicativo e a validade de seu certificado.', erro=True)
+                return self.salvar_mensagem(message='Erro ao inutilizar notas, verifique a versão do seu aplicativo e a validade do seu certificado.', erro=True)
 
     def consultar_nota(self, chave, ambiente, salvar_arquivos):
         self.nova_nfe = nf_e()
@@ -1524,7 +1530,7 @@ class ProcessadorNotaFiscal(object):
             else:
                 return self.salvar_mensagem(message=str(processo.resposta.xMotivo.valor), erro=True)
         else:
-            return self.salvar_mensagem(message='Erro ao consultar nota, verifique a versão do seu aplicativo e a validade de seu certificado.', erro=True)
+            return self.salvar_mensagem(message='Erro ao consultar nota, verifique a versão do seu aplicativo e a validade do seu certificado.', erro=True)
 
     def baixar_nota(self, chave, ambiente, ambiente_nacional, salvar_arquivos):
         self.nova_nfe = nf_e()
@@ -1551,7 +1557,7 @@ class ProcessadorNotaFiscal(object):
             else:
                 return self.salvar_mensagem(message=str(processo.resposta.xMotivo.valor), erro=True)
         else:
-            return self.salvar_mensagem(message='Erro ao baixar nota, verifique a versão do seu aplicativo e a validade de seu certificado.', erro=True)
+            return self.salvar_mensagem(message='Erro ao baixar nota, verifique a versão do seu aplicativo e a validade do seu certificado.', erro=True)
 
     def efetuar_manifesto(self, chave, cnpj, ambiente, tipo_manifesto, justificativa, ambiente_nacional, salvar_arquivos):
         self.nova_nfe = nf_e()
@@ -1576,4 +1582,4 @@ class ProcessadorNotaFiscal(object):
             else:
                 return self.salvar_mensagem(message=str(processo.resposta.xMotivo.valor), erro=True)
         else:
-            return self.salvar_mensagem(message='Erro ao efetuar manifesto, verifique a versão do seu aplicativo e a validade de seu certificado.', erro=True)
+            return self.salvar_mensagem(message='Erro ao efetuar manifesto, verifique a versão do seu aplicativo e a validade do seu certificado.', erro=True)
