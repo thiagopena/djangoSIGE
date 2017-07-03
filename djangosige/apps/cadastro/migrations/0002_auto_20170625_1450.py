@@ -22,86 +22,103 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='produto',
             name='cfop_padrao',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='fiscal.NaturezaOperacao'),
+            field=models.ForeignKey(
+                blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='fiscal.NaturezaOperacao'),
         ),
         migrations.AddField(
             model_name='produto',
             name='grupo_fiscal',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='fiscal.GrupoFiscal'),
+            field=models.ForeignKey(
+                blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='fiscal.GrupoFiscal'),
         ),
         migrations.AddField(
             model_name='produto',
             name='marca',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='cadastro.Marca'),
+            field=models.ForeignKey(
+                blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='cadastro.Marca'),
         ),
         migrations.AddField(
             model_name='produto',
             name='unidade',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='cadastro.Unidade'),
+            field=models.ForeignKey(
+                blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='cadastro.Unidade'),
         ),
         migrations.AddField(
             model_name='pessoa',
             name='banco_padrao',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='ban_padrao', to='cadastro.Banco'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='ban_padrao', to='cadastro.Banco'),
         ),
         migrations.AddField(
             model_name='pessoa',
             name='criado_por',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(
+                blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
         ),
         migrations.AddField(
             model_name='pessoa',
             name='email_padrao',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='ema_padrao', to='cadastro.Email'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='ema_padrao', to='cadastro.Email'),
         ),
         migrations.AddField(
             model_name='pessoa',
             name='endereco_padrao',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='end_padrao', to='cadastro.Endereco'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='end_padrao', to='cadastro.Endereco'),
         ),
         migrations.AddField(
             model_name='pessoa',
             name='site_padrao',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='sit_padrao', to='cadastro.Site'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='sit_padrao', to='cadastro.Site'),
         ),
         migrations.AddField(
             model_name='pessoa',
             name='telefone_padrao',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='tel_padrao', to='cadastro.Telefone'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='tel_padrao', to='cadastro.Telefone'),
         ),
         migrations.AddField(
             model_name='minhaempresa',
             name='m_usuario',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='m_usuario', to='login.Usuario'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='m_usuario', to='login.Usuario'),
         ),
         migrations.AddField(
             model_name='endereco',
             name='pessoa_end',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='endereco', to='cadastro.Pessoa'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='endereco', to='cadastro.Pessoa'),
         ),
         migrations.AddField(
             model_name='email',
             name='pessoa_email',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='email', to='cadastro.Pessoa'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='email', to='cadastro.Pessoa'),
         ),
         migrations.AddField(
             model_name='documento',
             name='pessoa_documento',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='documento', to='cadastro.Pessoa'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='documento', to='cadastro.Pessoa'),
         ),
         migrations.AddField(
             model_name='banco',
             name='pessoa_banco',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='banco', to='cadastro.Pessoa'),
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, related_name='banco', to='cadastro.Pessoa'),
         ),
         migrations.AddField(
             model_name='veiculo',
             name='transportadora_veiculo',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='veiculo', to='cadastro.Transportadora'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='veiculo', to='cadastro.Transportadora'),
         ),
         migrations.AddField(
             model_name='minhaempresa',
             name='m_empresa',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='minha_empresa', to='cadastro.Empresa'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='minha_empresa', to='cadastro.Empresa'),
         ),
     ]

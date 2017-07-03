@@ -41,54 +41,83 @@ MOD_FRETE_ESCOLHAS = (
 
 
 class ItensVenda(models.Model):
-    produto         = models.ForeignKey('cadastro.Produto', related_name="venda_produto", on_delete=models.CASCADE, null=True, blank=True)
-    venda_id        = models.ForeignKey('vendas.Venda', related_name="itens_venda", on_delete=models.CASCADE)
-    quantidade      = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    valor_unit      = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    tipo_desconto   = models.CharField(max_length=1, choices=TIPOS_DESCONTO_ESCOLHAS , null=True, blank=True)
-    desconto        = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    subtotal        = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    inf_ad_prod     = models.CharField(max_length=500, null=True, blank=True)
+    produto = models.ForeignKey('cadastro.Produto', related_name="venda_produto",
+                                on_delete=models.CASCADE, null=True, blank=True)
+    venda_id = models.ForeignKey(
+        'vendas.Venda', related_name="itens_venda", on_delete=models.CASCADE)
+    quantidade = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                     MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    valor_unit = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                     MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    tipo_desconto = models.CharField(
+        max_length=1, choices=TIPOS_DESCONTO_ESCOLHAS, null=True, blank=True)
+    desconto = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                   MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    subtotal = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                   MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    inf_ad_prod = models.CharField(max_length=500, null=True, blank=True)
 
-    ##Rateio
-    valor_rateio_frete    = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    valor_rateio_despesas = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    valor_rateio_seguro   = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    # Rateio
+    valor_rateio_frete = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                             MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    valor_rateio_despesas = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                                MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    valor_rateio_seguro = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                              MinValueValidator(Decimal('0.00'))], null=True, blank=True)
 
-    ##Bases de calculo
-    vbc_icms     = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vbc_icms_st  = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vbc_ipi      = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    # Bases de calculo
+    vbc_icms = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                   MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vbc_icms_st = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                      MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vbc_ipi = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                  MinValueValidator(Decimal('0.00'))], null=True, blank=True)
 
-    ##Valores e aliquotas
-    vicms           = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vicms_st        = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vipi            = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vfcp            = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vicmsufdest     = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vicmsufremet    = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vicms_deson     = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    p_icms          = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    p_icmsst        = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    p_ipi           = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    # Valores e aliquotas
+    vicms = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vicms_st = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                   MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vipi = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                               MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vfcp = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                               MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vicmsufdest = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                      MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vicmsufremet = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                       MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vicms_deson = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                      MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    p_icms = models.DecimalField(max_digits=5, decimal_places=2, validators=[
+                                 MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    p_icmsst = models.DecimalField(max_digits=5, decimal_places=2, validators=[
+                                   MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    p_ipi = models.DecimalField(max_digits=5, decimal_places=2, validators=[
+                                MinValueValidator(Decimal('0.00'))], null=True, blank=True)
 
-    ##Valores do PIS e COFINS
-    vq_bcpis    = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vq_bccofins = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vpis        = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vcofins     = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    # Valores do PIS e COFINS
+    vq_bcpis = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                   MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vq_bccofins = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                      MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vpis = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                               MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vcofins = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                  MinValueValidator(Decimal('0.00'))], null=True, blank=True)
 
-    ##Opcoes
-    icms_incluido_preco    = models.BooleanField(default=False)
-    icmsst_incluido_preco  = models.BooleanField(default=False)
-    ipi_incluido_preco     = models.BooleanField(default=False)
-    incluir_bc_icms        = models.BooleanField(default=False) #incluir IPI na BC do ICMS
-    incluir_bc_icmsst      = models.BooleanField(default=False) #incluir IPI na BC do ICMS-ST
+    # Opcoes
+    icms_incluido_preco = models.BooleanField(default=False)
+    icmsst_incluido_preco = models.BooleanField(default=False)
+    ipi_incluido_preco = models.BooleanField(default=False)
+    incluir_bc_icms = models.BooleanField(
+        default=False)  # incluir IPI na BC do ICMS
+    incluir_bc_icmsst = models.BooleanField(
+        default=False)  # incluir IPI na BC do ICMS-ST
     auto_calcular_impostos = models.BooleanField(default=True)
 
     @property
     def vprod(self):
-        return round(self.quantidade*self.valor_unit, 2)
+        return round(self.quantidade * self.valor_unit, 2)
 
     @property
     def vbc_uf_dest(self):
@@ -99,7 +128,7 @@ class ItensVenda(models.Model):
         try:
             icms_obj = self.produto.grupo_fiscal.icms_sn_padrao.get()
             if icms_obj.p_cred_sn:
-                return round((self.subtotal*icms_obj.p_cred_sn)/100, 2)
+                return round((self.subtotal * icms_obj.p_cred_sn) / 100, 2)
             else:
                 return ''
         except:
@@ -110,7 +139,7 @@ class ItensVenda(models.Model):
             return round(self.desconto, decimais)
         else:
             tot_sem_desc = self.get_total_sem_desconto()
-            v_desconto = tot_sem_desc*(self.desconto/100)
+            v_desconto = tot_sem_desc * (self.desconto / 100)
             return round(v_desconto, decimais)
 
     def format_desconto(self):
@@ -118,10 +147,13 @@ class ItensVenda(models.Model):
 
     def format_quantidade(self):
         return locale.format(u'%.2f', self.quantidade, 1)
+
     def format_valor_unit(self):
         return locale.format(u'%.2f', self.valor_unit, 1)
+
     def format_total(self):
         return locale.format(u'%.2f', self.subtotal, 1)
+
     def format_vprod(self):
         return locale.format(u'%.2f', self.vprod, 1)
 
@@ -129,7 +161,7 @@ class ItensVenda(models.Model):
         if self.tipo_desconto == '0':
             return self.subtotal + self.desconto
         else:
-            tot_sem_desc = (self.subtotal*100)/(100-self.desconto)
+            tot_sem_desc = (self.subtotal * 100) / (100 - self.desconto)
             return tot_sem_desc
 
     def get_mot_deson_icms(self):
@@ -162,7 +194,8 @@ class ItensVenda(models.Model):
 
     def get_aliquota_pis(self, format=True):
         try:
-            pis_padrao = PIS.objects.get(grupo_fiscal=self.produto.grupo_fiscal)
+            pis_padrao = PIS.objects.get(
+                grupo_fiscal=self.produto.grupo_fiscal)
 
             if pis_padrao.valiq_pis:
                 if format:
@@ -180,7 +213,8 @@ class ItensVenda(models.Model):
 
     def get_aliquota_cofins(self, format=True):
         try:
-            cofins_padrao = COFINS.objects.get(grupo_fiscal=self.produto.grupo_fiscal)
+            cofins_padrao = COFINS.objects.get(
+                grupo_fiscal=self.produto.grupo_fiscal)
 
             if cofins_padrao.valiq_cofins:
                 if format:
@@ -206,53 +240,67 @@ class ItensVenda(models.Model):
         if self.produto.grupo_fiscal:
 
             try:
-                pis_padrao = PIS.objects.get(grupo_fiscal=self.produto.grupo_fiscal)
-                cofins_padrao = COFINS.objects.get(grupo_fiscal=self.produto.grupo_fiscal)
+                pis_padrao = PIS.objects.get(
+                    grupo_fiscal=self.produto.grupo_fiscal)
+                cofins_padrao = COFINS.objects.get(
+                    grupo_fiscal=self.produto.grupo_fiscal)
 
-                ##Calculo Vl. PIS
+                # Calculo Vl. PIS
                 if pis_padrao.valiq_pis:
                     self.vq_bcpis = self.quantidade
                     self.vpis = self.quantidade * pis_padrao.valiq_pis
                 elif pis_padrao.p_pis:
                     self.vq_bcpis = vbc
-                    self.vpis = vbc * (pis_padrao.p_pis/100)
+                    self.vpis = vbc * (pis_padrao.p_pis / 100)
 
-                ##Calculo Vl. COFINS
+                # Calculo Vl. COFINS
                 if cofins_padrao.valiq_cofins:
                     self.vq_bccofins = self.quantidade
                     self.vcofins = self.quantidade * cofins_padrao.valiq_cofins
                 elif cofins_padrao.p_cofins:
                     self.vq_bccofins = vbc
-                    self.vcofins = vbc * (cofins_padrao.p_cofins/100)
-
+                    self.vcofins = vbc * (cofins_padrao.p_cofins / 100)
 
             except (PIS.DoesNotExist, COFINS.DoesNotExist):
                 pass
 
 
 class Venda(models.Model):
-    #Cliente
-    cliente          = models.ForeignKey('cadastro.Cliente', related_name="venda_cliente", on_delete=models.CASCADE)
-    ind_final        = models.BooleanField(default=False)
-    #Transporte
-    transportadora   = models.ForeignKey('cadastro.Transportadora', related_name="venda_transportadora", on_delete=models.CASCADE, null=True, blank=True)
-    veiculo          = models.ForeignKey('cadastro.Veiculo', related_name="venda_veiculo", on_delete=models.SET_NULL, null=True, blank=True)
-    mod_frete        = models.CharField(max_length=1, choices=MOD_FRETE_ESCOLHAS , default='9')
-    #Estoque
-    local_orig       = models.ForeignKey('estoque.LocalEstoque', related_name="venda_local_estoque", default=DEFAULT_LOCAL_ID)
+    # Cliente
+    cliente = models.ForeignKey(
+        'cadastro.Cliente', related_name="venda_cliente", on_delete=models.CASCADE)
+    ind_final = models.BooleanField(default=False)
+    # Transporte
+    transportadora = models.ForeignKey(
+        'cadastro.Transportadora', related_name="venda_transportadora", on_delete=models.CASCADE, null=True, blank=True)
+    veiculo = models.ForeignKey('cadastro.Veiculo', related_name="venda_veiculo",
+                                on_delete=models.SET_NULL, null=True, blank=True)
+    mod_frete = models.CharField(
+        max_length=1, choices=MOD_FRETE_ESCOLHAS, default='9')
+    # Estoque
+    local_orig = models.ForeignKey(
+        'estoque.LocalEstoque', related_name="venda_local_estoque", default=DEFAULT_LOCAL_ID)
     movimentar_estoque = models.BooleanField(default=True)
-    #Info
-    data_emissao     = models.DateField(null=True, blank=True)
-    vendedor         = models.CharField(max_length=255, null=True, blank=True)
-    valor_total      = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    tipo_desconto    = models.CharField(max_length=1, choices=TIPOS_DESCONTO_ESCOLHAS , default='0')
-    desconto         = models.DecimalField(max_digits=15, decimal_places=4, validators=[MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    despesas         = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    frete            = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    seguro           = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    impostos         = models.DecimalField(max_digits=13, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    cond_pagamento   = models.ForeignKey('vendas.CondicaoPagamento', related_name="venda_pagamento", on_delete=models.SET_NULL, null=True, blank=True)
-    observacoes      = models.CharField(max_length=1055, null=True, blank=True)
+    # Info
+    data_emissao = models.DateField(null=True, blank=True)
+    vendedor = models.CharField(max_length=255, null=True, blank=True)
+    valor_total = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                      MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    tipo_desconto = models.CharField(
+        max_length=1, choices=TIPOS_DESCONTO_ESCOLHAS, default='0')
+    desconto = models.DecimalField(max_digits=15, decimal_places=4, validators=[
+                                   MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    despesas = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                   MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    frete = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    seguro = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                 MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    impostos = models.DecimalField(max_digits=13, decimal_places=2, validators=[
+                                   MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    cond_pagamento = models.ForeignKey(
+        'vendas.CondicaoPagamento', related_name="venda_pagamento", on_delete=models.SET_NULL, null=True, blank=True)
+    observacoes = models.CharField(max_length=1055, null=True, blank=True)
 
     def get_total_sem_imposto(self):
         total_sem_imposto = self.valor_total - self.impostos
@@ -285,9 +333,8 @@ class Venda(models.Model):
             return round(self.desconto, decimais)
         else:
             tot_sem_desc = self.get_total_sem_desconto()
-            v_desconto = tot_sem_desc*(self.desconto/100)
+            v_desconto = tot_sem_desc * (self.desconto / 100)
             return round(v_desconto, decimais)
-
 
     def format_valor_total(self):
         return locale.format(u'%.2f', self.valor_total, 1)
@@ -303,7 +350,7 @@ class Venda(models.Model):
 
     def format_desconto(self):
         if self.tipo_desconto == '0':
-            #return 'R$ {0}'.format(locale.format(u'%.2f', self.desconto, 1))
+            # return 'R$ {0}'.format(locale.format(u'%.2f', self.desconto, 1))
             return locale.format(u'%.2f', self.desconto, 1)
         else:
             itens = ItensVenda.objects.filter(venda_id=self.id)
@@ -311,8 +358,8 @@ class Venda(models.Model):
             for it in itens:
                 tot += it.get_total_sem_desconto()
 
-            v_desconto = tot*(self.desconto/100)
-            #return 'R$ {0}'.format(locale.format(u'%.2f', v_desconto, 1))
+            v_desconto = tot * (self.desconto / 100)
+            # return 'R$ {0}'.format(locale.format(u'%.2f', v_desconto, 1))
             return locale.format(u'%.2f', v_desconto, 1)
 
     def format_seguro(self):
@@ -352,19 +399,20 @@ class Venda(models.Model):
         except PedidoVenda.DoesNotExist:
             return OrcamentoVenda.objects.get(id=self.id)
 
-
     def __unicode__(self):
-        s = u'Venda nº %s' %(self.id)
+        s = u'Venda nº %s' % (self.id)
         return s
+
     def __str__(self):
-        s = u'Venda nº %s' %(self.id)
+        s = u'Venda nº %s' % (self.id)
         return s
 
 
 class OrcamentoVenda(Venda):
     #descricao       = models.CharField(max_length=255)
     data_vencimento = models.DateField(null=True, blank=True)
-    status          = models.CharField(max_length=1, choices=STATUS_ORCAMENTO_ESCOLHAS, default='0')
+    status = models.CharField(
+        max_length=1, choices=STATUS_ORCAMENTO_ESCOLHAS, default='0')
 
     @property
     def format_data_vencimento(self):
@@ -375,20 +423,23 @@ class OrcamentoVenda(Venda):
         return 'Orçamento'
 
     def edit_url(self):
-        return reverse_lazy('vendas:editarorcamentovendaview', kwargs={'pk':self.id})
+        return reverse_lazy('vendas:editarorcamentovendaview', kwargs={'pk': self.id})
 
     def __unicode__(self):
-        s = u'Orçamento de venda nº %s' %(self.id)
+        s = u'Orçamento de venda nº %s' % (self.id)
         return s
+
     def __str__(self):
-        s = u'Orçamento de venda nº %s' %(self.id)
+        s = u'Orçamento de venda nº %s' % (self.id)
         return s
 
 
 class PedidoVenda(Venda):
-    orcamento       = models.ForeignKey('vendas.OrcamentoVenda', related_name="orcamento_pedido", on_delete=models.SET_NULL, null=True, blank=True)
-    data_entrega    = models.DateField(null=True, blank=True)
-    status          = models.CharField(max_length=1, choices=STATUS_PEDIDO_VENDA_ESCOLHAS, default='0')
+    orcamento = models.ForeignKey(
+        'vendas.OrcamentoVenda', related_name="orcamento_pedido", on_delete=models.SET_NULL, null=True, blank=True)
+    data_entrega = models.DateField(null=True, blank=True)
+    status = models.CharField(
+        max_length=1, choices=STATUS_PEDIDO_VENDA_ESCOLHAS, default='0')
 
     @property
     def format_data_entrega(self):
@@ -399,12 +450,14 @@ class PedidoVenda(Venda):
         return 'Pedido'
 
     def edit_url(self):
-        return reverse_lazy('vendas:editarpedidovendaview', kwargs={'pk':self.id})
+        return reverse_lazy('vendas:editarpedidovendaview', kwargs={'pk': self.id})
 
     def __unicode__(self):
-        s = u'Pedido de venda nº %s (%s)' %(self.id, self.get_status_display())
-        return s
-    def __str__(self):
-        s = u'Pedido de venda nº %s (%s)' %(self.id, self.get_status_display())
+        s = u'Pedido de venda nº %s (%s)' % (
+            self.id, self.get_status_display())
         return s
 
+    def __str__(self):
+        s = u'Pedido de venda nº %s (%s)' % (
+            self.id, self.get_status_display())
+        return s

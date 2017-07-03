@@ -28,7 +28,8 @@ class AdicionarEmpresaView(AdicionarPessoaView):
         return super(AdicionarEmpresaView, self).get(request, form, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        form = EmpresaForm(request.POST, request.FILES, prefix='empresa_form', request=request)
+        form = EmpresaForm(request.POST, request.FILES,
+                           prefix='empresa_form', request=request)
         return super(AdicionarEmpresaView, self).post(request, form, *args, **kwargs)
 
 
@@ -77,14 +78,15 @@ class EditarEmpresaView(EditarPessoaView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        form = form_class(request.POST, request.FILES, prefix='empresa_form', instance=self.object, request=request)
+        form = form_class(request.POST, request.FILES,
+                          prefix='empresa_form', instance=self.object, request=request)
         logo_file = Empresa.objects.get(pk=self.object.pk).logo_file
         return super(EditarEmpresaView, self).post(request, form, logo_file=logo_file, *args, **kwargs)
 
 
 class InfoEmpresa(View):
     def post(self, request, *args, **kwargs):
-        pessoa  = Pessoa.objects.get(pk=request.POST['pessoaId'])
+        pessoa = Pessoa.objects.get(pk=request.POST['pessoaId'])
         obj_list = []
         obj_list.append(pessoa.pessoa_jur_info)
 
@@ -92,6 +94,6 @@ class InfoEmpresa(View):
             obj_list.append(pessoa.endereco_padrao)
 
         data = serializers.serialize('json', obj_list, fields=('cnpj', 'inscricao_estadual', 'logradouro', 'numero', 'bairro',
-            'municipio', 'cmun', 'uf', 'pais', 'complemento', 'cep',))
+                                                               'municipio', 'cmun', 'uf', 'pais', 'complemento', 'cep',))
 
         return HttpResponse(data, content_type='application/json')

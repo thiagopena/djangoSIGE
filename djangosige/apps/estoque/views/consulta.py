@@ -14,7 +14,8 @@ class ConsultaEstoqueView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ConsultaEstoqueView, self).get_context_data(**kwargs)
-        context['todos_produtos'] = Produto.objects.filter(controlar_estoque=True)
+        context['todos_produtos'] = Produto.objects.filter(
+            controlar_estoque=True)
         context['todos_locais'] = LocalEstoque.objects.all()
         context['title_complete'] = 'CONSULTA DE ESTOQUE'
         return context
@@ -26,10 +27,10 @@ class ConsultaEstoqueView(ListView):
         if produto:
             produtos_filtrados = Produto.objects.filter(id=produto)
         elif local:
-            produtos_filtrados = LocalEstoque.objects.get(id=local).produtos_estoque.filter(controlar_estoque=True, estoque_atual__gt=0)
+            produtos_filtrados = LocalEstoque.objects.get(
+                id=local).produtos_estoque.filter(controlar_estoque=True, estoque_atual__gt=0)
         else:
-            produtos_filtrados = Produto.objects.filter(controlar_estoque=True, estoque_atual__gt=0)
+            produtos_filtrados = Produto.objects.filter(
+                controlar_estoque=True, estoque_atual__gt=0)
 
         return produtos_filtrados
-
-

@@ -11,10 +11,10 @@ class NaturezaOperacaoForm(forms.ModelForm):
         model = NaturezaOperacao
         fields = ('cfop', 'descricao', 'tp_operacao', 'id_dest',)
         widgets = {
-            'cfop':forms.TextInput(attrs={'class':'form-control', 'size':'40'}),
-            'descricao':forms.TextInput(attrs={'class':'form-control'}),
-            'tp_operacao':forms.Select(attrs={'class':'form-control'}),
-            'id_dest':forms.Select(attrs={'class':'form-control'}),
+            'cfop': forms.TextInput(attrs={'class': 'form-control', 'size': '40'}),
+            'descricao': forms.TextInput(attrs={'class': 'form-control'}),
+            'tp_operacao': forms.Select(attrs={'class': 'form-control'}),
+            'id_dest': forms.Select(attrs={'class': 'form-control'}),
         }
         labels = {
             'cfop': _('CFOP'),

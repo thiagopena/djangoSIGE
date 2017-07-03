@@ -6,6 +6,7 @@ from django.utils.deprecation import MiddlewareMixin
 
 from .configs.settings import LOGIN_NOT_REQUIRED
 
+
 class LoginRequiredMiddleware(MiddlewareMixin):
     def __init__(self, get_response=None, *args, **kwargs):
         self.exceptions = tuple(re.compile(url) for url in LOGIN_NOT_REQUIRED)
@@ -14,7 +15,7 @@ class LoginRequiredMiddleware(MiddlewareMixin):
         return super(LoginRequiredMiddleware, self).__init__(get_response, *args, **kwargs)
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        #Caso o user ja esteja logado:
+        # Caso o user ja esteja logado:
         if request.user.is_authenticated():
             for url in self.exceptions:
                 if url.match(request.path):

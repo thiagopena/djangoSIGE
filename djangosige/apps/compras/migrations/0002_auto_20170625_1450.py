@@ -21,21 +21,25 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='compra',
             name='cond_pagamento',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='compra_pagamento', to='vendas.CondicaoPagamento'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='compra_pagamento', to='vendas.CondicaoPagamento'),
         ),
         migrations.AddField(
             model_name='compra',
             name='fornecedor',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='compra_fornecedor', to='cadastro.Fornecedor'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='compra_fornecedor', to='cadastro.Fornecedor'),
         ),
         migrations.AddField(
             model_name='compra',
             name='local_dest',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='compra_local_estoque', to='estoque.LocalEstoque'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='compra_local_estoque', to='estoque.LocalEstoque'),
         ),
         migrations.AddField(
             model_name='pedidocompra',
             name='orcamento',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='orcamento_pedido', to='compras.OrcamentoCompra'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='orcamento_pedido', to='compras.OrcamentoCompra'),
         ),
     ]

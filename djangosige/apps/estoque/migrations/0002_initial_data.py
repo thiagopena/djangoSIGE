@@ -6,8 +6,9 @@ from django.core.serializers import base, python
 from django.core.management import call_command
 
 #
-##Codigo retirado de: https://stackoverflow.com/questions/25960850/loading-initial-data-with-django-1-7-and-data-migrations
+# Codigo retirado de: https://stackoverflow.com/questions/25960850/loading-initial-data-with-django-1-7-and-data-migrations
 #
+
 
 def load_fixture(apps, schema_editor):
     # Save the old _get_model() function
@@ -20,7 +21,8 @@ def load_fixture(apps, schema_editor):
         try:
             return apps.get_model(model_identifier)
         except (LookupError, TypeError):
-            raise base.DeserializationError("Invalid model identifier: '%s'" % model_identifier)
+            raise base.DeserializationError(
+                "Invalid model identifier: '%s'" % model_identifier)
 
     # Replace the _get_model() function on the module, so loaddata can utilize it.
     python._get_model = _get_model
@@ -41,4 +43,3 @@ class Migration(migrations.Migration):
     operations = [
         migrations.RunPython(load_fixture),
     ]
-

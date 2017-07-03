@@ -22,33 +22,36 @@ class LancamentoForm(forms.ModelForm):
         if user:
             try:
                 usuario = Usuario.objects.get(user=user)
-                m_empresa = MinhaEmpresa.objects.get(m_usuario=usuario).m_empresa
+                m_empresa = MinhaEmpresa.objects.get(
+                    m_usuario=usuario).m_empresa
                 if m_empresa:
                     if Banco.objects.filter(pessoa_banco=m_empresa).count():
-                        self.fields['conta_corrente'].choices = ((None, '----------'),)
-                        self.fields['conta_corrente'].choices += ((conta.id, str(conta)) for conta in Banco.objects.filter(pessoa_banco=m_empresa))
+                        self.fields['conta_corrente'].choices = (
+                            (None, '----------'),)
+                        self.fields['conta_corrente'].choices += (
+                            (conta.id, str(conta)) for conta in Banco.objects.filter(pessoa_banco=m_empresa))
                     else:
-                        self.fields['conta_corrente'].choices = ((None, '----------'),)
+                        self.fields['conta_corrente'].choices = (
+                            (None, '----------'),)
             except:
                 self.fields['conta_corrente'].choices = ((None, '----------'),)
         else:
             self.fields['conta_corrente'].choices = ((None, '----------'),)
 
-
     class Meta:
         fields = ('descricao', 'grupo_plano', 'conta_corrente', 'data_pagamento', 'data_vencimento',
                   'valor_total', 'abatimento', 'juros', 'valor_liquido', 'movimentar_caixa',)
         widgets = {
-            'descricao': forms.TextInput(attrs={'class':'form-control'}),
-            'grupo_plano': forms.Select(attrs={'class':'form-control'}),
-            'conta_corrente': forms.Select(attrs={'class':'form-control'}),
-            'data_pagamento': forms.DateInput(attrs={'class':'form-control datepicker'}),
-            'data_vencimento': forms.DateInput(attrs={'class':'form-control datepicker'}),
-            'valor_total': forms.TextInput(attrs={'class':'form-control decimal-mask'}),
-            'abatimento': forms.TextInput(attrs={'class':'form-control decimal-mask'}),
-            'juros': forms.TextInput(attrs={'class':'form-control decimal-mask'}),
-            'valor_liquido': forms.TextInput(attrs={'class':'form-control decimal-mask'}),
-            'movimentar_caixa': forms.CheckboxInput(attrs={'class':'form-control'}),
+            'descricao': forms.TextInput(attrs={'class': 'form-control'}),
+            'grupo_plano': forms.Select(attrs={'class': 'form-control'}),
+            'conta_corrente': forms.Select(attrs={'class': 'form-control'}),
+            'data_pagamento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
+            'data_vencimento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
+            'valor_total': forms.TextInput(attrs={'class': 'form-control decimal-mask'}),
+            'abatimento': forms.TextInput(attrs={'class': 'form-control decimal-mask'}),
+            'juros': forms.TextInput(attrs={'class': 'form-control decimal-mask'}),
+            'valor_liquido': forms.TextInput(attrs={'class': 'form-control decimal-mask'}),
+            'movimentar_caixa': forms.CheckboxInput(attrs={'class': 'form-control'}),
         }
         labels = {
             'descricao': _('Descrição'),
@@ -70,7 +73,8 @@ class EntradaForm(LancamentoForm):
         self.fields['status'].initial = '0'
 
         if PlanoContasGrupo.objects.filter(tipo_grupo='1').count():
-            self.fields['grupo_plano'].choices = ((grupo.id,  str(grupo.codigo) + ' - ' + str(grupo.descricao)) for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='0'))
+            self.fields['grupo_plano'].choices = ((grupo.id,  str(grupo.codigo) + ' - ' + str(
+                grupo.descricao)) for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='0'))
         else:
             self.fields['grupo_plano'].choices = ((None, '----------'),)
 
@@ -78,8 +82,9 @@ class EntradaForm(LancamentoForm):
         model = Entrada
         fields = LancamentoForm.Meta.fields + ('cliente', 'status',)
         widgets = LancamentoForm.Meta.widgets
-        widgets['cliente'] = forms.Select(attrs={'class':'form-control'})
-        widgets['status'] = forms.Select(attrs={'class':'form-control', 'disabled':True})
+        widgets['cliente'] = forms.Select(attrs={'class': 'form-control'})
+        widgets['status'] = forms.Select(
+            attrs={'class': 'form-control', 'disabled': True})
         labels = LancamentoForm.Meta.labels
         labels['cliente'] = _('Cliente')
         labels['status'] = _('Status')
@@ -91,7 +96,8 @@ class SaidaForm(LancamentoForm):
         self.fields['status'].initial = '0'
 
         if PlanoContasGrupo.objects.filter(tipo_grupo='1').count():
-            self.fields['grupo_plano'].choices = ((grupo.id,  str(grupo.codigo) + ' - ' + str(grupo.descricao)) for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='1'))
+            self.fields['grupo_plano'].choices = ((grupo.id,  str(grupo.codigo) + ' - ' + str(
+                grupo.descricao)) for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='1'))
         else:
             self.fields['grupo_plano'].choices = ((None, '----------'),)
 
@@ -99,8 +105,9 @@ class SaidaForm(LancamentoForm):
         model = Saida
         fields = LancamentoForm.Meta.fields + ('fornecedor', 'status',)
         widgets = LancamentoForm.Meta.widgets
-        widgets['fornecedor'] = forms.Select(attrs={'class':'form-control'})
-        widgets['status'] = forms.Select(attrs={'class':'form-control', 'disabled':True})
+        widgets['fornecedor'] = forms.Select(attrs={'class': 'form-control'})
+        widgets['status'] = forms.Select(
+            attrs={'class': 'form-control', 'disabled': True})
         labels = LancamentoForm.Meta.labels
         labels['fornecedor'] = _('Fornecedor')
         labels['status'] = _('Status')
@@ -111,7 +118,8 @@ class ContaReceberForm(EntradaForm):
         super(ContaReceberForm, self).__init__(*args, **kwargs)
         self.fields['status'].choices = STATUS_CONTA_ENTRADA_ESCOLHAS
         self.fields['status'].initial = '1'
-        self.fields['data_pagamento'].widget.attrs = {'class':'form-control hidden', 'disabled':True, 'style':'background-color:lightgrey;'}
+        self.fields['data_pagamento'].widget.attrs = {
+            'class': 'form-control hidden', 'disabled': True, 'style': 'background-color:lightgrey;'}
 
 
 class ContaPagarForm(SaidaForm):
@@ -119,4 +127,5 @@ class ContaPagarForm(SaidaForm):
         super(ContaPagarForm, self).__init__(*args, **kwargs)
         self.fields['status'].choices = STATUS_CONTA_SAIDA_ESCOLHAS
         self.fields['status'].initial = '1'
-        self.fields['data_pagamento'].widget.attrs = {'class':'form-control hidden', 'disabled':True, 'style':'background-color:lightgrey;'}
+        self.fields['data_pagamento'].widget.attrs = {
+            'class': 'form-control hidden', 'disabled': True, 'style': 'background-color:lightgrey;'}

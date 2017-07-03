@@ -22,14 +22,17 @@ class AdicionarCondicaoPagamentoView(CreateView):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarCondicaoPagamentoView, self).get_context_data(**kwargs)
+        context = super(AdicionarCondicaoPagamentoView,
+                        self).get_context_data(**kwargs)
         context['title_complete'] = 'ADICIONAR CONDIÇÃO DE PAGAMENTO'
-        context['return_url'] = reverse_lazy('vendas:listacondicaopagamentoview')
+        context['return_url'] = reverse_lazy(
+            'vendas:listacondicaopagamentoview')
         return context
 
     def form_valid(self, form):
         super(AdicionarCondicaoPagamentoView, self).form_valid(form)
-        messages.success(self.request, self.get_success_message(form.cleaned_data))
+        messages.success(
+            self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
 
@@ -40,7 +43,8 @@ class CondicaoPagamentoListView(ListView):
     success_url = reverse_lazy('vendas:listacondicaopagamentoview')
 
     def get_context_data(self, **kwargs):
-        context = super(CondicaoPagamentoListView, self).get_context_data(**kwargs)
+        context = super(CondicaoPagamentoListView,
+                        self).get_context_data(**kwargs)
         context['title_complete'] = 'CONDIÇÕES DE PAGAMENTO CADASTRADAS'
         context['add_url'] = reverse_lazy('vendas:addcondicaopagamentoview')
         return context
@@ -50,7 +54,7 @@ class CondicaoPagamentoListView(ListView):
 
     def post(self, request, *args, **kwargs):
         for key, value in request.POST.items():
-            if value=="on":
+            if value == "on":
                 instance = CondicaoPagamento.objects.get(id=key)
                 instance.delete()
         return redirect(self.success_url)
@@ -67,18 +71,22 @@ class EditarCondicaoPagamentoView(UpdateView):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
 
     def get_context_data(self, **kwargs):
-        context = super(EditarCondicaoPagamentoView, self).get_context_data(**kwargs)
-        context['return_url'] = reverse_lazy('vendas:listacondicaopagamentoview')
+        context = super(EditarCondicaoPagamentoView,
+                        self).get_context_data(**kwargs)
+        context['return_url'] = reverse_lazy(
+            'vendas:listacondicaopagamentoview')
         return context
 
     def form_valid(self, form):
         super(EditarCondicaoPagamentoView, self).form_valid(form)
-        messages.success(self.request, self.get_success_message(form.cleaned_data))
+        messages.success(
+            self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
 
 class InfoCondicaoPagamento(View):
     def post(self, request, *args, **kwargs):
         pag = CondicaoPagamento.objects.get(pk=request.POST['pagamentoId'])
-        data = serializers.serialize('json', [pag,], fields=('n_parcelas', 'parcela_inicial', 'dias_recorrencia'))
+        data = serializers.serialize('json', [pag, ], fields=(
+            'n_parcelas', 'parcela_inicial', 'dias_recorrencia'))
         return HttpResponse(data, content_type='application/json')

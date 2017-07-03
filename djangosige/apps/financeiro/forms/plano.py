@@ -12,23 +12,26 @@ class PlanoContasGrupoForm(forms.ModelForm):
         model = PlanoContasGrupo
         fields = ('tipo_grupo', 'descricao',)
         widgets = {
-            'descricao': forms.TextInput(attrs={'class':'form-control'}),
-            'tipo_grupo': forms.Select(attrs={'class':'form-control'}),
+            'descricao': forms.TextInput(attrs={'class': 'form-control'}),
+            'tipo_grupo': forms.Select(attrs={'class': 'form-control'}),
         }
         labels = {
             'descricao': _('Descrição'),
             'tipo_grupo': _('Tipo de lançamento'),
         }
 
+
 class PlanoContasSubgrupoForm(forms.ModelForm):
     class Meta:
         model = PlanoContasSubgrupo
         fields = ('descricao',)
         widgets = {
-            'descricao': forms.TextInput(attrs={'class':'form-control'}),
+            'descricao': forms.TextInput(attrs={'class': 'form-control'}),
         }
         labels = {
             'descricao': _('Descrição'),
         }
 
-PlanoContasSubgrupoFormSet = inlineformset_factory(PlanoContasGrupo, PlanoContasSubgrupo, form=PlanoContasSubgrupoForm, fk_name='grupo', extra=1, can_delete=True)
+
+PlanoContasSubgrupoFormSet = inlineformset_factory(
+    PlanoContasGrupo, PlanoContasSubgrupo, form=PlanoContasSubgrupoForm, fk_name='grupo', extra=1, can_delete=True)

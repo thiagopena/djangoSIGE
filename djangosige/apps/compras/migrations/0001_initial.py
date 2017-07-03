@@ -20,35 +20,57 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Compra',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('mod_frete', models.CharField(choices=[('0', 'Por conta do emitente'), ('1', 'Por conta do destinatário/remetente'), ('2', 'Por conta de terceiros'), ('9', 'Sem frete')], default='9', max_length=1)),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('mod_frete', models.CharField(choices=[('0', 'Por conta do emitente'), (
+                    '1', 'Por conta do destinatário/remetente'), ('2', 'Por conta de terceiros'), ('9', 'Sem frete')], default='9', max_length=1)),
                 ('movimentar_estoque', models.BooleanField(default=True)),
                 ('data_emissao', models.DateField(blank=True, null=True)),
-                ('valor_total', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('tipo_desconto', models.CharField(choices=[('0', 'Valor'), ('1', 'Percentual')], default='0', max_length=1)),
-                ('desconto', models.DecimalField(decimal_places=4, default=Decimal('0.00'), max_digits=15, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('despesas', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('frete', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('seguro', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('total_icms', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('total_ipi', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('observacoes', models.CharField(blank=True, max_length=1055, null=True)),
+                ('valor_total', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('tipo_desconto', models.CharField(choices=[
+                 ('0', 'Valor'), ('1', 'Percentual')], default='0', max_length=1)),
+                ('desconto', models.DecimalField(decimal_places=4, default=Decimal(
+                    '0.00'), max_digits=15, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('despesas', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('frete', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('seguro', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('total_icms', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('total_ipi', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('observacoes', models.CharField(
+                    blank=True, max_length=1055, null=True)),
             ],
         ),
         migrations.CreateModel(
             name='ItensCompra',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantidade', models.DecimalField(blank=True, decimal_places=2, max_digits=13, null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('valor_unit', models.DecimalField(blank=True, decimal_places=2, max_digits=13, null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('tipo_desconto', models.CharField(blank=True, choices=[('0', 'Valor'), ('1', 'Percentual')], max_length=1, null=True)),
-                ('desconto', models.DecimalField(blank=True, decimal_places=2, max_digits=13, null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('subtotal', models.DecimalField(blank=True, decimal_places=2, max_digits=13, null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('inf_ad_prod', models.CharField(blank=True, max_length=500, null=True)),
-                ('vicms', models.DecimalField(blank=True, decimal_places=2, max_digits=13, null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('vipi', models.DecimalField(blank=True, decimal_places=2, max_digits=13, null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('p_icms', models.DecimalField(blank=True, decimal_places=2, max_digits=5, null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('p_ipi', models.DecimalField(blank=True, decimal_places=2, max_digits=5, null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
+                ('quantidade', models.DecimalField(blank=True, decimal_places=2, max_digits=13,
+                                                   null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('valor_unit', models.DecimalField(blank=True, decimal_places=2, max_digits=13,
+                                                   null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('tipo_desconto', models.CharField(blank=True, choices=[
+                 ('0', 'Valor'), ('1', 'Percentual')], max_length=1, null=True)),
+                ('desconto', models.DecimalField(blank=True, decimal_places=2, max_digits=13,
+                                                 null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('subtotal', models.DecimalField(blank=True, decimal_places=2, max_digits=13,
+                                                 null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('inf_ad_prod', models.CharField(
+                    blank=True, max_length=500, null=True)),
+                ('vicms', models.DecimalField(blank=True, decimal_places=2, max_digits=13,
+                                              null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('vipi', models.DecimalField(blank=True, decimal_places=2, max_digits=13, null=True,
+                                             validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('p_icms', models.DecimalField(blank=True, decimal_places=2, max_digits=5,
+                                               null=True, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('p_ipi', models.DecimalField(blank=True, decimal_places=2, max_digits=5, null=True,
+                                              validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
                 ('icms_incluido_preco', models.BooleanField(default=False)),
                 ('ipi_incluido_preco', models.BooleanField(default=False)),
                 ('incluir_bc_icms', models.BooleanField(default=False)),
@@ -58,43 +80,52 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Pagamento',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('indice_parcela', models.IntegerField()),
                 ('vencimento', models.DateField()),
-                ('valor_parcela', models.DecimalField(decimal_places=2, max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('valor_parcela', models.DecimalField(decimal_places=2, max_digits=13, validators=[
+                 django.core.validators.MinValueValidator(Decimal('0.00'))])),
             ],
         ),
         migrations.CreateModel(
             name='OrcamentoCompra',
             fields=[
-                ('compra_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='compras.Compra')),
+                ('compra_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
+                                                    parent_link=True, primary_key=True, serialize=False, to='compras.Compra')),
                 ('data_vencimento', models.DateField(blank=True, null=True)),
-                ('status', models.CharField(choices=[('0', 'Aberto'), ('1', 'Baixado'), ('2', 'Cancelado')], default='0', max_length=1)),
+                ('status', models.CharField(choices=[
+                 ('0', 'Aberto'), ('1', 'Baixado'), ('2', 'Cancelado')], default='0', max_length=1)),
             ],
             bases=('compras.compra',),
         ),
         migrations.CreateModel(
             name='PedidoCompra',
             fields=[
-                ('compra_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='compras.Compra')),
+                ('compra_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
+                                                    parent_link=True, primary_key=True, serialize=False, to='compras.Compra')),
                 ('data_entrega', models.DateField(blank=True, null=True)),
-                ('status', models.CharField(choices=[('0', 'Aberto'), ('1', 'Realizado'), ('2', 'Cancelado'), ('3', 'Importado por XML'), ('4', 'Recebido')], default='0', max_length=1)),
+                ('status', models.CharField(choices=[('0', 'Aberto'), ('1', 'Realizado'), ('2', 'Cancelado'), (
+                    '3', 'Importado por XML'), ('4', 'Recebido')], default='0', max_length=1)),
             ],
             bases=('compras.compra',),
         ),
         migrations.AddField(
             model_name='pagamento',
             name='compra_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='parcela_pagamento', to='compras.Compra'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='parcela_pagamento', to='compras.Compra'),
         ),
         migrations.AddField(
             model_name='itenscompra',
             name='compra_id',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='itens_compra', to='compras.Compra'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='itens_compra', to='compras.Compra'),
         ),
         migrations.AddField(
             model_name='itenscompra',
             name='produto',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='compra_produto', to='cadastro.Produto'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='compra_produto', to='cadastro.Produto'),
         ),
     ]
