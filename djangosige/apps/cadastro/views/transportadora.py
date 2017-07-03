@@ -24,12 +24,12 @@ class AdicionarTransportadoraView(AdicionarPessoaView):
         form = TransportadoraForm(prefix='transportadora_form')
         veiculo_form = VeiculoFormSet(prefix='veiculo_form')
         veiculo_form.can_delete = False
-        return super(AdicionarTransportadoraView, self).get(request, form, *args, **kwargs, veiculo_form=veiculo_form)
+        return super(AdicionarTransportadoraView, self).get(request, form, veiculo_form=veiculo_form, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         form = TransportadoraForm(request.POST, request.FILES, prefix='transportadora_form', request=request)
         veiculo_form = VeiculoFormSet(request.POST, prefix='veiculo_form')
-        return super(AdicionarTransportadoraView, self).post(request, form, *args, **kwargs, veiculo_form=veiculo_form)
+        return super(AdicionarTransportadoraView, self).post(request, form, veiculo_form=veiculo_form, *args, **kwargs)
 
 
 class TransportadorasListView(PessoasListView):
@@ -75,7 +75,7 @@ class EditarTransportadoraView(EditarPessoaView):
         if Veiculo.objects.filter(transportadora_veiculo=self.object.pk).count():
             veiculo_form.extra = 0
 
-        return super(EditarTransportadoraView, self).get(request, form, *args, **kwargs, veiculo_form=veiculo_form)
+        return super(EditarTransportadoraView, self).get(request, form, veiculo_form=veiculo_form, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -84,4 +84,4 @@ class EditarTransportadoraView(EditarPessoaView):
 
         veiculo_form = VeiculoFormSet(request.POST, prefix='veiculo_form', instance=self.object)
 
-        return super(EditarTransportadoraView, self).post(request, form, *args, **kwargs, veiculo_form=veiculo_form)
+        return super(EditarTransportadoraView, self).post(request, form, veiculo_form=veiculo_form, *args, **kwargs)
