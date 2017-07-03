@@ -1,7 +1,7 @@
 import os
 from decouple import config, Csv
 from dj_database_url import parse as dburl
-from .configs import DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS
+from .configs import DEFAULT_DATABASE_URL, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS
 
 APP_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(APP_ROOT))
@@ -18,10 +18,11 @@ DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
 
-default_dburl = 'sqlite:///' + os.path.join(APP_ROOT, 'db.sqlite3')
+if not DEFAULT_DATABASE_URL:
+    DEFAULT_DATABASE_URL = 'sqlite:///' + os.path.join(APP_ROOT, 'db.sqlite3')
 
 DATABASES = {
-    'default': config('DATABASE_URL', default=default_dburl, cast=dburl),
+    'default': config('DATABASE_URL', default=DEFAULT_DATABASE_URL, cast=dburl),
 }
 
 

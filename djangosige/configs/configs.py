@@ -1,35 +1,7 @@
-# Configurações da database
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
 # Configuração da base de dados
-# DATABASES = {
-#     'default': {
-#         #
-#         #Base de dados utilizada (backend)
-#         #Obs: Para o MySQL é necessário o mysqlclient (pip install mysqlclient)
-#         #
-#         'ENGINE': 'django.db.backends.mysql',
-#         #'ENGINE': 'django.db.backends.postgresql',
-#         #'ENGINE': 'django.db.backends.sqlite3',
-#         #'ENGINE': 'django.db.backends.oracle',
-
-#         #Nome da base de dados
-#         'NAME': '',
-
-#         #Usuário
-#         'USER':'',
-
-#         #Senha
-#         'PASSWORD':'',
-
-#         #Host
-#         'HOST':'127.0.0.1',
-
-#         #Port
-#         'PORT':'3306',
-#     }
-# }
+# Exemplo: DEFAULT_DATABASE_URL = 'postgres://user:pass@localhost/dbname'
+# Caso seja deixado vazio o default será: 'sqlite:////...djangosige/db.sqlite3'
+DEFAULT_DATABASE_URL = ''
 
 #
 # Configurações do servidor de email
