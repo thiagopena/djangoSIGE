@@ -22,6 +22,7 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
     ```
 
 2. Edite o conteúdo do arquivo **djangosige/configs/configs.py**
+
 3. Gere um `.env` local
 
     ```bash
@@ -61,6 +62,13 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
     - Emissão, download, consulta e cancelamento de NF-e/NFC-es **(Testar em ambiente de homologação)**
     - Comunicação com SEFAZ (Consulta de cadastro, inutilização de notas, manifestação do destinatário)
 - Interface simples e em português
+
+## Créditos
+
+- [AdminBSBMaterialDesign](https://github.com/gurayyarar/AdminBSBMaterialDesign)
+- [geraldo](https://github.com/marinho/geraldo)
+- [jQuery-Mask-Plugin](https://igorescobar.github.io/jQuery-Mask-Plugin/)
+- [DataTables](https://datatables.net/)
 
 ## Ajuda
 
