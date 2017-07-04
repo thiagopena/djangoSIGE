@@ -18,6 +18,7 @@ from pysignfe.nfe.manual_600.nfe_310 import Dup as Dup_310
 
 from ssl import SSLError
 
+
 class ProcessadorNotaFiscal(object):
     def __init__(self):
         self.conf_nfe = None
@@ -44,7 +45,8 @@ class ProcessadorNotaFiscal(object):
         if nota_obj.dhemi:
             nfe.infNFe.ide.dhEmi.valor = nota_obj.dhemi.replace(tzinfo=None)
         if nota_obj.dhsaient:
-            nfe.infNFe.ide.dhSaiEnt.valor = nota_obj.dhsaient.replace(tzinfo=None)
+            nfe.infNFe.ide.dhSaiEnt.valor = nota_obj.dhsaient.replace(
+                tzinfo=None)
 
         nfe.infNFe.ide.tpNF.valor = nota_obj.tpnf
         nfe.infNFe.ide.idDest.valor = nota_obj.iddest
@@ -54,7 +56,7 @@ class ProcessadorNotaFiscal(object):
         nfe.infNFe.ide.indPres.valor = nota_obj.ind_pres
         nfe.infNFe.ide.procEmi.valor = 0
 
-        #Identificação do emitente
+        # Identificação do emitente
         if nota_obj.emit_saida:
             nfe.infNFe.emit.CNPJ.valor = nota_obj.emit_saida.cpf_cnpj_apenas_digitos
             nfe.infNFe.emit.xNome.valor = nota_obj.emit_saida.nome_razao_social
@@ -70,52 +72,52 @@ class ProcessadorNotaFiscal(object):
                 nfe.infNFe.emit.CRT.valor = '3'
 
             if nota_obj.emit_saida.endereco_padrao:
-                nfe.infNFe.emit.enderEmit.xLgr.valor    = nota_obj.emit_saida.endereco_padrao.logradouro
-                nfe.infNFe.emit.enderEmit.nro.valor     = nota_obj.emit_saida.endereco_padrao.numero
-                nfe.infNFe.emit.enderEmit.xCpl.valor    = nota_obj.emit_saida.endereco_padrao.complemento
+                nfe.infNFe.emit.enderEmit.xLgr.valor = nota_obj.emit_saida.endereco_padrao.logradouro
+                nfe.infNFe.emit.enderEmit.nro.valor = nota_obj.emit_saida.endereco_padrao.numero
+                nfe.infNFe.emit.enderEmit.xCpl.valor = nota_obj.emit_saida.endereco_padrao.complemento
                 nfe.infNFe.emit.enderEmit.xBairro.valor = nota_obj.emit_saida.endereco_padrao.bairro
-                nfe.infNFe.emit.enderEmit.cMun.valor    = nota_obj.emit_saida.endereco_padrao.cmun
-                nfe.infNFe.ide.cMunFG.valor             = nota_obj.emit_saida.endereco_padrao.cmun
-                nfe.infNFe.emit.enderEmit.xMun.valor    = nota_obj.emit_saida.endereco_padrao.municipio
-                nfe.infNFe.emit.enderEmit.UF.valor      = nota_obj.emit_saida.endereco_padrao.uf
-                nfe.infNFe.emit.enderEmit.CEP.valor     = nota_obj.emit_saida.endereco_padrao.cep
-                nfe.infNFe.emit.enderEmit.cPais.valor   = nota_obj.emit_saida.endereco_padrao.cpais
-                nfe.infNFe.emit.enderEmit.xPais.valor   = nota_obj.emit_saida.endereco_padrao.pais
+                nfe.infNFe.emit.enderEmit.cMun.valor = nota_obj.emit_saida.endereco_padrao.cmun
+                nfe.infNFe.ide.cMunFG.valor = nota_obj.emit_saida.endereco_padrao.cmun
+                nfe.infNFe.emit.enderEmit.xMun.valor = nota_obj.emit_saida.endereco_padrao.municipio
+                nfe.infNFe.emit.enderEmit.UF.valor = nota_obj.emit_saida.endereco_padrao.uf
+                nfe.infNFe.emit.enderEmit.CEP.valor = nota_obj.emit_saida.endereco_padrao.cep
+                nfe.infNFe.emit.enderEmit.cPais.valor = nota_obj.emit_saida.endereco_padrao.cpais
+                nfe.infNFe.emit.enderEmit.xPais.valor = nota_obj.emit_saida.endereco_padrao.pais
 
             if nota_obj.emit_saida.telefone_padrao:
                 nfe.infNFe.emit.enderEmit.fone.valor = nota_obj.emit_saida.telefone_padrao.get_telefone_apenas_digitos()
 
-        #Identificação do destinatario
+        # Identificação do destinatario
         if nota_obj.dest_saida:
             if nota_obj.dest_saida.id_estrangeiro:
                 nfe.infNFe.dest.idEstrangeiro.valor = nota_obj.dest_saida.id_estrangeiro
             elif nota_obj.dest_saida.tipo_pessoa == 'PF':
-                nfe.infNFe.dest.CPF.valor  = nota_obj.dest_saida.cpf_cnpj_apenas_digitos
+                nfe.infNFe.dest.CPF.valor = nota_obj.dest_saida.cpf_cnpj_apenas_digitos
             elif nota_obj.dest_saida.tipo_pessoa == 'PJ':
-                nfe.infNFe.dest.CNPJ.valor  = nota_obj.dest_saida.cpf_cnpj_apenas_digitos
-                nfe.infNFe.dest.IE.valor  = nota_obj.dest_saida.inscricao_estadual
-                nfe.infNFe.dest.ISUF.valor  = nota_obj.dest_saida.pessoa_jur_info.suframa
+                nfe.infNFe.dest.CNPJ.valor = nota_obj.dest_saida.cpf_cnpj_apenas_digitos
+                nfe.infNFe.dest.IE.valor = nota_obj.dest_saida.inscricao_estadual
+                nfe.infNFe.dest.ISUF.valor = nota_obj.dest_saida.pessoa_jur_info.suframa
 
             nfe.infNFe.dest.xNome.valor = nota_obj.dest_saida.nome_razao_social
             nfe.infNFe.dest.indIEDest.valor = nota_obj.dest_saida.indicador_ie
             #nfe.infNFe.dest.IM.valor = nota_obj.dest_saida.inscricao_municipal
 
             if nota_obj.dest_saida.endereco_padrao:
-                nfe.infNFe.dest.enderDest.xLgr.valor    = nota_obj.dest_saida.endereco_padrao.logradouro
-                nfe.infNFe.dest.enderDest.nro.valor     = nota_obj.dest_saida.endereco_padrao.numero
-                nfe.infNFe.dest.enderDest.xCpl.valor    = nota_obj.dest_saida.endereco_padrao.complemento
+                nfe.infNFe.dest.enderDest.xLgr.valor = nota_obj.dest_saida.endereco_padrao.logradouro
+                nfe.infNFe.dest.enderDest.nro.valor = nota_obj.dest_saida.endereco_padrao.numero
+                nfe.infNFe.dest.enderDest.xCpl.valor = nota_obj.dest_saida.endereco_padrao.complemento
                 nfe.infNFe.dest.enderDest.xBairro.valor = nota_obj.dest_saida.endereco_padrao.bairro
-                nfe.infNFe.dest.enderDest.cMun.valor    = nota_obj.dest_saida.endereco_padrao.cmun
-                nfe.infNFe.dest.enderDest.xMun.valor    = nota_obj.dest_saida.endereco_padrao.municipio
-                nfe.infNFe.dest.enderDest.UF.valor      = nota_obj.dest_saida.endereco_padrao.uf
-                nfe.infNFe.dest.enderDest.CEP.valor     = nota_obj.dest_saida.endereco_padrao.cep
-                nfe.infNFe.dest.enderDest.cPais.valor   = nota_obj.dest_saida.endereco_padrao.cpais
-                nfe.infNFe.dest.enderDest.xPais.valor   = nota_obj.dest_saida.endereco_padrao.pais
+                nfe.infNFe.dest.enderDest.cMun.valor = nota_obj.dest_saida.endereco_padrao.cmun
+                nfe.infNFe.dest.enderDest.xMun.valor = nota_obj.dest_saida.endereco_padrao.municipio
+                nfe.infNFe.dest.enderDest.UF.valor = nota_obj.dest_saida.endereco_padrao.uf
+                nfe.infNFe.dest.enderDest.CEP.valor = nota_obj.dest_saida.endereco_padrao.cep
+                nfe.infNFe.dest.enderDest.cPais.valor = nota_obj.dest_saida.endereco_padrao.cpais
+                nfe.infNFe.dest.enderDest.xPais.valor = nota_obj.dest_saida.endereco_padrao.pais
 
             if nota_obj.dest_saida.telefone_padrao:
                 nfe.infNFe.dest.enderDest.fone.valor = nota_obj.dest_saida.telefone_padrao.get_telefone_apenas_digitos()
 
-        #Autorização para obter XML
+        # Autorização para obter XML
         for aut in AutXML.objects.filter(nfe=nota_obj):
             a = autXML_310()
             if len(aut.get_cpf_cnpj_apenas_digitos()) <= 11:
@@ -125,229 +127,239 @@ class ProcessadorNotaFiscal(object):
 
             nfe.infNFe.autXML.append(a)
 
-        #Detalhamento dos produtos e servicos
+        # Detalhamento dos produtos e servicos
         if nota_obj.venda:
             for index, item in enumerate(nota_obj.venda.itens_venda.all(), 1):
                 det = Det_310()
                 det.nItem.valor = index
                 det.infAdProd.valor = item.inf_ad_prod
 
-                det.prod.CEST.valor     = item.produto.cest
-                det.prod.cProd.valor    = item.produto.codigo
-                det.prod.cEAN.valor     = item.produto.codigo_barras
-                det.prod.xProd.valor    = item.produto.descricao
+                det.prod.CEST.valor = item.produto.cest
+                det.prod.cProd.valor = item.produto.codigo
+                det.prod.cEAN.valor = item.produto.codigo_barras
+                det.prod.xProd.valor = item.produto.descricao
                 if item.produto.ncm:
                     det.prod.NCM.valor = item.produto.ncm[0:8]
-                    
+
                     if len(item.produto.ncm) > 8:
                         det.prod.EXTIPI.valor = item.produto.ncm[8:]
 
-                det.prod.CFOP.valor     = item.produto.get_cfop_padrao()
-                det.prod.uCom.valor     = item.produto.get_sigla_unidade()
-                det.prod.qCom.valor     = item.quantidade
-                det.prod.vUnCom.valor   = item.valor_unit
-                det.prod.vProd.valor    = item.vprod
-                #det.prod.cEANTrib.valor =
-                det.prod.uTrib.valor    = det.prod.uCom.valor
-                det.prod.qTrib.valor    = det.prod.qCom.valor
-                det.prod.vUnTrib.valor  = det.prod.vUnCom.valor
-                det.prod.vFrete.valor   = item.valor_rateio_frete
-                det.prod.vSeg.valor     = item.valor_rateio_seguro
-                det.prod.vDesc.valor    = item.get_valor_desconto()
-                det.prod.vOutro.valor   = item.valor_rateio_despesas
+                det.prod.CFOP.valor = item.produto.get_cfop_padrao()
+                det.prod.uCom.valor = item.produto.get_sigla_unidade()
+                det.prod.qCom.valor = item.quantidade
+                det.prod.vUnCom.valor = item.valor_unit
+                det.prod.vProd.valor = item.vprod
+                # det.prod.cEANTrib.valor =
+                det.prod.uTrib.valor = det.prod.uCom.valor
+                det.prod.qTrib.valor = det.prod.qCom.valor
+                det.prod.vUnTrib.valor = det.prod.vUnCom.valor
+                det.prod.vFrete.valor = item.valor_rateio_frete
+                det.prod.vSeg.valor = item.valor_rateio_seguro
+                det.prod.vDesc.valor = item.get_valor_desconto()
+                det.prod.vOutro.valor = item.valor_rateio_despesas
                 #det.prod.indTot.valor   = 1
 
-                #Impostos
+                # Impostos
                 if item.produto.grupo_fiscal:
-                    ##Simples Nacional
+                    # Simples Nacional
                     if item.produto.grupo_fiscal.regime_trib == '1':
                         det.imposto.ICMS.regime_tributario = 1
-                        ##ICMS
+                        # ICMS
                         if item.produto.grupo_fiscal.icms_sn_padrao:
                             icms_sn_obj = item.produto.grupo_fiscal.icms_sn_padrao.get()
 
-                            det.imposto.ICMS.orig.valor     = item.produto.origem
-                            det.imposto.ICMS.CSOSN.valor    = icms_sn_obj.csosn
-                            det.imposto.ICMS.modBC.valor    = icms_sn_obj.mod_bc
-                            det.imposto.ICMS.vBC.valor      = item.vbc_icms
-                            det.imposto.ICMS.pRedBC.valor   = icms_sn_obj.p_red_bc
-                            det.imposto.ICMS.pICMS.valor    = item.p_icms
-                            det.imposto.ICMS.vICMS.valor    = item.vicms
-                            det.imposto.ICMS.modBCST.valor  = icms_sn_obj.mod_bcst
-                            det.imposto.ICMS.pMVAST.valor   = icms_sn_obj.p_mvast
+                            det.imposto.ICMS.orig.valor = item.produto.origem
+                            det.imposto.ICMS.CSOSN.valor = icms_sn_obj.csosn
+                            det.imposto.ICMS.modBC.valor = icms_sn_obj.mod_bc
+                            det.imposto.ICMS.vBC.valor = item.vbc_icms
+                            det.imposto.ICMS.pRedBC.valor = icms_sn_obj.p_red_bc
+                            det.imposto.ICMS.pICMS.valor = item.p_icms
+                            det.imposto.ICMS.vICMS.valor = item.vicms
+                            det.imposto.ICMS.modBCST.valor = icms_sn_obj.mod_bcst
+                            det.imposto.ICMS.pMVAST.valor = icms_sn_obj.p_mvast
                             det.imposto.ICMS.pRedBCST.valor = icms_sn_obj.p_red_bcst
-                            det.imposto.ICMS.vBCST.valor    = item.vbc_icms_st
-                            det.imposto.ICMS.pICMSST.valor  = item.p_icmsst
-                            det.imposto.ICMS.vICMSST.valor  = item.vicms_st
-                            det.imposto.ICMS.pCredSN.valor  = icms_sn_obj.p_cred_sn
+                            det.imposto.ICMS.vBCST.valor = item.vbc_icms_st
+                            det.imposto.ICMS.pICMSST.valor = item.p_icmsst
+                            det.imposto.ICMS.vICMSST.valor = item.vicms_st
+                            det.imposto.ICMS.pCredSN.valor = icms_sn_obj.p_cred_sn
                             det.imposto.ICMS.vCredICMSSN.valor = item.vicms_cred_sn
                         else:
                             det.imposto.ICMS.CSOSN.valor = '400'
 
-                    ##Regime normal
+                    # Regime normal
                     elif item.produto.grupo_fiscal.regime_trib == '0':
                         det.imposto.ICMS.regime_tributario = False
-                        ##ICMS
+                        # ICMS
                         if item.produto.grupo_fiscal.icms_padrao:
                             icms_obj = item.produto.grupo_fiscal.icms_padrao.get()
 
-                            det.imposto.ICMS.orig.valor     = item.produto.origem
-                            det.imposto.ICMS.CST.valor      = icms_obj.cst.replace('r','').replace('p','')
-                            det.imposto.ICMS.modBC.valor    = icms_obj.mod_bc
-                            det.imposto.ICMS.vBC.valor      = item.vbc_icms
-                            det.imposto.ICMS.pRedBC.valor   = icms_obj.p_red_bc
-                            det.imposto.ICMS.pICMS.valor    = item.p_icms
-                            det.imposto.ICMS.vICMS.valor    = item.vicms
-                            det.imposto.ICMS.modBCST.valor  = icms_obj.mod_bcst
-                            det.imposto.ICMS.pMVAST.valor   = icms_obj.p_mvast
+                            det.imposto.ICMS.orig.valor = item.produto.origem
+                            det.imposto.ICMS.CST.valor = icms_obj.cst.replace(
+                                'r', '').replace('p', '')
+                            det.imposto.ICMS.modBC.valor = icms_obj.mod_bc
+                            det.imposto.ICMS.vBC.valor = item.vbc_icms
+                            det.imposto.ICMS.pRedBC.valor = icms_obj.p_red_bc
+                            det.imposto.ICMS.pICMS.valor = item.p_icms
+                            det.imposto.ICMS.vICMS.valor = item.vicms
+                            det.imposto.ICMS.modBCST.valor = icms_obj.mod_bcst
+                            det.imposto.ICMS.pMVAST.valor = icms_obj.p_mvast
                             det.imposto.ICMS.pRedBCST.valor = icms_obj.p_red_bcst
-                            det.imposto.ICMS.vBCST.valor    = item.vbc_icms_st
-                            det.imposto.ICMS.pICMSST.valor  = item.p_icmsst
-                            det.imposto.ICMS.vICMSST.valor  = item.vicms_st
+                            det.imposto.ICMS.vBCST.valor = item.vbc_icms_st
+                            det.imposto.ICMS.pICMSST.valor = item.p_icmsst
+                            det.imposto.ICMS.vICMSST.valor = item.vicms_st
 
                             if item.vicms_deson and icms_obj.mot_des_icms:
-                                det.imposto.ICMS.vICMSDeson.valor  = item.vicms_deson
-                                det.imposto.ICMS.motDesICMS.valor  = icms_obj.mot_des_icms
+                                det.imposto.ICMS.vICMSDeson.valor = item.vicms_deson
+                                det.imposto.ICMS.motDesICMS.valor = icms_obj.mot_des_icms
 
-                            ##Partilha ICMSPart
+                            # Partilha ICMSPart
                             if icms_obj.cst in ('10p', '90p'):
-                                det.imposto.ICMS.partilha     = True
-                                det.imposto.ICMS.UFST.valor   = icms_obj.ufst
-                                det.imposto.ICMS.pBCOp.valor  = icms_obj.p_bc_op
+                                det.imposto.ICMS.partilha = True
+                                det.imposto.ICMS.UFST.valor = icms_obj.ufst
+                                det.imposto.ICMS.pBCOp.valor = icms_obj.p_bc_op
 
-                            ##Repasse ICMSST (todo)
-                            #elif icms_obj.cst == '41r':
+                            # Repasse ICMSST (todo)
+                            # elif icms_obj.cst == '41r':
                             #    det.imposto.ICMS.repasse      = True
 
-                    ##ICMSUFDest (vendas interestaduais para consumidor final nao contribuinte)
+                    # ICMSUFDest (vendas interestaduais para consumidor final nao contribuinte)
                     icms_dest = item.produto.grupo_fiscal.icms_dest_padrao.get()
                     if icms_dest.p_fcp_dest or icms_dest.p_icms_dest or icms_dest.p_icms_inter or icms_dest.p_icms_inter_part:
-                        det.imposto.ICMSUFDest.vBCUFDest.valor      = item.vbc_uf_dest
-                        det.imposto.ICMSUFDest.pFCPUFDest.valor     = icms_dest.p_fcp_dest
-                        det.imposto.ICMSUFDest.pICMSUFDest.valor    = icms_dest.p_icms_dest
-                        det.imposto.ICMSUFDest.pICMSInter.valor     = icms_dest.p_icms_inter
+                        det.imposto.ICMSUFDest.vBCUFDest.valor = item.vbc_uf_dest
+                        det.imposto.ICMSUFDest.pFCPUFDest.valor = icms_dest.p_fcp_dest
+                        det.imposto.ICMSUFDest.pICMSUFDest.valor = icms_dest.p_icms_dest
+                        det.imposto.ICMSUFDest.pICMSInter.valor = icms_dest.p_icms_inter
                         det.imposto.ICMSUFDest.pICMSInterPart.valor = icms_dest.p_icms_inter_part
-                        det.imposto.ICMSUFDest.vFCPUFDest.valor     = item.vfcp
-                        det.imposto.ICMSUFDest.vICMSUFDest.valor    = item.vicmsufdest
-                        det.imposto.ICMSUFDest.vICMSUFRemet.valor   = item.vicmsufremet
+                        det.imposto.ICMSUFDest.vFCPUFDest.valor = item.vfcp
+                        det.imposto.ICMSUFDest.vICMSUFDest.valor = item.vicmsufdest
+                        det.imposto.ICMSUFDest.vICMSUFRemet.valor = item.vicmsufremet
 
-                    ##IPI
+                    # IPI
                     ipi_obj = item.produto.grupo_fiscal.ipi_padrao.get()
                     if ipi_obj.cst:
-                        det.imposto.IPI.CST.valor       = ipi_obj.cst
-                        det.imposto.IPI.clEnq.valor     = ipi_obj.cl_enq
-                        det.imposto.IPI.CNPJProd.valor  = ipi_obj.get_cnpj_prod_apenas_digitos()
+                        det.imposto.IPI.CST.valor = ipi_obj.cst
+                        det.imposto.IPI.clEnq.valor = ipi_obj.cl_enq
+                        det.imposto.IPI.CNPJProd.valor = ipi_obj.get_cnpj_prod_apenas_digitos()
                         #det.imposto.IPI.cSelo.valor     = ipi_obj.cselo
                         #det.imposto.IPI.qSelo.valor     = ipi_obj.qselo
-                        det.imposto.IPI.cEnq.valor      = ipi_obj.c_enq
+                        det.imposto.IPI.cEnq.valor = ipi_obj.c_enq
 
                         if ipi_obj.tipo_ipi == '1':
-                            det.imposto.IPI.qUnid.valor     = item.quantidade
-                            det.imposto.IPI.vUnid.valor     = ipi_obj.valor_fixo
+                            det.imposto.IPI.qUnid.valor = item.quantidade
+                            det.imposto.IPI.vUnid.valor = ipi_obj.valor_fixo
                         elif ipi_obj.tipo_ipi == '2':
-                            det.imposto.IPI.vBC.valor       = item.vbc_ipi
-                            det.imposto.IPI.pIPI.valor      = item.p_ipi
+                            det.imposto.IPI.vBC.valor = item.vbc_ipi
+                            det.imposto.IPI.pIPI.valor = item.p_ipi
 
                         det.imposto.IPI.vIPI.valor = item.vipi
                     else:
                         det.imposto.IPI.CST.valor = '99'
 
-                    ##PIS
+                    # PIS
                     pis_obj = item.produto.grupo_fiscal.pis_padrao.get()
                     if pis_obj.cst:
-                        det.imposto.PIS.CST.valor       = pis_obj.cst
+                        det.imposto.PIS.CST.valor = pis_obj.cst
 
                         if pis_obj.valiq_pis:
-                            det.imposto.PIS.qBCProd.valor   = item.vq_bcpis
+                            det.imposto.PIS.qBCProd.valor = item.vq_bcpis
                             det.imposto.PIS.vAliqProd.valor = pis_obj.valiq_pis
                         elif pis_obj.p_pis:
-                            det.imposto.PIS.vBC.valor       = item.vq_bcpis
-                            det.imposto.PIS.pPIS.valor      = pis_obj.p_pis
+                            det.imposto.PIS.vBC.valor = item.vq_bcpis
+                            det.imposto.PIS.pPIS.valor = pis_obj.p_pis
 
-                        det.imposto.PIS.vPIS.valor      = item.vpis
+                        det.imposto.PIS.vPIS.valor = item.vpis
 
                     else:
                         det.imposto.PIS.CST.valor = '99'
 
-                    ##COFINS
+                    # COFINS
                     cofins_obj = item.produto.grupo_fiscal.cofins_padrao.get()
                     if cofins_obj.cst:
                         det.imposto.COFINS.CST.valor = cofins_obj.cst
 
                         if cofins_obj.valiq_cofins:
-                            det.imposto.COFINS.qBCProd.valor   = item.vq_bccofins
+                            det.imposto.COFINS.qBCProd.valor = item.vq_bccofins
                             det.imposto.COFINS.vAliqProd.valor = cofins_obj.valiq_cofins
                         elif cofins_obj.p_cofins:
-                            det.imposto.COFINS.vBC.valor       = item.vq_bccofins
-                            det.imposto.COFINS.pCOFINS.valor      = cofins_obj.p_cofins
+                            det.imposto.COFINS.vBC.valor = item.vq_bccofins
+                            det.imposto.COFINS.pCOFINS.valor = cofins_obj.p_cofins
 
-                        det.imposto.COFINS.vCOFINS.valor      = item.vcofins
+                        det.imposto.COFINS.vCOFINS.valor = item.vcofins
 
                     else:
                         det.imposto.COFINS.CST.valor = '99'
 
-                #Incluir detalhes na nfe
+                # Incluir detalhes na nfe
                 nfe.infNFe.det.append(det)
 
-        #Totais
-        nfe.infNFe.total.ICMSTot.vBC.valor     = nota_obj.venda.get_valor_total_attr('vbc_icms')
-        nfe.infNFe.total.ICMSTot.vICMS.valor   = nota_obj.venda.get_valor_total_attr('vicms')
-        nfe.infNFe.total.ICMSTot.vBCST.valor   = nota_obj.venda.get_valor_total_attr('vbc_icms_st')
-        nfe.infNFe.total.ICMSTot.vST.valor     = nota_obj.venda.get_valor_total_attr('vicms_st')
-        nfe.infNFe.total.ICMSTot.vProd.valor   = nota_obj.venda.get_valor_total_attr('vprod')
-        nfe.infNFe.total.ICMSTot.vFrete.valor  = nota_obj.venda.frete
-        nfe.infNFe.total.ICMSTot.vSeg.valor    = nota_obj.venda.seguro
-        nfe.infNFe.total.ICMSTot.vDesc.valor   = nota_obj.venda.get_valor_desconto_total()
+        # Totais
+        nfe.infNFe.total.ICMSTot.vBC.valor = nota_obj.venda.get_valor_total_attr(
+            'vbc_icms')
+        nfe.infNFe.total.ICMSTot.vICMS.valor = nota_obj.venda.get_valor_total_attr(
+            'vicms')
+        nfe.infNFe.total.ICMSTot.vBCST.valor = nota_obj.venda.get_valor_total_attr(
+            'vbc_icms_st')
+        nfe.infNFe.total.ICMSTot.vST.valor = nota_obj.venda.get_valor_total_attr(
+            'vicms_st')
+        nfe.infNFe.total.ICMSTot.vProd.valor = nota_obj.venda.get_valor_total_attr(
+            'vprod')
+        nfe.infNFe.total.ICMSTot.vFrete.valor = nota_obj.venda.frete
+        nfe.infNFe.total.ICMSTot.vSeg.valor = nota_obj.venda.seguro
+        nfe.infNFe.total.ICMSTot.vDesc.valor = nota_obj.venda.get_valor_desconto_total()
         #nfe.infNFe.total.ICMSTot.vII.valor     = nota_obj.venda.get_valor_total_attr('vii')
-        nfe.infNFe.total.ICMSTot.vIPI.valor    = nota_obj.venda.get_valor_total_attr('vipi')
-        nfe.infNFe.total.ICMSTot.vPIS.valor    = nota_obj.venda.get_valor_total_attr('vpis')
-        nfe.infNFe.total.ICMSTot.vCOFINS.valor = nota_obj.venda.get_valor_total_attr('vcofins')
-        nfe.infNFe.total.ICMSTot.vOutro.valor  = nota_obj.venda.despesas
-        nfe.infNFe.total.ICMSTot.vICMSDeson.valor = nota_obj.venda.get_valor_total_attr('vicms_deson')
+        nfe.infNFe.total.ICMSTot.vIPI.valor = nota_obj.venda.get_valor_total_attr(
+            'vipi')
+        nfe.infNFe.total.ICMSTot.vPIS.valor = nota_obj.venda.get_valor_total_attr(
+            'vpis')
+        nfe.infNFe.total.ICMSTot.vCOFINS.valor = nota_obj.venda.get_valor_total_attr(
+            'vcofins')
+        nfe.infNFe.total.ICMSTot.vOutro.valor = nota_obj.venda.despesas
+        nfe.infNFe.total.ICMSTot.vICMSDeson.valor = nota_obj.venda.get_valor_total_attr(
+            'vicms_deson')
         nfe.calcula_total_nfe()
 
-        #Transporte
+        # Transporte
         nfe.infNFe.transp.modFrete.valor = nota_obj.venda.mod_frete
         if nota_obj.venda.transportadora:
             if nota_obj.venda.transportadora.tipo_pessoa == 'PJ':
-                nfe.infNFe.transp.transporta.CNPJ.valor  = nota_obj.venda.transportadora.cpf_cnpj_apenas_digitos
-                nfe.infNFe.transp.transporta.IE.valor    = nota_obj.venda.transportadora.pessoa_jur_info.inscricao_estadual
+                nfe.infNFe.transp.transporta.CNPJ.valor = nota_obj.venda.transportadora.cpf_cnpj_apenas_digitos
+                nfe.infNFe.transp.transporta.IE.valor = nota_obj.venda.transportadora.pessoa_jur_info.inscricao_estadual
             elif nota_obj.venda.transportadora.tipo_pessoa == 'PF':
-                nfe.infNFe.transp.transporta.CPF.valor  = nota_obj.venda.transportadora.cpf_cnpj_apenas_digitos
+                nfe.infNFe.transp.transporta.CPF.valor = nota_obj.venda.transportadora.cpf_cnpj_apenas_digitos
 
             nfe.infNFe.transp.transporta.xNome.valor = nota_obj.venda.transportadora.nome_razao_social
             nfe.infNFe.transp.transporta.xEnder.valor = nota_obj.venda.transportadora.endereco_padrao.logradouro
-            nfe.infNFe.transp.transporta.xMun.valor  = nota_obj.venda.transportadora.endereco_padrao.municipio
-            nfe.infNFe.transp.transporta.UF.valor    = nota_obj.venda.transportadora.endereco_padrao.uf
+            nfe.infNFe.transp.transporta.xMun.valor = nota_obj.venda.transportadora.endereco_padrao.municipio
+            nfe.infNFe.transp.transporta.UF.valor = nota_obj.venda.transportadora.endereco_padrao.uf
 
         if nota_obj.venda.veiculo:
             nfe.infNFe.transp.veicTransp.placa.valor = nota_obj.venda.veiculo.placa
-            nfe.infNFe.transp.veicTransp.UF.valor    = nota_obj.venda.veiculo.uf
+            nfe.infNFe.transp.veicTransp.UF.valor = nota_obj.venda.veiculo.uf
             #nfe.infNFe.transp.veicTransp.RNTC.valor  = nota_obj.venda.veiculo.rntc
 
-        #Cobranca
+        # Cobranca
         if nota_obj.grupo_cobr:
-            nfe.infNFe.cobr.fat.nFat.valor  = nota_obj.n_fat
+            nfe.infNFe.cobr.fat.nFat.valor = nota_obj.n_fat
             nfe.infNFe.cobr.fat.vOrig.valor = nota_obj.v_orig
             nfe.infNFe.cobr.fat.vDesc.valor = nota_obj.v_desc
-            nfe.infNFe.cobr.fat.vLiq.valor  = nota_obj.v_liq
+            nfe.infNFe.cobr.fat.vLiq.valor = nota_obj.v_liq
 
             for pagamento in nota_obj.venda.parcela_pagamento.all():
                 d = Dup_310()
-                d.nDup.valor  = str(pagamento.id)
+                d.nDup.valor = str(pagamento.id)
                 d.dVenc.valor = pagamento.vencimento
-                d.vDup.valor  = pagamento.valor_parcela
+                d.vDup.valor = pagamento.valor_parcela
 
                 nfe.infNFe.cobr.dup.append(d)
 
-        #Pagamento(NFC-e)
+        # Pagamento(NFC-e)
         if nota_obj.mod == '65':
             nfe.infNFe.Pag.tPag.valor = nota_obj.venda.get_forma_pagamento()
             nfe.infNFe.Pag.vPag.valor = nota_obj.venda.valor_total
 
-        #Informacoes adicionais
+        # Informacoes adicionais
         nfe.infNFe.infAdic.infAdFisco.valor = nota_obj.inf_ad_fisco
-        nfe.infNFe.infAdic.infCpl.valor     = nota_obj.inf_cpl
+        nfe.infNFe.infAdic.infCpl.valor = nota_obj.inf_cpl
 
         nfe.gera_nova_chave()
 
@@ -368,8 +380,9 @@ class ProcessadorNotaFiscal(object):
 
         nfe.xml = xml_nfe
 
-        if NotaFiscalSaida.objects.filter(n_nf_saida = str(nfe.infNFe.ide.nNF.valor)).count():
-            raise ValueError('Nota com esta numeração já existe na base de dados.')
+        if NotaFiscalSaida.objects.filter(n_nf_saida=str(nfe.infNFe.ide.nNF.valor)).count():
+            raise ValueError(
+                'Nota com esta numeração já existe na base de dados.')
 
         nota_saida.n_nf_saida = str(nfe.infNFe.ide.nNF.valor)
         nota_saida.chave = str(nfe.infNFe.Id.valor[-44:])
@@ -389,7 +402,7 @@ class ProcessadorNotaFiscal(object):
         nota_saida.tpnf = str(nfe.infNFe.ide.tpNF.valor)
         nota_saida.inf_ad_fisco = str(nfe.infNFe.infAdic.infAdFisco.valor)
         nota_saida.inf_cpl = str(nfe.infNFe.infAdic.infCpl.valor)
-        nota_saida.status_nfe = u'3' #Em digitação
+        nota_saida.status_nfe = u'3'  # Em digitação
 
         if nfe.infNFe.cobr.fat.nFat.valor:
             nota_saida.n_fat = str(nfe.infNFe.cobr.fat.nFat.valor)
@@ -401,9 +414,11 @@ class ProcessadorNotaFiscal(object):
         clientes = []
 
         if nfe.infNFe.dest.CNPJ.valor:
-            clientes = [c for c in Cliente.objects.filter(tipo_pessoa='PJ') if c.cpf_cnpj_apenas_digitos == nfe.infNFe.dest.CNPJ.valor]
+            clientes = [c for c in Cliente.objects.filter(
+                tipo_pessoa='PJ') if c.cpf_cnpj_apenas_digitos == nfe.infNFe.dest.CNPJ.valor]
         elif nfe.infNFe.dest.CPF.valor:
-            clientes = [c for c in Cliente.objects.filter(tipo_pessoa='PF') if c.cpf_cnpj_apenas_digitos == nfe.infNFe.dest.CPF.valor]
+            clientes = [c for c in Cliente.objects.filter(
+                tipo_pessoa='PF') if c.cpf_cnpj_apenas_digitos == nfe.infNFe.dest.CPF.valor]
 
         if len(clientes):
             nota_saida.dest_saida = clientes[0]
@@ -428,7 +443,8 @@ class ProcessadorNotaFiscal(object):
                 info_cliente.cpf = str(nfe.infNFe.dest.CPF.valor)
             elif nfe.infNFe.dest.idEstrangeiro.valor:
                 info_cliente = PessoaJuridica()
-                cliente.id_estrangeiro = str(nfe.infNFe.dest.idEstrangeiro.valor)
+                cliente.id_estrangeiro = str(
+                    nfe.infNFe.dest.idEstrangeiro.valor)
 
             ender_cliente = Endereco()
             tel_cliente = Telefone()
@@ -439,7 +455,8 @@ class ProcessadorNotaFiscal(object):
             ender_cliente.complemento = nfe.infNFe.dest.enderDest.xCpl.valor
             ender_cliente.pais = nfe.infNFe.dest.enderDest.xPais.valor
             ender_cliente.cpais = str(nfe.infNFe.dest.enderDest.cPais.valor)
-            ender_cliente.municipio = str(nfe.infNFe.dest.enderDest.xMun.valor).title()
+            ender_cliente.municipio = str(
+                nfe.infNFe.dest.enderDest.xMun.valor).title()
             ender_cliente.cmun = str(nfe.infNFe.dest.enderDest.cMun.valor)
             ender_cliente.cep = str(nfe.infNFe.dest.enderDest.CEP.valor)
             ender_cliente.uf = nfe.infNFe.dest.enderDest.UF.valor
@@ -464,9 +481,11 @@ class ProcessadorNotaFiscal(object):
         empresas = []
 
         if nfe.infNFe.emit.CNPJ.valor:
-            empresas = [e for e in Empresa.objects.filter(tipo_pessoa='PJ') if e.cpf_cnpj_apenas_digitos == nfe.infNFe.emit.CNPJ.valor]
+            empresas = [e for e in Empresa.objects.filter(
+                tipo_pessoa='PJ') if e.cpf_cnpj_apenas_digitos == nfe.infNFe.emit.CNPJ.valor]
         elif nfe.infNFe.emit.CPF.valor:
-            empresas = [e for e in Empresa.objects.filter(tipo_pessoa='PF') if e.cpf_cnpj_apenas_digitos == nfe.infNFe.emit.CPF.valor]
+            empresas = [e for e in Empresa.objects.filter(
+                tipo_pessoa='PF') if e.cpf_cnpj_apenas_digitos == nfe.infNFe.emit.CPF.valor]
 
         if len(empresas):
             nota_saida.emit_saida = empresas[0]
@@ -493,7 +512,8 @@ class ProcessadorNotaFiscal(object):
             ender_empresa.complemento = nfe.infNFe.emit.enderEmit.xCpl.valor
             ender_empresa.pais = nfe.infNFe.emit.enderEmit.xPais.valor
             ender_empresa.cpais = str(nfe.infNFe.emit.enderEmit.cPais.valor)
-            ender_empresa.municipio = str(nfe.infNFe.emit.enderEmit.xMun.valor).title()
+            ender_empresa.municipio = str(
+                nfe.infNFe.emit.enderEmit.xMun.valor).title()
             ender_empresa.cmun = str(nfe.infNFe.emit.enderEmit.cMun.valor)
             ender_empresa.cep = str(nfe.infNFe.emit.enderEmit.CEP.valor)
             ender_empresa.uf = nfe.infNFe.emit.enderEmit.UF.valor
@@ -513,19 +533,21 @@ class ProcessadorNotaFiscal(object):
 
             nota_saida.emit_saida = empresa
 
-        ##Venda
+        # Venda
         if str(nfe.infNFe.ide.mod.valor) == '55':
             venda.ind_final = False
         elif str(nfe.infNFe.ide.mod.valor) == '65':
             venda.ind_final = True
 
-        #Transportadora
+        # Transportadora
         if nfe.infNFe.transp.transporta.CNPJ.valor or nfe.infNFe.transp.transporta.CPF.valor:
             transportadoras = []
             if nfe.infNFe.transp.transporta.CNPJ.valor:
-                transportadoras = [t for t in Transportadora.objects.filter(tipo_pessoa='PJ') if t.cpf_cnpj_apenas_digitos == nfe.infNFe.transp.transporta.CNPJ.valor]
+                transportadoras = [t for t in Transportadora.objects.filter(
+                    tipo_pessoa='PJ') if t.cpf_cnpj_apenas_digitos == nfe.infNFe.transp.transporta.CNPJ.valor]
             elif nfe.infNFe.transp.transporta.CPF.valor:
-                transportadoras = [t for t in Transportadora.objects.filter(tipo_pessoa='PF') if t.cpf_cnpj_apenas_digitos == nfe.infNFe.transp.transporta.CPF.valor]
+                transportadoras = [t for t in Transportadora.objects.filter(
+                    tipo_pessoa='PF') if t.cpf_cnpj_apenas_digitos == nfe.infNFe.transp.transporta.CPF.valor]
 
             if len(transportadoras):
                 venda.transportadora = transportadoras[0]
@@ -536,12 +558,15 @@ class ProcessadorNotaFiscal(object):
                 if nfe.infNFe.transp.transporta.CNPJ.valor:
                     info_transporta = PessoaJuridica()
                     transporta.tipo_pessoa = 'PJ'
-                    info_transporta.cnpj = str(nfe.infNFe.transp.transporta.CNPJ.valor)
-                    info_transporta.inscricao_estadual = str(nfe.infNFe.transp.transporta.IE.valor)
+                    info_transporta.cnpj = str(
+                        nfe.infNFe.transp.transporta.CNPJ.valor)
+                    info_transporta.inscricao_estadual = str(
+                        nfe.infNFe.transp.transporta.IE.valor)
                 elif nfe.infNFe.transp.transporta.CPF.valor:
                     info_transporta = PessoaFisica()
                     transporta.tipo_pessoa = 'PF'
-                    info_transporta.cpf = str(nfe.infNFe.transp.transporta.CPF.valor)
+                    info_transporta.cpf = str(
+                        nfe.infNFe.transp.transporta.CPF.valor)
 
                 ender_transporta = Endereco()
                 ender_transporta.logradouro = nfe.infNFe.transp.transporta.xEnder.valor
@@ -566,16 +591,16 @@ class ProcessadorNotaFiscal(object):
         venda.frete = nfe.infNFe.total.ICMSTot.vFrete.valor
         venda.seguro = nfe.infNFe.total.ICMSTot.vSeg.valor
         venda.impostos = 0
-        venda.status = u'3' #Importado
+        venda.status = u'3'  # Importado
         venda.save()
 
-        ##ItensVenda/Produto/NaturezaOperacao/Unidade
+        # ItensVenda/Produto/NaturezaOperacao/Unidade
         for det in nfe.infNFe.det:
             itens_venda = ItensVenda()
             itens_venda.venda_id = venda
             produtos = Produto.objects.filter(descricao=det.prod.xProd.valor)
 
-            #Produto
+            # Produto
             if len(produtos):
                 produto = produtos[0]
                 if not produto.venda:
@@ -589,14 +614,16 @@ class ProcessadorNotaFiscal(object):
                 produto.origem = str(det.imposto.ICMS.orig.valor)
                 produto.controlar_estoque = False
                 if det.prod.EXTIPI.valor:
-                    produto.ncm = str(det.prod.NCM.valor) + str(det.prod.EXTIPI.valor)
+                    produto.ncm = str(det.prod.NCM.valor) + \
+                        str(det.prod.EXTIPI.valor)
                 else:
                     produto.ncm = str(det.prod.NCM.valor)
                 produto.venda = det.prod.vUnCom.valor
                 produto.inf_adicionais = det.infAdProd.valor
 
-                #Natureza Operacao
-                nat_ops = NaturezaOperacao.objects.filter(cfop=str(det.prod.CFOP.valor))
+                # Natureza Operacao
+                nat_ops = NaturezaOperacao.objects.filter(
+                    cfop=str(det.prod.CFOP.valor))
                 if len(nat_ops):
                     nat_op = nat_ops[0]
                 else:
@@ -607,100 +634,103 @@ class ProcessadorNotaFiscal(object):
 
                 produto.cfop_padrao = nat_op
 
-                #Grupo Fiscal
+                # Grupo Fiscal
                 grupo_fiscal = GrupoFiscal()
-                grupo_fiscal.descricao = 'Produto: ' + str(det.prod.xProd.valor) + ' (Importado por XML)'
+                grupo_fiscal.descricao = 'Produto: ' + \
+                    str(det.prod.xProd.valor) + ' (Importado por XML)'
                 if det.imposto.ICMS.regime_tributario != 1:
-                    grupo_fiscal.regime_trib = '0' #Normal
+                    grupo_fiscal.regime_trib = '0'  # Normal
                     grupo_fiscal.save()
-                    ##ICMS
+                    # ICMS
                     grupo_icms = ICMS()
                     grupo_icms.grupo_fiscal = grupo_fiscal
-                    grupo_icms.cst          = str(det.imposto.ICMS.CST.valor)
-                    grupo_icms.mod_bc       = str(det.imposto.ICMS.modBC.valor)
-                    grupo_icms.p_icms       = det.imposto.ICMS.pICMS.valor
-                    grupo_icms.p_red_bc     = det.imposto.ICMS.pRedBC.valor
-                    grupo_icms.mod_bcst     = str(det.imposto.ICMS.modBCST.valor)
-                    grupo_icms.p_mvast      = det.imposto.ICMS.pMVAST.valor
-                    grupo_icms.p_red_bcst   = det.imposto.ICMS.pRedBCST.valor
-                    grupo_icms.p_icmsst     = det.imposto.ICMS.pICMSST.valor
-                    grupo_icms.mot_des_icms = str(det.imposto.ICMS.motDesICMS.valor)
-                    grupo_icms.p_dif        = det.imposto.ICMS.pDif.valor
-                    grupo_icms.p_bc_op      = det.imposto.ICMS.pBCOp.valor
-                    grupo_icms.ufst         = str(det.imposto.ICMS.UFST.valor)
+                    grupo_icms.cst = str(det.imposto.ICMS.CST.valor)
+                    grupo_icms.mod_bc = str(det.imposto.ICMS.modBC.valor)
+                    grupo_icms.p_icms = det.imposto.ICMS.pICMS.valor
+                    grupo_icms.p_red_bc = det.imposto.ICMS.pRedBC.valor
+                    grupo_icms.mod_bcst = str(det.imposto.ICMS.modBCST.valor)
+                    grupo_icms.p_mvast = det.imposto.ICMS.pMVAST.valor
+                    grupo_icms.p_red_bcst = det.imposto.ICMS.pRedBCST.valor
+                    grupo_icms.p_icmsst = det.imposto.ICMS.pICMSST.valor
+                    grupo_icms.mot_des_icms = str(
+                        det.imposto.ICMS.motDesICMS.valor)
+                    grupo_icms.p_dif = det.imposto.ICMS.pDif.valor
+                    grupo_icms.p_bc_op = det.imposto.ICMS.pBCOp.valor
+                    grupo_icms.ufst = str(det.imposto.ICMS.UFST.valor)
                     grupo_icms.save()
                 else:
-                    grupo_fiscal.regime_trib = '1' #Simples
+                    grupo_fiscal.regime_trib = '1'  # Simples
                     grupo_fiscal.save()
-                    ##ICMSSN
+                    # ICMSSN
                     grupo_icmssn = ICMSSN()
                     grupo_icmssn.grupo_fiscal = grupo_fiscal
-                    grupo_icmssn.csosn        = str(det.imposto.ICMS.CSOSN.valor)
-                    grupo_icmssn.p_cred_sn    = det.imposto.ICMS.pCredSN.valor
-                    grupo_icmssn.mod_bc       = str(det.imposto.ICMS.modBC.valor)
-                    grupo_icmssn.p_icms       = det.imposto.ICMS.pICMS.valor
-                    grupo_icmssn.p_red_bc     = det.imposto.ICMS.pRedBC.valor
-                    grupo_icmssn.mod_bcst     = str(det.imposto.ICMS.modBCST.valor)
-                    grupo_icmssn.p_mvast      = det.imposto.ICMS.pMVAST.valor
-                    grupo_icmssn.p_red_bcst   = det.imposto.ICMS.pRedBCST.valor
-                    grupo_icmssn.p_icmsst     = det.imposto.ICMS.pICMSST.valor
+                    grupo_icmssn.csosn = str(det.imposto.ICMS.CSOSN.valor)
+                    grupo_icmssn.p_cred_sn = det.imposto.ICMS.pCredSN.valor
+                    grupo_icmssn.mod_bc = str(det.imposto.ICMS.modBC.valor)
+                    grupo_icmssn.p_icms = det.imposto.ICMS.pICMS.valor
+                    grupo_icmssn.p_red_bc = det.imposto.ICMS.pRedBC.valor
+                    grupo_icmssn.mod_bcst = str(det.imposto.ICMS.modBCST.valor)
+                    grupo_icmssn.p_mvast = det.imposto.ICMS.pMVAST.valor
+                    grupo_icmssn.p_red_bcst = det.imposto.ICMS.pRedBCST.valor
+                    grupo_icmssn.p_icmsst = det.imposto.ICMS.pICMSST.valor
                     grupo_icmssn.save()
 
-                ##ICMSUFDest
+                # ICMSUFDest
                 grupo_icmsufdest = ICMSUFDest()
                 grupo_icmsufdest.grupo_fiscal = grupo_fiscal
                 if det.imposto.ICMSUFDest.xml:
-                    grupo_icmsufdest.p_fcp_dest        = det.imposto.ICMSUFDest.pFCPUFDest.valor
-                    grupo_icmsufdest.p_icms_dest       = det.imposto.ICMSUFDest.pICMSUFDest.valor
-                    grupo_icmsufdest.p_icms_inter      = det.imposto.ICMSUFDest.pICMSInter.valor
+                    grupo_icmsufdest.p_fcp_dest = det.imposto.ICMSUFDest.pFCPUFDest.valor
+                    grupo_icmsufdest.p_icms_dest = det.imposto.ICMSUFDest.pICMSUFDest.valor
+                    grupo_icmsufdest.p_icms_inter = det.imposto.ICMSUFDest.pICMSInter.valor
                     grupo_icmsufdest.p_icms_inter_part = det.imposto.ICMSUFDest.pICMSInterPart.valor
 
                 grupo_icmsufdest.save()
 
-                ##IPI
+                # IPI
                 grupo_ipi = IPI()
                 grupo_ipi.grupo_fiscal = grupo_fiscal
                 if det.imposto.IPI.xml:
-                    grupo_ipi.cst          = str(det.imposto.IPI.CST.valor)
-                    grupo_ipi.cl_enq       = str(det.imposto.IPI.clEnq.valor)
-                    grupo_ipi.c_enq        = str(det.imposto.IPI.cEnq.valor)
-                    grupo_ipi.cnpj_prod    = str(det.imposto.IPI.CNPJProd.valor)
+                    grupo_ipi.cst = str(det.imposto.IPI.CST.valor)
+                    grupo_ipi.cl_enq = str(det.imposto.IPI.clEnq.valor)
+                    grupo_ipi.c_enq = str(det.imposto.IPI.cEnq.valor)
+                    grupo_ipi.cnpj_prod = str(det.imposto.IPI.CNPJProd.valor)
 
                     if det.imposto.IPI.qUnid.valor or det.imposto.IPI.vUnid.valor:
-                        grupo_ipi.tipo_ipi     = u'1'
-                        grupo_ipi.valor_fixo   = det.imposto.IPI.vUnid.valor
+                        grupo_ipi.tipo_ipi = u'1'
+                        grupo_ipi.valor_fixo = det.imposto.IPI.vUnid.valor
                     elif det.imposto.IPI.vBC.valor or det.imposto.IPI.pIPI.valor:
-                        grupo_ipi.tipo_ipi     = u'2'
-                        grupo_ipi.p_ipi        = det.imposto.IPI.pIPI.valor
+                        grupo_ipi.tipo_ipi = u'2'
+                        grupo_ipi.p_ipi = det.imposto.IPI.pIPI.valor
                     else:
-                        grupo_ipi.tipo_ipi     = u'0'
+                        grupo_ipi.tipo_ipi = u'0'
 
                 grupo_ipi.save()
 
-                ##PIS
+                # PIS
                 grupo_pis = PIS()
                 grupo_pis.grupo_fiscal = grupo_fiscal
                 if det.imposto.PIS.CST.valor:
-                    grupo_pis.cst          = det.imposto.PIS.CST.valor
-                    grupo_pis.p_pis        = det.imposto.PIS.pPIS.valor
-                    grupo_pis.valiq_pis    = det.imposto.PIS.vAliqProd.valor
+                    grupo_pis.cst = det.imposto.PIS.CST.valor
+                    grupo_pis.p_pis = det.imposto.PIS.pPIS.valor
+                    grupo_pis.valiq_pis = det.imposto.PIS.vAliqProd.valor
 
                 grupo_pis.save()
 
-                ##COFINS
+                # COFINS
                 grupo_cofins = COFINS()
                 grupo_cofins.grupo_fiscal = grupo_fiscal
                 if det.imposto.COFINS.CST.valor:
-                    grupo_cofins.cst          = det.imposto.COFINS.CST.valor
-                    grupo_cofins.p_cofins     = det.imposto.COFINS.pCOFINS.valor
+                    grupo_cofins.cst = det.imposto.COFINS.CST.valor
+                    grupo_cofins.p_cofins = det.imposto.COFINS.pCOFINS.valor
                     grupo_cofins.valiq_cofins = det.imposto.COFINS.vAliqProd.valor
 
                 grupo_cofins.save()
 
                 produto.grupo_fiscal = grupo_fiscal
 
-                #Unidade
-                unidades = Unidade.objects.filter(sigla_unidade=det.prod.uCom.valor)
+                # Unidade
+                unidades = Unidade.objects.filter(
+                    sigla_unidade=det.prod.uCom.valor)
                 if len(unidades):
                     unidade = unidades[0]
                 else:
@@ -724,44 +754,44 @@ class ProcessadorNotaFiscal(object):
             itens_venda.subtotal = det.prod.vProd.valor
             itens_venda.inf_ad_prod = det.infAdProd.valor
 
-            ##Rateio
+            # Rateio
             itens_venda.valor_rateio_frete = det.prod.vFrete.valor
             itens_venda.valor_rateio_despesas = det.prod.vOutro.valor
             itens_venda.valor_rateio_seguro = det.prod.vSeg.valor
 
-            ##Bases de calculo
+            # Bases de calculo
             itens_venda.vbc_icms = det.imposto.ICMS.vBC.valor
             itens_venda.vbc_icms_st = det.imposto.ICMS.vBCST.valor
             itens_venda.vbc_ipi = det.imposto.IPI.vBC.valor
 
-            ##Valores e aliquotas
-            itens_venda.vicms        = det.imposto.ICMS.vICMS.valor
-            itens_venda.vicms_st     = det.imposto.ICMS.vICMSST.valor
-            itens_venda.vipi         = det.imposto.IPI.vIPI.valor
+            # Valores e aliquotas
+            itens_venda.vicms = det.imposto.ICMS.vICMS.valor
+            itens_venda.vicms_st = det.imposto.ICMS.vICMSST.valor
+            itens_venda.vipi = det.imposto.IPI.vIPI.valor
 
             if det.imposto.ICMSUFDest.xml:
-                itens_venda.vicmsufdest  = det.imposto.vICMSUFDest.valor
+                itens_venda.vicmsufdest = det.imposto.vICMSUFDest.valor
                 itens_venda.vicmsufremet = det.imposto.vICMSUFRemet.valor
-                itens_venda.vfcp         = det.imposto.vFCPUFDest.valor
+                itens_venda.vfcp = det.imposto.vFCPUFDest.valor
 
-            itens_venda.vicms_deson  = det.imposto.ICMS.vICMSDeson.valor
-            itens_venda.p_icms       = det.imposto.ICMS.pICMS.valor
-            itens_venda.p_icmsst     = det.imposto.ICMS.pICMSST.valor
-            itens_venda.p_ipi        = det.imposto.IPI.pIPI.valor
+            itens_venda.vicms_deson = det.imposto.ICMS.vICMSDeson.valor
+            itens_venda.p_icms = det.imposto.ICMS.pICMS.valor
+            itens_venda.p_icmsst = det.imposto.ICMS.pICMSST.valor
+            itens_venda.p_ipi = det.imposto.IPI.pIPI.valor
 
-            ##Valores do PIS e COFINS
+            # Valores do PIS e COFINS
             if det.imposto.PIS.vBC.valor:
-                itens_venda.vq_bcpis    = det.imposto.PIS.vBC.valor
+                itens_venda.vq_bcpis = det.imposto.PIS.vBC.valor
             elif det.imposto.PIS.qBCProd.valor:
-                itens_venda.vq_bcpis    = det.imposto.PIS.qBCProd.valor
+                itens_venda.vq_bcpis = det.imposto.PIS.qBCProd.valor
 
             if det.imposto.COFINS.vBC.valor:
                 itens_venda.vq_bccofins = det.imposto.COFINS.vBC.valor
             elif det.imposto.COFINS.qBCProd.valor:
                 itens_venda.vq_bccofins = det.imposto.COFINS.qBCProd.valor
 
-            itens_venda.vpis        = det.imposto.PIS.vPIS.valor
-            itens_venda.vcofins     = det.imposto.COFINS.vCOFINS.valor
+            itens_venda.vpis = det.imposto.PIS.vPIS.valor
+            itens_venda.vcofins = det.imposto.COFINS.vCOFINS.valor
             itens_venda.auto_calcular_impostos = False
 
             itens_venda.save()
@@ -771,8 +801,8 @@ class ProcessadorNotaFiscal(object):
         nota_saida.venda = venda
         nota_saida.save()
 
-        ##Informacoes de cobranca
-        for i,d in enumerate(nfe.infNFe.cobr.dup, 1):
+        # Informacoes de cobranca
+        for i, d in enumerate(nfe.infNFe.cobr.dup, 1):
             pagamento = PagamentoVenda()
             pagamento.venda_id = venda
             pagamento.indice_parcela = i
@@ -806,15 +836,17 @@ class ProcessadorNotaFiscal(object):
         nota_entrada.ind_pres = str(nfe.infNFe.ide.indPres.valor)
         nota_entrada.inf_ad_fisco = str(nfe.infNFe.infAdic.infAdFisco.valor)
         nota_entrada.inf_cpl = str(nfe.infNFe.infAdic.infCpl.valor)
-        nota_entrada.status_nfe = u'9' #Importada
+        nota_entrada.status_nfe = u'9'  # Importada
 
         ##Fornecedor (emitente)
         fornecedores = []
 
         if nfe.infNFe.emit.CNPJ.valor:
-            fornecedores = [f for f in Fornecedor.objects.filter(tipo_pessoa='PJ') if f.cpf_cnpj_apenas_digitos == nfe.infNFe.emit.CNPJ.valor]
+            fornecedores = [f for f in Fornecedor.objects.filter(
+                tipo_pessoa='PJ') if f.cpf_cnpj_apenas_digitos == nfe.infNFe.emit.CNPJ.valor]
         elif nfe.infNFe.emit.CPF.valor:
-            fornecedores = [f for f in Fornecedor.objects.filter(tipo_pessoa='PF') if f.cpf_cnpj_apenas_digitos == nfe.infNFe.emit.CPF.valor]
+            fornecedores = [f for f in Fornecedor.objects.filter(
+                tipo_pessoa='PF') if f.cpf_cnpj_apenas_digitos == nfe.infNFe.emit.CPF.valor]
 
         if len(fornecedores):
             nota_entrada.emit_entrada = fornecedores[0]
@@ -828,8 +860,10 @@ class ProcessadorNotaFiscal(object):
                 info_fornecedor = PessoaJuridica()
                 fornecedor.tipo_pessoa = 'PJ'
                 info_fornecedor.cnpj = str(nfe.infNFe.emit.CNPJ.valor)
-                info_fornecedor.nome_fantasia = str(nfe.infNFe.emit.xFant.valor)
-                info_fornecedor.inscricao_estadual = str(nfe.infNFe.emit.IE.valor)
+                info_fornecedor.nome_fantasia = str(
+                    nfe.infNFe.emit.xFant.valor)
+                info_fornecedor.inscricao_estadual = str(
+                    nfe.infNFe.emit.IE.valor)
             elif nfe.infNFe.emit.CPF.valor:
                 info_fornecedor = PessoaFisica()
                 fornecedor.tipo_pessoa = 'PF'
@@ -844,7 +878,8 @@ class ProcessadorNotaFiscal(object):
             ender_fornecedor.complemento = nfe.infNFe.emit.enderEmit.xCpl.valor
             ender_fornecedor.pais = nfe.infNFe.emit.enderEmit.xPais.valor
             ender_fornecedor.cpais = str(nfe.infNFe.emit.enderEmit.cPais.valor)
-            ender_fornecedor.municipio = str(nfe.infNFe.emit.enderEmit.xMun.valor).title()
+            ender_fornecedor.municipio = str(
+                nfe.infNFe.emit.enderEmit.xMun.valor).title()
             ender_fornecedor.cmun = str(nfe.infNFe.emit.enderEmit.cMun.valor)
             ender_fornecedor.cep = str(nfe.infNFe.emit.enderEmit.CEP.valor)
             ender_fornecedor.uf = nfe.infNFe.emit.enderEmit.UF.valor
@@ -869,7 +904,8 @@ class ProcessadorNotaFiscal(object):
         empresas = []
 
         if nfe.infNFe.dest.CNPJ.valor:
-            empresas = [e for e in Empresa.objects.filter(tipo_pessoa='PJ') if e.cpf_cnpj_apenas_digitos == nfe.infNFe.dest.CNPJ.valor]
+            empresas = [e for e in Empresa.objects.filter(
+                tipo_pessoa='PJ') if e.cpf_cnpj_apenas_digitos == nfe.infNFe.dest.CNPJ.valor]
             if len(empresas):
                 nota_entrada.dest_entrada = fornecedores[0]
             else:
@@ -891,13 +927,16 @@ class ProcessadorNotaFiscal(object):
                 ender_empresa.bairro = nfe.infNFe.dest.enderDest.xBairro.valor
                 ender_empresa.complemento = nfe.infNFe.dest.enderDest.xCpl.valor
                 ender_empresa.pais = nfe.infNFe.dest.enderDest.xPais.valor
-                ender_empresa.cpais = str(nfe.infNFe.dest.enderDest.cPais.valor)
-                ender_empresa.municipio = str(nfe.infNFe.dest.enderDest.xMun.valor).title()
+                ender_empresa.cpais = str(
+                    nfe.infNFe.dest.enderDest.cPais.valor)
+                ender_empresa.municipio = str(
+                    nfe.infNFe.dest.enderDest.xMun.valor).title()
                 ender_empresa.cmun = str(nfe.infNFe.dest.enderDest.cMun.valor)
                 ender_empresa.cep = str(nfe.infNFe.dest.enderDest.CEP.valor)
                 ender_empresa.uf = nfe.infNFe.dest.enderDest.UF.valor
 
-                tel_empresa.telefone = str(nfe.infNFe.dest.enderDest.fone.valor)
+                tel_empresa.telefone = str(
+                    nfe.infNFe.dest.enderDest.fone.valor)
 
                 empresa.save()
                 info_empresa.pessoa_id = empresa
@@ -912,7 +951,7 @@ class ProcessadorNotaFiscal(object):
 
                 nota_entrada.dest_entrada = empresa
 
-        ##Compra
+        # Compra
         compra.mod_frete = str(nfe.infNFe.transp.modFrete.valor)
         compra.valor_total = nfe.infNFe.total.ICMSTot.vNF.valor
         compra.tipo_desconto = u'0'
@@ -922,16 +961,16 @@ class ProcessadorNotaFiscal(object):
         compra.seguro = nfe.infNFe.total.ICMSTot.vSeg.valor
         compra.total_icms = nfe.infNFe.total.ICMSTot.vICMS.valor
         compra.total_ipi = nfe.infNFe.total.ICMSTot.vIPI.valor
-        compra.status = u'3' #Importado
+        compra.status = u'3'  # Importado
         compra.save()
 
-        ##ItensCompra/Produto/Unidade
+        # ItensCompra/Produto/Unidade
         for det in nfe.infNFe.det:
             itens_compra = ItensCompra()
             itens_compra.compra_id = compra
             produtos = Produto.objects.filter(descricao=det.prod.xProd.valor)
 
-            #Produto
+            # Produto
             if len(produtos):
                 produto = produtos[0]
                 if not produto.custo:
@@ -945,14 +984,16 @@ class ProcessadorNotaFiscal(object):
                 produto.origem = str(det.imposto.ICMS.orig.valor)
                 produto.controlar_estoque = False
                 if det.prod.EXTIPI.valor:
-                    produto.ncm = str(det.prod.NCM.valor) + str(det.prod.EXTIPI.valor)
+                    produto.ncm = str(det.prod.NCM.valor) + \
+                        str(det.prod.EXTIPI.valor)
                 else:
                     produto.ncm = str(det.prod.NCM.valor)
                 produto.custo = det.prod.vUnCom.valor
                 produto.inf_adicionais = det.infAdProd.valor
 
-                #Natureza Operacao
-                nat_ops = NaturezaOperacao.objects.filter(cfop=str(det.prod.CFOP.valor))
+                # Natureza Operacao
+                nat_ops = NaturezaOperacao.objects.filter(
+                    cfop=str(det.prod.CFOP.valor))
                 if len(nat_ops):
                     nat_op = nat_ops[0]
                 else:
@@ -963,97 +1004,100 @@ class ProcessadorNotaFiscal(object):
 
                 produto.cfop_padrao = nat_op
 
-                #Grupo Fiscal
+                # Grupo Fiscal
                 grupo_fiscal = GrupoFiscal()
-                grupo_fiscal.descricao = 'Produto: ' + str(det.prod.xProd.valor) + ' (Importado por XML)'
+                grupo_fiscal.descricao = 'Produto: ' + \
+                    str(det.prod.xProd.valor) + ' (Importado por XML)'
                 if det.imposto.ICMS.regime_tributario != 1:
-                    grupo_fiscal.regime_trib = '0' #Normal
+                    grupo_fiscal.regime_trib = '0'  # Normal
                     grupo_fiscal.save()
-                    ##ICMS
+                    # ICMS
                     grupo_icms = ICMS()
                     grupo_icms.grupo_fiscal = grupo_fiscal
-                    grupo_icms.cst          = str(det.imposto.ICMS.CST.valor)
-                    grupo_icms.mod_bc       = str(det.imposto.ICMS.modBC.valor)
-                    grupo_icms.p_icms       = det.imposto.ICMS.pICMS.valor
-                    grupo_icms.p_red_bc     = det.imposto.ICMS.pRedBC.valor
-                    grupo_icms.mod_bcst     = str(det.imposto.ICMS.modBCST.valor)
-                    grupo_icms.p_mvast      = det.imposto.ICMS.pMVAST.valor
-                    grupo_icms.p_red_bcst   = det.imposto.ICMS.pRedBCST.valor
-                    grupo_icms.p_icmsst     = det.imposto.ICMS.pICMSST.valor
-                    grupo_icms.mot_des_icms = str(det.imposto.ICMS.motDesICMS.valor)
-                    grupo_icms.p_dif        = det.imposto.ICMS.pDif.valor
-                    grupo_icms.p_bc_op      = det.imposto.ICMS.pBCOp.valor
-                    grupo_icms.ufst         = str(det.imposto.ICMS.UFST.valor)
+                    grupo_icms.cst = str(det.imposto.ICMS.CST.valor)
+                    grupo_icms.mod_bc = str(det.imposto.ICMS.modBC.valor)
+                    grupo_icms.p_icms = det.imposto.ICMS.pICMS.valor
+                    grupo_icms.p_red_bc = det.imposto.ICMS.pRedBC.valor
+                    grupo_icms.mod_bcst = str(det.imposto.ICMS.modBCST.valor)
+                    grupo_icms.p_mvast = det.imposto.ICMS.pMVAST.valor
+                    grupo_icms.p_red_bcst = det.imposto.ICMS.pRedBCST.valor
+                    grupo_icms.p_icmsst = det.imposto.ICMS.pICMSST.valor
+                    grupo_icms.mot_des_icms = str(
+                        det.imposto.ICMS.motDesICMS.valor)
+                    grupo_icms.p_dif = det.imposto.ICMS.pDif.valor
+                    grupo_icms.p_bc_op = det.imposto.ICMS.pBCOp.valor
+                    grupo_icms.ufst = str(det.imposto.ICMS.UFST.valor)
                     grupo_icms.save()
                 else:
-                    grupo_fiscal.regime_trib = '1' #Simples
+                    grupo_fiscal.regime_trib = '1'  # Simples
                     grupo_fiscal.save()
-                    ##ICMSSN
+                    # ICMSSN
                     grupo_icmssn = ICMSSN()
                     grupo_icmssn.grupo_fiscal = grupo_fiscal
-                    grupo_icmssn.csosn        = str(det.imposto.ICMS.CSOSN.valor)
-                    grupo_icmssn.p_cred_sn    = det.imposto.ICMS.pCredSN.valor
-                    grupo_icmssn.mod_bc       = str(det.imposto.ICMS.modBC.valor)
-                    grupo_icmssn.p_icms       = det.imposto.ICMS.pICMS.valor
-                    grupo_icmssn.p_red_bc     = det.imposto.ICMS.pRedBC.valor
-                    grupo_icmssn.mod_bcst     = str(det.imposto.ICMS.modBCST.valor)
-                    grupo_icmssn.p_mvast      = det.imposto.ICMS.pMVAST.valor
-                    grupo_icmssn.p_red_bcst   = det.imposto.ICMS.pRedBCST.valor
-                    grupo_icmssn.p_icmsst     = det.imposto.ICMS.pICMSST.valor
+                    grupo_icmssn.csosn = str(det.imposto.ICMS.CSOSN.valor)
+                    grupo_icmssn.p_cred_sn = det.imposto.ICMS.pCredSN.valor
+                    grupo_icmssn.mod_bc = str(det.imposto.ICMS.modBC.valor)
+                    grupo_icmssn.p_icms = det.imposto.ICMS.pICMS.valor
+                    grupo_icmssn.p_red_bc = det.imposto.ICMS.pRedBC.valor
+                    grupo_icmssn.mod_bcst = str(det.imposto.ICMS.modBCST.valor)
+                    grupo_icmssn.p_mvast = det.imposto.ICMS.pMVAST.valor
+                    grupo_icmssn.p_red_bcst = det.imposto.ICMS.pRedBCST.valor
+                    grupo_icmssn.p_icmsst = det.imposto.ICMS.pICMSST.valor
                     grupo_icmssn.save()
 
-                ##ICMSUFDest
+                # ICMSUFDest
                 if det.imposto.ICMSUFDest.xml:
                     grupo_icmsufdest = ICMSUFDest()
                     grupo_icmsufdest.grupo_fiscal = grupo_fiscal
-                    grupo_icmsufdest.p_fcp_dest        = det.imposto.ICMSUFDest.pFCPUFDest.valor
-                    grupo_icmsufdest.p_icms_dest       = det.imposto.ICMSUFDest.pICMSUFDest.valor
-                    grupo_icmsufdest.p_icms_inter      = det.imposto.ICMSUFDest.pICMSInter.valor
+                    grupo_icmsufdest.p_fcp_dest = det.imposto.ICMSUFDest.pFCPUFDest.valor
+                    grupo_icmsufdest.p_icms_dest = det.imposto.ICMSUFDest.pICMSUFDest.valor
+                    grupo_icmsufdest.p_icms_inter = det.imposto.ICMSUFDest.pICMSInter.valor
                     grupo_icmsufdest.p_icms_inter_part = det.imposto.ICMSUFDest.pICMSInterPart.valor
                     grupo_icmsufdest.save()
 
-                ##IPI
+                # IPI
                 if det.imposto.IPI.xml:
                     grupo_ipi = IPI()
                     grupo_ipi.grupo_fiscal = grupo_fiscal
-                    grupo_ipi.cst          = str(det.imposto.IPI.CST.valor)
-                    grupo_ipi.cl_enq       = str(det.imposto.IPI.clEnq.valor)
-                    grupo_ipi.c_enq        = str(det.imposto.IPI.cEnq.valor)
-                    grupo_ipi.cnpj_prod    = str(det.imposto.IPI.CNPJProd.valor)
+                    grupo_ipi.cst = str(det.imposto.IPI.CST.valor)
+                    grupo_ipi.cl_enq = str(det.imposto.IPI.clEnq.valor)
+                    grupo_ipi.c_enq = str(det.imposto.IPI.cEnq.valor)
+                    grupo_ipi.cnpj_prod = str(det.imposto.IPI.CNPJProd.valor)
 
                     if det.imposto.IPI.qUnid.valor or det.imposto.IPI.vUnid.valor:
-                        grupo_ipi.tipo_ipi     = u'1'
-                        grupo_ipi.valor_fixo   = det.imposto.IPI.vUnid.valor
+                        grupo_ipi.tipo_ipi = u'1'
+                        grupo_ipi.valor_fixo = det.imposto.IPI.vUnid.valor
                     elif det.imposto.IPI.vBC.valor or det.imposto.IPI.pIPI.valor:
-                        grupo_ipi.tipo_ipi     = u'2'
-                        grupo_ipi.p_ipi        = det.imposto.IPI.pIPI.valor
+                        grupo_ipi.tipo_ipi = u'2'
+                        grupo_ipi.p_ipi = det.imposto.IPI.pIPI.valor
                     else:
-                        grupo_ipi.tipo_ipi     = u'0'
+                        grupo_ipi.tipo_ipi = u'0'
 
                     grupo_ipi.save()
 
-                ##PIS
+                # PIS
                 if det.imposto.PIS.CST.valor:
                     grupo_pis = PIS()
                     grupo_pis.grupo_fiscal = grupo_fiscal
-                    grupo_pis.cst          = det.imposto.PIS.CST.valor
-                    grupo_pis.p_pis        = det.imposto.PIS.pPIS.valor
-                    grupo_pis.valiq_pis    = det.imposto.PIS.vAliqProd.valor
+                    grupo_pis.cst = det.imposto.PIS.CST.valor
+                    grupo_pis.p_pis = det.imposto.PIS.pPIS.valor
+                    grupo_pis.valiq_pis = det.imposto.PIS.vAliqProd.valor
                     grupo_pis.save()
 
-                ##COFINS
+                # COFINS
                 if det.imposto.COFINS.CST.valor:
                     grupo_cofins = COFINS()
                     grupo_cofins.grupo_fiscal = grupo_fiscal
-                    grupo_cofins.cst          = det.imposto.COFINS.CST.valor
-                    grupo_cofins.p_cofins     = det.imposto.COFINS.pCOFINS.valor
+                    grupo_cofins.cst = det.imposto.COFINS.CST.valor
+                    grupo_cofins.p_cofins = det.imposto.COFINS.pCOFINS.valor
                     grupo_cofins.valiq_cofins = det.imposto.COFINS.vAliqProd.valor
                     grupo_cofins.save()
 
                 produto.grupo_fiscal = grupo_fiscal
 
-                #Unidade
-                unidades = Unidade.objects.filter(sigla_unidade=det.prod.uCom.valor)
+                # Unidade
+                unidades = Unidade.objects.filter(
+                    sigla_unidade=det.prod.uCom.valor)
                 if len(unidades):
                     unidade = unidades[0]
                 else:
@@ -1097,10 +1141,10 @@ class ProcessadorNotaFiscal(object):
         try:
             with open(self.conf_nfe.get_certificado_a1(), 'rb') as f:
                 arquivo = f.read()
-            self.info_certificado = self.nova_nfe.extrair_certificado_a1(arquivo, self.conf_nfe.senha_certificado)
+            self.info_certificado = self.nova_nfe.extrair_certificado_a1(
+                arquivo, self.conf_nfe.senha_certificado)
         except:
             return self.salvar_mensagem(message=u'Erro ao tentar ler o certificado, verifique se sua senha está correta.', erro=True)
-
 
     def verificar_configuracao_nfe(self, nota_obj):
         try:
@@ -1122,7 +1166,8 @@ class ProcessadorNotaFiscal(object):
         try:
             with open(self.conf_nfe.get_certificado_a1(), 'rb') as f:
                 arquivo = f.read()
-            self.info_certificado = self.nova_nfe.extrair_certificado_a1(arquivo, self.conf_nfe.senha_certificado)
+            self.info_certificado = self.nova_nfe.extrair_certificado_a1(
+                arquivo, self.conf_nfe.senha_certificado)
         except:
             e = ErrosValidacaoNotaFiscal(nfe=nota_obj)
             e.tipo = u'0'
@@ -1148,7 +1193,7 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message=e.descricao, erro=True)
         else:
             processo = self.nova_nfe.gerar_xml(xml_nfe=nfe.xml, cert=self.info_certificado['cert'], key=self.info_certificado['key'],
-                versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, consumidor=nota_obj.consumidor, caminho=MEDIA_ROOT)
+                                               versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, consumidor=nota_obj.consumidor, caminho=MEDIA_ROOT)
 
         for err in processo.envio.erros:
             e = ErrosValidacaoNotaFiscal(nfe=nota_obj)
@@ -1204,17 +1249,17 @@ class ProcessadorNotaFiscal(object):
         else:
             try:
                 processos = self.nova_nfe.processar_nota(xml_nfe=nfe.xml, cert=self.info_certificado['cert'], key=self.info_certificado['key'],
-                    versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, consumidor=nota_obj.consumidor, contingencia=nota_obj.contingencia,
-                    consultar_servico=False, numero_lote=nota_obj.numero_lote, caminho=MEDIA_ROOT)
+                                                         versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, consumidor=nota_obj.consumidor, contingencia=nota_obj.contingencia,
+                                                         consultar_servico=False, numero_lote=nota_obj.numero_lote, caminho=MEDIA_ROOT)
 
-                ##HTTP 200 - OK
+                # HTTP 200 - OK
                 if processos['lote'].resposta.status in (u'200', 200):
-                    ##Lote processado
+                    # Lote processado
                     if processos['lote'].resposta.cStat.valor in (u'104', 104):
                         if len(processos['notas']):
                             proc = processos['notas'][0]
 
-                            ##Autorizada
+                            # Autorizada
                             if proc.protNFe.infProt.cStat.valor == u'100':
                                 nota_obj.status_nfe = u'1'
                                 nota_obj.chave = proc.NFe.chave
@@ -1222,51 +1267,63 @@ class ProcessadorNotaFiscal(object):
 
                                 e = RespostaSefazNotaFiscal(nfe=nota_obj)
                                 e.tipo = u'1'
-                                e.codigo = str(proc.protNFe.infProt.cStat.valor)
-                                e.descricao = str(proc.protNFe.infProt.xMotivo.valor)
+                                e.codigo = str(
+                                    proc.protNFe.infProt.cStat.valor)
+                                e.descricao = str(
+                                    proc.protNFe.infProt.xMotivo.valor)
                                 e.save()
-                                self.salvar_mensagem(message=e.descricao, erro=False)
+                                self.salvar_mensagem(
+                                    message=e.descricao, erro=False)
 
-                            ##Denegada
+                            # Denegada
                             elif proc.protNFe.infProt.cStat.valor in (u'110', u'301', u'302', u'303'):
                                 nota_obj.status_nfe = u'2'
                                 nota_obj.chave = proc.NFe.chave
 
                                 e = RespostaSefazNotaFiscal(nfe=nota_obj)
                                 e.tipo = u'3'
-                                e.codigo = str(proc.protNFe.infProt.cStat.valor)
-                                e.descricao = str(proc.protNFe.infProt.xMotivo.valor)
+                                e.codigo = str(
+                                    proc.protNFe.infProt.cStat.valor)
+                                e.descricao = str(
+                                    proc.protNFe.infProt.xMotivo.valor)
                                 e.save()
-                                self.salvar_mensagem(message=e.descricao, erro=True)
+                                self.salvar_mensagem(
+                                    message=e.descricao, erro=True)
 
-                            ##Resultado do processamento (provavelmente nao ocorre)
+                            # Resultado do processamento (provavelmente nao ocorre)
                             elif proc.protNFe.infProt.cStat.valor < u'200':
                                 nota_obj.chave = proc.NFe.chave
 
                                 e = RespostaSefazNotaFiscal(nfe=nota_obj)
                                 e.tipo = u'1'
-                                e.codigo = str(proc.protNFe.infProt.cStat.valor)
-                                e.descricao = str(proc.protNFe.infProt.xMotivo.valor)
+                                e.codigo = str(
+                                    proc.protNFe.infProt.cStat.valor)
+                                e.descricao = str(
+                                    proc.protNFe.infProt.xMotivo.valor)
                                 e.save()
-                                self.salvar_mensagem(message=e.descricao, erro=True)
+                                self.salvar_mensagem(
+                                    message=e.descricao, erro=True)
 
-                            ##Rejeicao
+                            # Rejeicao
                             else:
                                 nota_obj.status_nfe = u'5'
                                 nota_obj.chave = proc.NFe.chave
 
                                 e = RespostaSefazNotaFiscal(nfe=nota_obj)
                                 e.tipo = u'2'
-                                e.codigo = str(proc.protNFe.infProt.cStat.valor)
-                                e.descricao = str(proc.protNFe.infProt.xMotivo.valor)
+                                e.codigo = str(
+                                    proc.protNFe.infProt.cStat.valor)
+                                e.descricao = str(
+                                    proc.protNFe.infProt.xMotivo.valor)
                                 e.save()
-                                self.salvar_mensagem(message=e.descricao, erro=True)
+                                self.salvar_mensagem(
+                                    message=e.descricao, erro=True)
 
                             nota_obj.numero_protocolo = proc.protNFe.infProt.nProt.valor
                             nota_obj.save()
 
-                    ##Lote em processamento
-                    elif processos['lote'].resposta.cStat.valor in (u'105', 105) :
+                    # Lote em processamento
+                    elif processos['lote'].resposta.cStat.valor in (u'105', 105):
                         nota_obj.status_nfe = u'4'
                         nota_obj.save()
 
@@ -1276,7 +1333,7 @@ class ProcessadorNotaFiscal(object):
                         e.codigo = str(processos['lote'].resposta.cStat.valor)
                         e.save()
                         self.salvar_mensagem(message=e.descricao, erro=False)
-                    elif processos['lote'].resposta.cStat.valor in (u'100', 100) :
+                    elif processos['lote'].resposta.cStat.valor in (u'100', 100):
                         nota_obj.status_nfe = u'1'
                         nota_obj.save()
 
@@ -1289,12 +1346,13 @@ class ProcessadorNotaFiscal(object):
                     else:
                         e = RespostaSefazNotaFiscal(nfe=nota_obj)
                         e.tipo = u'0'
-                        e.descricao = 'Erro ao processar lote, motivo: ' + str(processos['lote'].resposta.xMotivo.valor)
+                        e.descricao = 'Erro ao processar lote, motivo: ' + \
+                            str(processos['lote'].resposta.xMotivo.valor)
                         e.codigo = str(processos['lote'].resposta.cStat.valor)
                         e.save()
                         self.salvar_mensagem(message=e.descricao, erro=True)
 
-                ##HTTP 403 - Acesso proibido
+                # HTTP 403 - Acesso proibido
                 elif processos['lote'].resposta.status in (u'403', 403):
                     e = RespostaSefazNotaFiscal(nfe=nota_obj)
                     e.tipo = u'0'
@@ -1311,7 +1369,6 @@ class ProcessadorNotaFiscal(object):
 
                 nota_obj.numero_lote = processos['numero_lote']
                 nota_obj.save()
-
 
             except SSLError:
                 e = RespostaSefazNotaFiscal(nfe=nota_obj)
@@ -1337,14 +1394,14 @@ class ProcessadorNotaFiscal(object):
         else:
             try:
                 processo = self.nova_nfe.cancelar_nota(chave=nota_obj.chave, protocolo=nota_obj.numero_protocolo, justificativa=nota_obj.just_canc, cert=self.info_certificado['cert'], key=self.info_certificado['key'],
-                    versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, contingencia=nota_obj.contingencia, caminho=MEDIA_ROOT)
+                                                       versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, contingencia=nota_obj.contingencia, caminho=MEDIA_ROOT)
 
-                ##HTTP 200 - OK
+                # HTTP 200 - OK
                 if processo.resposta.status in (u'200', 200):
                     if len(processo.resposta.retEvento):
                         ret = processo.resposta.retEvento[0]
 
-                        ##Cancelamento de NF-e homologado / Evento registrado e vinculado a NF-e
+                        # Cancelamento de NF-e homologado / Evento registrado e vinculado a NF-e
                         if ret.infEvento.cStat.valor == u'101' or ret.infEvento.cStat.valor == u'135':
                             nota_obj.status_nfe = u'8'
                             nota_obj.numero_protocolo = ret.infEvento.nProt.valor
@@ -1355,7 +1412,8 @@ class ProcessadorNotaFiscal(object):
                             e.codigo = str(ret.infEvento.cStat.valor)
                             e.descricao = str(ret.infEvento.xMotivo.valor)
                             e.save()
-                            self.salvar_mensagem(message=e.descricao, erro=False)
+                            self.salvar_mensagem(
+                                message=e.descricao, erro=False)
 
                         elif ret.infEvento.cStat.valor < u'200':
                             e = RespostaSefazNotaFiscal(nfe=nota_obj)
@@ -1363,7 +1421,8 @@ class ProcessadorNotaFiscal(object):
                             e.codigo = str(ret.infEvento.cStat.valor)
                             e.descricao = str(ret.infEvento.xMotivo.valor)
                             e.save()
-                            self.salvar_mensagem(message=e.descricao, erro=True)
+                            self.salvar_mensagem(
+                                message=e.descricao, erro=True)
 
                         else:
                             e = RespostaSefazNotaFiscal(nfe=nota_obj)
@@ -1371,9 +1430,10 @@ class ProcessadorNotaFiscal(object):
                             e.codigo = str(ret.infEvento.cStat.valor)
                             e.descricao = str(ret.infEvento.xMotivo.valor)
                             e.save()
-                            self.salvar_mensagem(message=e.descricao, erro=True)
+                            self.salvar_mensagem(
+                                message=e.descricao, erro=True)
 
-                ##HTTP 403 - Acesso proibido
+                # HTTP 403 - Acesso proibido
                 elif processo.resposta.status in (u'403', 403):
                     e = RespostaSefazNotaFiscal(nfe=nota_obj)
                     e.tipo = u'0'
@@ -1387,7 +1447,6 @@ class ProcessadorNotaFiscal(object):
                     e.descricao = 'Erro ao enviar nota, verifique a versão do seu aplicativo e a validade do seu certificado.'
                     e.save()
                     self.salvar_mensagem(message=e.descricao, erro=True)
-
 
             except SSLError:
                 e = RespostaSefazNotaFiscal(nfe=nota_obj)
@@ -1407,7 +1466,7 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message='Arquivo de processamento da nota não encontrado. Verifique se sua nota foi processada corretamente.', erro=True)
 
         try:
-            ##Tentar ler arquivo do processamento da NF-e
+            # Tentar ler arquivo do processamento da NF-e
             f = open(nota_obj.caminho_proc_completo, encoding='utf8')
             proc_nfe = f.read()
             f.close()
@@ -1419,7 +1478,8 @@ class ProcessadorNotaFiscal(object):
         if self.conf_nfe.inserir_logo_danfe:
             logo_path = nota_obj.emit_saida.caminho_completo_logo
 
-        danfe = self.nova_nfe.gerar_danfe(proc_nfe, nome_sistema=u'PySIGNFe', leiaute_logo_vertical=self.conf_nfe.leiaute_logo_vertical, versao=nota_obj.versao, logo=logo_path)
+        danfe = self.nova_nfe.gerar_danfe(
+            proc_nfe, nome_sistema=u'PySIGNFe', leiaute_logo_vertical=self.conf_nfe.leiaute_logo_vertical, versao=nota_obj.versao, logo=logo_path)
 
         return danfe
 
@@ -1434,18 +1494,18 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message='Arquivo de processamento da nota não encontrado. Verifique se sua nota foi processada corretamente.', erro=True)
 
         try:
-            ##Tentar ler arquivo do processamento da NF-e
+            # Tentar ler arquivo do processamento da NF-e
             f = open(nota_obj.caminho_proc_completo, encoding='utf8')
             proc_nfe = f.read()
             f.close()
         except FileNotFoundError:
             return self.salvar_mensagem(message='Arquivo de processamento da nota não encontrado. Verifique se sua nota foi processada corretamente.', erro=True)
 
-
         if not self.conf_nfe.csc or not self.conf_nfe.cidtoken:
             return self.salvar_mensagem(message='Insira o Código de Segurança do Contribuinte e o Identificador do CSC na área de configuração de NF-e.', erro=True)
 
-        danfce = self.nova_nfe.gerar_danfe(proc_nfe, csc=self.conf_nfe.csc, cidtoken=self.conf_nfe.cidtoken, versao=nota_obj.versao)
+        danfce = self.nova_nfe.gerar_danfe(
+            proc_nfe, csc=self.conf_nfe.csc, cidtoken=self.conf_nfe.cidtoken, versao=nota_obj.versao)
 
         return danfce
 
@@ -1463,7 +1523,7 @@ class ProcessadorNotaFiscal(object):
         else:
             try:
                 processo = self.nova_nfe.consultar_cadastro(cert=self.info_certificado['cert'], key=self.info_certificado['key'], cpf_cnpj=empresa.cpf_cnpj_apenas_digitos, versao=u'3.10',
-                    ambiente=2, estado=empresa.uf_padrao, contingencia=False, salvar_arquivos=salvar_arquivos, caminho=MEDIA_ROOT)
+                                                            ambiente=2, estado=empresa.uf_padrao, contingencia=False, salvar_arquivos=salvar_arquivos, caminho=MEDIA_ROOT)
 
                 self.processo = processo
 
@@ -1474,10 +1534,10 @@ class ProcessadorNotaFiscal(object):
                         return self.salvar_mensagem(message=str(processo.resposta.infCons.xMotivo.valor), erro=True)
                 else:
                     return self.salvar_mensagem(message='Erro ao consultar cadastro, verifique a versão do seu aplicativo e a validade do seu certificado.', erro=True)
-            
+
             except SSLError as e:
                 return self.salvar_mensagem(message=u'Erro de autenticação: {}'.format(e), erro=True)
-            
+
     def inutilizar_notas(self, empresa, ambiente, modelo, serie, numero_inicial, numero_final, justificativa, salvar_arquivos):
         self.nova_nfe = nf_e()
 
@@ -1496,7 +1556,7 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message=u'CNPJ do emitente não foi preenchido.', erro=True)
         else:
             processo = self.nova_nfe.inutilizar_faixa_numeracao(cnpj=empresa.cpf_cnpj_apenas_digitos, serie=serie, numero_inicial=numero_inicial, numero_final=numero_final, justificativa=justificativa,
-                cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10', ambiente=int(ambiente), estado=empresa.uf_padrao, nfce=nfce, contingencia=False, caminho=MEDIA_ROOT)
+                                                                cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10', ambiente=int(ambiente), estado=empresa.uf_padrao, nfce=nfce, contingencia=False, caminho=MEDIA_ROOT)
 
             self.processo = processo
 
@@ -1520,7 +1580,8 @@ class ProcessadorNotaFiscal(object):
         except KeyError:
             return self.salvar_mensagem(message=u'Chave com código da UF incorreto.', erro=True)
 
-        processo = self.nova_nfe.consultar_nfe(chave=chave, cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10', ambiente=int(ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
+        processo = self.nova_nfe.consultar_nfe(chave=chave, cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10', ambiente=int(
+            ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
 
         self.processo = processo
 
@@ -1546,8 +1607,8 @@ class ProcessadorNotaFiscal(object):
 
         cnpj = chave[6:20]
 
-        processo = self.nova_nfe.download_notas(cnpj=cnpj, lista_chaves=[chave,], ambiente_nacional=ambiente_nacional, cert=self.info_certificado['cert'], key=self.info_certificado['key'],
-            versao=u'3.10', ambiente=int(ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
+        processo = self.nova_nfe.download_notas(cnpj=cnpj, lista_chaves=[chave, ], ambiente_nacional=ambiente_nacional, cert=self.info_certificado['cert'], key=self.info_certificado['key'],
+                                                versao=u'3.10', ambiente=int(ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
 
         self.processo = processo
 
@@ -1572,7 +1633,7 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message=u'Chave com código da UF incorreto.', erro=True)
 
         processo = self.nova_nfe.efetuar_manifesto(cnpj=cnpj, tipo_manifesto=tipo_manifesto, chave=chave, ambiente_nacional=ambiente_nacional, cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10',
-            ambiente=int(ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
+                                                   ambiente=int(ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
 
         self.processo = processo
 

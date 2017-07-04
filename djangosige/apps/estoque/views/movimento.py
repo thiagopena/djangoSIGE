@@ -20,15 +20,17 @@ class MovimentoEstoqueMixin(object):
         prod = itens_mvmt_obj.produto
         lista_produtos.append(prod)
 
-        #Modificar valor do estoque atual dos produtos
+        # Modificar valor do estoque atual dos produtos
         if not prod.estoque_atual is None and isinstance(self.object, EntradaEstoque):
-            prod_estocado, created = ProdutoEstocado.objects.get_or_create(local=self.object.local_dest, produto=itens_mvmt_obj.produto)
+            prod_estocado, created = ProdutoEstocado.objects.get_or_create(
+                local=self.object.local_dest, produto=itens_mvmt_obj.produto)
             prod_estocado.quantidade = prod_estocado.quantidade + itens_mvmt_obj.quantidade
             lista_produtos_estocados.append(prod_estocado)
             prod.estoque_atual = prod.estoque_atual + itens_mvmt_obj.quantidade
 
         elif not prod.estoque_atual is None and isinstance(self.object, SaidaEstoque):
-            prod_estocado, created = ProdutoEstocado.objects.get_or_create(local=self.object.local_orig, produto=itens_mvmt_obj.produto)
+            prod_estocado, created = ProdutoEstocado.objects.get_or_create(
+                local=self.object.local_orig, produto=itens_mvmt_obj.produto)
 
             if itens_mvmt_obj.quantidade > prod_estocado.quantidade:
                 itens_mvmt_obj.quantidade = prod_estocado.quantidade
@@ -39,21 +41,26 @@ class MovimentoEstoqueMixin(object):
             lista_produtos_estocados.append(prod_estocado)
 
             if prod.estoque_atual < itens_mvmt_obj.quantidade:
-                pform.add_error('quantidade', 'Quantidade retirada do estoque maior que o estoque atual (' + str(prod.estoque_atual).replace('.',',') + ') do produto.')
+                pform.add_error('quantidade', 'Quantidade retirada do estoque maior que o estoque atual (' +
+                                str(prod.estoque_atual).replace('.', ',') + ') do produto.')
             else:
                 prod.estoque_atual = prod.estoque_atual - itens_mvmt_obj.quantidade
 
         elif isinstance(self.object, TransferenciaEstoque):
-            prod_estocado_orig, created = ProdutoEstocado.objects.get_or_create(local=self.object.local_estoque_orig, produto=itens_mvmt_obj.produto)
-            prod_estocado_dest, created = ProdutoEstocado.objects.get_or_create(local=self.object.local_estoque_dest, produto=itens_mvmt_obj.produto)
+            prod_estocado_orig, created = ProdutoEstocado.objects.get_or_create(
+                local=self.object.local_estoque_orig, produto=itens_mvmt_obj.produto)
+            prod_estocado_dest, created = ProdutoEstocado.objects.get_or_create(
+                local=self.object.local_estoque_dest, produto=itens_mvmt_obj.produto)
 
             if itens_mvmt_obj.quantidade > prod_estocado_orig.quantidade:
                 itens_mvmt_obj.quantidade = prod_estocado_orig.quantidade
                 prod_estocado_orig.quantidade = Decimal('0.00')
             else:
-                prod_estocado_orig.quantidade = prod_estocado_orig.quantidade - itens_mvmt_obj.quantidade
+                prod_estocado_orig.quantidade = prod_estocado_orig.quantidade - \
+                    itens_mvmt_obj.quantidade
 
-            prod_estocado_dest.quantidade = prod_estocado_dest.quantidade + itens_mvmt_obj.quantidade
+            prod_estocado_dest.quantidade = prod_estocado_dest.quantidade + \
+                itens_mvmt_obj.quantidade
 
             lista_produtos_estocados.append(prod_estocado_orig)
             lista_produtos_estocados.append(prod_estocado_dest)
@@ -64,7 +71,8 @@ class AdicionarMovimentoEstoqueBaseView(CreateView, MovimentoEstoqueMixin):
         return self.success_message % dict(cleaned_data, pk=self.object.pk)
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarMovimentoEstoqueBaseView, self).get_context_data(**kwargs)
+        context = super(AdicionarMovimentoEstoqueBaseView,
+                        self).get_context_data(**kwargs)
         return self.view_context(context)
 
     def get(self, request, *args, **kwargs):
@@ -79,13 +87,13 @@ class AdicionarMovimentoEstoqueBaseView(CreateView, MovimentoEstoqueMixin):
 
     def post(self, request, *args, **kwargs):
         self.object = None
-        ##Tirar . dos campos decimais
+        # Tirar . dos campos decimais
         req_post = request.POST.copy()
-        for key,value in req_post.items():
+        for key, value in req_post.items():
             if ('quantidade' in key or
-            'valor' in key or
-            'total' in key):
-                req_post[key] = req_post[key].replace('.','')
+                'valor' in key or
+                    'total' in key):
+                req_post[key] = req_post[key].replace('.', '')
 
         request.POST = req_post
 
@@ -104,9 +112,10 @@ class AdicionarMovimentoEstoqueBaseView(CreateView, MovimentoEstoqueMixin):
                     itens_mvmt_obj = pform.save(commit=False)
                     itens_mvmt_obj.movimento_id = self.object
 
-                    self.adicionar_novo_movimento_estoque(itens_mvmt_obj, pform, lista_produtos, lista_produtos_estocados)
+                    self.adicionar_novo_movimento_estoque(
+                        itens_mvmt_obj, pform, lista_produtos, lista_produtos_estocados)
 
-            #Verificar se movimentos de estoque invalidos existem
+            # Verificar se movimentos de estoque invalidos existem
             if len(pform.errors):
                 return self.form_invalid(form, itens_form)
             else:
@@ -122,7 +131,8 @@ class AdicionarMovimentoEstoqueBaseView(CreateView, MovimentoEstoqueMixin):
 
     def form_valid(self, form):
         super(AdicionarMovimentoEstoqueBaseView, self).form_valid(form)
-        messages.success(self.request, self.get_success_message(form.cleaned_data))
+        messages.success(
+            self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
     def form_invalid(self, form, itens_form):
@@ -137,7 +147,8 @@ class AdicionarEntradaEstoqueView(AdicionarMovimentoEstoqueBaseView):
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR ENTRADA EM ESTOQUE'
-        context['return_url'] = reverse_lazy('estoque:listaentradasestoqueview')
+        context['return_url'] = reverse_lazy(
+            'estoque:listaentradasestoqueview')
         return context
 
 
@@ -152,6 +163,7 @@ class AdicionarSaidaEstoqueView(AdicionarMovimentoEstoqueBaseView):
         context['return_url'] = reverse_lazy('estoque:listasaidasestoqueview')
         return context
 
+
 class AdicionarTransferenciaEstoqueView(AdicionarMovimentoEstoqueBaseView):
     form_class = TransferenciaEstoqueForm
     template_name = "estoque/movimento/movimento_estoque_add.html"
@@ -160,7 +172,8 @@ class AdicionarTransferenciaEstoqueView(AdicionarMovimentoEstoqueBaseView):
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR TRANSFERÊNCIA EM ESTOQUE'
-        context['return_url'] = reverse_lazy('estoque:listatransferenciasestoqueview')
+        context['return_url'] = reverse_lazy(
+            'estoque:listatransferenciasestoqueview')
         return context
 
 
@@ -169,12 +182,13 @@ class MovimentoEstoqueBaseListView(ListView):
         return object.objects.all()
 
     def get_context_data(self, **kwargs):
-        context = super(MovimentoEstoqueBaseListView, self).get_context_data(**kwargs)
+        context = super(MovimentoEstoqueBaseListView,
+                        self).get_context_data(**kwargs)
         return self.view_context(context)
 
     def post(self, request, object, *args, **kwargs):
         for key, value in request.POST.items():
-            if value=="on":
+            if value == "on":
                 instance = object.objects.get(id=key)
                 instance.delete()
         return redirect(self.success_url)
@@ -193,12 +207,13 @@ class MovimentoEstoqueListView(MovimentoEstoqueBaseListView):
         all_entradas = EntradaEstoque.objects.all()
         all_saidas = SaidaEstoque.objects.all()
         all_transferencias = TransferenciaEstoque.objects.all()
-        all_movimentos = list(chain(all_saidas, all_entradas, all_transferencias))
+        all_movimentos = list(
+            chain(all_saidas, all_entradas, all_transferencias))
         return all_movimentos
 
     def post(self, request, *args, **kwargs):
         for key, value in request.POST.items():
-            if value=="on":
+            if value == "on":
                 if EntradaEstoque.objects.filter(id=key).exists():
                     instance = EntradaEstoque.objects.get(id=key)
                 elif SaidaEstoque.objects.filter(id=key).exists():
@@ -206,7 +221,8 @@ class MovimentoEstoqueListView(MovimentoEstoqueBaseListView):
                 elif TransferenciaEstoque.objects.filter(id=key).exists():
                     instance = TransferenciaEstoque.objects.get(id=key)
                 else:
-                    raise ValueError('Entrada/Saida para o lancamento escolhido nao existe.')
+                    raise ValueError(
+                        'Entrada/Saida para o lancamento escolhido nao existe.')
 
                 instance.delete()
         return redirect(self.success_url)
@@ -256,7 +272,8 @@ class TransferenciaEstoqueListView(MovimentoEstoqueBaseListView):
 
     def view_context(self, context):
         context['title_complete'] = 'TRANSFERÊNCIAS EM ESTOQUE'
-        context['add_url'] = reverse_lazy('estoque:addtransferenciaestoqueview')
+        context['add_url'] = reverse_lazy(
+            'estoque:addtransferenciaestoqueview')
         return context
 
     def get_queryset(self):
@@ -266,12 +283,12 @@ class TransferenciaEstoqueListView(MovimentoEstoqueBaseListView):
         return super(TransferenciaEstoqueListView, self).post(request, self.model)
 
 
-
 class DetalharMovimentoEstoqueBaseView(DetailView):
     template_name = "estoque/movimento/movimento_estoque_detail.html"
 
     def get_context_data(self, **kwargs):
-        context = super(DetalharMovimentoEstoqueBaseView, self).get_context_data(**kwargs)
+        context = super(DetalharMovimentoEstoqueBaseView,
+                        self).get_context_data(**kwargs)
         return self.view_context(context)
 
 
@@ -279,8 +296,10 @@ class DetalharEntradaEstoqueView(DetalharMovimentoEstoqueBaseView):
     model = EntradaEstoque
 
     def view_context(self, context):
-        context['title_complete'] = 'MOVIMENTO DE ENTRADA EM ESTOQUE N°' + str(self.object.id)
-        context['return_url'] = reverse_lazy('estoque:listaentradasestoqueview')
+        context['title_complete'] = 'MOVIMENTO DE ENTRADA EM ESTOQUE N°' + \
+            str(self.object.id)
+        context['return_url'] = reverse_lazy(
+            'estoque:listaentradasestoqueview')
         return context
 
 
@@ -288,7 +307,8 @@ class DetalharSaidaEstoqueView(DetalharMovimentoEstoqueBaseView):
     model = SaidaEstoque
 
     def view_context(self, context):
-        context['title_complete'] = 'MOVIMENTO DE SAÍDA EM ESTOQUE N°' + str(self.object.id)
+        context['title_complete'] = 'MOVIMENTO DE SAÍDA EM ESTOQUE N°' + \
+            str(self.object.id)
         context['return_url'] = reverse_lazy('estoque:listasaidasestoqueview')
         return context
 
@@ -297,7 +317,8 @@ class DetalharTransferenciaEstoqueView(DetalharMovimentoEstoqueBaseView):
     model = TransferenciaEstoque
 
     def view_context(self, context):
-        context['title_complete'] = 'MOVIMENTO DE TRANSFERÊNCIA EM ESTOQUE N°' + str(self.object.id)
-        context['return_url'] = reverse_lazy('estoque:listatransferenciasestoqueview')
+        context['title_complete'] = 'MOVIMENTO DE TRANSFERÊNCIA EM ESTOQUE N°' + \
+            str(self.object.id)
+        context['return_url'] = reverse_lazy(
+            'estoque:listatransferenciasestoqueview')
         return context
-

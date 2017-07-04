@@ -31,14 +31,14 @@ from djangosige.apps.cadastro.models import MinhaEmpresa
 
 
 class SuperUserRequiredMixin(object):
-    @method_decorator(login_required(login_url = 'login:loginview'))
+    @method_decorator(login_required(login_url='login:loginview'))
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_superuser:
             messages.add_message(
-                    request,
-                    messages.WARNING,
-                    u'Apenas o administrador tem permissão para realizar esta operação.',
-                    'superuser_permission')
+                request,
+                messages.WARNING,
+                u'Apenas o administrador tem permissão para realizar esta operação.',
+                'superuser_permission')
             return redirect(request.META.get('HTTP_REFERER'))
         return super(SuperUserRequiredMixin, self).dispatch(request, *args, **kwargs)
 
@@ -52,7 +52,7 @@ class UserFormView(View):
 
         if request.user.is_authenticated():
             return redirect('base:index')
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST or None)
@@ -67,7 +67,7 @@ class UserFormView(View):
                 login(request, user)
                 return redirect('base:index')
 
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'form': form})
 
 
 class UserRegistrationFormView(SuperUserRequiredMixin, SuccessMessageMixin, FormView):
@@ -81,7 +81,7 @@ class UserRegistrationFormView(SuperUserRequiredMixin, SuccessMessageMixin, Form
 
     def get(self, request):
         form = self.form_class(None)
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         form = self.form_class(request.POST)
@@ -100,7 +100,7 @@ class UserRegistrationFormView(SuperUserRequiredMixin, SuccessMessageMixin, Form
 
             return redirect("login:usuariosview")
 
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'form': form})
 
 
 class UserLogoutView(View):
@@ -118,38 +118,45 @@ class ForgotPasswordView(FormView):
         form = self.form_class(request.POST)
 
         if not DEFAULT_FROM_EMAIL:
-            form.add_error(field=None, error=u"Envio de email não configurado.")
+            form.add_error(
+                field=None, error=u"Envio de email não configurado.")
             return self.form_invalid(form)
 
         if form.is_valid():
             data = form.cleaned_data["email_or_username"]
-            associated_user = User.objects.filter(Q(email=data)|Q(username=data)).first()
+            associated_user = User.objects.filter(
+                Q(email=data) | Q(username=data)).first()
 
             if associated_user:
                 try:
                     if associated_user.email:
                         c = {
-                            'email':associated_user.email,
-                            'domain':request.META['HTTP_HOST'],
-                            'site_name':'djangoSIGE',
-                            'uid':urlsafe_base64_encode(force_bytes(associated_user.pk)),
-                            'user':associated_user,
-                            'token':default_token_generator.make_token(associated_user),
-                            'protocol':'http://',
+                            'email': associated_user.email,
+                            'domain': request.META['HTTP_HOST'],
+                            'site_name': 'djangoSIGE',
+                            'uid': urlsafe_base64_encode(force_bytes(associated_user.pk)),
+                            'user': associated_user,
+                            'token': default_token_generator.make_token(associated_user),
+                            'protocol': 'http://',
                         }
                         subject = u"Redefinir sua senha - DjangoSIGE"
                         email_template_name = 'login/trocar_senha_email.html'
-                        email_mensagem = loader.render_to_string(email_template_name, c)
-                        sended = send_mail(subject, email_mensagem, DEFAULT_FROM_EMAIL, [associated_user.email,], fail_silently=False)
+                        email_mensagem = loader.render_to_string(
+                            email_template_name, c)
+                        sended = send_mail(subject, email_mensagem, DEFAULT_FROM_EMAIL, [
+                                           associated_user.email, ], fail_silently=False)
 
                         if sended == 1:
-                            messages.success(request, u'Um email foi enviado para '+ data + u'. Aguarde o recebimento da mensagem para trocar sua senha.')
+                            messages.success(request, u'Um email foi enviado para ' + data +
+                                             u'. Aguarde o recebimento da mensagem para trocar sua senha.')
                             return self.form_valid(form)
                         else:
-                            form.add_error(field=None, error=u"Erro ao enviar email de verificação.")
+                            form.add_error(
+                                field=None, error=u"Erro ao enviar email de verificação.")
                             return self.form_invalid(form)
                     else:
-                        form.add_error(field=None, error=u"Este usuário não cadastrou um email.")
+                        form.add_error(
+                            field=None, error=u"Este usuário não cadastrou um email.")
                         return self.form_invalid(form)
 
                 except Exception as e:
@@ -157,11 +164,13 @@ class ForgotPasswordView(FormView):
                     return self.form_invalid(form)
 
             else:
-                form.add_error(field=None, error=u"Usuário/Email: {} não foi encontrado na database.".format(data))
+                form.add_error(
+                    field=None, error=u"Usuário/Email: {} não foi encontrado na database.".format(data))
                 return self.form_invalid(form)
 
         form.add_error(field=None, error="Entrada inválida.")
         return self.form_invalid(form)
+
 
 class PasswordResetConfirmView(FormView):
     template_name = "login/trocar_senha.html"
@@ -173,14 +182,15 @@ class PasswordResetConfirmView(FormView):
         form = self.form_class(request.POST)
 
         if uidb64 is None or token is None:
-            form.add_error(field=None, error=u"O link usado para a troca de senha não é válido ou expirou, por favor tente enviar novamente.")
+            form.add_error(
+                field=None, error=u"O link usado para a troca de senha não é válido ou expirou, por favor tente enviar novamente.")
             return self.form_invalid(form)
 
         try:
             uid = urlsafe_base64_decode(uidb64)
             user = userModel._default_manager.get(pk=uid)
         except (TypeError, ValueError, OverflowError, userModel.DoesNotExist):
-            user= None
+            user = None
 
         if user is not None and default_token_generator.check_token(user, token):
             if form.is_valid():
@@ -195,10 +205,12 @@ class PasswordResetConfirmView(FormView):
                     form.add_error(field=None, error=u"Senhas diferentes.")
                     return self.form_invalid(form)
             else:
-                form.add_error(field=None, error=u"Não foi possivel trocar a senha. Formulário inválido.")
+                form.add_error(
+                    field=None, error=u"Não foi possivel trocar a senha. Formulário inválido.")
                 return self.form_invalid(form)
         else:
-            form.add_error(field=None, error=u"O link usado para a troca de senha não é válido ou expirou, por favor tente enviar novamente.")
+            form.add_error(
+                field=None, error=u"O link usado para a troca de senha não é válido ou expirou, por favor tente enviar novamente.")
             return self.form_invalid(form)
 
 
@@ -229,8 +241,10 @@ class EditarPerfilView(UpdateView):
         form = self.get_form(form_class)
 
         try:
-            empresa_instance = MinhaEmpresa.objects.get(m_usuario=self.object.id)
-            minha_empresa_form = MinhaEmpresaForm(instance=empresa_instance, prefix='m_empresa_form')
+            empresa_instance = MinhaEmpresa.objects.get(
+                m_usuario=self.object.id)
+            minha_empresa_form = MinhaEmpresaForm(
+                instance=empresa_instance, prefix='m_empresa_form')
         except MinhaEmpresa.DoesNotExist:
             minha_empresa_form = MinhaEmpresaForm(prefix='m_empresa_form')
 
@@ -241,15 +255,19 @@ class EditarPerfilView(UpdateView):
 
         try:
             instance = Usuario.objects.get(user=request.user)
-            form = self.form_class(request.POST, request.FILES, instance=instance)
+            form = self.form_class(
+                request.POST, request.FILES, instance=instance)
         except Usuario.DoesNotExist:
             form = self.form_class(request.POST, request.FILES, instance=None)
 
         try:
-            empresa_instance = MinhaEmpresa.objects.get(m_usuario=self.object.id)
-            minha_empresa_form = MinhaEmpresaForm(request.POST, prefix='m_empresa_form', instance=empresa_instance)
+            empresa_instance = MinhaEmpresa.objects.get(
+                m_usuario=self.object.id)
+            minha_empresa_form = MinhaEmpresaForm(
+                request.POST, prefix='m_empresa_form', instance=empresa_instance)
         except MinhaEmpresa.DoesNotExist:
-            minha_empresa_form = MinhaEmpresaForm(request.POST, prefix='m_empresa_form', instance=None)
+            minha_empresa_form = MinhaEmpresaForm(
+                request.POST, prefix='m_empresa_form', instance=None)
 
         user = User.objects.get(pk=request.user.id)
 
@@ -276,10 +294,11 @@ class EditarPerfilView(UpdateView):
             except (DatabaseError, ValidationError) as e:
                 form.add_error(field=None, error=e)
 
-        return render(request, self.template_name, {'form':form, 'minha_empresa_form':minha_empresa_form})
+        return render(request, self.template_name, {'form': form, 'minha_empresa_form': minha_empresa_form})
 
     def form_valid(self, form, minha_empresa_form):
-        messages.success(self.request, self.get_success_message(form.cleaned_data))
+        messages.success(
+            self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
 
@@ -303,10 +322,11 @@ class SelecionarMinhaEmpresaView(FormView):
         except MinhaEmpresa.DoesNotExist:
             form = MinhaEmpresaForm()
         except Usuario.DoesNotExist:
-            usuario, created = Usuario.objects.get_or_create(user=self.request.user)
+            usuario, created = Usuario.objects.get_or_create(
+                user=self.request.user)
             form = MinhaEmpresaForm()
 
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request):
         try:
@@ -323,7 +343,7 @@ class SelecionarMinhaEmpresaView(FormView):
             minha_empresa.save()
             return self.form_valid(form)
 
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'form': form})
 
     def form_valid(self, form):
         return redirect(self.success_url)
@@ -340,7 +360,7 @@ class UsuariosListView(SuperUserRequiredMixin, ListView):
 
     def post(self, request, *args, **kwargs):
         for key, value in request.POST.items():
-            if value=="on":
+            if value == "on":
                 instance = User.objects.get(id=key)
                 instance.delete()
         return redirect(self.success_url)
@@ -355,7 +375,7 @@ class UsuarioDetailView(SuperUserRequiredMixin, TemplateView):
         try:
             usr = User.objects.get(pk=self.kwargs['pk'])
             context['user_match'] = usr
-            context['user_foto']  = Usuario.objects.get(user=usr).user_foto
+            context['user_foto'] = Usuario.objects.get(user=usr).user_foto
         except:
             pass
         return context

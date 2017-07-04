@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 from djangosige.apps.estoque.forms import LocalEstoqueForm
 from djangosige.apps.estoque.models import LocalEstoque
 
+
 class AdicionarLocalEstoqueView(CreateView):
     form_class = LocalEstoqueForm
     template_name = "base/popup_form.html"
@@ -20,7 +21,8 @@ class AdicionarLocalEstoqueView(CreateView):
         return context
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarLocalEstoqueView, self).get_context_data(**kwargs)
+        context = super(AdicionarLocalEstoqueView,
+                        self).get_context_data(**kwargs)
         return self.view_context(context)
 
     def get_success_message(self, cleaned_data):
@@ -28,7 +30,8 @@ class AdicionarLocalEstoqueView(CreateView):
 
     def form_valid(self, form):
         super(AdicionarLocalEstoqueView, self).form_valid(form)
-        messages.success(self.request, self.get_success_message(form.cleaned_data))
+        messages.success(
+            self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
 
@@ -52,7 +55,7 @@ class LocalEstoqueListView(ListView):
 
     def post(self, request, *args, **kwargs):
         for key, value in request.POST.items():
-            if value=="on":
+            if value == "on":
                 instance = LocalEstoque.objects.get(id=key)
                 instance.delete()
         return redirect(self.success_url)
@@ -70,7 +73,8 @@ class EditarLocalEstoqueView(UpdateView):
         return context
 
     def get_context_data(self, **kwargs):
-        context = super(EditarLocalEstoqueView, self).get_context_data(**kwargs)
+        context = super(EditarLocalEstoqueView,
+                        self).get_context_data(**kwargs)
         return self.view_context(context)
 
     def get_success_message(self, cleaned_data):
@@ -78,6 +82,6 @@ class EditarLocalEstoqueView(UpdateView):
 
     def form_valid(self, form):
         super(EditarLocalEstoqueView, self).form_valid(form)
-        messages.success(self.request, self.get_success_message(form.cleaned_data))
+        messages.success(
+            self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
-

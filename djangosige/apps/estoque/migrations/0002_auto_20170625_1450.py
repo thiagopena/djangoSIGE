@@ -21,21 +21,25 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='saidaestoque',
             name='pedido_venda',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='saida_estoque', to='vendas.PedidoVenda'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='saida_estoque', to='vendas.PedidoVenda'),
         ),
         migrations.AddField(
             model_name='entradaestoque',
             name='fornecedor',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='entrada_estoque_fornecedor', to='cadastro.Fornecedor'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='entrada_estoque_fornecedor', to='cadastro.Fornecedor'),
         ),
         migrations.AddField(
             model_name='entradaestoque',
             name='local_dest',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, related_name='entrada_estoque_local', to='estoque.LocalEstoque'),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE,
+                                    related_name='entrada_estoque_local', to='estoque.LocalEstoque'),
         ),
         migrations.AddField(
             model_name='entradaestoque',
             name='pedido_compra',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='entrada_estoque_pedido', to='compras.PedidoCompra'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='entrada_estoque_pedido', to='compras.PedidoCompra'),
         ),
     ]

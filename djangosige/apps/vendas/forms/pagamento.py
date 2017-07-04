@@ -16,9 +16,9 @@ class PagamentoForm(forms.ModelForm):
         model = Pagamento
         fields = ('indice_parcela', 'vencimento', 'valor_parcela',)
         widgets = {
-            'indice_parcela': forms.TextInput(attrs={'class':'form-control', 'readonly':True}),
-            'vencimento': forms.DateInput(attrs={'class':'form-control datepicker'}),
-            'valor_parcela': forms.TextInput(attrs={'class':'form-control decimal-mask'}),
+            'indice_parcela': forms.TextInput(attrs={'class': 'form-control', 'readonly': True}),
+            'vencimento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
+            'valor_parcela': forms.TextInput(attrs={'class': 'form-control decimal-mask'}),
         }
         labels = {
             'indice_parcela': _('Ind. Parcela'),
@@ -30,13 +30,14 @@ class PagamentoForm(forms.ModelForm):
 class CondicaoPagamentoForm(forms.ModelForm):
     class Meta:
         model = CondicaoPagamento
-        fields = ('descricao', 'forma', 'n_parcelas', 'dias_recorrencia', 'parcela_inicial',)
+        fields = ('descricao', 'forma', 'n_parcelas',
+                  'dias_recorrencia', 'parcela_inicial',)
         widgets = {
-            'descricao': forms.TextInput(attrs={'class':'form-control', 'title':'Insira uma breve descrição da condição de pagamento, EX: Entrada + 3x s/ juros'}),
-            'forma': forms.Select(attrs={'class':'form-control'}),
-            'n_parcelas': forms.NumberInput(attrs={'class':'form-control'}),
-            'dias_recorrencia': forms.NumberInput(attrs={'class':'form-control'}),
-            'parcela_inicial': forms.NumberInput(attrs={'class':'form-control'}),
+            'descricao': forms.TextInput(attrs={'class': 'form-control', 'title': 'Insira uma breve descrição da condição de pagamento, EX: Entrada + 3x s/ juros'}),
+            'forma': forms.Select(attrs={'class': 'form-control'}),
+            'n_parcelas': forms.NumberInput(attrs={'class': 'form-control'}),
+            'dias_recorrencia': forms.NumberInput(attrs={'class': 'form-control'}),
+            'parcela_inicial': forms.NumberInput(attrs={'class': 'form-control'}),
         }
         labels = {
             'descricao': _('Descrição'),
@@ -47,4 +48,5 @@ class CondicaoPagamentoForm(forms.ModelForm):
         }
 
 
-PagamentoFormSet  = inlineformset_factory(Venda, Pagamento, form=PagamentoForm, extra=1, can_delete=True)
+PagamentoFormSet = inlineformset_factory(
+    Venda, Pagamento, form=PagamentoForm, extra=1, can_delete=True)

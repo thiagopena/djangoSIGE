@@ -20,77 +20,101 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Lancamento',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('data_vencimento', models.DateField(blank=True, null=True)),
                 ('data_pagamento', models.DateField(blank=True, null=True)),
                 ('descricao', models.CharField(max_length=255)),
-                ('valor_total', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('abatimento', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('juros', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('valor_liquido', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('valor_total', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('abatimento', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('juros', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('valor_liquido', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
                 ('movimentar_caixa', models.BooleanField(default=True)),
             ],
         ),
         migrations.CreateModel(
             name='MovimentoCaixa',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('data_movimento', models.DateField(blank=True, null=True)),
-                ('saldo_inicial', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13)),
-                ('saldo_final', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13)),
-                ('entradas', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
-                ('saidas', models.DecimalField(decimal_places=2, default=Decimal('0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('saldo_inicial', models.DecimalField(
+                    decimal_places=2, default=Decimal('0.00'), max_digits=13)),
+                ('saldo_final', models.DecimalField(
+                    decimal_places=2, default=Decimal('0.00'), max_digits=13)),
+                ('entradas', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
+                ('saidas', models.DecimalField(decimal_places=2, default=Decimal(
+                    '0.00'), max_digits=13, validators=[django.core.validators.MinValueValidator(Decimal('0.00'))])),
             ],
         ),
         migrations.CreateModel(
             name='PlanoContasGrupo',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(auto_created=True,
+                                        primary_key=True, serialize=False, verbose_name='ID')),
                 ('codigo', models.CharField(max_length=6)),
-                ('tipo_grupo', models.CharField(choices=[('0', 'Entrada'), ('1', 'Saída')], max_length=1)),
+                ('tipo_grupo', models.CharField(choices=[
+                 ('0', 'Entrada'), ('1', 'Saída')], max_length=1)),
                 ('descricao', models.CharField(max_length=255)),
             ],
         ),
         migrations.CreateModel(
             name='Entrada',
             fields=[
-                ('lancamento_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='financeiro.Lancamento')),
-                ('status', models.CharField(choices=[('0', 'Recebida'), ('1', 'A receber'), ('2', 'Atrasada')], default='1', max_length=1)),
-                ('cliente', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='conta_cliente', to='cadastro.Cliente')),
+                ('lancamento_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
+                                                        parent_link=True, primary_key=True, serialize=False, to='financeiro.Lancamento')),
+                ('status', models.CharField(choices=[
+                 ('0', 'Recebida'), ('1', 'A receber'), ('2', 'Atrasada')], default='1', max_length=1)),
+                ('cliente', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                              related_name='conta_cliente', to='cadastro.Cliente')),
             ],
             bases=('financeiro.lancamento',),
         ),
         migrations.CreateModel(
             name='PlanoContasSubgrupo',
             fields=[
-                ('planocontasgrupo_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='financeiro.PlanoContasGrupo')),
-                ('grupo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='plano_subgrupo', to='financeiro.PlanoContasGrupo')),
+                ('planocontasgrupo_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
+                                                              parent_link=True, primary_key=True, serialize=False, to='financeiro.PlanoContasGrupo')),
+                ('grupo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
+                                            related_name='plano_subgrupo', to='financeiro.PlanoContasGrupo')),
             ],
             bases=('financeiro.planocontasgrupo',),
         ),
         migrations.CreateModel(
             name='Saida',
             fields=[
-                ('lancamento_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='financeiro.Lancamento')),
-                ('status', models.CharField(choices=[('0', 'Paga'), ('1', 'A pagar'), ('2', 'Atrasada')], default='1', max_length=1)),
-                ('fornecedor', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='conta_fornecedor', to='cadastro.Fornecedor')),
-                ('grupo_plano', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='grupo_plano_pagamento', to='financeiro.PlanoContasGrupo')),
+                ('lancamento_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE,
+                                                        parent_link=True, primary_key=True, serialize=False, to='financeiro.Lancamento')),
+                ('status', models.CharField(choices=[
+                 ('0', 'Paga'), ('1', 'A pagar'), ('2', 'Atrasada')], default='1', max_length=1)),
+                ('fornecedor', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                                 related_name='conta_fornecedor', to='cadastro.Fornecedor')),
+                ('grupo_plano', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                                  related_name='grupo_plano_pagamento', to='financeiro.PlanoContasGrupo')),
             ],
             bases=('financeiro.lancamento',),
         ),
         migrations.AddField(
             model_name='lancamento',
             name='conta_corrente',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='conta_corrente_conta', to='cadastro.Banco'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='conta_corrente_conta', to='cadastro.Banco'),
         ),
         migrations.AddField(
             model_name='lancamento',
             name='movimento_caixa',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='movimento_caixa_lancamento', to='financeiro.MovimentoCaixa'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='movimento_caixa_lancamento', to='financeiro.MovimentoCaixa'),
         ),
         migrations.AddField(
             model_name='entrada',
             name='grupo_plano',
-            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='grupo_plano_recebimento', to='financeiro.PlanoContasGrupo'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL,
+                                    related_name='grupo_plano_recebimento', to='financeiro.PlanoContasGrupo'),
         ),
     ]

@@ -44,24 +44,26 @@ class AdicionarCompraView(CreateView):
     def post(self, request, form_class, *args, **kwargs):
         self.object = None
 
-        ##Tirar . dos campos decimais
+        # Tirar . dos campos decimais
         req_post = request.POST.copy()
 
-        for key,value in req_post.items():
+        for key, value in req_post.items():
             if ('desconto' in key or
-            'quantidade' in key or
-            'valor' in key or
-            'frete' in key or
-            'despesas' in key or
-            'seguro' in key or
-            'total' in key):
-                req_post[key] = req_post[key].replace('.','')
+                'quantidade' in key or
+                'valor' in key or
+                'frete' in key or
+                'despesas' in key or
+                'seguro' in key or
+                    'total' in key):
+                req_post[key] = req_post[key].replace('.', '')
 
         request.POST = req_post
 
         form = self.get_form(form_class)
-        produtos_form = ItensCompraFormSet(request.POST, prefix='produtos_form')
-        pagamento_form = PagamentoFormSet(request.POST, prefix='pagamento_form')
+        produtos_form = ItensCompraFormSet(
+            request.POST, prefix='produtos_form')
+        pagamento_form = PagamentoFormSet(
+            request.POST, prefix='pagamento_form')
 
         if (form.is_valid() and produtos_form.is_valid() and pagamento_form.is_valid()):
             self.object = form.save(commit=False)
@@ -82,7 +84,8 @@ class AdicionarCompraView(CreateView):
 
     def form_valid(self, form):
         super(AdicionarCompraView, self).form_valid(form)
-        messages.success(self.request, self.get_success_message(form.cleaned_data))
+        messages.success(
+            self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
     def form_invalid(self, form, produtos_form, pagamento_form):
@@ -97,7 +100,8 @@ class AdicionarOrcamentoCompraView(AdicionarCompraView):
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR ORÇAMENTO DE COMPRA'
-        context['return_url'] = reverse_lazy('compras:listaorcamentocompraview')
+        context['return_url'] = reverse_lazy(
+            'compras:listaorcamentocompraview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -139,7 +143,7 @@ class CompraListView(ListView):
 
     def post(self, request, object, *args, **kwargs):
         for key, value in request.POST.items():
-            if value=="on":
+            if value == "on":
                 instance = object.objects.get(id=key)
                 instance.delete()
         return redirect(self.success_url)
@@ -185,7 +189,8 @@ class OrcamentoCompraVencimentoHojeListView(OrcamentoCompraVencidosListView):
     success_url = reverse_lazy('compras:listaorcamentocomprahojeview')
 
     def view_context(self, context):
-        context['title_complete'] = 'ORÇAMENTOS DE COMPRA COM VENCIMENTO DIA ' + datetime.now().date().strftime('%d/%m/%Y')
+        context['title_complete'] = 'ORÇAMENTOS DE COMPRA COM VENCIMENTO DIA ' + \
+            datetime.now().date().strftime('%d/%m/%Y')
         context['add_url'] = reverse_lazy('compras:addorcamentocompraview')
         return context
 
@@ -230,7 +235,8 @@ class PedidoCompraEntregaHojeListView(PedidoCompraListView):
     success_url = reverse_lazy('compras:listapedidocomprahojeview')
 
     def view_context(self, context):
-        context['title_complete'] = 'PEDIDOS DE COMPRA COM ENTREGA DIA ' + datetime.now().date().strftime('%d/%m/%Y')
+        context['title_complete'] = 'PEDIDOS DE COMPRA COM ENTREGA DIA ' + \
+            datetime.now().date().strftime('%d/%m/%Y')
         context['add_url'] = reverse_lazy('compras:addpedidocompraview')
         return context
 
@@ -249,16 +255,18 @@ class EditarCompraView(UpdateView):
     def get(self, request, form_class, *args, **kwargs):
 
         form = form = self.get_form(form_class)
-        produtos_form = ItensCompraFormSet(instance=self.object, prefix='produtos_form')
+        produtos_form = ItensCompraFormSet(
+            instance=self.object, prefix='produtos_form')
         itens_list = ItensCompra.objects.filter(compra_id=self.object.id)
         produtos_form.initial = [{'total_sem_desconto': item.get_total_sem_desconto(),
                                   'total_impostos': item.get_total_impostos(),
                                   'total_com_impostos': item.get_total_com_impostos()} for item in itens_list]
 
-        pagamento_form = PagamentoFormSet(instance=self.object, prefix='pagamento_form')
+        pagamento_form = PagamentoFormSet(
+            instance=self.object, prefix='pagamento_form')
 
         itens_compra = ItensCompra.objects.filter(compra_id=self.object.pk)
-        pagamentos  = Pagamento.objects.filter(compra_id=self.object.pk)
+        pagamentos = Pagamento.objects.filter(compra_id=self.object.pk)
 
         if len(itens_compra):
             produtos_form.extra = 0
@@ -268,24 +276,26 @@ class EditarCompraView(UpdateView):
         return self.render_to_response(self.get_context_data(form=form, produtos_form=produtos_form, pagamento_form=pagamento_form))
 
     def post(self, request, form_class, *args, **kwargs):
-        ##Tirar . dos campos decimais
+        # Tirar . dos campos decimais
         req_post = request.POST.copy()
 
-        for key,value in req_post.items():
+        for key, value in req_post.items():
             if ('desconto' in key or
-            'quantidade' in key or
-            'valor' in key or
-            'frete' in key or
-            'despesas' in key or
-            'seguro' in key or
-            'total' in key):
-                req_post[key] = req_post[key].replace('.','')
+                'quantidade' in key or
+                'valor' in key or
+                'frete' in key or
+                'despesas' in key or
+                'seguro' in key or
+                    'total' in key):
+                req_post[key] = req_post[key].replace('.', '')
 
         request.POST = req_post
 
         form = self.get_form(form_class)
-        produtos_form = ItensCompraFormSet(request.POST, prefix='produtos_form', instance=self.object)
-        pagamento_form = PagamentoFormSet(request.POST, prefix='pagamento_form', instance=self.object)
+        produtos_form = ItensCompraFormSet(
+            request.POST, prefix='produtos_form', instance=self.object)
+        pagamento_form = PagamentoFormSet(
+            request.POST, prefix='pagamento_form', instance=self.object)
 
         if (form.is_valid() and produtos_form.is_valid() and pagamento_form.is_valid()):
             self.object = form.save(commit=False)
@@ -306,7 +316,8 @@ class EditarCompraView(UpdateView):
 
     def form_valid(self, form):
         super(EditarCompraView, self).form_valid(form)
-        messages.success(self.request, self.get_success_message(form.cleaned_data))
+        messages.success(
+            self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
     def form_invalid(self, form, produtos_form, pagamento_form):
@@ -321,8 +332,10 @@ class EditarOrcamentoCompraView(EditarCompraView):
     success_message = "<b>Orçamento de compra %(id)s </b>editado com sucesso."
 
     def view_context(self, context):
-        context['title_complete'] = 'EDITAR ORÇAMENTO DE COMPRA N°' + str(self.object.id)
-        context['return_url'] = reverse_lazy('compras:listaorcamentocompraview')
+        context['title_complete'] = 'EDITAR ORÇAMENTO DE COMPRA N°' + \
+            str(self.object.id)
+        context['return_url'] = reverse_lazy(
+            'compras:listaorcamentocompraview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -344,7 +357,8 @@ class EditarPedidoCompraView(EditarCompraView):
     success_message = "<b>Pedido de compra %(id)s </b>editado com sucesso."
 
     def view_context(self, context):
-        context['title_complete'] = 'EDITAR PEDIDO DE COMPRA N°' + str(self.object.id)
+        context['title_complete'] = 'EDITAR PEDIDO DE COMPRA N°' + \
+            str(self.object.id)
         context['return_url'] = reverse_lazy('compras:listapedidocompraview')
         return context
 
@@ -362,7 +376,7 @@ class EditarPedidoCompraView(EditarCompraView):
 class InfoFornecedor(View):
     def post(self, request, *args, **kwargs):
         obj_list = []
-        pessoa  = Pessoa.objects.get(pk=request.POST['pessoaId'])
+        pessoa = Pessoa.objects.get(pk=request.POST['pessoaId'])
         fornecedor = Fornecedor.objects.get(pk=request.POST['pessoaId'])
         obj_list.append(fornecedor)
 
@@ -379,14 +393,14 @@ class InfoFornecedor(View):
             obj_list.append(pessoa.pessoa_fis_info)
 
         data = serializers.serialize('json', obj_list, fields=('cnpj', 'inscricao_estadual', 'responsavel', 'cpf', 'rg', 'logradouro', 'numero', 'bairro',
-            'municipio', 'cmun', 'uf', 'pais', 'complemento', 'cep', 'email', 'telefone',))
+                                                               'municipio', 'cmun', 'uf', 'pais', 'complemento', 'cep', 'email', 'telefone',))
 
         return HttpResponse(data, content_type='application/json')
 
 
 class InfoCompra(View):
     def post(self, request, *args, **kwargs):
-        compra  = PedidoCompra.objects.get(pk=request.POST['compraId'])
+        compra = PedidoCompra.objects.get(pk=request.POST['compraId'])
         itens_compra = compra.itens_compra.all()
         pagamentos = compra.parcela_pagamento.all()
         data = []
@@ -405,10 +419,12 @@ class InfoCompra(View):
         pedido_fields_dict['total_icms'] = compra.format_vicms()
         pedido_fields_dict['total_ipi'] = compra.format_vipi()
         pedido_fields_dict['valor_total'] = compra.format_valor_total()
-        pedido_fields_dict['total_sem_desconto'] = compra.format_total_sem_desconto()
+        pedido_fields_dict['total_sem_desconto'] = compra.format_total_sem_desconto(
+        )
         pedido_fields_dict['forma_pag'] = compra.get_forma_pagamento()
         pedido_fields_dict['n_itens'] = str(len(itens_compra))
-        pedido_fields_dict['valor_total_produtos'] = compra.format_total_produtos()
+        pedido_fields_dict['valor_total_produtos'] = compra.format_total_produtos(
+        )
 
         if compra.cond_pagamento:
             pedido_fields_dict['n_parcelas'] = compra.cond_pagamento.n_parcelas
@@ -430,12 +446,14 @@ class InfoCompra(View):
             itens_fields_dict['controlar_estoque'] = item.produto.controlar_estoque
             itens_fields_dict['produto'] = item.produto.descricao
             itens_hidden_fields_dict['codigo'] = item.produto.codigo
-            itens_hidden_fields_dict['unidade'] = item.produto.get_sigla_unidade()
+            itens_hidden_fields_dict['unidade'] = item.produto.get_sigla_unidade(
+            )
             itens_hidden_fields_dict['ncm'] = item.produto.ncm
             itens_fields_dict['quantidade'] = item.format_quantidade()
             itens_fields_dict['valor_unit'] = item.format_valor_unit()
             itens_fields_dict['desconto'] = item.format_desconto()
-            itens_hidden_fields_dict['subtotal'] = item.format_valor_attr('subtotal')
+            itens_hidden_fields_dict['subtotal'] = item.format_valor_attr(
+                'subtotal')
 
             itens_fields_dict['impostos'] = item.format_total_impostos()
             itens_fields_dict['total'] = item.format_total_com_imposto()
@@ -483,7 +501,7 @@ class GerarPedidoCompraView(View):
         novo_pedido.pk = None
         novo_pedido.id = None
         novo_pedido.status = '0'
-        orcamento.status = '1' #Baixado
+        orcamento.status = '1'  # Baixado
         orcamento.save()
         novo_pedido.orcamento = orcamento
         novo_pedido.save()
@@ -500,7 +518,7 @@ class GerarPedidoCompraView(View):
             pagamento.save()
             novo_pedido.parcela_pagamento.add(pagamento)
 
-        return redirect(reverse_lazy('compras:editarpedidocompraview', kwargs={'pk':novo_pedido.id}))
+        return redirect(reverse_lazy('compras:editarpedidocompraview', kwargs={'pk': novo_pedido.id}))
 
 
 class CancelarCompraView(View):
@@ -508,9 +526,9 @@ class CancelarCompraView(View):
         compra_id = kwargs.get('pk', None)
         compra = None
         try:
-           compra = PedidoCompra.objects.get(id=compra_id)
+            compra = PedidoCompra.objects.get(id=compra_id)
         except PedidoCompra.DoesNotExist:
-           compra = OrcamentoCompra.objects.get(id=compra_id)
+            compra = OrcamentoCompra.objects.get(id=compra_id)
         compra.status = '2'
         compra.save()
 
@@ -547,7 +565,7 @@ class GerarCopiaCompraView(View):
             pagamento.save()
             instance.parcela_pagamento.add(pagamento)
 
-        return redirect(reverse_lazy(redirect_url, kwargs={'pk':instance.id}))
+        return redirect(reverse_lazy(redirect_url, kwargs={'pk': instance.id}))
 
 
 class ReceberCompraView(View):
@@ -560,7 +578,8 @@ class ReceberCompraView(View):
         if pedido.movimentar_estoque:
             for item in pedido.itens_compra.all():
                 if item.produto.controlar_estoque:
-                    prod_estocado, created = ProdutoEstocado.objects.get_or_create(local=pedido.local_dest, produto=item.produto)
+                    prod_estocado, created = ProdutoEstocado.objects.get_or_create(
+                        local=pedido.local_dest, produto=item.produto)
                     item_mvmt = ItensMovimento()
 
                     prod_estocado.produto.estoque_atual += item.quantidade
@@ -581,7 +600,8 @@ class ReceberCompraView(View):
                 entrada_estoque.data_movimento = datetime.now().date()
 
             entrada_estoque.quantidade_itens = pedido.itens_compra.count()
-            entrada_estoque.observacoes = 'Entrada de estoque pelo pedido de compra nº{}'.format(str(pedido.id))
+            entrada_estoque.observacoes = 'Entrada de estoque pelo pedido de compra nº{}'.format(
+                str(pedido.id))
             entrada_estoque.tipo_movimento = u'1'
             entrada_estoque.valor_total = pedido.get_total_produtos_estoque()
             entrada_estoque.pedido_compra = pedido
@@ -600,7 +620,8 @@ class ReceberCompraView(View):
         pedido.status = u'4'
         pedido.save()
 
-        messages.success(request, "<b>Pedido de compra {0} </b>recebido com sucesso.".format(str(pedido.id)))
+        messages.success(
+            request, "<b>Pedido de compra {0} </b>recebido com sucesso.".format(str(pedido.id)))
 
         return redirect(reverse_lazy('compras:listapedidocompraview'))
 
@@ -610,7 +631,7 @@ class GerarPDFCompra(View):
         resp = HttpResponse(content_type='application/pdf')
 
         compra_pdf = io.BytesIO()
-        compra_report = CompraReport(queryset=[compra,])
+        compra_report = CompraReport(queryset=[compra, ])
         compra_report.title = title
 
         compra_report.band_page_footer = compra_report.banda_foot
@@ -623,17 +644,21 @@ class GerarPDFCompra(View):
             if flogo != 'imagens/logo.png':
                 compra_report.topo_pagina.inserir_logo(logo_path)
 
-            compra_report.band_page_footer.inserir_nome_empresa(m_empresa.m_empresa.nome_razao_social)
+            compra_report.band_page_footer.inserir_nome_empresa(
+                m_empresa.m_empresa.nome_razao_social)
             if m_empresa.m_empresa.endereco_padrao:
-                compra_report.band_page_footer.inserir_endereco_empresa(m_empresa.m_empresa.endereco_padrao.format_endereco_completo)
+                compra_report.band_page_footer.inserir_endereco_empresa(
+                    m_empresa.m_empresa.endereco_padrao.format_endereco_completo)
             if m_empresa.m_empresa.telefone_padrao:
-                compra_report.band_page_footer.inserir_telefone_empresa(m_empresa.m_empresa.telefone_padrao.telefone)
+                compra_report.band_page_footer.inserir_telefone_empresa(
+                    m_empresa.m_empresa.telefone_padrao.telefone)
         except:
             pass
 
         compra_report.topo_pagina.inserir_data_emissao(compra.data_emissao)
         if isinstance(compra, OrcamentoCompra):
-            compra_report.topo_pagina.inserir_data_validade(compra.data_vencimento)
+            compra_report.topo_pagina.inserir_data_validade(
+                compra.data_vencimento)
         elif isinstance(compra, PedidoCompra):
             compra_report.topo_pagina.inserir_data_entrega(compra.data_entrega)
         compra_report.band_page_header = compra_report.topo_pagina
@@ -650,19 +675,27 @@ class GerarPDFCompra(View):
         if compra.fornecedor.email_padrao:
             compra_report.dados_fornecedor.inserir_informacoes_email()
 
-        compra_report.band_page_header.child_bands.append(compra_report.dados_fornecedor)
+        compra_report.band_page_header.child_bands.append(
+            compra_report.dados_fornecedor)
 
-        compra_report.dados_produtos.band_detail.set_band_height(len(ItensCompra.objects.filter(compra_id=compra)))
-        compra_report.banda_produtos.elements.append(compra_report.dados_produtos)
-        compra_report.band_page_header.child_bands.append(compra_report.banda_produtos)
+        compra_report.dados_produtos.band_detail.set_band_height(
+            len(ItensCompra.objects.filter(compra_id=compra)))
+        compra_report.banda_produtos.elements.append(
+            compra_report.dados_produtos)
+        compra_report.band_page_header.child_bands.append(
+            compra_report.banda_produtos)
 
-        compra_report.band_page_header.child_bands.append(compra_report.totais_venda)
+        compra_report.band_page_header.child_bands.append(
+            compra_report.totais_venda)
 
         if compra.cond_pagamento:
-            compra_report.banda_pagamento.elements.append(compra_report.dados_pagamento)
-            compra_report.band_page_header.child_bands.append(compra_report.banda_pagamento)
+            compra_report.banda_pagamento.elements.append(
+                compra_report.dados_pagamento)
+            compra_report.band_page_header.child_bands.append(
+                compra_report.banda_pagamento)
 
-        compra_report.band_page_header.child_bands.append(compra_report.observacoes)
+        compra_report.band_page_header.child_bands.append(
+            compra_report.observacoes)
 
         compra_report.generate_by(PDFGenerator, filename=compra_pdf)
         pdf = compra_pdf.getvalue()
@@ -682,7 +715,6 @@ class GerarPDFOrcamentoCompra(GerarPDFCompra):
         title = 'Orçamento de compra nº {}'.format(compra_id)
 
         return self.gerar_pdf(title, obj, request.user.id)
-
 
 
 class GerarPDFPedidoCompra(GerarPDFCompra):

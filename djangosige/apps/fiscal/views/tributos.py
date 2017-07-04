@@ -22,7 +22,8 @@ class AdicionarGrupoFiscalView(CreateView):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarGrupoFiscalView, self).get_context_data(**kwargs)
+        context = super(AdicionarGrupoFiscalView,
+                        self).get_context_data(**kwargs)
         context['title_complete'] = 'ADICIONAR GRUPO FISCAL'
         context['return_url'] = reverse_lazy('fiscal:listagrupofiscalview')
         return context
@@ -31,13 +32,14 @@ class AdicionarGrupoFiscalView(CreateView):
         self.object = None
         form = GrupoFiscalForm()
 
-        ##Dados iniciais da situação fiscal da MinhaEmpresa
+        # Dados iniciais da situação fiscal da MinhaEmpresa
         try:
-            user_empresa = MinhaEmpresa.objects.get(m_usuario=Usuario.objects.get(user=request.user)).m_empresa
+            user_empresa = MinhaEmpresa.objects.get(
+                m_usuario=Usuario.objects.get(user=request.user)).m_empresa
             if user_empresa.pessoa_jur_info.sit_fiscal in ('LR', 'LP'):
-                form.initial = {'regime_trib':'0'}
+                form.initial = {'regime_trib': '0'}
             else:
-                form.initial = {'regime_trib':'1'}
+                form.initial = {'regime_trib': '1'}
         except:
             pass
 
@@ -49,30 +51,33 @@ class AdicionarGrupoFiscalView(CreateView):
         cofins_form = COFINSForm(prefix='cofins_form')
 
         return self.render_to_response(self.get_context_data(form=form,
-                             icms_form=icms_form,
-                             icmssn_form=icmssn_form,
-                             icms_dest_form=icms_dest_form,
-                             ipi_form=ipi_form,
-                             pis_form=pis_form,
-                             cofins_form=cofins_form))
+                                                             icms_form=icms_form,
+                                                             icmssn_form=icmssn_form,
+                                                             icms_dest_form=icms_dest_form,
+                                                             ipi_form=ipi_form,
+                                                             pis_form=pis_form,
+                                                             cofins_form=cofins_form))
 
     def post(self, request, *args, **kwargs):
         self.object = None
 
         req_post = request.POST.copy()
-        req_post['ipi_form-valor_fixo'] = req_post['ipi_form-valor_fixo'].replace('.','')
-        req_post['pis_form-valiq_pis'] = req_post['pis_form-valiq_pis'].replace('.','')
-        req_post['cofins_form-valiq_cofins'] = req_post['cofins_form-valiq_cofins'].replace('.','')
+        req_post['ipi_form-valor_fixo'] = req_post['ipi_form-valor_fixo'].replace(
+            '.', '')
+        req_post['pis_form-valiq_pis'] = req_post['pis_form-valiq_pis'].replace(
+            '.', '')
+        req_post['cofins_form-valiq_cofins'] = req_post['cofins_form-valiq_cofins'].replace(
+            '.', '')
         request.POST = req_post
 
         print(request.POST['ipi_form-valor_fixo'])
 
         form = GrupoFiscalForm(request.POST)
 
-        #Tributação normal
+        # Tributação normal
         if request.POST['regime_trib'] == '0':
             novo_icms_form = ICMSForm(request.POST, prefix='icms_form')
-        #Simples nacional
+        # Simples nacional
         elif request.POST['regime_trib'] == '1':
             novo_icms_form = ICMSSNForm(request.POST, prefix='icmssn_form')
 
@@ -86,7 +91,7 @@ class AdicionarGrupoFiscalView(CreateView):
             icms_dest_form.is_valid() and
             ipi_form.is_valid() and
             pis_form.is_valid() and
-            cofins_form.is_valid()):
+                cofins_form.is_valid()):
 
             self.object = form.save(commit=False)
             self.object.save()
@@ -111,17 +116,18 @@ class AdicionarGrupoFiscalView(CreateView):
 
     def form_valid(self, form):
         super(AdicionarGrupoFiscalView, self).form_valid(form)
-        messages.success(self.request, self.get_success_message(form.cleaned_data))
+        messages.success(
+            self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
     def form_invalid(self, form, icms_form, icmssn_form, icms_dest_form, ipi_form, pis_form, cofins_form):
         return self.render_to_response(self.get_context_data(form=form,
-                             icms_form=icms_form,
-                             icmssn_form=icmssn_form,
-                             icms_dest_form=icms_dest_form,
-                             ipi_form=ipi_form,
-                             pis_form=pis_form,
-                             cofins_form=cofins_form))
+                                                             icms_form=icms_form,
+                                                             icmssn_form=icmssn_form,
+                                                             icms_dest_form=icms_dest_form,
+                                                             ipi_form=ipi_form,
+                                                             pis_form=pis_form,
+                                                             cofins_form=cofins_form))
 
 
 class GrupoFiscalListView(ListView):
@@ -141,7 +147,7 @@ class GrupoFiscalListView(ListView):
 
     def post(self, request, *args, **kwargs):
         for key, value in request.POST.items():
-            if value=="on":
+            if value == "on":
                 instance = GrupoFiscal.objects.get(id=key)
                 instance.delete()
         return redirect(self.success_url)
@@ -172,10 +178,12 @@ class EditarGrupoFiscalView(UpdateView):
             icmssn_form = ICMSSNForm(prefix='icmssn_form')
         elif self.object.regime_trib == '1':
             icms_form = ICMSForm(prefix='icms_form')
-            icmssn_form = ICMSSNForm(grupo_fiscal=self.object, prefix='icmssn_form')
+            icmssn_form = ICMSSNForm(
+                grupo_fiscal=self.object, prefix='icmssn_form')
 
         if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
-            icms_dest_form = ICMSUFDestForm(grupo_fiscal=self.object, prefix='icms_dest_form')
+            icms_dest_form = ICMSUFDestForm(
+                grupo_fiscal=self.object, prefix='icms_dest_form')
         else:
             icms_dest_form = ICMSUFDestForm(prefix='icms_dest_form')
 
@@ -190,23 +198,27 @@ class EditarGrupoFiscalView(UpdateView):
             pis_form = PISForm(prefix='pis_form')
 
         if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
-            cofins_form = COFINSForm(grupo_fiscal=self.object, prefix='cofins_form')
+            cofins_form = COFINSForm(
+                grupo_fiscal=self.object, prefix='cofins_form')
         else:
             cofins_form = COFINSForm(prefix='cofins_form')
 
         return self.render_to_response(self.get_context_data(form=form,
-                             icms_form=icms_form,
-                             icmssn_form=icmssn_form,
-                             icms_dest_form=icms_dest_form,
-                             ipi_form=ipi_form,
-                             pis_form=pis_form,
-                             cofins_form=cofins_form))
+                                                             icms_form=icms_form,
+                                                             icmssn_form=icmssn_form,
+                                                             icms_dest_form=icms_dest_form,
+                                                             ipi_form=ipi_form,
+                                                             pis_form=pis_form,
+                                                             cofins_form=cofins_form))
 
     def post(self, request, *args, **kwargs):
         req_post = request.POST.copy()
-        req_post['ipi_form-valor_fixo'] = req_post['ipi_form-valor_fixo'].replace('.','')
-        req_post['pis_form-valiq_pis'] = req_post['pis_form-valiq_pis'].replace('.','')
-        req_post['cofins_form-valiq_cofins'] = req_post['cofins_form-valiq_cofins'].replace('.','')
+        req_post['ipi_form-valor_fixo'] = req_post['ipi_form-valor_fixo'].replace(
+            '.', '')
+        req_post['pis_form-valiq_pis'] = req_post['pis_form-valiq_pis'].replace(
+            '.', '')
+        req_post['cofins_form-valiq_cofins'] = req_post['cofins_form-valiq_cofins'].replace(
+            '.', '')
         request.POST = req_post
 
         self.object = self.get_object()
@@ -214,22 +226,27 @@ class EditarGrupoFiscalView(UpdateView):
         form = form_class(request.POST, instance=self.object)
 
         if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
-            icms_dest_form = ICMSUFDestForm(request.POST, prefix='icms_dest_form', grupo_fiscal=self.object)
+            icms_dest_form = ICMSUFDestForm(
+                request.POST, prefix='icms_dest_form', grupo_fiscal=self.object)
         else:
-            icms_dest_form = ICMSUFDestForm(request.POST, prefix='icms_dest_form')
+            icms_dest_form = ICMSUFDestForm(
+                request.POST, prefix='icms_dest_form')
 
         if IPI.objects.filter(grupo_fiscal=self.object).count():
-            ipi_form = IPIForm(request.POST, prefix='ipi_form', grupo_fiscal=self.object)
+            ipi_form = IPIForm(request.POST, prefix='ipi_form',
+                               grupo_fiscal=self.object)
         else:
             ipi_form = IPIForm(request.POST, prefix='ipi_form')
 
         if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
-            pis_form = PISForm(request.POST, prefix='pis_form', grupo_fiscal=self.object)
+            pis_form = PISForm(request.POST, prefix='pis_form',
+                               grupo_fiscal=self.object)
         else:
             pis_form = PISForm(request.POST, prefix='pis_form')
 
         if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
-            cofins_form = COFINSForm(request.POST, prefix='cofins_form', grupo_fiscal=self.object)
+            cofins_form = COFINSForm(
+                request.POST, prefix='cofins_form', grupo_fiscal=self.object)
         else:
             cofins_form = COFINSForm(request.POST, prefix='cofins_form')
 
@@ -244,12 +261,12 @@ class EditarGrupoFiscalView(UpdateView):
                 icms_dest_form.is_valid() and
                 ipi_form.is_valid() and
                 pis_form.is_valid() and
-                cofins_form.is_valid()):
+                    cofins_form.is_valid()):
 
                 self.object = form.save(commit=False)
                 self.object.save()
 
-                #Mais facil deletar e recriar as entradas.
+                # Mais facil deletar e recriar as entradas.
                 ICMSSN.objects.filter(grupo_fiscal=self.object).delete()
                 ICMS.objects.filter(grupo_fiscal=self.object).delete()
 
@@ -269,16 +286,15 @@ class EditarGrupoFiscalView(UpdateView):
 
     def form_valid(self, form):
         super(EditarGrupoFiscalView, self).form_valid(form)
-        messages.success(self.request, self.get_success_message(form.cleaned_data))
+        messages.success(
+            self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
     def form_invalid(self, form, icms_form, icmssn_form, icms_dest_form, ipi_form, pis_form, cofins_form):
         return self.render_to_response(self.get_context_data(form=form,
-                             icms_form=icms_form,
-                             icmssn_form=icmssn_form,
-                             icms_dest_form=icms_dest_form,
-                             ipi_form=ipi_form,
-                             pis_form=pis_form,
-                             cofins_form=cofins_form))
-
-
+                                                             icms_form=icms_form,
+                                                             icmssn_form=icmssn_form,
+                                                             icms_dest_form=icms_dest_form,
+                                                             ipi_form=ipi_form,
+                                                             pis_form=pis_form,
+                                                             cofins_form=cofins_form))

@@ -22,19 +22,27 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
     ```
 
 2. Edite o conteúdo do arquivo **djangosige/configs/configs.py**
-3. Sincronize a base de dados:
+
+3. Gere um `.env` local
+
+    ```bash
+    python contrib/env_gen.py
+    ```
+
+
+4. Sincronize a base de dados:
 
     ```bash
     python manage.py migrate
     ```
 
-4. Crie um usuário (Administrador do sistema):
+5. Crie um usuário (Administrador do sistema):
 
     ```bash
     python manage.py createsuperuser
     ```
 
-5. Teste a instalação carregando o servidor de desenvolvimento (http://localhost:8000 no navegador):
+6. Teste a instalação carregando o servidor de desenvolvimento (http://localhost:8000 no navegador):
 
     ```bash
     python manage.py runserver
@@ -54,6 +62,13 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
     - Emissão, download, consulta e cancelamento de NF-e/NFC-es **(Testar em ambiente de homologação)**
     - Comunicação com SEFAZ (Consulta de cadastro, inutilização de notas, manifestação do destinatário)
 - Interface simples e em português
+
+## Créditos
+
+- [AdminBSBMaterialDesign](https://github.com/gurayyarar/AdminBSBMaterialDesign)
+- [geraldo](https://github.com/marinho/geraldo)
+- [jQuery-Mask-Plugin](https://igorescobar.github.io/jQuery-Mask-Plugin/)
+- [DataTables](https://datatables.net/)
 
 ## Ajuda
 

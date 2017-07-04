@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from djangosige.apps.cadastro.models import Empresa, MinhaEmpresa
 
+
 class EmpresaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -12,22 +13,23 @@ class EmpresaForm(forms.ModelForm):
 
     class Meta:
         model = Empresa
-        fields = ('nome_razao_social', 'inscricao_municipal', 'cnae', 'logo_file', 'iest', 'informacoes_adicionais',)
+        fields = ('nome_razao_social', 'inscricao_municipal', 'cnae',
+                  'logo_file', 'iest', 'informacoes_adicionais',)
 
         widgets = {
-            'nome_razao_social':forms.TextInput(attrs={'class':'form-control'}),
-            'cnae':forms.TextInput(attrs={'class':'form-control'}),
-            'inscricao_municipal':forms.TextInput(attrs={'class':'form-control'}),
-            'logo_file':forms.FileInput(attrs={'class':'form-control', 'accept':'image/*'}),
-            'iest':forms.TextInput(attrs={'class':'form-control'}),
-            'informacoes_adicionais':forms.Textarea(attrs={'class':'form-control'}),
+            'nome_razao_social': forms.TextInput(attrs={'class': 'form-control'}),
+            'cnae': forms.TextInput(attrs={'class': 'form-control'}),
+            'inscricao_municipal': forms.TextInput(attrs={'class': 'form-control'}),
+            'logo_file': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'}),
+            'iest': forms.TextInput(attrs={'class': 'form-control'}),
+            'informacoes_adicionais': forms.Textarea(attrs={'class': 'form-control'}),
         }
         labels = {
             'nome_razao_social': _('Razão Social'),
             'cnae': _('CNAE'),
             'inscricao_municipal': _('Inscrição Municipal'),
-            'logo_file':_('Logo'),
-            'iest':_('IE do substituto tributário'),
+            'logo_file': _('Logo'),
+            'iest': _('IE do substituto tributário'),
             'informacoes_adicionais': _('Informações Adicionais'),
         }
 
@@ -49,7 +51,7 @@ class MinhaEmpresaForm(forms.ModelForm):
         fields = ('m_empresa',)
 
         widgets = {
-            'm_empresa':forms.Select(attrs={'class':'form-control'}),
+            'm_empresa': forms.Select(attrs={'class': 'form-control'}),
         }
         labels = {
             'm_empresa': _('Minha Empresa'),

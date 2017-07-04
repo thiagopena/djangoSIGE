@@ -16,9 +16,9 @@ class PagamentoForm(forms.ModelForm):
         model = Pagamento
         fields = ('indice_parcela', 'vencimento', 'valor_parcela',)
         widgets = {
-            'indice_parcela': forms.TextInput(attrs={'class':'form-control', 'readonly':True}),
-            'vencimento': forms.DateInput(attrs={'class':'form-control datepicker'}),
-            'valor_parcela': forms.TextInput(attrs={'class':'form-control decimal-mask'}),
+            'indice_parcela': forms.TextInput(attrs={'class': 'form-control', 'readonly': True}),
+            'vencimento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
+            'valor_parcela': forms.TextInput(attrs={'class': 'form-control decimal-mask'}),
         }
         labels = {
             'indice_parcela': _('Ind. Parcela'),
@@ -26,4 +26,6 @@ class PagamentoForm(forms.ModelForm):
             'valor_parcela': _('Valor'),
         }
 
-PagamentoFormSet  = inlineformset_factory(Compra, Pagamento, form=PagamentoForm, extra=1, can_delete=True)
+
+PagamentoFormSet = inlineformset_factory(
+    Compra, Pagamento, form=PagamentoForm, extra=1, can_delete=True)

@@ -15,7 +15,8 @@ class AdicionarFornecedorView(AdicionarPessoaView):
     success_message = "Fornecedor <b>%(nome_razao_social)s </b>adicionado com sucesso."
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarFornecedorView, self).get_context_data(**kwargs)
+        context = super(AdicionarFornecedorView,
+                        self).get_context_data(**kwargs)
         context['title_complete'] = 'CADASTRAR FORNECEDOR'
         context['return_url'] = reverse_lazy('cadastro:listafornecedoresview')
         context['tipo_pessoa'] = 'fornecedor'
@@ -26,7 +27,8 @@ class AdicionarFornecedorView(AdicionarPessoaView):
         return super(AdicionarFornecedorView, self).get(request, form, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        form = FornecedorForm(request.POST, request.FILES, prefix='fornecedor_form', request=request)
+        form = FornecedorForm(request.POST, request.FILES,
+                              prefix='fornecedor_form', request=request)
         return super(AdicionarFornecedorView, self).post(request, form, *args, **kwargs)
 
 
@@ -74,14 +76,15 @@ class EditarFornecedorView(EditarPessoaView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        form = form_class(request.POST, request.FILES, prefix='fornecedor_form', instance=self.object, request=request)
+        form = form_class(request.POST, request.FILES,
+                          prefix='fornecedor_form', instance=self.object, request=request)
         return super(EditarFornecedorView, self).post(request, form, *args, **kwargs)
 
 
 class InfoFornecedor(View):
     def post(self, request, *args, **kwargs):
         obj_list = []
-        pessoa  = Pessoa.objects.get(pk=request.POST['pessoaId'])
+        pessoa = Pessoa.objects.get(pk=request.POST['pessoaId'])
         fornecedor = Fornecedor.objects.get(pk=request.POST['pessoaId'])
         obj_list.append(fornecedor)
 
@@ -98,6 +101,6 @@ class InfoFornecedor(View):
             obj_list.append(pessoa.pessoa_fis_info)
 
         data = serializers.serialize('json', obj_list, fields=('indicador_ie', 'limite_de_credito', 'cnpj', 'inscricao_estadual', 'responsavel', 'cpf', 'rg', 'id_estrangeiro', 'logradouro', 'numero', 'bairro',
-            'municipio', 'cmun', 'uf', 'pais', 'complemento', 'cep', 'email', 'telefone',))
+                                                               'municipio', 'cmun', 'uf', 'pais', 'complemento', 'cep', 'email', 'telefone',))
 
         return HttpResponse(data, content_type='application/json')

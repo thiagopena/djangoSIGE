@@ -12,8 +12,8 @@ class GrupoFiscalForm(forms.ModelForm):
         model = GrupoFiscal
         fields = ('descricao', 'regime_trib',)
         widgets = {
-            'descricao': forms.TextInput(attrs={'class':'form-control', 'title':'Insira uma breve descrição do grupo fiscal, EX: ICMS (Simples Nacional) + IPI'}),
-            'regime_trib': forms.Select(attrs={'class':'form-control'}),
+            'descricao': forms.TextInput(attrs={'class': 'form-control', 'title': 'Insira uma breve descrição do grupo fiscal, EX: ICMS (Simples Nacional) + IPI'}),
+            'regime_trib': forms.Select(attrs={'class': 'form-control'}),
         }
         labels = {
             'descricao': _('Descrição'),
@@ -45,20 +45,20 @@ class ICMSForm(forms.ModelForm):
         fields = ('cst', 'mod_bc', 'p_icms', 'p_red_bc', 'mod_bcst', 'p_mvast', 'p_red_bcst', 'p_icmsst', 'mot_des_icms',
                   'p_dif', 'p_bc_op', 'ufst', 'icms_incluido_preco', 'icmsst_incluido_preco', )
         widgets = {
-            'cst':forms.Select(attrs={'class':'form-control'}),
-            'mod_bc':forms.Select(attrs={'class':'form-control'}),
-            'p_icms':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'p_red_bc':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'mod_bcst':forms.Select(attrs={'class':'form-control'}),
-            'p_mvast':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'p_red_bcst':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'p_icmsst':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'mot_des_icms':forms.Select(attrs={'class':'form-control'}),
-            'p_dif':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'p_bc_op':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'ufst':forms.Select(attrs={'class':'form-control'}),
-            'icms_incluido_preco':forms.CheckboxInput(attrs={'class':'form-control'}),
-            'icmsst_incluido_preco':forms.CheckboxInput(attrs={'class':'form-control'}),
+            'cst': forms.Select(attrs={'class': 'form-control'}),
+            'mod_bc': forms.Select(attrs={'class': 'form-control'}),
+            'p_icms': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'p_red_bc': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'mod_bcst': forms.Select(attrs={'class': 'form-control'}),
+            'p_mvast': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'p_red_bcst': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'p_icmsst': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'mot_des_icms': forms.Select(attrs={'class': 'form-control'}),
+            'p_dif': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'p_bc_op': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'ufst': forms.Select(attrs={'class': 'form-control'}),
+            'icms_incluido_preco': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'icmsst_incluido_preco': forms.CheckboxInput(attrs={'class': 'form-control'}),
 
         }
         labels = {
@@ -84,7 +84,8 @@ class ICMSSNForm(forms.ModelForm):
         if 'grupo_fiscal' in kwargs:
             grupo_fiscal = kwargs.pop('grupo_fiscal')
             instance = ICMSSN.objects.get(grupo_fiscal=grupo_fiscal)
-            super(ICMSSNForm, self).__init__(instance=instance, *args, **kwargs)
+            super(ICMSSNForm, self).__init__(
+                instance=instance, *args, **kwargs)
         else:
             super(ICMSSNForm, self).__init__(*args, **kwargs)
 
@@ -97,23 +98,22 @@ class ICMSSNForm(forms.ModelForm):
         self.fields['p_red_bcst'].localize = True
         self.fields['p_icmsst'].localize = True
 
-
     class Meta:
         model = ICMSSN
         fields = ('csosn', 'p_cred_sn', 'p_icms', 'mod_bcst', 'mod_bc', 'p_red_bc', 'p_mvast', 'p_red_bcst', 'p_icmsst',
-            'icmssn_incluido_preco', 'icmssnst_incluido_preco',)
+                  'icmssn_incluido_preco', 'icmssnst_incluido_preco',)
         widgets = {
-            'csosn':forms.Select(attrs={'class':'form-control'}),
-            'p_cred_sn':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'mod_bc':forms.Select(attrs={'class':'form-control'}),
-            'p_icms':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'p_red_bc':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'mod_bcst':forms.Select(attrs={'class':'form-control'}),
-            'p_mvast':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'p_red_bcst':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'p_icmsst':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'icmssn_incluido_preco':forms.CheckboxInput(attrs={'class':'form-control'}),
-            'icmssnst_incluido_preco':forms.CheckboxInput(attrs={'class':'form-control'}),
+            'csosn': forms.Select(attrs={'class': 'form-control'}),
+            'p_cred_sn': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'mod_bc': forms.Select(attrs={'class': 'form-control'}),
+            'p_icms': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'p_red_bc': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'mod_bcst': forms.Select(attrs={'class': 'form-control'}),
+            'p_mvast': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'p_red_bcst': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'p_icmsst': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'icmssn_incluido_preco': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'icmssnst_incluido_preco': forms.CheckboxInput(attrs={'class': 'form-control'}),
         }
         labels = {
             'csosn': _('CSOSN'),
@@ -135,7 +135,8 @@ class ICMSUFDestForm(forms.ModelForm):
         if 'grupo_fiscal' in kwargs:
             grupo_fiscal = kwargs.pop('grupo_fiscal')
             instance = ICMSUFDest.objects.get(grupo_fiscal=grupo_fiscal)
-            super(ICMSUFDestForm, self).__init__(instance=instance, *args, **kwargs)
+            super(ICMSUFDestForm, self).__init__(
+                instance=instance, *args, **kwargs)
         else:
             super(ICMSUFDestForm, self).__init__(*args, **kwargs)
 
@@ -146,12 +147,13 @@ class ICMSUFDestForm(forms.ModelForm):
 
     class Meta:
         model = ICMSUFDest
-        fields = ('p_fcp_dest', 'p_icms_dest', 'p_icms_inter', 'p_icms_inter_part', )
+        fields = ('p_fcp_dest', 'p_icms_dest',
+                  'p_icms_inter', 'p_icms_inter_part', )
         widgets = {
-            'p_fcp_dest':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'p_icms_dest':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'p_icms_inter':forms.Select(attrs={'class':'form-control'}),
-            'p_icms_inter_part':forms.Select(attrs={'class':'form-control'}),
+            'p_fcp_dest': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'p_icms_dest': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'p_icms_inter': forms.Select(attrs={'class': 'form-control'}),
+            'p_icms_inter_part': forms.Select(attrs={'class': 'form-control'}),
         }
         labels = {
             'p_fcp_dest': _('% do ICMS relativo ao FCP de destino'),
@@ -175,18 +177,19 @@ class IPIForm(forms.ModelForm):
 
     class Meta:
         model = IPI
-        fields = ('cst', 'cl_enq', 'c_enq', 'cnpj_prod', 'tipo_ipi', 'p_ipi', 'valor_fixo', 'ipi_incluido_preco', 'incluir_bc_icms', 'incluir_bc_icmsst',)
+        fields = ('cst', 'cl_enq', 'c_enq', 'cnpj_prod', 'tipo_ipi', 'p_ipi',
+                  'valor_fixo', 'ipi_incluido_preco', 'incluir_bc_icms', 'incluir_bc_icmsst',)
         widgets = {
-            'cst':forms.Select(attrs={'class':'form-control'}),
-            'cl_enq':forms.TextInput(attrs={'class':'form-control'}),
-            'c_enq':forms.TextInput(attrs={'class':'form-control'}),
-            'cnpj_prod':forms.TextInput(attrs={'class':'form-control'}),
-            'p_ipi':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'tipo_ipi':forms.Select(attrs={'class':'form-control'}),
-            'valor_fixo':forms.TextInput(attrs={'class':'form-control decimal-mask'}),
-            'ipi_incluido_preco':forms.CheckboxInput(attrs={'class':'form-control'}),
-            'incluir_bc_icms':forms.CheckboxInput(attrs={'class':'form-control'}),
-            'incluir_bc_icmsst':forms.CheckboxInput(attrs={'class':'form-control'}),
+            'cst': forms.Select(attrs={'class': 'form-control'}),
+            'cl_enq': forms.TextInput(attrs={'class': 'form-control'}),
+            'c_enq': forms.TextInput(attrs={'class': 'form-control'}),
+            'cnpj_prod': forms.TextInput(attrs={'class': 'form-control'}),
+            'p_ipi': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'tipo_ipi': forms.Select(attrs={'class': 'form-control'}),
+            'valor_fixo': forms.TextInput(attrs={'class': 'form-control decimal-mask'}),
+            'ipi_incluido_preco': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'incluir_bc_icms': forms.CheckboxInput(attrs={'class': 'form-control'}),
+            'incluir_bc_icmsst': forms.CheckboxInput(attrs={'class': 'form-control'}),
         }
         labels = {
             'cst': _('CST IPI'),
@@ -218,9 +221,9 @@ class PISForm(forms.ModelForm):
         model = PIS
         fields = ('cst', 'p_pis', 'valiq_pis',)
         widgets = {
-            'cst':forms.Select(attrs={'class':'form-control'}),
-            'p_pis':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'valiq_pis':forms.TextInput(attrs={'class':'form-control decimal-mask'}),
+            'cst': forms.Select(attrs={'class': 'form-control'}),
+            'p_pis': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'valiq_pis': forms.TextInput(attrs={'class': 'form-control decimal-mask'}),
         }
         labels = {
             'cst': _('CST PIS'),
@@ -234,7 +237,8 @@ class COFINSForm(forms.ModelForm):
         if 'grupo_fiscal' in kwargs:
             grupo_fiscal = kwargs.pop('grupo_fiscal')
             instance = COFINS.objects.get(grupo_fiscal=grupo_fiscal)
-            super(COFINSForm, self).__init__(instance=instance, *args, **kwargs)
+            super(COFINSForm, self).__init__(
+                instance=instance, *args, **kwargs)
         else:
             super(COFINSForm, self).__init__(*args, **kwargs)
 
@@ -245,13 +249,12 @@ class COFINSForm(forms.ModelForm):
         model = COFINS
         fields = ('cst', 'p_cofins', 'valiq_cofins',)
         widgets = {
-            'cst':forms.Select(attrs={'class':'form-control'}),
-            'p_cofins':forms.TextInput(attrs={'class':'form-control percentual-mask'}),
-            'valiq_cofins':forms.TextInput(attrs={'class':'form-control decimal-mask'}),
+            'cst': forms.Select(attrs={'class': 'form-control'}),
+            'p_cofins': forms.TextInput(attrs={'class': 'form-control percentual-mask'}),
+            'valiq_cofins': forms.TextInput(attrs={'class': 'form-control decimal-mask'}),
         }
         labels = {
             'cst': _('CST COFINS'),
             'p_cofins': _('Alíquota do COFINS (em %)'),
             'valiq_cofins': _('Alíquota do COFINS por produto (em R$)'),
         }
-
