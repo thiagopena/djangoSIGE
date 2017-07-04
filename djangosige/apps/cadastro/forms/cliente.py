@@ -14,16 +14,24 @@ class ClienteForm(forms.ModelForm):
 
     class Meta:
         model = Cliente
-        fields = ('nome_razao_social', 'tipo_pessoa', 'inscricao_municipal',
-                  'limite_de_credito', 'indicador_ie', 'id_estrangeiro', 'informacoes_adicionais', )
+        fields = ('nome_razao_social', 'tipo_pessoa',
+                  'inscricao_municipal', 'limite_de_credito',
+                  'indicador_ie', 'id_estrangeiro', 'informacoes_adicionais', )
         widgets = {
-            'nome_razao_social': forms.TextInput(attrs={'class': 'form-control'}),
-            'tipo_pessoa': forms.RadioSelect(attrs={'class': 'form-control'}),
-            'limite_de_credito': forms.TextInput(attrs={'class': 'form-control decimal-mask'}),
-            'indicador_ie': forms.Select(attrs={'class': 'form-control'}),
-            'inscricao_municipal': forms.TextInput(attrs={'class': 'form-control'}),
-            'id_estrangeiro': forms.TextInput(attrs={'class': 'form-control'}),
-            'informacoes_adicionais': forms.Textarea(attrs={'class': 'form-control'}),
+            'nome_razao_social': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'tipo_pessoa': forms.RadioSelect(
+                attrs={'class': 'form-control'}),
+            'limite_de_credito': forms.TextInput(
+                attrs={'class': 'form-control decimal-mask'}),
+            'indicador_ie': forms.Select(
+                attrs={'class': 'form-control'}),
+            'inscricao_municipal': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'id_estrangeiro': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'informacoes_adicionais': forms.Textarea(
+                attrs={'class': 'form-control'}),
         }
         labels = {
             'nome_razao_social': _('Razão Social'),

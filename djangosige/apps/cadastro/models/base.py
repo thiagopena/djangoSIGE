@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-#from djangosige.configs.settings import APP_ROOT, STATIC_URL
-#import csv
+"""
+from djangosige.configs.settings import APP_ROOT, STATIC_URL
+import csv
+"""
 import re
 
 from django.db import models
@@ -113,15 +115,20 @@ class Pessoa(models.Model):
 
     # Dados padrao
     endereco_padrao = models.ForeignKey(
-        'cadastro.Endereco', related_name="end_padrao", on_delete=models.CASCADE, null=True, blank=True)
+        'cadastro.Endereco', related_name="end_padrao",
+        on_delete=models.CASCADE, null=True, blank=True)
     telefone_padrao = models.ForeignKey(
-        'cadastro.Telefone', related_name="tel_padrao", on_delete=models.CASCADE, null=True, blank=True)
+        'cadastro.Telefone', related_name="tel_padrao",
+        on_delete=models.CASCADE, null=True, blank=True)
     site_padrao = models.ForeignKey(
-        'cadastro.Site', related_name="sit_padrao", on_delete=models.CASCADE, null=True, blank=True)
+        'cadastro.Site', related_name="sit_padrao",
+        on_delete=models.CASCADE, null=True, blank=True)
     email_padrao = models.ForeignKey(
-        'cadastro.Email', related_name="ema_padrao", on_delete=models.CASCADE, null=True, blank=True)
+        'cadastro.Email', related_name="ema_padrao",
+        on_delete=models.CASCADE, null=True, blank=True)
     banco_padrao = models.ForeignKey(
-        'cadastro.Banco', related_name="ban_padrao", on_delete=models.CASCADE, null=True, blank=True)
+        'cadastro.Banco', related_name="ban_padrao",
+        on_delete=models.CASCADE, null=True, blank=True)
 
     # Sobre o objeto
     criado_por = models.ForeignKey(User, null=True, blank=True)
@@ -154,7 +161,8 @@ class Pessoa(models.Model):
             return 'ISENTO'
         elif self.tipo_pessoa == 'PJ':
             if self.pessoa_jur_info.inscricao_estadual:
-                return re.sub('[./-]', '', self.pessoa_jur_info.inscricao_estadual)
+                return re.sub('[./-]', '',
+                              self.pessoa_jur_info.inscricao_estadual)
         else:
             return ''
 
@@ -176,7 +184,8 @@ class Pessoa(models.Model):
 
 class PessoaFisica(models.Model):
     pessoa_id = models.OneToOneField(
-        Pessoa, on_delete=models.CASCADE, primary_key=True, related_name='pessoa_fis_info')
+        Pessoa, on_delete=models.CASCADE, primary_key=True,
+        related_name='pessoa_fis_info')
     cpf = models.CharField(max_length=32, null=True, blank=True)
     rg = models.CharField(max_length=32, null=True, blank=True)
     nascimento = models.DateField(null=True, blank=True)
@@ -198,7 +207,8 @@ class PessoaFisica(models.Model):
 
 class PessoaJuridica(models.Model):
     pessoa_id = models.OneToOneField(
-        Pessoa, on_delete=models.CASCADE, primary_key=True, related_name='pessoa_jur_info')
+        Pessoa, on_delete=models.CASCADE,
+        primary_key=True, related_name='pessoa_jur_info')
     cnpj = models.CharField(max_length=32, null=True, blank=True)
     nome_fantasia = models.CharField(max_length=255, null=True, blank=True)
     inscricao_estadual = models.CharField(max_length=32, null=True, blank=True)
@@ -250,11 +260,14 @@ class Endereco(models.Model):
 
     @property
     def format_endereco(self):
-        return '{0}, {1} - {2}'.format(self.logradouro, self.numero, self.bairro)
+        return '{0}, {1} - {2}'.format(
+            self.logradouro, self.numero, self.bairro)
 
     @property
     def format_endereco_completo(self):
-        return '{0} - {1} - {2} - {3} - {4} - {5} - {6}'.format(self.logradouro, self.numero, self.bairro, self.municipio, self.cep, self.uf, self.pais)
+        return '{0} - {1} - {2} - {3} - {4} - {5} - {6}'.format(
+            self.logradouro, self.numero, self.bairro,
+            self.municipio, self.cep, self.uf, self.pais)
 
     def __unicode__(self):
         s = u'%s, %s, %s (%s)' % (
@@ -275,7 +288,8 @@ class Telefone(models.Model):
     telefone = models.CharField(max_length=32)
 
     def get_telefone_apenas_digitos(self):
-        return self.telefone.replace('(', '').replace(' ', '').replace(')', '').replace('-', '')
+        return self.telefone.replace(
+            '(', '').replace(' ', '').replace(')', '').replace('-', '')
 
 
 class Email(models.Model):

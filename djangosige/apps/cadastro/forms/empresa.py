@@ -17,12 +17,19 @@ class EmpresaForm(forms.ModelForm):
                   'logo_file', 'iest', 'informacoes_adicionais',)
 
         widgets = {
-            'nome_razao_social': forms.TextInput(attrs={'class': 'form-control'}),
-            'cnae': forms.TextInput(attrs={'class': 'form-control'}),
-            'inscricao_municipal': forms.TextInput(attrs={'class': 'form-control'}),
-            'logo_file': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/*'}),
-            'iest': forms.TextInput(attrs={'class': 'form-control'}),
-            'informacoes_adicionais': forms.Textarea(attrs={'class': 'form-control'}),
+            'nome_razao_social': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'cnae': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'inscricao_municipal': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'logo_file': forms.FileInput(
+                attrs={'class': 'form-control',
+                       'accept': 'image/*'}),
+            'iest': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'informacoes_adicionais': forms.Textarea(
+                attrs={'class': 'form-control'}),
         }
         labels = {
             'nome_razao_social': _('Razão Social'),

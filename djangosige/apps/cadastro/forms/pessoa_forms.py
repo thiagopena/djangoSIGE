@@ -22,12 +22,18 @@ class PessoaJuridicaForm(forms.ModelForm):
                   'responsavel', 'sit_fiscal', 'suframa',)
 
         widgets = {
-            'nome_fantasia': forms.TextInput(attrs={'class': 'form-control'}),
-            'cnpj': forms.TextInput(attrs={'class': 'form-control'}),
-            'inscricao_estadual': forms.TextInput(attrs={'class': 'form-control'}),
-            'responsavel': forms.TextInput(attrs={'class': 'form-control'}),
-            'sit_fiscal': forms.Select(attrs={'class': 'form-control'}),
-            'suframa': forms.TextInput(attrs={'class': 'form-control'}),
+            'nome_fantasia': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'cnpj': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'inscricao_estadual': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'responsavel': forms.TextInput(
+                attrs={'class': 'form-control'}),
+            'sit_fiscal': forms.Select(
+                attrs={'class': 'form-control'}),
+            'suframa': forms.TextInput(
+                attrs={'class': 'form-control'}),
         }
         labels = {
             'nome_fantasia': _('Nome Fantasia'),
@@ -56,7 +62,8 @@ class PessoaFisicaForm(forms.ModelForm):
         widgets = {
             'cpf': forms.TextInput(attrs={'class': 'form-control'}),
             'rg': forms.TextInput(attrs={'class': 'form-control'}),
-            'nascimento': forms.DateInput(attrs={'class': 'form-control datepicker'}),
+            'nascimento': forms.DateInput(
+                attrs={'class': 'form-control datepicker'}),
         }
         labels = {
             'cpf': _('CPF'),

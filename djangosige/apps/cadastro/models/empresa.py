@@ -13,12 +13,14 @@ from djangosige.configs.settings import MEDIA_ROOT
 
 def logo_directory_path(instance, filename):
     extension = os.path.splitext(filename)[1]
-    return 'imagens/empresas/logo_{0}_{1}{2}'.format(instance.nome_razao_social, instance.id, extension)
+    return 'imagens/empresas/logo_{0}_{1}{2}'.format(
+        instance.nome_razao_social, instance.id, extension)
 
 
 class Empresa(Pessoa):
     logo_file = models.ImageField(
-        upload_to=logo_directory_path, default='imagens/logo.png', blank=True, null=True)
+        upload_to=logo_directory_path, default='imagens/logo.png',
+        blank=True, null=True)
     cnae = models.CharField(max_length=10, blank=True, null=True)
     iest = models.CharField(max_length=32, null=True, blank=True)
 
@@ -33,7 +35,8 @@ class Empresa(Pessoa):
         # Deletar logo se ja existir um
         try:
             obj = Empresa.objects.get(id=self.id)
-            if obj.logo_file != self.logo_file and obj.logo_file != 'imagens/logo.png':
+            if obj.logo_file != self.logo_file and\
+               obj.logo_file != 'imagens/logo.png':
                 obj.logo_file.delete(save=False)
         except:
             pass
@@ -57,6 +60,7 @@ def logo_post_delete_handler(sender, instance, **kwargs):
 
 class MinhaEmpresa(models.Model):
     m_empresa = models.ForeignKey(
-        Empresa, on_delete=models.CASCADE, related_name='minha_empresa', blank=True, null=True)
+        Empresa, on_delete=models.CASCADE,
+        related_name='minha_empresa', blank=True, null=True)
     m_usuario = models.ForeignKey(
         Usuario, on_delete=models.CASCADE, related_name='m_usuario')
