@@ -9,25 +9,12 @@ ORIGEM_ESCOLHAS = (
     (u'0', u'0 - Nacional'),
     (u'1', u'1 - Estrangeira - Importação direta.'),
     (u'2', u'2 - Estrangeira - Adquirida no mercado interno.'),
-    (u'3', u""" 3 - Nacional - Mercadoria ou bem com Conteúdo de Importação
-     superior a 40% e inferior ou igual a 70%."""),
-
-    (u'4', u"""4 - Nacional - Cuja produção tenha sido feita em conformidade
-     com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/67,
-     e as Leis nºs 8.248/91, 8.387/91, 10.176/01 e 11.484/ 07 """),
-
-    (u'5', u"""5 - Nacional - Mercadoria ou bem com Conteúdo de Importação
-     inferior ou igual a 40% (quarenta por cento)"""),
-
-    (u'6', u"""6 - Estrangeira - Importação direta, sem similar nacional,
-     constante em lista da Resolução CAMEX nº 79/2012 e gás natural"""),
-
-    (u'7', u"""7 - Estrangeira - Adquirida no mercado interno, sem similar
-     nacional, constante em lista da Resolução
-     CAMEX nº 79/2012 e gás natural"""),
-
-    (u'8', u"""8 - Nacional - Mercadoria ou bem com Conteúdo de Importação
-     superior a 70% (setenta por cento)."""),
+    (u'3', u'3 - Nacional - Mercadoria ou bem com Conteúdo de Importação superior a 40% e inferior ou igual a 70%.'),
+    (u'4', u'4 - Nacional - Cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam o Decreto-Lei nº 288/67, e as Leis nºs 8.248/91, 8.387/91, 10.176/01 e 11.484/ 07'),
+    (u'5', u'5 - Nacional - Mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40% (quarenta por cento)'),
+    (u'6', u'6 - Estrangeira - Importação direta, sem similar nacional, constante em lista da Resolução CAMEX nº 79/2012 e gás natural'),
+    (u'7', u'7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista da Resolução CAMEX nº 79/2012 e gás natural'),
+    (u'8', u'8 - Nacional - Mercadoria ou bem com Conteúdo de Importação superior a 70% (setenta por cento).'),
 )
 
 TP_OPERACAO_OPCOES = (
@@ -88,12 +75,10 @@ class Produto(models.Model):
     categoria = models.ForeignKey(Categoria, null=True, blank=True)
     marca = models.ForeignKey(Marca, null=True, blank=True)
     unidade = models.ForeignKey(Unidade, null=True, blank=True)
-    custo = models.DecimalField(max_digits=16, decimal_places=2,
-                                validators=[MinValueValidator(
-                                    Decimal('0.00'))], default=Decimal('0.00'))
-    venda = models.DecimalField(max_digits=16, decimal_places=2,
-                                validators=[MinValueValidator(
-                                    Decimal('0.00'))], default=Decimal('0.00'))
+    custo = models.DecimalField(max_digits=16, decimal_places=2, validators=[
+                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    venda = models.DecimalField(max_digits=16, decimal_places=2, validators=[
+                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     inf_adicionais = models.CharField(max_length=255, null=True, blank=True)
 
     # Fiscal
@@ -109,14 +94,10 @@ class Produto(models.Model):
         'fiscal.GrupoFiscal', null=True, blank=True)
 
     # Estoque
-    estoque_minimo = models.DecimalField(max_digits=16, decimal_places=2,
-                                         validators=[MinValueValidator(
-                                             Decimal('0.00'))],
-                                         default=Decimal('0.00'))
-    estoque_atual = models.DecimalField(max_digits=16, decimal_places=2,
-                                        validators=[MinValueValidator(
-                                            Decimal('0.00'))],
-                                        default=Decimal('0.00'))
+    estoque_minimo = models.DecimalField(max_digits=16, decimal_places=2, validators=[
+                                         MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    estoque_atual = models.DecimalField(max_digits=16, decimal_places=2, validators=[
+                                        MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     controlar_estoque = models.BooleanField(default=True)
 
     @property

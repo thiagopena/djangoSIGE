@@ -4,19 +4,14 @@ from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 
-from djangosige.apps.cadastro.models import (Pessoa, Endereco,
-                                             Telefone, Email, Site,
-                                             Banco, Documento,)
+from djangosige.apps.cadastro.models import Pessoa, Endereco, Telefone, Email, Site, Banco, Documento
 
 
 class EnderecoForm(forms.ModelForm):
     class Meta:
         model = Endereco
-        fields = ('tipo_endereco', 'logradouro',
-                  'numero', 'bairro', 'complemento',
-                  'pais', 'cpais', 'uf', 'cep',
-                  'municipio', 'cmun',
-                  )
+        fields = ('tipo_endereco', 'logradouro', 'numero', 'bairro',
+                  'complemento', 'pais', 'cpais', 'uf', 'cep', 'municipio', 'cmun',)
 
         labels = {
             'tipo_endereco': _('Tipo'),

@@ -5,19 +5,14 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib import messages
 from django.shortcuts import redirect
 
-from djangosige.apps.cadastro.forms import (
-    PessoaJuridicaForm, PessoaFisicaForm, EnderecoFormSet,
-    TelefoneFormSet, EmailFormSet, SiteFormSet, BancoFormSet,
-    DocumentoFormSet,)
-from djangosige.apps.cadastro.models import (
-    PessoaFisica, PessoaJuridica, Endereco, Telefone,
-    Email, Site, Banco, Documento,)
+from djangosige.apps.cadastro.forms import PessoaJuridicaForm, PessoaFisicaForm, EnderecoFormSet, TelefoneFormSet, EmailFormSet, \
+    SiteFormSet, BancoFormSet, DocumentoFormSet
+from djangosige.apps.cadastro.models import PessoaFisica, PessoaJuridica, Endereco, Telefone, Email, Site, Banco, Documento
 
 
 class AdicionarPessoaView(CreateView):
     def get_success_message(self, cleaned_data):
-        return self.success_message % dict(
-            cleaned_data, nome_razao_social=self.object.nome_razao_social)
+        return self.success_message % dict(cleaned_data, nome_razao_social=self.object.nome_razao_social)
 
     def get(self, request, form, *args, **kwargs):
         self.object = None
@@ -44,13 +39,14 @@ class AdicionarPessoaView(CreateView):
         for formset in formsets:
             formset.can_delete = False
 
-        return self.render_to_response(
-            self.get_context_data(
-                form=form, pessoa_juridica_form=pessoa_juridica_form,
-                pessoa_fisica_form=pessoa_fisica_form,
-                endereco_form=endereco_form, banco_form=banco_form,
-                documento_form=documento_form, formsets=formsets,
-                veiculo_form=veiculo_form))
+        return self.render_to_response(self.get_context_data(form=form,
+                                                             pessoa_juridica_form=pessoa_juridica_form,
+                                                             pessoa_fisica_form=pessoa_fisica_form,
+                                                             endereco_form=endereco_form,
+                                                             banco_form=banco_form,
+                                                             documento_form=documento_form,
+                                                             formsets=formsets,
+                                                             veiculo_form=veiculo_form))
 
     def post(self, request, form, *args, **kwargs):
         self.object = None
@@ -141,29 +137,22 @@ class AdicionarPessoaView(CreateView):
         pessoa_fisica_form = PessoaFisicaForm(
             request.POST, prefix='pessoa_fis_form')
 
-        return self.form_invalid(
-            form, pessoa_juridica_form, pessoa_fisica_form,
-            endereco_form, banco_form, documento_form,
-            formsets, veiculo_form)
+        return self.form_invalid(form, pessoa_juridica_form, pessoa_fisica_form, endereco_form, banco_form, documento_form, formsets, veiculo_form)
 
     def form_valid(self, form):
         messages.success(
             self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
-    def form_invalid(self, form, pessoa_juridica_form,
-                     pessoa_fisica_form, endereco_form,
-                     banco_form, documento_form, formsets, veiculo_form):
-        return self.render_to_response(
-            self.get_context_data(
-                form=form, pessoa_juridica_form=pessoa_juridica_form,
-                pessoa_fisica_form=pessoa_fisica_form,
-                endereco_form=endereco_form,
-                banco_form=banco_form,
-                documento_form=documento_form,
-                formsets=formsets,
-                veiculo_form=veiculo_form)
-        )
+    def form_invalid(self, form, pessoa_juridica_form, pessoa_fisica_form, endereco_form, banco_form, documento_form, formsets, veiculo_form):
+        return self.render_to_response(self.get_context_data(form=form,
+                                                             pessoa_juridica_form=pessoa_juridica_form,
+                                                             pessoa_fisica_form=pessoa_fisica_form,
+                                                             endereco_form=endereco_form,
+                                                             banco_form=banco_form,
+                                                             documento_form=documento_form,
+                                                             formsets=formsets,
+                                                             veiculo_form=veiculo_form))
 
 
 class PessoasListView(ListView):
@@ -181,8 +170,7 @@ class PessoasListView(ListView):
 
 class EditarPessoaView(UpdateView):
     def get_success_message(self, cleaned_data):
-        return self.success_message % dict(
-            cleaned_data, nome_razao_social=self.object.nome_razao_social)
+        return self.success_message % dict(cleaned_data, nome_razao_social=self.object.nome_razao_social)
 
     def get(self, request, form, *args, **kwargs):
         if self.object.tipo_pessoa == 'PJ':
@@ -225,18 +213,16 @@ class EditarPessoaView(UpdateView):
         # Caso Transportadora
         veiculo_form = kwargs.pop('veiculo_form', None)
 
-        return self.render_to_response(
-            self.get_context_data(
-                form=form, pessoa_juridica_form=pessoa_juridica_form,
-                pessoa_fisica_form=pessoa_fisica_form,
-                endereco_form=endereco_form,
-                banco_form=banco_form,
-                documento_form=documento_form,
-                formsets=formsets,
-                logo_file=logo_file,
-                veiculo_form=veiculo_form,
-                Warningobject=self.object)
-        )
+        return self.render_to_response(self.get_context_data(form=form,
+                                                             pessoa_juridica_form=pessoa_juridica_form,
+                                                             pessoa_fisica_form=pessoa_fisica_form,
+                                                             endereco_form=endereco_form,
+                                                             banco_form=banco_form,
+                                                             documento_form=documento_form,
+                                                             formsets=formsets,
+                                                             logo_file=logo_file,
+                                                             veiculo_form=veiculo_form,
+                                                             object=self.object))
 
     def post(self, request, form, *args, **kwargs):
         self.object = self.get_object()
@@ -350,31 +336,21 @@ class EditarPessoaView(UpdateView):
             pessoa_fisica_form = PessoaFisicaForm(
                 request.POST, prefix='pessoa_fis_form', instance=self.object)
 
-        return self.form_invalid(
-            form, pessoa_juridica_form, pessoa_fisica_form,
-            endereco_form, banco_form, documento_form, formsets,
-            veiculo_form, logo_file=logo_file)
+        return self.form_invalid(form, pessoa_juridica_form, pessoa_fisica_form, endereco_form, banco_form, documento_form, formsets, veiculo_form, logo_file=logo_file)
 
     def form_valid(self, form):
         messages.success(
             self.request, self.get_success_message(form.cleaned_data))
         return redirect(self.success_url)
 
-    def form_invalid(self, form, pessoa_juridica_form,
-                     pessoa_fisica_form, endereco_form,
-                     banco_form, documento_form,
-                     formsets, veiculo_form, *args, **kwargs):
-
+    def form_invalid(self, form, pessoa_juridica_form, pessoa_fisica_form, endereco_form, banco_form, documento_form, formsets, veiculo_form, *args, **kwargs):
         logo_file = kwargs.pop('logo_file', None)
-        return self.render_to_response(
-            self.get_context_data(
-                form=form,
-                pessoa_juridica_form=pessoa_juridica_form,
-                pessoa_fisica_form=pessoa_fisica_form,
-                endereco_form=endereco_form,
-                banco_form=banco_form,
-                documento_form=documento_form,
-                formsets=formsets,
-                veiculo_form=veiculo_form,
-                logo_file=logo_file)
-        )
+        return self.render_to_response(self.get_context_data(form=form,
+                                                             pessoa_juridica_form=pessoa_juridica_form,
+                                                             pessoa_fisica_form=pessoa_fisica_form,
+                                                             endereco_form=endereco_form,
+                                                             banco_form=banco_form,
+                                                             documento_form=documento_form,
+                                                             formsets=formsets,
+                                                             veiculo_form=veiculo_form,
+                                                             logo_file=logo_file))
