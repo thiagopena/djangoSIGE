@@ -37,10 +37,10 @@
     },
     {
         "fields": {
-            "banco_padrao": null,
+            "banco_padrao": 1,
             "criado_por": 1,
             "data_criacao": "2017-07-04T16:46:50.145Z",
-            "data_edicao": "2017-07-04T16:46:50.359Z",
+            "data_edicao": "2017-07-07T23:57:21.630Z",
             "email_padrao": null,
             "endereco_padrao": 3,
             "informacoes_adicionais": "",
@@ -292,6 +292,17 @@
         },
         "model": "cadastro.telefone",
         "pk": 4
+    },
+    {
+        "fields": {
+            "agencia": "4444",
+            "banco": "001",
+            "conta": "12345678901",
+            "digito": "22",
+            "pessoa_banco": 3
+        },
+        "model": "cadastro.banco",
+        "pk": 1
     },
     {
         "fields": {
@@ -853,6 +864,38 @@
     },
     {
         "fields": {
+            "abatimento": "30.00",
+            "conta_corrente": 1,
+            "data_pagamento": "2017-07-06",
+            "data_vencimento": "2017-07-15",
+            "descricao": "Recebimento1",
+            "juros": "0.00",
+            "movimentar_caixa": true,
+            "movimento_caixa": 6,
+            "valor_liquido": "70.00",
+            "valor_total": "100.00"
+        },
+        "model": "financeiro.lancamento",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "abatimento": "0.00",
+            "conta_corrente": 1,
+            "data_pagamento": "2017-07-07",
+            "data_vencimento": "2017-07-31",
+            "descricao": "Pagamento1",
+            "juros": "0.00",
+            "movimentar_caixa": true,
+            "movimento_caixa": 7,
+            "valor_liquido": "20.00",
+            "valor_total": "20.00"
+        },
+        "model": "financeiro.lancamento",
+        "pk": 7
+    },
+    {
+        "fields": {
             "cliente": 1,
             "grupo_plano": null,
             "status": "1"
@@ -898,11 +941,29 @@
     },
     {
         "fields": {
+            "cliente": 5,
+            "grupo_plano": 1,
+            "status": "0"
+        },
+        "model": "financeiro.entrada",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "fornecedor": 2,
+            "grupo_plano": 9,
+            "status": "0"
+        },
+        "model": "financeiro.saida",
+        "pk": 7
+    },
+    {
+        "fields": {
             "data_movimento": "2017-08-03",
             "entradas": "355.60",
             "saidas": "0.00",
-            "saldo_final": "355.60",
-            "saldo_inicial": "0.00"
+            "saldo_final": "405.60",
+            "saldo_inicial": "50.00"
         },
         "model": "financeiro.movimentocaixa",
         "pk": 1
@@ -912,8 +973,8 @@
             "data_movimento": "2017-09-02",
             "entradas": "355.60",
             "saidas": "0.00",
-            "saldo_final": "711.20",
-            "saldo_inicial": "355.60"
+            "saldo_final": "761.20",
+            "saldo_inicial": "405.60"
         },
         "model": "financeiro.movimentocaixa",
         "pk": 2
@@ -923,8 +984,8 @@
             "data_movimento": "2017-10-02",
             "entradas": "355.60",
             "saidas": "0.00",
-            "saldo_final": "1066.80",
-            "saldo_inicial": "711.20"
+            "saldo_final": "1116.80",
+            "saldo_inicial": "761.20"
         },
         "model": "financeiro.movimentocaixa",
         "pk": 3
@@ -934,8 +995,8 @@
             "data_movimento": "2017-11-01",
             "entradas": "355.60",
             "saidas": "0.00",
-            "saldo_final": "1422.40",
-            "saldo_inicial": "1066.80"
+            "saldo_final": "1472.40",
+            "saldo_inicial": "1116.80"
         },
         "model": "financeiro.movimentocaixa",
         "pk": 4
@@ -945,11 +1006,33 @@
             "data_movimento": "2017-12-01",
             "entradas": "355.60",
             "saidas": "0.00",
-            "saldo_final": "1778.00",
-            "saldo_inicial": "1422.40"
+            "saldo_final": "1828.00",
+            "saldo_inicial": "1472.40"
         },
         "model": "financeiro.movimentocaixa",
         "pk": 5
+    },
+    {
+        "fields": {
+            "data_movimento": "2017-07-06",
+            "entradas": "70.00",
+            "saidas": "0.00",
+            "saldo_final": "70.00",
+            "saldo_inicial": "0.00"
+        },
+        "model": "financeiro.movimentocaixa",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "data_movimento": "2017-07-07",
+            "entradas": "0.00",
+            "saidas": "20.00",
+            "saldo_final": "50.00",
+            "saldo_inicial": "70.00"
+        },
+        "model": "financeiro.movimentocaixa",
+        "pk": 7
     },
     {
         "fields": {
