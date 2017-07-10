@@ -11,7 +11,7 @@
 <div class="col-sm-6">
   <div class="form-group">
     <div class="form-line">
-      <label>{{form.origem.label}}</label>
+      <label>{{form.origem.label}}</label><strong style="color:red;"> *</strong>
       {% if form.origem.errors %}<label class="error">{% for error in form.origem.errors %}{{error}}{% endfor %}</label>{% endif %}
       <div class="select-container">
       {{form.origem}}
