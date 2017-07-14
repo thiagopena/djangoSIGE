@@ -31,6 +31,7 @@ from djangosige.apps.cadastro.models import MinhaEmpresa
 
 
 class SuperUserRequiredMixin(object):
+
     @method_decorator(login_required(login_url='login:loginview'))
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_superuser:
@@ -39,7 +40,7 @@ class SuperUserRequiredMixin(object):
                 messages.WARNING,
                 u'Apenas o administrador tem permissão para realizar esta operação.',
                 'superuser_permission')
-            return redirect(request.META.get('HTTP_REFERER'))
+            return redirect('base:index')
         return super(SuperUserRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
@@ -104,6 +105,7 @@ class UserRegistrationFormView(SuperUserRequiredMixin, SuccessMessageMixin, Form
 
 
 class UserLogoutView(View):
+
     def get(self, request):
         logout(request)
         return redirect("login:loginview")
@@ -195,7 +197,8 @@ class PasswordResetConfirmView(FormView):
         if user is not None and default_token_generator.check_token(user, token):
             if form.is_valid():
                 new_password = form.cleaned_data['new_password']
-                new_password_confirm = form.cleaned_data['new_password_confirm']
+                new_password_confirm = form.cleaned_data[
+                    'new_password_confirm']
                 if new_password == new_password_confirm:
                     user.set_password(new_password)
                     user.save()
@@ -229,7 +232,7 @@ class EditarPerfilView(UpdateView):
         return self.success_message
 
     def get_object(self, queryset=None):
-        obj, created = Usuario.objects.get_or_create(user=self.request.user)
+        obj = Usuario.objects.get_or_create(user=self.request.user)[0]
         return obj
 
     def get_success_url(self, *args, **kwargs):
@@ -322,8 +325,7 @@ class SelecionarMinhaEmpresaView(FormView):
         except MinhaEmpresa.DoesNotExist:
             form = MinhaEmpresaForm()
         except Usuario.DoesNotExist:
-            usuario, created = Usuario.objects.get_or_create(
-                user=self.request.user)
+            usuario = Usuario.objects.get_or_create(user=self.request.user)[0]
             form = MinhaEmpresaForm()
 
         return render(request, self.template_name, {'form': form})

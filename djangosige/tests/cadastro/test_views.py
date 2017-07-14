@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from djangosige.tests.test_case import BaseTestCase
 from djangosige.apps.cadastro.models import Produto, Unidade, Marca, Categoria, Transportadora, Fornecedor, Cliente, Empresa
 from django.core.urlresolvers import reverse, resolve
@@ -204,11 +206,70 @@ class CadastroListarViewsTestCase(BaseTestCase):
 
 class CadastroEditarViewsTestCase(BaseTestCase):
 
-    def test_edit_views_get_request(self):
-        for m in CADASTRO_MODELS:
+    def test_edit_pessoa__get_post_request(self):
+        for m in PESSOA_MODELS:
             # Buscar objeto qualquer
-            obj = eval(m.title()).objects.order_by('pk').first()
+            obj = eval(m.title()).objects.order_by('pk').last()
             url = reverse('cadastro:editar{}view'.format(m),
                           kwargs={'pk': obj.pk})
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
+            data = response.context['form'].initial
+            if m == 'cliente':
+                data['{}-limite_de_credito'.format(response.context['form'].prefix)] = data[
+                    'limite_de_credito']
+                del data['limite_de_credito']
+
+            # Inserir informacoes adicionais
+            data['informacoes_adicionais'] = 'Objeto editado.'
+            response = self.client.post(url, data, follow=True)
+            self.assertEqual(response.status_code, 200)
+
+    def test_edit_produto_get_post_request(self):
+        # Buscar objeto qualquer
+        obj = Produto.objects.order_by('pk').last()
+        url = reverse('cadastro:editarprodutoview',
+                      kwargs={'pk': obj.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        data = response.context['form'].initial
+        data['inf_adicionais'] = 'Produto editado.'
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'cadastro/produto/produto_list.html')
+
+    def test_edit_categoria_get_post_request(self):
+        # Buscar objeto qualquer
+        obj = Categoria.objects.order_by('pk').last()
+        url = reverse('cadastro:editarcategoriaview',
+                      kwargs={'pk': obj.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        data = response.context['form'].initial
+        data['categoria_desc'] = 'Categoria Editada'
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_marca_get_post_request(self):
+        # Buscar objeto qualquer
+        obj = Marca.objects.order_by('pk').last()
+        url = reverse('cadastro:editarmarcaview',
+                      kwargs={'pk': obj.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        data = response.context['form'].initial
+        data['marca_desc'] = 'Marca Editada'
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+
+    def test_edit_unidade_get_post_request(self):
+        # Buscar objeto qualquer
+        obj = Unidade.objects.order_by('pk').last()
+        url = reverse('cadastro:editarunidadeview',
+                      kwargs={'pk': obj.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        data = response.context['form'].initial
+        data['unidade_desc'] = 'Unidade Editada'
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)

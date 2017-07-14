@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.views.generic import TemplateView
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import F
 

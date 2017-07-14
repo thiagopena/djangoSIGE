@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from djangosige.tests.test_case import BaseTestCase
 from django.core.urlresolvers import resolve, reverse
 from djangosige.apps.base.views import IndexView
