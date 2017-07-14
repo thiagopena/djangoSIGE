@@ -59,4 +59,4 @@ class MinhaEmpresa(models.Model):
     m_empresa = models.ForeignKey(
         Empresa, on_delete=models.CASCADE, related_name='minha_empresa', blank=True, null=True)
     m_usuario = models.ForeignKey(
-        Usuario, on_delete=models.CASCADE, related_name='m_usuario')
+        Usuario, on_delete=models.CASCADE, related_name='empresa_usuario')
