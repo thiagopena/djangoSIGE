@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
 from djangosige.tests.test_case import BaseTestCase, TEST_USERNAME, TEST_PASSWORD
-from djangosige.apps.cadastro.models import Empresa
+from djangosige.apps.cadastro.models import Empresa, MinhaEmpresa
 from djangosige.apps.login.models import Usuario
 
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.db.models import Q
 
 
 class UserFormViewTestCase(BaseTestCase):
@@ -135,3 +136,83 @@ class EditarPerfilViewTestCase(BaseTestCase):
         self.assertTemplateUsed(response, 'login/perfil.html')
         self.assertEqual(usuario.empresa_usuario.all()[
                          0].m_empresa.pk, m_empresa.pk)
+
+
+class SelecionarMinhaEmpresaViewTestCase(BaseTestCase):
+
+    def test_selecionar_empresa_view(self):
+        url = reverse('login:selecionarempresaview')
+        m_empresa = Empresa.objects.create()
+        usuario = Usuario.objects.get(user=self.user)
+        MinhaEmpresa.objects.filter(m_usuario=usuario).delete()
+
+        # Usuario sem MinhaEmpresa
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, 'login/selecionar_minha_empresa.html')
+
+        data = {'m_empresa': m_empresa.pk, }
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(usuario.empresa_usuario.all()[
+                         0].m_empresa.pk, m_empresa.pk)
+
+        # Usuario com MinhaEmpresa
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(
+            response, 'login/selecionar_minha_empresa.html')
+
+        m_empresa = Empresa.objects.filter(~Q(id=m_empresa.pk)).first()
+        data = {'m_empresa': m_empresa.pk, }
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(usuario.empresa_usuario.all()[
+                         0].m_empresa.pk, m_empresa.pk)
+
+
+class UsuariosListViewTestCase(BaseTestCase):
+
+    def test_deletar_usuario(self):
+        url = reverse('login:usuariosview')
+        self.user.is_superuser = True
+        self.user.save()
+
+        # Testar GET request lista
+        obj = User.objects.create()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(obj in response.context['object_list'])
+        self.assertTemplateUsed(response, 'login/lista_users.html')
+
+        # Deletar objeto criado por POST request
+        data = {
+            obj.pk: 'on',
+        }
+        response = self.client.post(url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(obj in response.context['object_list'])
+
+
+class UsuarioDetailViewTestCase(BaseTestCase):
+
+    def test_usuario_detail_get_request(self):
+        url = reverse('login:usuariodetailview', kwargs={'pk': self.user.pk})
+        self.user.is_superuser = True
+        self.user.save()
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'login/detalhe_users.html')
+
+
+class DeletarUsuarioViewTestCase(BaseTestCase):
+
+    def test_deletar_usuario_view(self):
+        new_user = User.objects.create()
+        url = reverse('login:deletarusuarioview', kwargs={'pk': new_user.pk})
+        self.user.is_superuser = True
+        self.user.save()
+        response = self.client.post(url, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertFalse(new_user in response.context['object_list'])
