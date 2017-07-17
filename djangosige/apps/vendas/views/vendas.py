@@ -534,8 +534,6 @@ class InfoVenda(View):
                 'vq_bcpis')
             itens_editable_fields_dict['editable_field_vq_bccofins'] = item.format_valor_attr(
                 'vq_bccofins')
-            #itens_editable_fields_dict['aliq_pis'] = item.get_aliquota_pis()
-            #itens_editable_fields_dict['aliq_cofins'] = item.get_aliquota_cofins()
             itens_editable_fields_dict['editable_field_vpis'] = item.format_valor_attr(
                 'vpis')
             itens_editable_fields_dict['editable_field_vcofins'] = item.format_valor_attr(
@@ -563,7 +561,6 @@ class InfoVenda(View):
 
             data.append(pagamento_dict)
 
-        # return HttpResponse(data, content_type='application/json')
         return HttpResponse(json.dumps(data), content_type='application/json')
 
 
@@ -605,15 +602,18 @@ class GerarPedidoVendaView(View):
 class CancelarVendaView(View):
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
-        venda = None
-        try:
-            venda = PedidoVenda.objects.get(id=venda_id)
-        except PedidoVenda.DoesNotExist:
-            venda = OrcamentoVenda.objects.get(id=venda_id)
-        venda.status = '2'
-        venda.save()
+        
+        if PedidoVenda.objects.filter(id=venda_id).exists():
+            instance = PedidoVenda.objects.get(id=venda_id)
+            redirect_url = 'vendas:editarpedidovendaview'
+        else:
+            instance = OrcamentoVenda.objects.get(id=venda_id)
+            redirect_url = 'vendas:editarorcamentovendaview'
 
-        return redirect(request.META.get('HTTP_REFERER'))
+        instance.status = '2'
+        instance.save()
+
+        return redirect(reverse_lazy(redirect_url, kwargs={'pk': instance.id}))
 
 
 class GerarCopiaVendaView(View):

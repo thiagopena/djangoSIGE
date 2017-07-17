@@ -8,7 +8,6 @@ from djangosige.apps.vendas.models import OrcamentoVenda, PedidoVenda, ItensVend
 
 
 class VendaForm(forms.ModelForm):
-    #total_sem_imposto = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control decimal-mask', 'readonly':True, 'disabled':True}), initial='0.00', label='Total s/ imposto (R$)', required=False)
     total_sem_imposto = forms.DecimalField(widget=forms.TextInput(
         attrs={'class': 'form-control decimal-mask', 'readonly': True}), label='Total s/ imposto (R$)', required=False)
 
@@ -116,13 +115,10 @@ class PedidoVendaForm(VendaForm):
 
 
 class ItensVendaForm(forms.ModelForm):
-    #total_sem_desconto = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control decimal-mask', 'disabled':True}), label='Subtotal s/ desconto', required=False)
     total_sem_desconto = forms.DecimalField(widget=forms.TextInput(
         attrs={'class': 'form-control decimal-mask', 'readonly': True}), label='Subtotal s/ desconto', required=False)
-    #total_impostos     = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control decimal-mask', 'disabled':True}), label='Impostos', required=False)
     total_impostos = forms.DecimalField(widget=forms.TextInput(
         attrs={'class': 'form-control decimal-mask', 'readonly': True}), label='Impostos', required=False)
-    #total_com_impostos = forms.DecimalField(widget=forms.TextInput(attrs={'class':'form-control decimal-mask', 'disabled':True}), label='Total', required=False)
     total_com_impostos = forms.DecimalField(widget=forms.TextInput(
         attrs={'class': 'form-control decimal-mask', 'readonly': True}), label='Total', required=False)
     calculo_imposto = forms.CharField(widget=forms.TextInput(
