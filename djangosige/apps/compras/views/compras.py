@@ -593,8 +593,8 @@ class ReceberCompraView(View):
         if pedido.movimentar_estoque:
             for item in pedido.itens_compra.all():
                 if item.produto.controlar_estoque:
-                    prod_estocado, created = ProdutoEstocado.objects.get_or_create(
-                        local=pedido.local_dest, produto=item.produto)
+                    prod_estocado = ProdutoEstocado.objects.get_or_create(
+                        local=pedido.local_dest, produto=item.produto)[0]
                     item_mvmt = ItensMovimento()
 
                     prod_estocado.produto.estoque_atual += item.quantidade

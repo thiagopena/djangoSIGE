@@ -3,7 +3,7 @@
 from djangosige.tests.test_case import BaseTestCase
 from djangosige.apps.cadastro.models import Cliente, Produto, Transportadora
 from djangosige.apps.vendas.models import CondicaoPagamento, OrcamentoVenda, PedidoVenda
-from djangosige.apps.estoque.models import LocalEstoque
+from djangosige.apps.estoque.models import LocalEstoque, DEFAULT_LOCAL_ID
 from django.core.urlresolvers import reverse
 
 from datetime import datetime, timedelta
@@ -57,7 +57,7 @@ class VendasAdicionarViewsTestCase(BaseTestCase):
     def test_add_orcamento_venda_view_post_request(self):
         url = reverse('vendas:addorcamentovendaview')
         cli = Cliente.objects.order_by('id').last()
-        local_orig = LocalEstoque.objects.get(descricao='Estoque Padrão')
+        local_orig = LocalEstoque.objects.get(pk=DEFAULT_LOCAL_ID)
 
         data = {
             'data_emissao': '16/07/2017',
@@ -90,7 +90,7 @@ class VendasAdicionarViewsTestCase(BaseTestCase):
     def test_add_pedido_venda_view_post_request(self):
         url = reverse('vendas:addpedidovendaview')
         cli = Cliente.objects.order_by('id').last()
-        local_orig = LocalEstoque.objects.get(descricao='Estoque Padrão')
+        local_orig = LocalEstoque.objects.get(pk=DEFAULT_LOCAL_ID)
 
         data = {
             'data_emissao': '16/07/2017',
