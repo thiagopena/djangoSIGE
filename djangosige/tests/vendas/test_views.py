@@ -193,7 +193,7 @@ class VendasListarViewsTestCase(BaseTestCase):
 
 class VendasEditarViewsTestCase(BaseTestCase):
 
-    def test_edit_orcamento_get_post_request(self):
+    def test_edit_orcamento_venda_get_post_request(self):
         # Buscar objeto qualquer
         obj = OrcamentoVenda.objects.order_by('pk').last()
         url = reverse('vendas:editarorcamentovendaview',
@@ -209,7 +209,7 @@ class VendasEditarViewsTestCase(BaseTestCase):
         self.assertTemplateUsed(
             response, 'vendas/orcamento_venda/orcamento_venda_list.html')
 
-    def test_edit_pedido_get_post_request(self):
+    def test_edit_pedido_venda_get_post_request(self):
         # Buscar objeto qualquer
         obj = PedidoVenda.objects.order_by('pk').last()
         url = reverse('vendas:editarpedidovendaview',
