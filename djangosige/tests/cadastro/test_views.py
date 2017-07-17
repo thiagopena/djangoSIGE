@@ -172,36 +172,13 @@ class CadastroListarViewsTestCase(BaseTestCase):
             else:
                 url = reverse('cadastro:lista{}sview'.format(m))
 
-            # Testar GET request lista
             model_class = eval(m.title())
             obj = model_class.objects.create()
-            response = self.client.get(url)
-            self.assertEqual(response.status_code, 200)
-            self.assertTrue(obj in response.context['object_list'])
-
-            # Deletar objeto criado por POST request
-            data = {
-                obj.pk: 'on',
-            }
-            response = self.client.post(url, data, follow=True)
-            self.assertEqual(response.status_code, 200)
-            self.assertFalse(obj in response.context['object_list'])
+            self.check_list_view_delete(url=url, object=obj)
 
         url = reverse('cadastro:listaprodutosbaixoestoqueview')
-
-        # Testar GET request lista
         obj = Produto.objects.create()
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(obj in response.context['object_list'])
-
-        # Deletar objeto criado por POST request
-        data = {
-            obj.pk: 'on',
-        }
-        response = self.client.post(url, data, follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertFalse(obj in response.context['object_list'])
+        self.check_list_view_delete(url=url, object=obj)
 
 
 class CadastroEditarViewsTestCase(BaseTestCase):
