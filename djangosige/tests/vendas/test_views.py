@@ -29,8 +29,6 @@ VENDA_FORMSET_DATA = {
     'produtos_form-1-subtotal': '280,00',
     'produtos_form-TOTAL_FORMS': 2,
     'produtos_form-INITIAL_FORMS': 0,
-    'produtos_form-TOTAL_FORMS': 2,
-    'produtos_form-INITIAL_FORMS': 0,
     'pagamento_form-1-indice_parcela': 1,
     'pagamento_form-1-vencimento': '31/07/2017',
     'pagamento_form-1-valor_parcela': '460,00',
@@ -41,12 +39,12 @@ VENDA_FORMSET_DATA = {
 
 class VendasAdicionarViewsTestCase(BaseTestCase):
 
-    def test_add_orcamento_view_get_request(self):
+    def test_add_orcamento_venda_view_get_request(self):
         url = reverse('vendas:addorcamentovendaview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_add_pedido_view_get_request(self):
+    def test_add_pedido_venda_view_get_request(self):
         url = reverse('vendas:addpedidovendaview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -56,10 +54,9 @@ class VendasAdicionarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
-    def test_add_orcamento_view_post_request(self):
+    def test_add_orcamento_venda_view_post_request(self):
         url = reverse('vendas:addorcamentovendaview')
         cli = Cliente.objects.order_by('id').last()
-        cond_pag = CondicaoPagamento.objects.get(n_parcelas=1)
         local_orig = LocalEstoque.objects.get(descricao='Estoque Padrão')
 
         data = {
@@ -90,10 +87,9 @@ class VendasAdicionarViewsTestCase(BaseTestCase):
         self.assertFormError(
             response, 'form', 'cliente', 'Este campo é obrigatório.')
 
-    def test_add_pedido_view_post_request(self):
+    def test_add_pedido_venda_view_post_request(self):
         url = reverse('vendas:addpedidovendaview')
         cli = Cliente.objects.order_by('id').last()
-        cond_pag = CondicaoPagamento.objects.get(n_parcelas=1)
         local_orig = LocalEstoque.objects.get(descricao='Estoque Padrão')
 
         data = {
@@ -149,50 +145,50 @@ class VendasAdicionarViewsTestCase(BaseTestCase):
 
 class VendasListarViewsTestCase(BaseTestCase):
 
-    def test_list_orcamento_view_deletar_objeto(self):
+    def test_list_orcamento_venda_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = OrcamentoVenda.objects.create(cliente=cli)
         self.check_list_view_delete(url=reverse(
-            'vendas:listaorcamentovendaview'), object=obj)
+            'vendas:listaorcamentovendaview'), deleted_object=obj)
 
-    def test_list_orcamento_vencido_view_deletar_objeto(self):
+    def test_list_orcamento_venda_vencido_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = OrcamentoVenda.objects.create(
             cliente=cli, data_vencimento=datetime.now().date() - timedelta(days=1))
         self.check_list_view_delete(url=reverse(
-            'vendas:listaorcamentovendavencidoview'), object=obj)
+            'vendas:listaorcamentovendavencidoview'), deleted_object=obj)
 
-    def test_list_orcamento_vence_hoje_view_deletar_objeto(self):
+    def test_list_orcamento_venda_vence_hoje_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = OrcamentoVenda.objects.create(
             cliente=cli, data_vencimento=datetime.now().date())
         self.check_list_view_delete(url=reverse(
-            'vendas:listaorcamentovendahojeview'), object=obj)
+            'vendas:listaorcamentovendahojeview'), deleted_object=obj)
 
-    def test_list_pedido_view_deletar_objeto(self):
+    def test_list_pedido_venda_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = PedidoVenda.objects.create(cliente=cli)
         self.check_list_view_delete(url=reverse(
-            'vendas:listapedidovendaview'), object=obj)
+            'vendas:listapedidovendaview'), deleted_object=obj)
 
-    def test_list_pedido_atrasado_view_deletar_objeto(self):
+    def test_list_pedido_venda_atrasado_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = PedidoVenda.objects.create(
             cliente=cli, data_entrega=datetime.now().date() - timedelta(days=1))
         self.check_list_view_delete(url=reverse(
-            'vendas:listapedidovendaatrasadosview'), object=obj)
+            'vendas:listapedidovendaatrasadosview'), deleted_object=obj)
 
-    def test_list_pedido_entrega_hoje_view_deletar_objeto(self):
+    def test_list_pedido_venda_entrega_hoje_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = PedidoVenda.objects.create(
             cliente=cli, data_entrega=datetime.now().date())
         self.check_list_view_delete(url=reverse(
-            'vendas:listapedidovendahojeview'), object=obj)
+            'vendas:listapedidovendahojeview'), deleted_object=obj)
 
     def test_list_condicao_pagamento_view_deletar_objeto(self):
         obj = CondicaoPagamento.objects.create(n_parcelas=6)
         self.check_list_view_delete(url=reverse(
-            'vendas:listacondicaopagamentoview'), object=obj)
+            'vendas:listacondicaopagamentoview'), deleted_object=obj)
 
 
 class VendasEditarViewsTestCase(BaseTestCase):

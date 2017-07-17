@@ -174,11 +174,11 @@ class CadastroListarViewsTestCase(BaseTestCase):
 
             model_class = eval(m.title())
             obj = model_class.objects.create()
-            self.check_list_view_delete(url=url, object=obj)
+            self.check_list_view_delete(url=url, deleted_object=obj)
 
         url = reverse('cadastro:listaprodutosbaixoestoqueview')
         obj = Produto.objects.create()
-        self.check_list_view_delete(url=url, object=obj)
+        self.check_list_view_delete(url=url, deleted_object=obj)
 
 
 class CadastroEditarViewsTestCase(BaseTestCase):

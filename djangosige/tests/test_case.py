@@ -23,19 +23,19 @@ class BaseTestCase(TestCase):
 
         self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
 
-    def check_list_view_delete(self, url, object):
+    def check_list_view_delete(self, url, deleted_object):
         # Testar GET request lista
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(object in response.context['object_list'])
+        self.assertTrue(deleted_object in response.context['object_list'])
 
         # Deletar objeto criado por POST request
         data = {
-            object.pk: 'on',
+            deleted_object.pk: 'on',
         }
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertFalse(object in response.context['object_list'])
+        self.assertFalse(deleted_object in response.context['object_list'])
 
     def check_json_response(self, url, post_data, obj_pk, model):
         response = self.client.post(url, post_data, follow=True)

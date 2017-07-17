@@ -602,7 +602,7 @@ class GerarPedidoVendaView(View):
 class CancelarVendaView(View):
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
-        
+
         if PedidoVenda.objects.filter(id=venda_id).exists():
             instance = PedidoVenda.objects.get(id=venda_id)
             redirect_url = 'vendas:editarpedidovendaview'
