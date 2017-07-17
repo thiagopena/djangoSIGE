@@ -85,6 +85,7 @@ class EditarCondicaoPagamentoView(UpdateView):
 
 
 class InfoCondicaoPagamento(View):
+
     def post(self, request, *args, **kwargs):
         pag = CondicaoPagamento.objects.get(pk=request.POST['pagamentoId'])
         data = serializers.serialize('json', [pag, ], fields=(

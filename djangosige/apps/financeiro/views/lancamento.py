@@ -18,6 +18,7 @@ from djangosige.apps.estoque.models import SaidaEstoque, ItensMovimento, Produto
 
 
 class MovimentoCaixaMixin(object):
+
     def adicionar_novo_movimento_caixa(self, lancamento, novo_movimento):
         if isinstance(lancamento, Entrada):
             novo_movimento.entradas = novo_movimento.entradas + lancamento.valor_liquido
@@ -92,6 +93,7 @@ class MovimentoCaixaMixin(object):
 
 
 class AdicionarLancamentoBaseView(CreateView, MovimentoCaixaMixin):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
 
@@ -211,6 +213,7 @@ class AdicionarSaidaView(AdicionarLancamentoBaseView):
 
 
 class EditarLancamentoBaseView(UpdateView, MovimentoCaixaMixin):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
 
@@ -261,7 +264,8 @@ class EditarLancamentoBaseView(UpdateView, MovimentoCaixaMixin):
                             self.adicionar_valor_movimento_caixa(
                                 self.object, self.object.movimento_caixa, variacao_valor)
 
-                        # Caso tenha mudado a data, criar outro objeto e checar se o antigo pode ser deletado
+                        # Caso tenha mudado a data, criar outro objeto e checar
+                        # se o antigo pode ser deletado
                         else:
                             self.remover_valor_movimento_caixa(
                                 self.object, self.object.movimento_caixa, vliquido_previo)
@@ -388,6 +392,7 @@ class EditarSaidaView(EditarLancamentoBaseView):
 
 
 class LancamentoListBaseView(ListView, MovimentoCaixaMixin):
+
     def get_queryset(self, object, status):
         return object.objects.filter(status__in=status)
 
@@ -586,6 +591,7 @@ class SaidaListView(LancamentoListBaseView):
 
 
 class GerarLancamentoView(View, MovimentoCaixaMixin):
+
     def post(self, request, *args, **kwargs):
         conta_id = request.POST['contaId']
         data = {}
@@ -642,6 +648,7 @@ class GerarLancamentoView(View, MovimentoCaixaMixin):
 
 
 class FaturarPedidoVendaView(View, MovimentoCaixaMixin):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
 
@@ -753,6 +760,7 @@ class FaturarPedidoVendaView(View, MovimentoCaixaMixin):
 
 
 class FaturarPedidoCompraView(View, MovimentoCaixaMixin):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
 

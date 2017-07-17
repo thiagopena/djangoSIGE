@@ -7,6 +7,7 @@ from djangosige.apps.cadastro.models import Cliente
 
 
 class ClienteForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(ClienteForm, self).__init__(*args, **kwargs)

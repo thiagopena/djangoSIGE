@@ -68,6 +68,7 @@ class ProdutoForm(forms.ModelForm):
 
 
 class CategoriaForm(forms.ModelForm):
+
     class Meta:
         model = Categoria
         fields = ('categoria_desc',)
@@ -80,6 +81,7 @@ class CategoriaForm(forms.ModelForm):
 
 
 class MarcaForm(forms.ModelForm):
+
     class Meta:
         model = Marca
         fields = ('marca_desc',)
@@ -92,6 +94,7 @@ class MarcaForm(forms.ModelForm):
 
 
 class UnidadeForm(forms.ModelForm):
+
     class Meta:
         model = Unidade
         fields = ('sigla_unidade', 'unidade_desc',)

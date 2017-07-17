@@ -82,6 +82,7 @@ class EditarFornecedorView(EditarPessoaView):
 
 
 class InfoFornecedor(View):
+
     def post(self, request, *args, **kwargs):
         obj_list = []
         pessoa = Pessoa.objects.get(pk=request.POST['pessoaId'])

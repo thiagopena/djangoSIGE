@@ -85,7 +85,8 @@ class AdicionarProdutoView(CreateView):
                 prod_estocado.local = mov_inicial.local_dest
                 prod_estocado.quantidade = form.cleaned_data['estoque_inicial']
 
-                self.object.estoque_atual = form.cleaned_data['estoque_inicial']
+                self.object.estoque_atual = form.cleaned_data[
+                    'estoque_inicial']
                 self.object.save()
                 mov_inicial.save()
 

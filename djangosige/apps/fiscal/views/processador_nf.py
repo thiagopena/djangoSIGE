@@ -20,6 +20,7 @@ from ssl import SSLError
 
 
 class ProcessadorNotaFiscal(object):
+
     def __init__(self):
         self.conf_nfe = None
         self.nova_nfe = None
@@ -222,7 +223,8 @@ class ProcessadorNotaFiscal(object):
                             # elif icms_obj.cst == '41r':
                             #    det.imposto.ICMS.repasse      = True
 
-                    # ICMSUFDest (vendas interestaduais para consumidor final nao contribuinte)
+                    # ICMSUFDest (vendas interestaduais para consumidor final
+                    # nao contribuinte)
                     icms_dest = item.produto.grupo_fiscal.icms_dest_padrao.get()
                     if icms_dest.p_fcp_dest or icms_dest.p_icms_dest or icms_dest.p_icms_inter or icms_dest.p_icms_inter_part:
                         det.imposto.ICMSUFDest.vBCUFDest.valor = item.vbc_uf_dest
@@ -1290,7 +1292,8 @@ class ProcessadorNotaFiscal(object):
                                 self.salvar_mensagem(
                                     message=e.descricao, erro=True)
 
-                            # Resultado do processamento (provavelmente nao ocorre)
+                            # Resultado do processamento (provavelmente nao
+                            # ocorre)
                             elif proc.protNFe.infProt.cStat.valor < u'200':
                                 nota_obj.chave = proc.NFe.chave
 
@@ -1401,7 +1404,8 @@ class ProcessadorNotaFiscal(object):
                     if len(processo.resposta.retEvento):
                         ret = processo.resposta.retEvento[0]
 
-                        # Cancelamento de NF-e homologado / Evento registrado e vinculado a NF-e
+                        # Cancelamento de NF-e homologado / Evento registrado e
+                        # vinculado a NF-e
                         if ret.infEvento.cStat.valor == u'101' or ret.infEvento.cStat.valor == u'135':
                             nota_obj.status_nfe = u'8'
                             nota_obj.numero_protocolo = ret.infEvento.nProt.valor

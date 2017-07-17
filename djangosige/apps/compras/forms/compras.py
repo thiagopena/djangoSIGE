@@ -8,6 +8,7 @@ from djangosige.apps.compras.models import OrcamentoCompra, PedidoCompra, ItensC
 
 
 class CompraForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super(CompraForm, self).__init__(*args, **kwargs)
         self.fields['status'].initial = '0'
@@ -75,6 +76,7 @@ class CompraForm(forms.ModelForm):
 
 
 class OrcamentoCompraForm(CompraForm):
+
     class Meta(CompraForm.Meta):
         model = OrcamentoCompra
         fields = CompraForm.Meta.fields + ('data_vencimento', 'status',)
@@ -89,6 +91,7 @@ class OrcamentoCompraForm(CompraForm):
 
 
 class PedidoCompraForm(CompraForm):
+
     class Meta(CompraForm.Meta):
         model = PedidoCompra
         fields = CompraForm.Meta.fields + \

@@ -9,6 +9,7 @@ from djangosige.apps.cadastro.models import Produto
 
 
 class MovimentoForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super(MovimentoForm, self).__init__(*args, **kwargs)
         self.fields['quantidade_itens'].localize = True
@@ -31,6 +32,7 @@ class MovimentoForm(forms.ModelForm):
 
 
 class EntradaEstoqueForm(MovimentoForm):
+
     def __init__(self, *args, **kwargs):
         super(EntradaEstoqueForm, self).__init__(*args, **kwargs)
 
@@ -54,6 +56,7 @@ class EntradaEstoqueForm(MovimentoForm):
 
 
 class SaidaEstoqueForm(MovimentoForm):
+
     def __init__(self, *args, **kwargs):
         super(SaidaEstoqueForm, self).__init__(*args, **kwargs)
 
@@ -74,6 +77,7 @@ class SaidaEstoqueForm(MovimentoForm):
 
 
 class TransferenciaEstoqueForm(MovimentoForm):
+
     def __init__(self, *args, **kwargs):
         super(TransferenciaEstoqueForm, self).__init__(*args, **kwargs)
 

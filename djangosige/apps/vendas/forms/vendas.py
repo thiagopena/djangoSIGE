@@ -83,6 +83,7 @@ class VendaForm(forms.ModelForm):
 
 
 class OrcamentoVendaForm(VendaForm):
+
     class Meta(VendaForm.Meta):
         model = OrcamentoVenda
         fields = VendaForm.Meta.fields + ('data_vencimento', 'status',)
@@ -97,6 +98,7 @@ class OrcamentoVendaForm(VendaForm):
 
 
 class PedidoVendaForm(VendaForm):
+
     class Meta(VendaForm.Meta):
         model = PedidoVenda
         fields = VendaForm.Meta.fields + \

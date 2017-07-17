@@ -24,6 +24,7 @@ TP_MANIFESTO_OPCOES = (
 
 
 class NotaFiscalForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super(NotaFiscalForm, self).__init__(*args, **kwargs)
         self.fields['dhemi'].input_formats = ('%d/%m/%Y %H:%M',)
@@ -79,6 +80,7 @@ class NotaFiscalForm(forms.ModelForm):
 
 
 class NotaFiscalSaidaForm(NotaFiscalForm):
+
     def __init__(self, *args, **kwargs):
         super(NotaFiscalSaidaForm, self).__init__(*args, **kwargs)
         self.fields['v_orig'].localize = True
@@ -123,6 +125,7 @@ class NotaFiscalSaidaForm(NotaFiscalForm):
 
 
 class NotaFiscalEntradaForm(NotaFiscalForm):
+
     class Meta(NotaFiscalForm.Meta):
         model = NotaFiscalEntrada
         fields = NotaFiscalForm.Meta.fields + \
@@ -141,6 +144,7 @@ class NotaFiscalEntradaForm(NotaFiscalForm):
 
 
 class EmissaoNotaFiscalForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super(EmissaoNotaFiscalForm, self).__init__(*args, **kwargs)
         self.fields['dhemi'].input_formats = ('%d/%m/%Y %H:%M',)
@@ -169,6 +173,7 @@ class EmissaoNotaFiscalForm(forms.ModelForm):
 
 
 class CancelamentoNotaFiscalForm(forms.ModelForm):
+
     class Meta:
         model = NotaFiscalSaida
         fields = ('just_canc', 'chave',
@@ -260,6 +265,7 @@ class ManifestacaoDestinatarioForm(forms.Form):
 
 
 class AutXMLForm(forms.ModelForm):
+
     class Meta:
         model = AutXML
         fields = ('cpf_cnpj',)
@@ -272,6 +278,7 @@ class AutXMLForm(forms.ModelForm):
 
 
 class ConfiguracaoNotaFiscalForm(forms.ModelForm):
+
     class Meta:
         model = ConfiguracaoNotaFiscal
         fields = ('serie_atual', 'ambiente', 'imp_danfe', 'arquivo_certificado_a1',

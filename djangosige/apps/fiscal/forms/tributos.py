@@ -8,6 +8,7 @@ from djangosige.apps.fiscal.models import GrupoFiscal, ICMS, ICMSSN, ICMSUFDest,
 
 
 class GrupoFiscalForm(forms.ModelForm):
+
     class Meta:
         model = GrupoFiscal
         fields = ('descricao', 'regime_trib',)
@@ -22,6 +23,7 @@ class GrupoFiscalForm(forms.ModelForm):
 
 
 class ICMSForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
             grupo_fiscal = kwargs.pop('grupo_fiscal')
@@ -80,6 +82,7 @@ class ICMSForm(forms.ModelForm):
 
 
 class ICMSSNForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
             grupo_fiscal = kwargs.pop('grupo_fiscal')
@@ -131,6 +134,7 @@ class ICMSSNForm(forms.ModelForm):
 
 
 class ICMSUFDestForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
             grupo_fiscal = kwargs.pop('grupo_fiscal')
@@ -164,6 +168,7 @@ class ICMSUFDestForm(forms.ModelForm):
 
 
 class IPIForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
             grupo_fiscal = kwargs.pop('grupo_fiscal')
@@ -206,6 +211,7 @@ class IPIForm(forms.ModelForm):
 
 
 class PISForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
             grupo_fiscal = kwargs.pop('grupo_fiscal')
@@ -233,6 +239,7 @@ class PISForm(forms.ModelForm):
 
 
 class COFINSForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         if 'grupo_fiscal' in kwargs:
             grupo_fiscal = kwargs.pop('grupo_fiscal')

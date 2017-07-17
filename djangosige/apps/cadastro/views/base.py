@@ -11,6 +11,7 @@ from djangosige.apps.cadastro.models import PessoaFisica, PessoaJuridica, Endere
 
 
 class AdicionarPessoaView(CreateView):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, nome_razao_social=self.object.nome_razao_social)
 
@@ -156,6 +157,7 @@ class AdicionarPessoaView(CreateView):
 
 
 class PessoasListView(ListView):
+
     def get_queryset(self, object):
         return object.objects.all()
 
@@ -169,6 +171,7 @@ class PessoasListView(ListView):
 
 
 class EditarPessoaView(UpdateView):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, nome_razao_social=self.object.nome_razao_social)
 

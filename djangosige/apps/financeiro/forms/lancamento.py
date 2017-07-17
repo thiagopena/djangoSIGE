@@ -11,6 +11,7 @@ from djangosige.apps.cadastro.models import MinhaEmpresa, Banco
 
 
 class LancamentoForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
         super(LancamentoForm, self).__init__(*args, **kwargs)
@@ -68,6 +69,7 @@ class LancamentoForm(forms.ModelForm):
 
 
 class EntradaForm(LancamentoForm):
+
     def __init__(self, *args, **kwargs):
         super(EntradaForm, self).__init__(*args, **kwargs)
         self.fields['status'].initial = '0'
@@ -91,6 +93,7 @@ class EntradaForm(LancamentoForm):
 
 
 class SaidaForm(LancamentoForm):
+
     def __init__(self, *args, **kwargs):
         super(SaidaForm, self).__init__(*args, **kwargs)
         self.fields['status'].initial = '0'
@@ -114,6 +117,7 @@ class SaidaForm(LancamentoForm):
 
 
 class ContaReceberForm(EntradaForm):
+
     def __init__(self, *args, **kwargs):
         super(ContaReceberForm, self).__init__(*args, **kwargs)
         self.fields['status'].choices = STATUS_CONTA_ENTRADA_ESCOLHAS
@@ -123,6 +127,7 @@ class ContaReceberForm(EntradaForm):
 
 
 class ContaPagarForm(SaidaForm):
+
     def __init__(self, *args, **kwargs):
         super(ContaPagarForm, self).__init__(*args, **kwargs)
         self.fields['status'].choices = STATUS_CONTA_SAIDA_ESCOLHAS

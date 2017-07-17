@@ -15,6 +15,7 @@ REPORT_FONT_BOLD = REPORT_FONT + '-Bold'
 
 
 class VendaReport(Report):
+
     def __init__(self, *args, **kargs):
         super(VendaReport, self).__init__(*args, **kargs)
         self.title = 'Relatorio de venda'
@@ -37,6 +38,7 @@ class VendaReport(Report):
 
 
 class TopoPagina(ReportBand):
+
     def __init__(self):
         super(TopoPagina, self).__init__()
         self.elements = []
@@ -91,6 +93,7 @@ class TopoPagina(ReportBand):
 
 
 class DadosCliente(ReportBand):
+
     def __init__(self):
         super(DadosCliente, self).__init__()
         self.ender_info = False
@@ -175,6 +178,7 @@ class DadosCliente(ReportBand):
 
 
 class BandaProdutos(ReportBand):
+
     def __init__(self):
         super(BandaProdutos, self).__init__()
         self.elements = []
@@ -183,12 +187,14 @@ class BandaProdutos(ReportBand):
 
 
 class DadosProdutos(SubReport):
+
     def __init__(self):
         super(DadosProdutos, self).__init__()
         self.get_queryset = lambda self, parent_object: ItensVenda.objects.filter(
             venda_id=parent_object) or []
 
     class band_header(ReportBand):
+
         def __init__(self):
             super(DadosProdutos.band_header, self).__init__()
             self.elements = []
@@ -241,6 +247,7 @@ class DadosProdutos(SubReport):
             self.height = 1.8 * cm
 
     class band_detail(ReportBand):
+
         def __init__(self):
             super(DadosProdutos.band_detail, self).__init__()
 
@@ -285,6 +292,7 @@ class DadosProdutos(SubReport):
 
 
 class TotaisVenda(ReportBand):
+
     def __init__(self):
         super(TotaisVenda, self).__init__()
         self.elements = []
@@ -390,6 +398,7 @@ class TotaisVenda(ReportBand):
 
 
 class BandaPagamento(ReportBand):
+
     def __init__(self):
         super(BandaPagamento, self).__init__()
         self.elements = []
@@ -418,12 +427,14 @@ class BandaPagamento(ReportBand):
 
 
 class DadosPagamento(SubReport):
+
     def __init__(self):
         super(DadosPagamento, self).__init__()
         self.get_queryset = lambda self, parent_object: Pagamento.objects.filter(
             venda_id=parent_object) or []
 
     class band_header(ReportBand):
+
         def __init__(self):
             super(DadosPagamento.band_header, self).__init__()
             self.elements = []
@@ -449,6 +460,7 @@ class DadosPagamento(SubReport):
             self.height = 2.7 * cm
 
     class band_detail(ReportBand):
+
         def __init__(self):
             super(DadosPagamento.band_detail, self).__init__()
 
@@ -475,6 +487,7 @@ class DadosPagamento(SubReport):
 
 
 class Observacoes(ReportBand):
+
     def __init__(self):
         super(Observacoes, self).__init__()
         self.elements = []
@@ -506,6 +519,7 @@ class Observacoes(ReportBand):
 
 
 class BandaFoot(ReportBand):
+
     def __init__(self):
         super(BandaFoot, self).__init__()
         self.ender_info = False

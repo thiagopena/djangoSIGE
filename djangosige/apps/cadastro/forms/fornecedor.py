@@ -7,6 +7,7 @@ from djangosige.apps.cadastro.models import Fornecedor
 
 
 class FornecedorForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(FornecedorForm, self).__init__(*args, **kwargs)

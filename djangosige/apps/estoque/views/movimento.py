@@ -16,6 +16,7 @@ from djangosige.apps.estoque.models import EntradaEstoque, SaidaEstoque, Transfe
 
 
 class MovimentoEstoqueMixin(object):
+
     def adicionar_novo_movimento_estoque(self, itens_mvmt_obj, pform, lista_produtos, lista_produtos_estocados):
         prod = itens_mvmt_obj.produto
         lista_produtos.append(prod)
@@ -67,6 +68,7 @@ class MovimentoEstoqueMixin(object):
 
 
 class AdicionarMovimentoEstoqueBaseView(CreateView, MovimentoEstoqueMixin):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, pk=self.object.pk)
 
@@ -178,6 +180,7 @@ class AdicionarTransferenciaEstoqueView(AdicionarMovimentoEstoqueBaseView):
 
 
 class MovimentoEstoqueBaseListView(ListView):
+
     def get_queryset(self, object):
         return object.objects.all()
 

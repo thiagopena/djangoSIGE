@@ -8,6 +8,7 @@ from djangosige.apps.compras.models import Compra, Pagamento
 
 
 class PagamentoForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super(PagamentoForm, self).__init__(*args, **kwargs)
         self.fields['valor_parcela'].localize = True

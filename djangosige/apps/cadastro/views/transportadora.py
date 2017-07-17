@@ -88,7 +88,7 @@ class EditarTransportadoraView(EditarPessoaView):
             instance=self.object, prefix='veiculo_form')
         if Veiculo.objects.filter(
                 transportadora_veiculo=self.object.pk).count():
-                veiculo_form.extra = 0
+            veiculo_form.extra = 0
 
         return super(
             EditarTransportadoraView, self).get(

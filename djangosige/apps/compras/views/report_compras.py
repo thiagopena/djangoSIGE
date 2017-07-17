@@ -9,6 +9,7 @@ from reportlab.lib.units import cm
 
 
 class CompraReport(VendaReport):
+
     def __init__(self, *args, **kargs):
         super(CompraReport, self).__init__(*args, **kargs)
         self.title = 'Relatorio de compra'
@@ -19,6 +20,7 @@ class CompraReport(VendaReport):
 
 
 class DadosFornecedor(ReportBand):
+
     def __init__(self):
         super(DadosFornecedor, self).__init__()
         self.ender_info = False
@@ -103,6 +105,7 @@ class DadosFornecedor(ReportBand):
 
 
 class DadosProdutosCompra(DadosProdutos):
+
     def __init__(self):
         super(DadosProdutosCompra, self).__init__()
         self.get_queryset = lambda self, parent_object: ItensCompra.objects.filter(
@@ -110,6 +113,7 @@ class DadosProdutosCompra(DadosProdutos):
 
 
 class DadosPagamentoCompra(DadosPagamento):
+
     def __init__(self):
         super(DadosPagamento, self).__init__()
         self.get_queryset = lambda self, parent_object: Pagamento.objects.filter(

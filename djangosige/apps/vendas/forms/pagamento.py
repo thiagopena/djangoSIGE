@@ -8,6 +8,7 @@ from djangosige.apps.vendas.models import Venda, Pagamento, CondicaoPagamento
 
 
 class PagamentoForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         super(PagamentoForm, self).__init__(*args, **kwargs)
         self.fields['valor_parcela'].localize = True
@@ -28,6 +29,7 @@ class PagamentoForm(forms.ModelForm):
 
 
 class CondicaoPagamentoForm(forms.ModelForm):
+
     class Meta:
         model = CondicaoPagamento
         fields = ('descricao', 'forma', 'n_parcelas',

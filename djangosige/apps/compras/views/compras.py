@@ -23,6 +23,7 @@ import json
 
 
 class AdicionarCompraView(CreateView):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
 
@@ -134,6 +135,7 @@ class AdicionarPedidoCompraView(AdicionarCompraView):
 
 
 class CompraListView(ListView):
+
     def get_queryset(self, object):
         return object.objects.all()
 
@@ -245,6 +247,7 @@ class PedidoCompraEntregaHojeListView(PedidoCompraListView):
 
 
 class EditarCompraView(UpdateView):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
 
@@ -374,6 +377,7 @@ class EditarPedidoCompraView(EditarCompraView):
 
 
 class InfoFornecedor(View):
+
     def post(self, request, *args, **kwargs):
         obj_list = []
         pessoa = Pessoa.objects.get(pk=request.POST['pessoaId'])
@@ -399,6 +403,7 @@ class InfoFornecedor(View):
 
 
 class InfoCompra(View):
+
     def post(self, request, *args, **kwargs):
         compra = PedidoCompra.objects.get(pk=request.POST['compraId'])
         itens_compra = compra.itens_compra.all()
@@ -443,7 +448,8 @@ class InfoCompra(View):
             itens_hidden_fields_dict = {}
             itens_editable_fields_dict = {}
             itens_fields_dict['produto_id'] = item.produto.id
-            itens_fields_dict['controlar_estoque'] = item.produto.controlar_estoque
+            itens_fields_dict[
+                'controlar_estoque'] = item.produto.controlar_estoque
             itens_fields_dict['produto'] = item.produto.descricao
             itens_hidden_fields_dict['codigo'] = item.produto.codigo
             itens_hidden_fields_dict['unidade'] = item.produto.get_sigla_unidade(
@@ -462,7 +468,8 @@ class InfoCompra(View):
             itens_hidden_fields_dict['vicms'] = item.format_valor_attr('vicms')
             itens_hidden_fields_dict['vipi'] = item.format_valor_attr('vipi')
 
-            itens_editable_fields_dict['editable_field_inf_ad_prod'] = item.inf_ad_prod
+            itens_editable_fields_dict[
+                'editable_field_inf_ad_prod'] = item.inf_ad_prod
 
             itens_compra_dict['fields'] = itens_fields_dict
             itens_compra_dict['hidden_fields'] = itens_hidden_fields_dict
@@ -477,7 +484,8 @@ class InfoCompra(View):
             pagamento_fields_dict = {}
             pagamento_fields_dict['id'] = pagamento.id
             pagamento_fields_dict['vencimento'] = pagamento.format_vencimento
-            pagamento_fields_dict['valor_parcela'] = pagamento.format_valor_parcela
+            pagamento_fields_dict[
+                'valor_parcela'] = pagamento.format_valor_parcela
 
             pagamento_dict['fields'] = pagamento_fields_dict
 
@@ -487,6 +495,7 @@ class InfoCompra(View):
 
 
 class GerarPedidoCompraView(View):
+
     def get(self, request, *args, **kwargs):
         orcamento_id = kwargs.get('pk', None)
         orcamento = OrcamentoCompra.objects.get(id=orcamento_id)
@@ -522,20 +531,25 @@ class GerarPedidoCompraView(View):
 
 
 class CancelarCompraView(View):
+
     def get(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
-        compra = None
-        try:
-            compra = PedidoCompra.objects.get(id=compra_id)
-        except PedidoCompra.DoesNotExist:
-            compra = OrcamentoCompra.objects.get(id=compra_id)
-        compra.status = '2'
-        compra.save()
 
-        return redirect(request.META.get('HTTP_REFERER'))
+        if PedidoCompra.objects.filter(id=compra_id).exists():
+            instance = PedidoCompra.objects.get(id=compra_id)
+            redirect_url = 'compras:editarpedidocompraview'
+        else:
+            instance = OrcamentoCompra.objects.get(id=compra_id)
+            redirect_url = 'compras:editarorcamentocompraview'
+
+        instance.status = '2'
+        instance.save()
+
+        return redirect(reverse_lazy(redirect_url, kwargs={'pk': instance.id}))
 
 
 class GerarCopiaCompraView(View):
+
     def get(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
         if PedidoCompra.objects.filter(id=compra_id).exists():
@@ -569,6 +583,7 @@ class GerarCopiaCompraView(View):
 
 
 class ReceberCompraView(View):
+
     def get(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
         pedido = PedidoCompra.objects.get(id=compra_id)
@@ -627,6 +642,7 @@ class ReceberCompraView(View):
 
 
 class GerarPDFCompra(View):
+
     def gerar_pdf(self, title, compra, user_id):
         resp = HttpResponse(content_type='application/pdf')
 
@@ -705,6 +721,7 @@ class GerarPDFCompra(View):
 
 
 class GerarPDFOrcamentoCompra(GerarPDFCompra):
+
     def get(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
 
@@ -718,6 +735,7 @@ class GerarPDFOrcamentoCompra(GerarPDFCompra):
 
 
 class GerarPDFPedidoCompra(GerarPDFCompra):
+
     def get(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
 

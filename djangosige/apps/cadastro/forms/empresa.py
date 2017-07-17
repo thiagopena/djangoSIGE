@@ -7,6 +7,7 @@ from djangosige.apps.cadastro.models import Empresa, MinhaEmpresa
 
 
 class EmpresaForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(EmpresaForm, self).__init__(*args, **kwargs)

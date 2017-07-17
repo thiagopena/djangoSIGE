@@ -8,6 +8,7 @@ from djangosige.apps.cadastro.models import Pessoa, Endereco, Telefone, Email, S
 
 
 class EnderecoForm(forms.ModelForm):
+
     class Meta:
         model = Endereco
         fields = ('tipo_endereco', 'logradouro', 'numero', 'bairro',
@@ -42,6 +43,7 @@ class EnderecoForm(forms.ModelForm):
 
 
 class TelefoneForm(forms.ModelForm):
+
     class Meta:
         model = Telefone
         fields = ('tipo_telefone', 'telefone',)
@@ -56,6 +58,7 @@ class TelefoneForm(forms.ModelForm):
 
 
 class EmailForm(forms.ModelForm):
+
     class Meta:
         model = Email
         fields = ('email',)
@@ -68,6 +71,7 @@ class EmailForm(forms.ModelForm):
 
 
 class SiteForm(forms.ModelForm):
+
     class Meta:
         model = Site
         fields = ('site',)
@@ -80,6 +84,7 @@ class SiteForm(forms.ModelForm):
 
 
 class BancoForm(forms.ModelForm):
+
     class Meta:
         model = Banco
         fields = ('banco', 'agencia', 'conta', 'digito',)
@@ -98,6 +103,7 @@ class BancoForm(forms.ModelForm):
 
 
 class DocumentoForm(forms.ModelForm):
+
     class Meta:
         model = Documento
         fields = ('tipo', 'documento',)

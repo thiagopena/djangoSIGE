@@ -8,6 +8,7 @@ from djangosige.apps.financeiro.models import PlanoContasGrupo, PlanoContasSubgr
 
 
 class PlanoContasGrupoForm(forms.ModelForm):
+
     class Meta:
         model = PlanoContasGrupo
         fields = ('tipo_grupo', 'descricao',)
@@ -22,6 +23,7 @@ class PlanoContasGrupoForm(forms.ModelForm):
 
 
 class PlanoContasSubgrupoForm(forms.ModelForm):
+
     class Meta:
         model = PlanoContasSubgrupo
         fields = ('descricao',)

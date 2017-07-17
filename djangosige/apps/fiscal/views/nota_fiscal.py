@@ -25,6 +25,7 @@ from datetime import datetime
 
 
 class NotaFiscalViewMixin(object):
+
     def atualizar_campos(self, post_data):
         values_dict = {}
         itens_id = []
@@ -55,6 +56,7 @@ class NotaFiscalViewMixin(object):
 
 
 class AdicionarNotaFiscalView(CreateView, NotaFiscalViewMixin):
+
     def get_context_data(self, **kwargs):
         context = super(AdicionarNotaFiscalView,
                         self).get_context_data(**kwargs)
@@ -160,6 +162,7 @@ class AdicionarNotaFiscalSaidaView(AdicionarNotaFiscalView):
 
 
 class NotaFiscalListView(ListView, NotaFiscalViewMixin):
+
     def get_context_data(self, **kwargs):
         context = super(NotaFiscalListView, self).get_context_data(**kwargs)
         return self.view_context(context)
@@ -203,7 +206,8 @@ class NotaFiscalEntradaListView(NotaFiscalListView):
     success_url = reverse_lazy('fiscal:listanotafiscalentradaview')
 
     def view_context(self, context):
-        context['title_complete'] = 'NOTAS FISCAIS DE FORNECEDORES (ENTRADA DE MATERIAL)'
+        context[
+            'title_complete'] = 'NOTAS FISCAIS DE FORNECEDORES (ENTRADA DE MATERIAL)'
         context['add_url'] = reverse_lazy('fiscal:addnotafiscalentradaview')
         context['importar_nota_url'] = reverse_lazy(
             'fiscal:importarnotafiscalentrada')
@@ -218,6 +222,7 @@ class NotaFiscalEntradaListView(NotaFiscalListView):
 
 
 class EditarNotaFiscalView(UpdateView, NotaFiscalViewMixin):
+
     def get_context_data(self, **kwargs):
         context = super(EditarNotaFiscalView, self).get_context_data(**kwargs)
         context['edit_nfe'] = True
@@ -341,6 +346,7 @@ class EditarNotaFiscalEntradaView(EditarNotaFiscalView):
 
 # Gerar nota fiscal a partir de um pedido de venda
 class GerarNotaFiscalSaidaView(View):
+
     def get(self, request, *args, **kwargs):
         pedido_id = kwargs.get('pk', None)
         pedido = PedidoVenda.objects.get(id=pedido_id)
@@ -437,6 +443,7 @@ class ConfiguracaoNotaFiscalView(TemplateView):
 
 
 class ValidarNotaView(View):
+
     def get(self, request, *args, **kwargs):
         processador_nota = ProcessadorNotaFiscal()
         nfe_id = kwargs.get('pk', None)
@@ -505,6 +512,7 @@ class EmitirNotaView(TemplateView):
 
 
 class GerarCopiaNotaView(View):
+
     def get(self, request, *args, **kwargs):
         nota_id = kwargs.get('pk', None)
 
@@ -539,6 +547,7 @@ class GerarCopiaNotaView(View):
 
 
 class ImportarNotaView(View):
+
     def post(self, request, *args, **kwargs):
         if len(request.FILES):
             processador_nota = ProcessadorNotaFiscal()
@@ -550,16 +559,19 @@ class ImportarNotaView(View):
         else:
             messages.error(request, 'Arquivo XML não selecionado.')
 
-        # return redirect(reverse_lazy('fiscal:editarnotafiscalview', kwargs={'pk':self.object.pk}))
+        # return redirect(reverse_lazy('fiscal:editarnotafiscalview',
+        # kwargs={'pk':self.object.pk}))
         return self.get_redirect_url()
 
 
 class ImportarNotaSaidaView(ImportarNotaView):
+
     def get_redirect_url(self):
         return redirect(reverse_lazy('fiscal:listanotafiscalsaidaview'))
 
 
 class ImportarNotaEntradaView(ImportarNotaView):
+
     def get_redirect_url(self):
         return redirect(reverse_lazy('fiscal:listanotafiscalentradaview'))
 
@@ -617,6 +629,7 @@ class CancelarNotaView(TemplateView):
 
 
 class GerarDanfeView(View):
+
     def get(self, request, *args, **kwargs):
         nota_id = kwargs.get('pk', None)
         nota_obj = NotaFiscalSaida.objects.get(pk=nota_id)
@@ -636,6 +649,7 @@ class GerarDanfeView(View):
 
 
 class GerarDanfceView(View):
+
     def get(self, request, *args, **kwargs):
         nota_id = kwargs.get('pk', None)
         nota_obj = NotaFiscalSaida.objects.get(pk=nota_id)

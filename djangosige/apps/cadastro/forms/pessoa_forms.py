@@ -7,6 +7,7 @@ from djangosige.apps.cadastro.models import PessoaJuridica, PessoaFisica
 
 
 class PessoaJuridicaForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         if 'instance' in kwargs:
             instance = kwargs.pop('instance')
@@ -40,6 +41,7 @@ class PessoaJuridicaForm(forms.ModelForm):
 
 
 class PessoaFisicaForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         if 'instance' in kwargs:
             instance = kwargs.pop('instance')

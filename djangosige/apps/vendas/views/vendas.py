@@ -24,6 +24,7 @@ from .report_vendas import VendaReport
 
 
 class AdicionarVendaView(CreateView):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
 
@@ -134,6 +135,7 @@ class AdicionarPedidoVendaView(AdicionarVendaView):
 
 
 class VendaListView(ListView):
+
     def get_queryset(self, object):
         return object.objects.all()
 
@@ -248,6 +250,7 @@ class PedidoVendaEntregaHojeListView(PedidoVendaAtrasadosListView):
 
 
 class EditarVendaView(UpdateView):
+
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
 
@@ -376,6 +379,7 @@ class EditarPedidoVendaView(EditarVendaView):
 
 
 class InfoCliente(View):
+
     def post(self, request, *args, **kwargs):
         obj_list = []
         pessoa = Pessoa.objects.get(pk=request.POST['pessoaId'])
@@ -401,6 +405,7 @@ class InfoCliente(View):
 
 
 class InfoTransportadora(View):
+
     def post(self, request, *args, **kwargs):
         veiculos = Transportadora.objects.get(
             pk=request.POST['transportadoraId']).veiculo.all()
@@ -411,6 +416,7 @@ class InfoTransportadora(View):
 
 
 class InfoProduto(View):
+
     def get(self, request, *args, **kwargs):
         try:
             data = serializers.serialize('json', Produto.objects.all())
@@ -449,6 +455,7 @@ class InfoProduto(View):
 
 
 class InfoVenda(View):
+
     def post(self, request, *args, **kwargs):
         venda = PedidoVenda.objects.get(pk=request.POST['vendaId'])
         itens_venda = venda.itens_venda.all()
@@ -473,7 +480,8 @@ class InfoVenda(View):
         pedido_fields_dict['ind_final'] = venda.ind_final
         pedido_fields_dict['forma_pag'] = venda.get_forma_pagamento()
         pedido_fields_dict['n_itens'] = str(len(itens_venda))
-        pedido_fields_dict['valor_total_produtos'] = venda.format_total_produtos()
+        pedido_fields_dict[
+            'valor_total_produtos'] = venda.format_total_produtos()
 
         if venda.cond_pagamento:
             pedido_fields_dict['n_parcelas'] = venda.cond_pagamento.n_parcelas
@@ -492,7 +500,8 @@ class InfoVenda(View):
             itens_hidden_fields_dict = {}
             itens_editable_fields_dict = {}
             itens_fields_dict['produto_id'] = item.produto.id
-            itens_fields_dict['controlar_estoque'] = item.produto.controlar_estoque
+            itens_fields_dict[
+                'controlar_estoque'] = item.produto.controlar_estoque
             itens_fields_dict['produto'] = item.produto.descricao
             itens_hidden_fields_dict['codigo'] = item.produto.codigo
             itens_hidden_fields_dict['unidade'] = item.produto.get_sigla_unidade(
@@ -540,7 +549,8 @@ class InfoVenda(View):
                 'vcofins')
             itens_editable_fields_dict['editable_field_vicms_deson'] = item.format_valor_attr(
                 'vicms_deson')
-            itens_editable_fields_dict['editable_field_inf_ad_prod'] = item.inf_ad_prod
+            itens_editable_fields_dict[
+                'editable_field_inf_ad_prod'] = item.inf_ad_prod
 
             itens_venda_dict['fields'] = itens_fields_dict
             itens_venda_dict['hidden_fields'] = itens_hidden_fields_dict
@@ -555,7 +565,8 @@ class InfoVenda(View):
             pagamento_fields_dict = {}
             pagamento_fields_dict['id'] = pagamento.id
             pagamento_fields_dict['vencimento'] = pagamento.format_vencimento
-            pagamento_fields_dict['valor_parcela'] = pagamento.format_valor_parcela
+            pagamento_fields_dict[
+                'valor_parcela'] = pagamento.format_valor_parcela
 
             pagamento_dict['fields'] = pagamento_fields_dict
 
@@ -565,6 +576,7 @@ class InfoVenda(View):
 
 
 class GerarPedidoVendaView(View):
+
     def get(self, request, *args, **kwargs):
         orcamento_id = kwargs.get('pk', None)
         orcamento = OrcamentoVenda.objects.get(id=orcamento_id)
@@ -600,6 +612,7 @@ class GerarPedidoVendaView(View):
 
 
 class CancelarVendaView(View):
+
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
 
@@ -617,6 +630,7 @@ class CancelarVendaView(View):
 
 
 class GerarCopiaVendaView(View):
+
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
         if PedidoVenda.objects.filter(id=venda_id).exists():
@@ -650,6 +664,7 @@ class GerarCopiaVendaView(View):
 
 
 class GerarPDFVenda(View):
+
     def gerar_pdf(self, title, venda, user_id):
         resp = HttpResponse(content_type='application/pdf')
 
@@ -729,6 +744,7 @@ class GerarPDFVenda(View):
 
 
 class GerarPDFOrcamentoVenda(GerarPDFVenda):
+
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
 
@@ -742,6 +758,7 @@ class GerarPDFOrcamentoVenda(GerarPDFVenda):
 
 
 class GerarPDFPedidoVenda(GerarPDFVenda):
+
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
 

@@ -8,6 +8,7 @@ from djangosige.apps.cadastro.models import Transportadora, Veiculo
 
 
 class TransportadoraForm(forms.ModelForm):
+
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
         super(TransportadoraForm, self).__init__(*args, **kwargs)
@@ -36,6 +37,7 @@ class TransportadoraForm(forms.ModelForm):
 
 
 class VeiculoForm(forms.ModelForm):
+
     class Meta:
         model = Veiculo
         fields = ('descricao', 'placa', 'uf',)

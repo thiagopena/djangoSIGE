@@ -7,6 +7,7 @@ from djangosige.apps.fiscal.models import NaturezaOperacao
 
 
 class NaturezaOperacaoForm(forms.ModelForm):
+
     class Meta:
         model = NaturezaOperacao
         fields = ('cfop', 'descricao', 'tp_operacao', 'id_dest',)
