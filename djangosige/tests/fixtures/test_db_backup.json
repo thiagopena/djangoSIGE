@@ -1,6 +1,14 @@
 [
     {
         "fields": {
+            "user": 1,
+            "user_foto": "imagens/user.png"
+        },
+        "model": "login.usuario",
+        "pk": 1
+    },
+    {
+        "fields": {
             "banco_padrao": null,
             "criado_por": 1,
             "data_criacao": "2017-07-04T16:37:25.555Z",
@@ -425,7 +433,7 @@
             "controlar_estoque": true,
             "custo": "50.00",
             "descricao": "Produto1",
-            "estoque_atual": "490.00",
+            "estoque_atual": "540.00",
             "estoque_minimo": "90.00",
             "grupo_fiscal": 1,
             "inf_adicionais": "",
@@ -674,10 +682,42 @@
     },
     {
         "fields": {
+            "local": 2,
+            "produto": 1,
+            "quantidade": "20.00"
+        },
+        "model": "estoque.produtoestocado",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "local": 3,
+            "produto": 1,
+            "quantidade": "30.00"
+        },
+        "model": "estoque.produtoestocado",
+        "pk": 4
+    },
+    {
+        "fields": {
             "descricao": "Estoque Padrão"
         },
         "model": "estoque.localestoque",
         "pk": 1
+    },
+    {
+        "fields": {
+            "descricao": "Local Estoque Teste1"
+        },
+        "model": "estoque.localestoque",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "descricao": "Local Estoque Teste2"
+        },
+        "model": "estoque.localestoque",
+        "pk": 3
     },
     {
         "fields": {
@@ -725,6 +765,28 @@
     },
     {
         "fields": {
+            "movimento_id": 4,
+            "produto": 1,
+            "quantidade": "50.00",
+            "subtotal": "6000.00",
+            "valor_unit": "120.00"
+        },
+        "model": "estoque.itensmovimento",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "movimento_id": 5,
+            "produto": 1,
+            "quantidade": "30.00",
+            "subtotal": "3600.00",
+            "valor_unit": "120.00"
+        },
+        "model": "estoque.itensmovimento",
+        "pk": 6
+    },
+    {
+        "fields": {
             "data_movimento": "2017-07-04",
             "observacoes": "",
             "quantidade_itens": 1,
@@ -755,6 +817,26 @@
     },
     {
         "fields": {
+            "data_movimento": "2017-07-20",
+            "observacoes": "",
+            "quantidade_itens": 1,
+            "valor_total": "6000.00"
+        },
+        "model": "estoque.movimentoestoque",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "data_movimento": "2017-07-20",
+            "observacoes": "",
+            "quantidade_itens": 1,
+            "valor_total": "3600.00"
+        },
+        "model": "estoque.movimentoestoque",
+        "pk": 5
+    },
+    {
+        "fields": {
             "fornecedor": 2,
             "local_dest": 1,
             "pedido_compra": null,
@@ -775,12 +857,652 @@
     },
     {
         "fields": {
+            "fornecedor": null,
+            "local_dest": 2,
+            "pedido_compra": null,
+            "tipo_movimento": "0"
+        },
+        "model": "estoque.entradaestoque",
+        "pk": 4
+    },
+    {
+        "fields": {
             "local_orig": 1,
             "pedido_venda": 3,
             "tipo_movimento": "1"
         },
         "model": "estoque.saidaestoque",
         "pk": 3
+    },
+    {
+        "fields": {
+            "local_estoque_dest": 3,
+            "local_estoque_orig": 2
+        },
+        "model": "estoque.transferenciaestoque",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "auto_calcular_impostos": true,
+            "desconto": "7.30",
+            "icms_incluido_preco": false,
+            "icmsst_incluido_preco": false,
+            "incluir_bc_icms": false,
+            "incluir_bc_icmsst": false,
+            "inf_ad_prod": null,
+            "ipi_incluido_preco": false,
+            "p_icms": "0.00",
+            "p_icmsst": "0.00",
+            "p_ipi": "7.00",
+            "produto": 1,
+            "quantidade": "2.00",
+            "subtotal": "240.00",
+            "tipo_desconto": "0",
+            "valor_rateio_despesas": "0.00",
+            "valor_rateio_frete": "0.00",
+            "valor_rateio_seguro": "0.00",
+            "valor_unit": "120.00",
+            "vbc_icms": "0.00",
+            "vbc_icms_st": "0.00",
+            "vbc_ipi": "240.00",
+            "vcofins": "9.31",
+            "venda_id": 1,
+            "vfcp": "0.00",
+            "vicms": "0.00",
+            "vicms_deson": null,
+            "vicms_st": "0.00",
+            "vicmsufdest": "0.00",
+            "vicmsufremet": "0.00",
+            "vipi": "16.80",
+            "vpis": "1.51",
+            "vq_bccofins": "232.70",
+            "vq_bcpis": "232.70"
+        },
+        "model": "vendas.itensvenda",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "auto_calcular_impostos": true,
+            "desconto": "2.70",
+            "icms_incluido_preco": false,
+            "icmsst_incluido_preco": false,
+            "incluir_bc_icms": false,
+            "incluir_bc_icmsst": false,
+            "inf_ad_prod": null,
+            "ipi_incluido_preco": false,
+            "p_icms": "18.00",
+            "p_icmsst": "0.00",
+            "p_ipi": "0.00",
+            "produto": 2,
+            "quantidade": "3.00",
+            "subtotal": "42.30",
+            "tipo_desconto": "0",
+            "valor_rateio_despesas": "0.00",
+            "valor_rateio_frete": "0.00",
+            "valor_rateio_seguro": "0.00",
+            "valor_unit": "15.00",
+            "vbc_icms": "42.30",
+            "vbc_icms_st": "0.00",
+            "vbc_ipi": "0.00",
+            "vcofins": "1.58",
+            "venda_id": 1,
+            "vfcp": "0.00",
+            "vicms": "7.61",
+            "vicms_deson": null,
+            "vicms_st": "0.00",
+            "vicmsufdest": "0.00",
+            "vicmsufremet": "0.00",
+            "vipi": "21.00",
+            "vpis": "0.26",
+            "vq_bccofins": "39.60",
+            "vq_bcpis": "39.60"
+        },
+        "model": "vendas.itensvenda",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "auto_calcular_impostos": true,
+            "desconto": "100.00",
+            "icms_incluido_preco": false,
+            "icmsst_incluido_preco": false,
+            "incluir_bc_icms": false,
+            "incluir_bc_icmsst": false,
+            "inf_ad_prod": null,
+            "ipi_incluido_preco": false,
+            "p_icms": "0.00",
+            "p_icmsst": "0.00",
+            "p_ipi": "7.00",
+            "produto": 1,
+            "quantidade": "30.00",
+            "subtotal": "3500.00",
+            "tipo_desconto": "0",
+            "valor_rateio_despesas": "0.00",
+            "valor_rateio_frete": "0.00",
+            "valor_rateio_seguro": "0.00",
+            "valor_unit": "120.00",
+            "vbc_icms": "0.00",
+            "vbc_icms_st": "0.00",
+            "vbc_ipi": "3600.00",
+            "vcofins": "136.00",
+            "venda_id": 2,
+            "vfcp": "0.00",
+            "vicms": "0.00",
+            "vicms_deson": null,
+            "vicms_st": "0.00",
+            "vicmsufdest": "0.00",
+            "vicmsufremet": "0.00",
+            "vipi": "252.00",
+            "vpis": "22.10",
+            "vq_bccofins": "3400.00",
+            "vq_bcpis": "3400.00"
+        },
+        "model": "vendas.itensvenda",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "auto_calcular_impostos": true,
+            "desconto": "0.00",
+            "icms_incluido_preco": false,
+            "icmsst_incluido_preco": false,
+            "incluir_bc_icms": false,
+            "incluir_bc_icmsst": false,
+            "inf_ad_prod": null,
+            "ipi_incluido_preco": false,
+            "p_icms": "0.00",
+            "p_icmsst": "0.00",
+            "p_ipi": "7.00",
+            "produto": 1,
+            "quantidade": "10.00",
+            "subtotal": "1200.00",
+            "tipo_desconto": "0",
+            "valor_rateio_despesas": "0.00",
+            "valor_rateio_frete": "0.00",
+            "valor_rateio_seguro": "0.00",
+            "valor_unit": "120.00",
+            "vbc_icms": "0.00",
+            "vbc_icms_st": "0.00",
+            "vbc_ipi": "1200.00",
+            "vcofins": "48.00",
+            "venda_id": 3,
+            "vfcp": "0.00",
+            "vicms": "0.00",
+            "vicms_deson": null,
+            "vicms_st": "0.00",
+            "vicmsufdest": "0.00",
+            "vicmsufremet": "0.00",
+            "vipi": "84.00",
+            "vpis": "7.80",
+            "vq_bccofins": "1200.00",
+            "vq_bcpis": "1200.00"
+        },
+        "model": "vendas.itensvenda",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "auto_calcular_impostos": true,
+            "desconto": "0.00",
+            "icms_incluido_preco": false,
+            "icmsst_incluido_preco": false,
+            "incluir_bc_icms": false,
+            "incluir_bc_icmsst": false,
+            "inf_ad_prod": null,
+            "ipi_incluido_preco": false,
+            "p_icms": "18.00",
+            "p_icmsst": "0.00",
+            "p_ipi": "0.00",
+            "produto": 2,
+            "quantidade": "20.00",
+            "subtotal": "300.00",
+            "tipo_desconto": "0",
+            "valor_rateio_despesas": "0.00",
+            "valor_rateio_frete": "0.00",
+            "valor_rateio_seguro": "0.00",
+            "valor_unit": "15.00",
+            "vbc_icms": "300.00",
+            "vbc_icms_st": "0.00",
+            "vbc_ipi": "0.00",
+            "vcofins": "12.00",
+            "venda_id": 3,
+            "vfcp": "0.00",
+            "vicms": "54.00",
+            "vicms_deson": null,
+            "vicms_st": "0.00",
+            "vicmsufdest": "0.00",
+            "vicmsufremet": "0.00",
+            "vipi": "140.00",
+            "vpis": "1.95",
+            "vq_bccofins": "300.00",
+            "vq_bcpis": "300.00"
+        },
+        "model": "vendas.itensvenda",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "cliente": 5,
+            "cond_pagamento": 3,
+            "data_emissao": "2017-07-04",
+            "desconto": "10.0000",
+            "despesas": "0.00",
+            "frete": "0.00",
+            "impostos": "45.41",
+            "ind_final": false,
+            "local_orig": 1,
+            "mod_frete": "9",
+            "movimentar_estoque": true,
+            "observacoes": "",
+            "seguro": "0.00",
+            "tipo_desconto": "0",
+            "transportadora": 4,
+            "valor_total": "320.41",
+            "veiculo": 1,
+            "vendedor": "erp1"
+        },
+        "model": "vendas.venda",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "cliente": 1,
+            "cond_pagamento": 2,
+            "data_emissao": "2017-07-04",
+            "desconto": "100.0000",
+            "despesas": "0.00",
+            "frete": "0.00",
+            "impostos": "252.00",
+            "ind_final": false,
+            "local_orig": 1,
+            "mod_frete": "9",
+            "movimentar_estoque": true,
+            "observacoes": "",
+            "seguro": "0.00",
+            "tipo_desconto": "0",
+            "transportadora": 4,
+            "valor_total": "3752.00",
+            "veiculo": 1,
+            "vendedor": "erp1"
+        },
+        "model": "vendas.venda",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "cliente": 1,
+            "cond_pagamento": 1,
+            "data_emissao": "2017-07-04",
+            "desconto": "0.0000",
+            "despesas": "0.00",
+            "frete": "0.00",
+            "impostos": "278.00",
+            "ind_final": false,
+            "local_orig": 1,
+            "mod_frete": "9",
+            "movimentar_estoque": true,
+            "observacoes": "",
+            "seguro": "0.00",
+            "tipo_desconto": "0",
+            "transportadora": 4,
+            "valor_total": "1778.00",
+            "veiculo": 1,
+            "vendedor": "erp1"
+        },
+        "model": "vendas.venda",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "data_vencimento": "2017-07-31",
+            "status": "0"
+        },
+        "model": "vendas.orcamentovenda",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "data_entrega": "2017-07-04",
+            "orcamento": null,
+            "status": "0"
+        },
+        "model": "vendas.pedidovenda",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "data_entrega": "2017-07-05",
+            "orcamento": null,
+            "status": "1"
+        },
+        "model": "vendas.pedidovenda",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "indice_parcela": 1,
+            "valor_parcela": "320.41",
+            "vencimento": "2017-07-04",
+            "venda_id": 1
+        },
+        "model": "vendas.pagamento",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "indice_parcela": 1,
+            "valor_parcela": "938.00",
+            "vencimento": "2017-08-03",
+            "venda_id": 2
+        },
+        "model": "vendas.pagamento",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "indice_parcela": 2,
+            "valor_parcela": "938.00",
+            "vencimento": "2017-09-02",
+            "venda_id": 2
+        },
+        "model": "vendas.pagamento",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "indice_parcela": 3,
+            "valor_parcela": "938.00",
+            "vencimento": "2017-10-02",
+            "venda_id": 2
+        },
+        "model": "vendas.pagamento",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "indice_parcela": 4,
+            "valor_parcela": "938.00",
+            "vencimento": "2017-11-01",
+            "venda_id": 2
+        },
+        "model": "vendas.pagamento",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "indice_parcela": 1,
+            "valor_parcela": "355.60",
+            "vencimento": "2017-08-03",
+            "venda_id": 3
+        },
+        "model": "vendas.pagamento",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "indice_parcela": 2,
+            "valor_parcela": "355.60",
+            "vencimento": "2017-09-02",
+            "venda_id": 3
+        },
+        "model": "vendas.pagamento",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "indice_parcela": 3,
+            "valor_parcela": "355.60",
+            "vencimento": "2017-10-02",
+            "venda_id": 3
+        },
+        "model": "vendas.pagamento",
+        "pk": 8
+    },
+    {
+        "fields": {
+            "indice_parcela": 4,
+            "valor_parcela": "355.60",
+            "vencimento": "2017-11-01",
+            "venda_id": 3
+        },
+        "model": "vendas.pagamento",
+        "pk": 9
+    },
+    {
+        "fields": {
+            "indice_parcela": 5,
+            "valor_parcela": "355.60",
+            "vencimento": "2017-12-01",
+            "venda_id": 3
+        },
+        "model": "vendas.pagamento",
+        "pk": 10
+    },
+    {
+        "fields": {
+            "descricao": "Entrada + 4x s/ juros",
+            "dias_recorrencia": 30,
+            "forma": "03",
+            "n_parcelas": 5,
+            "parcela_inicial": 0
+        },
+        "model": "vendas.condicaopagamento",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "descricao": "Entrada + 3x s/ juros",
+            "dias_recorrencia": 30,
+            "forma": "03",
+            "n_parcelas": 4,
+            "parcela_inicial": 0
+        },
+        "model": "vendas.condicaopagamento",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "descricao": "À Vista",
+            "dias_recorrencia": 0,
+            "forma": "01",
+            "n_parcelas": 1,
+            "parcela_inicial": 0
+        },
+        "model": "vendas.condicaopagamento",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "cfop": "5102",
+            "descricao": "Venda de mercadoria adquirida ou recebida de terceiros",
+            "id_dest": "1",
+            "tp_operacao": "1"
+        },
+        "model": "fiscal.naturezaoperacao",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "cfop": "5405",
+            "descricao": "Venda de mercadoria, adquirida ou recebida de terceiros, sujeita a ST, na condição de contribuinte-substituído",
+            "id_dest": "1",
+            "tp_operacao": "1"
+        },
+        "model": "fiscal.naturezaoperacao",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "cfop": "5202",
+            "descricao": "Devolução de compra p/ comercialização",
+            "id_dest": "1",
+            "tp_operacao": "1"
+        },
+        "model": "fiscal.naturezaoperacao",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "cfop": "5411",
+            "descricao": "Devolução de compra p/ comercialização em operação com mercadoria sujeita a ST",
+            "id_dest": null,
+            "tp_operacao": "1"
+        },
+        "model": "fiscal.naturezaoperacao",
+        "pk": 4
+    },
+    {
+        "fields": {
+            "descricao": "Grupo1 (Simples Nacional): ICMS, IPI, COFINS, PIS",
+            "regime_trib": "1"
+        },
+        "model": "fiscal.grupofiscal",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "descricao": "Grupo2 (Normal): ICMS, IPI (fixo), PIS, COFINS",
+            "regime_trib": "0"
+        },
+        "model": "fiscal.grupofiscal",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "cst": "00",
+            "grupo_fiscal": 2,
+            "icms_incluido_preco": false,
+            "icmsst_incluido_preco": false,
+            "mod_bc": "3",
+            "mod_bcst": "4",
+            "mot_des_icms": null,
+            "p_bc_op": null,
+            "p_dif": null,
+            "p_icms": "18.00",
+            "p_icmsst": null,
+            "p_mvast": null,
+            "p_red_bc": null,
+            "p_red_bcst": null,
+            "ufst": null
+        },
+        "model": "fiscal.icms",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "grupo_fiscal": 1,
+            "p_fcp_dest": null,
+            "p_icms_dest": null,
+            "p_icms_inter": null,
+            "p_icms_inter_part": null
+        },
+        "model": "fiscal.icmsufdest",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "grupo_fiscal": 2,
+            "p_fcp_dest": null,
+            "p_icms_dest": null,
+            "p_icms_inter": null,
+            "p_icms_inter_part": null
+        },
+        "model": "fiscal.icmsufdest",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "csosn": "101",
+            "grupo_fiscal": 1,
+            "icmssn_incluido_preco": false,
+            "icmssnst_incluido_preco": false,
+            "mod_bc": "3",
+            "mod_bcst": "4",
+            "p_cred_sn": "18.00",
+            "p_icms": null,
+            "p_icmsst": null,
+            "p_mvast": null,
+            "p_red_bc": null,
+            "p_red_bcst": null
+        },
+        "model": "fiscal.icmssn",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "c_enq": "",
+            "cl_enq": "",
+            "cnpj_prod": "",
+            "cst": "00",
+            "grupo_fiscal": 1,
+            "incluir_bc_icms": false,
+            "incluir_bc_icmsst": false,
+            "ipi_incluido_preco": false,
+            "p_ipi": "7.00",
+            "tipo_ipi": "2",
+            "valor_fixo": null
+        },
+        "model": "fiscal.ipi",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "c_enq": "",
+            "cl_enq": "",
+            "cnpj_prod": "",
+            "cst": "50",
+            "grupo_fiscal": 2,
+            "incluir_bc_icms": false,
+            "incluir_bc_icmsst": false,
+            "ipi_incluido_preco": false,
+            "p_ipi": null,
+            "tipo_ipi": "1",
+            "valor_fixo": "7.00"
+        },
+        "model": "fiscal.ipi",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "cst": "01",
+            "grupo_fiscal": 1,
+            "p_pis": "0.65",
+            "valiq_pis": null
+        },
+        "model": "fiscal.pis",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "cst": "01",
+            "grupo_fiscal": 2,
+            "p_pis": "0.65",
+            "valiq_pis": null
+        },
+        "model": "fiscal.pis",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "cst": "01",
+            "grupo_fiscal": 1,
+            "p_cofins": "4.00",
+            "valiq_cofins": null
+        },
+        "model": "fiscal.cofins",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "cst": "01",
+            "grupo_fiscal": 2,
+            "p_cofins": "4.00",
+            "valiq_cofins": null
+        },
+        "model": "fiscal.cofins",
+        "pk": 2
     },
     {
         "fields": {
@@ -1245,635 +1967,5 @@
         },
         "model": "financeiro.planocontassubgrupo",
         "pk": 15
-    },
-    {
-        "fields": {
-            "cfop": "5102",
-            "descricao": "Venda de mercadoria adquirida ou recebida de terceiros",
-            "id_dest": "1",
-            "tp_operacao": "1"
-        },
-        "model": "fiscal.naturezaoperacao",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "cfop": "5405",
-            "descricao": "Venda de mercadoria, adquirida ou recebida de terceiros, sujeita a ST, na condição de contribuinte-substituído",
-            "id_dest": "1",
-            "tp_operacao": "1"
-        },
-        "model": "fiscal.naturezaoperacao",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "cfop": "5202",
-            "descricao": "Devolução de compra p/ comercialização",
-            "id_dest": "1",
-            "tp_operacao": "1"
-        },
-        "model": "fiscal.naturezaoperacao",
-        "pk": 3
-    },
-    {
-        "fields": {
-            "cfop": "5411",
-            "descricao": "Devolução de compra p/ comercialização em operação com mercadoria sujeita a ST",
-            "id_dest": null,
-            "tp_operacao": "1"
-        },
-        "model": "fiscal.naturezaoperacao",
-        "pk": 4
-    },
-    {
-        "fields": {
-            "descricao": "Grupo1 (Simples Nacional): ICMS, IPI, COFINS, PIS",
-            "regime_trib": "1"
-        },
-        "model": "fiscal.grupofiscal",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "descricao": "Grupo2 (Normal): ICMS, IPI (fixo), PIS, COFINS",
-            "regime_trib": "0"
-        },
-        "model": "fiscal.grupofiscal",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "cst": "00",
-            "grupo_fiscal": 2,
-            "icms_incluido_preco": false,
-            "icmsst_incluido_preco": false,
-            "mod_bc": "3",
-            "mod_bcst": "4",
-            "mot_des_icms": null,
-            "p_bc_op": null,
-            "p_dif": null,
-            "p_icms": "18.00",
-            "p_icmsst": null,
-            "p_mvast": null,
-            "p_red_bc": null,
-            "p_red_bcst": null,
-            "ufst": null
-        },
-        "model": "fiscal.icms",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "grupo_fiscal": 1,
-            "p_fcp_dest": null,
-            "p_icms_dest": null,
-            "p_icms_inter": null,
-            "p_icms_inter_part": null
-        },
-        "model": "fiscal.icmsufdest",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "grupo_fiscal": 2,
-            "p_fcp_dest": null,
-            "p_icms_dest": null,
-            "p_icms_inter": null,
-            "p_icms_inter_part": null
-        },
-        "model": "fiscal.icmsufdest",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "csosn": "101",
-            "grupo_fiscal": 1,
-            "icmssn_incluido_preco": false,
-            "icmssnst_incluido_preco": false,
-            "mod_bc": "3",
-            "mod_bcst": "4",
-            "p_cred_sn": "18.00",
-            "p_icms": null,
-            "p_icmsst": null,
-            "p_mvast": null,
-            "p_red_bc": null,
-            "p_red_bcst": null
-        },
-        "model": "fiscal.icmssn",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "c_enq": "",
-            "cl_enq": "",
-            "cnpj_prod": "",
-            "cst": "00",
-            "grupo_fiscal": 1,
-            "incluir_bc_icms": false,
-            "incluir_bc_icmsst": false,
-            "ipi_incluido_preco": false,
-            "p_ipi": "7.00",
-            "tipo_ipi": "2",
-            "valor_fixo": null
-        },
-        "model": "fiscal.ipi",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "c_enq": "",
-            "cl_enq": "",
-            "cnpj_prod": "",
-            "cst": "50",
-            "grupo_fiscal": 2,
-            "incluir_bc_icms": false,
-            "incluir_bc_icmsst": false,
-            "ipi_incluido_preco": false,
-            "p_ipi": null,
-            "tipo_ipi": "1",
-            "valor_fixo": "7.00"
-        },
-        "model": "fiscal.ipi",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "cst": "01",
-            "grupo_fiscal": 1,
-            "p_pis": "0.65",
-            "valiq_pis": null
-        },
-        "model": "fiscal.pis",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "cst": "01",
-            "grupo_fiscal": 2,
-            "p_pis": "0.65",
-            "valiq_pis": null
-        },
-        "model": "fiscal.pis",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "cst": "01",
-            "grupo_fiscal": 1,
-            "p_cofins": "4.00",
-            "valiq_cofins": null
-        },
-        "model": "fiscal.cofins",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "cst": "01",
-            "grupo_fiscal": 2,
-            "p_cofins": "4.00",
-            "valiq_cofins": null
-        },
-        "model": "fiscal.cofins",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "user": 1,
-            "user_foto": "imagens/user.png"
-        },
-        "model": "login.usuario",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "auto_calcular_impostos": true,
-            "desconto": "7.30",
-            "icms_incluido_preco": false,
-            "icmsst_incluido_preco": false,
-            "incluir_bc_icms": false,
-            "incluir_bc_icmsst": false,
-            "inf_ad_prod": null,
-            "ipi_incluido_preco": false,
-            "p_icms": "0.00",
-            "p_icmsst": "0.00",
-            "p_ipi": "7.00",
-            "produto": 1,
-            "quantidade": "2.00",
-            "subtotal": "240.00",
-            "tipo_desconto": "0",
-            "valor_rateio_despesas": "0.00",
-            "valor_rateio_frete": "0.00",
-            "valor_rateio_seguro": "0.00",
-            "valor_unit": "120.00",
-            "vbc_icms": "0.00",
-            "vbc_icms_st": "0.00",
-            "vbc_ipi": "240.00",
-            "vcofins": "9.31",
-            "venda_id": 1,
-            "vfcp": "0.00",
-            "vicms": "0.00",
-            "vicms_deson": null,
-            "vicms_st": "0.00",
-            "vicmsufdest": "0.00",
-            "vicmsufremet": "0.00",
-            "vipi": "16.80",
-            "vpis": "1.51",
-            "vq_bccofins": "232.70",
-            "vq_bcpis": "232.70"
-        },
-        "model": "vendas.itensvenda",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "auto_calcular_impostos": true,
-            "desconto": "2.70",
-            "icms_incluido_preco": false,
-            "icmsst_incluido_preco": false,
-            "incluir_bc_icms": false,
-            "incluir_bc_icmsst": false,
-            "inf_ad_prod": null,
-            "ipi_incluido_preco": false,
-            "p_icms": "18.00",
-            "p_icmsst": "0.00",
-            "p_ipi": "0.00",
-            "produto": 2,
-            "quantidade": "3.00",
-            "subtotal": "42.30",
-            "tipo_desconto": "0",
-            "valor_rateio_despesas": "0.00",
-            "valor_rateio_frete": "0.00",
-            "valor_rateio_seguro": "0.00",
-            "valor_unit": "15.00",
-            "vbc_icms": "42.30",
-            "vbc_icms_st": "0.00",
-            "vbc_ipi": "0.00",
-            "vcofins": "1.58",
-            "venda_id": 1,
-            "vfcp": "0.00",
-            "vicms": "7.61",
-            "vicms_deson": null,
-            "vicms_st": "0.00",
-            "vicmsufdest": "0.00",
-            "vicmsufremet": "0.00",
-            "vipi": "21.00",
-            "vpis": "0.26",
-            "vq_bccofins": "39.60",
-            "vq_bcpis": "39.60"
-        },
-        "model": "vendas.itensvenda",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "auto_calcular_impostos": true,
-            "desconto": "100.00",
-            "icms_incluido_preco": false,
-            "icmsst_incluido_preco": false,
-            "incluir_bc_icms": false,
-            "incluir_bc_icmsst": false,
-            "inf_ad_prod": null,
-            "ipi_incluido_preco": false,
-            "p_icms": "0.00",
-            "p_icmsst": "0.00",
-            "p_ipi": "7.00",
-            "produto": 1,
-            "quantidade": "30.00",
-            "subtotal": "3500.00",
-            "tipo_desconto": "0",
-            "valor_rateio_despesas": "0.00",
-            "valor_rateio_frete": "0.00",
-            "valor_rateio_seguro": "0.00",
-            "valor_unit": "120.00",
-            "vbc_icms": "0.00",
-            "vbc_icms_st": "0.00",
-            "vbc_ipi": "3600.00",
-            "vcofins": "136.00",
-            "venda_id": 2,
-            "vfcp": "0.00",
-            "vicms": "0.00",
-            "vicms_deson": null,
-            "vicms_st": "0.00",
-            "vicmsufdest": "0.00",
-            "vicmsufremet": "0.00",
-            "vipi": "252.00",
-            "vpis": "22.10",
-            "vq_bccofins": "3400.00",
-            "vq_bcpis": "3400.00"
-        },
-        "model": "vendas.itensvenda",
-        "pk": 3
-    },
-    {
-        "fields": {
-            "auto_calcular_impostos": true,
-            "desconto": "0.00",
-            "icms_incluido_preco": false,
-            "icmsst_incluido_preco": false,
-            "incluir_bc_icms": false,
-            "incluir_bc_icmsst": false,
-            "inf_ad_prod": null,
-            "ipi_incluido_preco": false,
-            "p_icms": "0.00",
-            "p_icmsst": "0.00",
-            "p_ipi": "7.00",
-            "produto": 1,
-            "quantidade": "10.00",
-            "subtotal": "1200.00",
-            "tipo_desconto": "0",
-            "valor_rateio_despesas": "0.00",
-            "valor_rateio_frete": "0.00",
-            "valor_rateio_seguro": "0.00",
-            "valor_unit": "120.00",
-            "vbc_icms": "0.00",
-            "vbc_icms_st": "0.00",
-            "vbc_ipi": "1200.00",
-            "vcofins": "48.00",
-            "venda_id": 3,
-            "vfcp": "0.00",
-            "vicms": "0.00",
-            "vicms_deson": null,
-            "vicms_st": "0.00",
-            "vicmsufdest": "0.00",
-            "vicmsufremet": "0.00",
-            "vipi": "84.00",
-            "vpis": "7.80",
-            "vq_bccofins": "1200.00",
-            "vq_bcpis": "1200.00"
-        },
-        "model": "vendas.itensvenda",
-        "pk": 4
-    },
-    {
-        "fields": {
-            "auto_calcular_impostos": true,
-            "desconto": "0.00",
-            "icms_incluido_preco": false,
-            "icmsst_incluido_preco": false,
-            "incluir_bc_icms": false,
-            "incluir_bc_icmsst": false,
-            "inf_ad_prod": null,
-            "ipi_incluido_preco": false,
-            "p_icms": "18.00",
-            "p_icmsst": "0.00",
-            "p_ipi": "0.00",
-            "produto": 2,
-            "quantidade": "20.00",
-            "subtotal": "300.00",
-            "tipo_desconto": "0",
-            "valor_rateio_despesas": "0.00",
-            "valor_rateio_frete": "0.00",
-            "valor_rateio_seguro": "0.00",
-            "valor_unit": "15.00",
-            "vbc_icms": "300.00",
-            "vbc_icms_st": "0.00",
-            "vbc_ipi": "0.00",
-            "vcofins": "12.00",
-            "venda_id": 3,
-            "vfcp": "0.00",
-            "vicms": "54.00",
-            "vicms_deson": null,
-            "vicms_st": "0.00",
-            "vicmsufdest": "0.00",
-            "vicmsufremet": "0.00",
-            "vipi": "140.00",
-            "vpis": "1.95",
-            "vq_bccofins": "300.00",
-            "vq_bcpis": "300.00"
-        },
-        "model": "vendas.itensvenda",
-        "pk": 5
-    },
-    {
-        "fields": {
-            "cliente": 5,
-            "cond_pagamento": 3,
-            "data_emissao": "2017-07-04",
-            "desconto": "10.0000",
-            "despesas": "0.00",
-            "frete": "0.00",
-            "impostos": "45.41",
-            "ind_final": false,
-            "local_orig": 1,
-            "mod_frete": "9",
-            "movimentar_estoque": true,
-            "observacoes": "",
-            "seguro": "0.00",
-            "tipo_desconto": "0",
-            "transportadora": 4,
-            "valor_total": "320.41",
-            "veiculo": 1,
-            "vendedor": "erp1"
-        },
-        "model": "vendas.venda",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "cliente": 1,
-            "cond_pagamento": 2,
-            "data_emissao": "2017-07-04",
-            "desconto": "100.0000",
-            "despesas": "0.00",
-            "frete": "0.00",
-            "impostos": "252.00",
-            "ind_final": false,
-            "local_orig": 1,
-            "mod_frete": "9",
-            "movimentar_estoque": true,
-            "observacoes": "",
-            "seguro": "0.00",
-            "tipo_desconto": "0",
-            "transportadora": 4,
-            "valor_total": "3752.00",
-            "veiculo": 1,
-            "vendedor": "erp1"
-        },
-        "model": "vendas.venda",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "cliente": 1,
-            "cond_pagamento": 1,
-            "data_emissao": "2017-07-04",
-            "desconto": "0.0000",
-            "despesas": "0.00",
-            "frete": "0.00",
-            "impostos": "278.00",
-            "ind_final": false,
-            "local_orig": 1,
-            "mod_frete": "9",
-            "movimentar_estoque": true,
-            "observacoes": "",
-            "seguro": "0.00",
-            "tipo_desconto": "0",
-            "transportadora": 4,
-            "valor_total": "1778.00",
-            "veiculo": 1,
-            "vendedor": "erp1"
-        },
-        "model": "vendas.venda",
-        "pk": 3
-    },
-    {
-        "fields": {
-            "data_vencimento": "2017-07-31",
-            "status": "0"
-        },
-        "model": "vendas.orcamentovenda",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "data_entrega": "2017-07-04",
-            "orcamento": null,
-            "status": "0"
-        },
-        "model": "vendas.pedidovenda",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "data_entrega": "2017-07-05",
-            "orcamento": null,
-            "status": "1"
-        },
-        "model": "vendas.pedidovenda",
-        "pk": 3
-    },
-    {
-        "fields": {
-            "indice_parcela": 1,
-            "valor_parcela": "320.41",
-            "vencimento": "2017-07-04",
-            "venda_id": 1
-        },
-        "model": "vendas.pagamento",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "indice_parcela": 1,
-            "valor_parcela": "938.00",
-            "vencimento": "2017-08-03",
-            "venda_id": 2
-        },
-        "model": "vendas.pagamento",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "indice_parcela": 2,
-            "valor_parcela": "938.00",
-            "vencimento": "2017-09-02",
-            "venda_id": 2
-        },
-        "model": "vendas.pagamento",
-        "pk": 3
-    },
-    {
-        "fields": {
-            "indice_parcela": 3,
-            "valor_parcela": "938.00",
-            "vencimento": "2017-10-02",
-            "venda_id": 2
-        },
-        "model": "vendas.pagamento",
-        "pk": 4
-    },
-    {
-        "fields": {
-            "indice_parcela": 4,
-            "valor_parcela": "938.00",
-            "vencimento": "2017-11-01",
-            "venda_id": 2
-        },
-        "model": "vendas.pagamento",
-        "pk": 5
-    },
-    {
-        "fields": {
-            "indice_parcela": 1,
-            "valor_parcela": "355.60",
-            "vencimento": "2017-08-03",
-            "venda_id": 3
-        },
-        "model": "vendas.pagamento",
-        "pk": 6
-    },
-    {
-        "fields": {
-            "indice_parcela": 2,
-            "valor_parcela": "355.60",
-            "vencimento": "2017-09-02",
-            "venda_id": 3
-        },
-        "model": "vendas.pagamento",
-        "pk": 7
-    },
-    {
-        "fields": {
-            "indice_parcela": 3,
-            "valor_parcela": "355.60",
-            "vencimento": "2017-10-02",
-            "venda_id": 3
-        },
-        "model": "vendas.pagamento",
-        "pk": 8
-    },
-    {
-        "fields": {
-            "indice_parcela": 4,
-            "valor_parcela": "355.60",
-            "vencimento": "2017-11-01",
-            "venda_id": 3
-        },
-        "model": "vendas.pagamento",
-        "pk": 9
-    },
-    {
-        "fields": {
-            "indice_parcela": 5,
-            "valor_parcela": "355.60",
-            "vencimento": "2017-12-01",
-            "venda_id": 3
-        },
-        "model": "vendas.pagamento",
-        "pk": 10
-    },
-    {
-        "fields": {
-            "descricao": "Entrada + 4x s/ juros",
-            "dias_recorrencia": 30,
-            "forma": "03",
-            "n_parcelas": 5,
-            "parcela_inicial": 0
-        },
-        "model": "vendas.condicaopagamento",
-        "pk": 1
-    },
-    {
-        "fields": {
-            "descricao": "Entrada + 3x s/ juros",
-            "dias_recorrencia": 30,
-            "forma": "03",
-            "n_parcelas": 4,
-            "parcela_inicial": 0
-        },
-        "model": "vendas.condicaopagamento",
-        "pk": 2
-    },
-    {
-        "fields": {
-            "descricao": "À Vista",
-            "dias_recorrencia": 0,
-            "forma": "01",
-            "n_parcelas": 1,
-            "parcela_inicial": 0
-        },
-        "model": "vendas.condicaopagamento",
-        "pk": 3
     }
 ]

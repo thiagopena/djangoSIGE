@@ -23,15 +23,15 @@ class MovimentoEstoqueMixin(object):
 
         # Modificar valor do estoque atual dos produtos
         if not prod.estoque_atual is None and isinstance(self.object, EntradaEstoque):
-            prod_estocado, created = ProdutoEstocado.objects.get_or_create(
-                local=self.object.local_dest, produto=itens_mvmt_obj.produto)
+            prod_estocado = ProdutoEstocado.objects.get_or_create(
+                local=self.object.local_dest, produto=itens_mvmt_obj.produto)[0]
             prod_estocado.quantidade = prod_estocado.quantidade + itens_mvmt_obj.quantidade
             lista_produtos_estocados.append(prod_estocado)
             prod.estoque_atual = prod.estoque_atual + itens_mvmt_obj.quantidade
 
         elif not prod.estoque_atual is None and isinstance(self.object, SaidaEstoque):
-            prod_estocado, created = ProdutoEstocado.objects.get_or_create(
-                local=self.object.local_orig, produto=itens_mvmt_obj.produto)
+            prod_estocado = ProdutoEstocado.objects.get_or_create(
+                local=self.object.local_orig, produto=itens_mvmt_obj.produto)[0]
 
             if itens_mvmt_obj.quantidade > prod_estocado.quantidade:
                 itens_mvmt_obj.quantidade = prod_estocado.quantidade
@@ -48,10 +48,10 @@ class MovimentoEstoqueMixin(object):
                 prod.estoque_atual = prod.estoque_atual - itens_mvmt_obj.quantidade
 
         elif isinstance(self.object, TransferenciaEstoque):
-            prod_estocado_orig, created = ProdutoEstocado.objects.get_or_create(
-                local=self.object.local_estoque_orig, produto=itens_mvmt_obj.produto)
-            prod_estocado_dest, created = ProdutoEstocado.objects.get_or_create(
-                local=self.object.local_estoque_dest, produto=itens_mvmt_obj.produto)
+            prod_estocado_orig = ProdutoEstocado.objects.get_or_create(
+                local=self.object.local_estoque_orig, produto=itens_mvmt_obj.produto)[0]
+            prod_estocado_dest = ProdutoEstocado.objects.get_or_create(
+                local=self.object.local_estoque_dest, produto=itens_mvmt_obj.produto)[0]
 
             if itens_mvmt_obj.quantidade > prod_estocado_orig.quantidade:
                 itens_mvmt_obj.quantidade = prod_estocado_orig.quantidade
@@ -223,9 +223,6 @@ class MovimentoEstoqueListView(MovimentoEstoqueBaseListView):
                     instance = SaidaEstoque.objects.get(id=key)
                 elif TransferenciaEstoque.objects.filter(id=key).exists():
                     instance = TransferenciaEstoque.objects.get(id=key)
-                else:
-                    raise ValueError(
-                        'Entrada/Saida para o lancamento escolhido nao existe.')
 
                 instance.delete()
         return redirect(self.success_url)
