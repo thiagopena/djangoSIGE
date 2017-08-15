@@ -39,7 +39,7 @@ class SuperUserRequiredMixin(object):
                 request,
                 messages.WARNING,
                 u'Apenas o administrador tem permissão para realizar esta operação.',
-                'superuser_permission')
+                'permission_warning')
             return redirect('base:index')
         return super(SuperUserRequiredMixin, self).dispatch(request, *args, **kwargs)
 
