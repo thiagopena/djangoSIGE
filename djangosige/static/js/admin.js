@@ -125,6 +125,7 @@ $.Admin.messages = {
         $('#modal-msg .modal-body p').text(message);
         $('#modal-msg .modal-title').text('Sucesso');
         $('#modal-msg').modal('show');
+        $('#modal-msg #btn-ok').show();
         $('#modal-msg #btn-sim').hide();
         $('#modal-msg #btn-nao').hide();
     },
@@ -135,6 +136,8 @@ $.Admin.messages = {
         $('#modal-msg .modal-body p').text(message);
         $('#modal-msg .modal-title').text('Tem certeza?');
         $('#modal-msg').modal('show');
+        $('#modal-msg #btn-sim').show();
+        $('#modal-msg #btn-nao').show();
         $('#modal-msg #btn-ok').hide();
     },
 
@@ -144,6 +147,7 @@ $.Admin.messages = {
         $('#modal-msg .modal-body p').text(message);
         $('#modal-msg .modal-title').text('Operação não permitida');
         $('#modal-msg').modal('show');
+        $('#modal-msg #btn-ok').show();
         $('#modal-msg #btn-sim').hide();
         $('#modal-msg #btn-nao').hide();
     }
@@ -303,7 +307,7 @@ $.Admin.formset = {
                 }
                 parentFormset.hide().change();
 
-                var addBtn = currentBox.find('.formset:visible:last .add-formset'); //.show();
+                var addBtn = currentBox.find('.formset:visible:last .add-formset');
 
                 if(!addBtn.length){
                     _this.createNewForm(parentFormset, nFormsets);
@@ -1858,7 +1862,7 @@ $.Admin.vendaForm = {
     },
 
     handleClienteInfo: function(data){
-        console.log(data)
+
         if(typeof data === 'undefined' || !data){
             $('.display-cliente-field').text('');
         }else{
@@ -3239,8 +3243,6 @@ $(function () {
     $.Admin.table.init();
     $.Admin.formset.init();
     $.Admin.validation.init();
-    //$.Admin.pessoaForm.init();
-    //$.Admin.popupwindow.init();
 
     setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
 });

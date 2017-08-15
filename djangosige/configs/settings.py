@@ -144,5 +144,4 @@ LOGIN_NOT_REQUIRED = (
     r'/login/esqueceu/',
     r'/login/trocarsenha/',
     r'/logout/',
-    r'/admin/',
 )

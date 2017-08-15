@@ -450,7 +450,7 @@
     <script src="{% static 'js/bootstrap/bootstrap.min.js' %}"></script>
 
     <!-- Datatables Js -->
-    <script src="{% static '/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
     
     <!-- Sige Js -->
     <script src="{% static 'js/admin.js' %}"></script>
@@ -458,7 +458,7 @@
 
     {% if messages %}
     {%for message in messages%}
-    {% if 'superuser_permission' in message.tags %}
+    {% if 'permission_warning' in message.tags %}
 
     <script type="text/javascript">
         $.Admin.messages.msgAlerta("{{message}}");
