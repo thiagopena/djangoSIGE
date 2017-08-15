@@ -8,8 +8,9 @@ from django.core.urlresolvers import reverse
 
 from datetime import datetime, timedelta
 
+
 VENDA_FORMSET_DATA = {
-    'produtos_form-0-produto': Produto.objects.order_by('id').first().pk,
+    'produtos_form-0-produto': 1,
     'produtos_form-0-quantidade': 2,
     'produtos_form-0-valor_unit': '100,00',
     'produtos_form-0-tipo_desconto': '0',
@@ -18,7 +19,7 @@ VENDA_FORMSET_DATA = {
     'produtos_form-0-valor_rateio_despesas': '0,00',
     'produtos_form-0-valor_rateio_seguro': '0,00',
     'produtos_form-0-subtotal': '180,00',
-    'produtos_form-1-produto': Produto.objects.order_by('id').last().pk,
+    'produtos_form-1-produto': 2,
     'produtos_form-1-quantidade': 3,
     'produtos_form-1-valor_unit': '100,00',
     'produtos_form-1-tipo_desconto': '0',

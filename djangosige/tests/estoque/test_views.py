@@ -6,11 +6,11 @@ from djangosige.apps.estoque.models import LocalEstoque, DEFAULT_LOCAL_ID, Produ
 from django.core.urlresolvers import reverse
 
 MOVIMENTO_ESTOQUE_FORMSET_DATA = {
-    'itens_form-0-produto': Produto.objects.order_by('id').first().pk,
+    'itens_form-0-produto': 1,
     'itens_form-0-quantidade': 2,
     'itens_form-0-valor_unit': '100,00',
     'itens_form-0-subtotal': '180,00',
-    'itens_form-1-produto': Produto.objects.order_by('id').last().pk,
+    'itens_form-1-produto': 2,
     'itens_form-1-quantidade': 3,
     'itens_form-1-valor_unit': '100,00',
     'itens_form-1-subtotal': '280,00',
