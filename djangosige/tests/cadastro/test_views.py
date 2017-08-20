@@ -2,25 +2,25 @@
 
 from djangosige.tests.test_case import BaseTestCase
 from djangosige.apps.cadastro.models import Produto, Unidade, Marca, Categoria, Transportadora, Fornecedor, Cliente, Empresa
-from django.core.urlresolvers import reverse, resolve
+from django.core.urlresolvers import reverse
 
 
 CADASTRO_MODELS = (
-    "empresa",
-    "cliente",
-    "fornecedor",
-    "transportadora",
-    "produto",
-    "categoria",
-    "unidade",
-    "marca",
+    Empresa,
+    Cliente,
+    Fornecedor,
+    Transportadora,
+    Produto,
+    Categoria,
+    Unidade,
+    Marca,
 )
 
 PESSOA_MODELS = (
-    "empresa",
-    "cliente",
-    "fornecedor",
-    "transportadora",
+    Empresa,
+    Cliente,
+    Fornecedor,
+    Transportadora,
 )
 
 INLINE_FORMSET_DATA = {
@@ -53,26 +53,33 @@ INLINE_FORMSET_DATA = {
 class CadastroAdicionarViewsTestCase(BaseTestCase):
 
     def test_add_views_get_request(self):
-        for m in CADASTRO_MODELS:
-            url = reverse('cadastro:add{}view'.format(m))
+        for model in CADASTRO_MODELS:
+            model_name = model.__name__.lower()
+            url = reverse('cadastro:add{}view'.format(model_name))
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
 
+            # Testar permissao
+            permission_codename = 'add_' + str(model_name)
+            self.check_user_get_permission(
+                url, permission_codename=permission_codename)
+
     def test_add_pessoa_post_request(self):
-        for m in PESSOA_MODELS:
-            url = reverse('cadastro:add{}view'.format(m))
+        for model in PESSOA_MODELS:
+            model_name = model.__name__.lower()
+            url = reverse('cadastro:add{}view'.format(model_name))
             pessoa_data = {
-                '{}_form-nome_razao_social'.format(m): 'Razao Social Qualquer',
-                '{}_form-tipo_pessoa'.format(m): 'PJ',
-                '{}_form-inscricao_municipal'.format(m): '',
-                '{}_form-informacoes_adicionais'.format(m): '',
+                '{}_form-nome_razao_social'.format(model_name): 'Razao Social Qualquer',
+                '{}_form-tipo_pessoa'.format(model_name): 'PJ',
+                '{}_form-inscricao_municipal'.format(model_name): '',
+                '{}_form-informacoes_adicionais'.format(model_name): '',
             }
 
-            if m == 'cliente':
+            if model_name == 'cliente':
                 pessoa_data['cliente_form-limite_de_credito'] = '0.00'
                 pessoa_data['cliente_form-indicador_ie'] = '1'
                 pessoa_data['cliente_form-id_estrangeiro'] = ''
-            elif m == 'transportadora':
+            elif model_name == 'transportadora':
                 pessoa_data['veiculo_form-TOTAL_FORMS'] = 1
                 pessoa_data['veiculo_form-INITIAL_FORMS'] = 0
                 pessoa_data['veiculo_form-0-descricao'] = 'Veiculo1'
@@ -86,7 +93,7 @@ class CadastroAdicionarViewsTestCase(BaseTestCase):
             self.assertTemplateUsed(response, 'cadastro/pessoa_list.html')
 
             # Assert form invalido
-            pessoa_data['{}_form-nome_razao_social'.format(m)] = ''
+            pessoa_data['{}_form-nome_razao_social'.format(model_name)] = ''
             response = self.client.post(url, pessoa_data, follow=True)
             self.assertFormError(
                 response, 'form', 'nome_razao_social', 'Este campo é obrigatório.')
@@ -166,14 +173,14 @@ class CadastroAdicionarViewsTestCase(BaseTestCase):
 class CadastroListarViewsTestCase(BaseTestCase):
 
     def test_list_views_deletar_objeto(self):
-        for m in CADASTRO_MODELS:
-            if m == 'fornecedor':
+        for model in CADASTRO_MODELS:
+            model_name = model.__name__.lower()
+            if model_name == 'fornecedor':
                 url = reverse('cadastro:listafornecedoresview')
             else:
-                url = reverse('cadastro:lista{}sview'.format(m))
+                url = reverse('cadastro:lista{}sview'.format(model_name))
 
-            model_class = eval(m.title())
-            obj = model_class.objects.create()
+            obj = model.objects.create()
             self.check_list_view_delete(url=url, deleted_object=obj)
 
         url = reverse('cadastro:listaprodutosbaixoestoqueview')
@@ -184,15 +191,16 @@ class CadastroListarViewsTestCase(BaseTestCase):
 class CadastroEditarViewsTestCase(BaseTestCase):
 
     def test_edit_pessoa__get_post_request(self):
-        for m in PESSOA_MODELS:
+        for model in PESSOA_MODELS:
             # Buscar objeto qualquer
-            obj = eval(m.title()).objects.order_by('pk').last()
-            url = reverse('cadastro:editar{}view'.format(m),
+            model_name = model.__name__.lower()
+            obj = model.objects.order_by('pk').last()
+            url = reverse('cadastro:editar{}view'.format(model_name),
                           kwargs={'pk': obj.pk})
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
             data = response.context['form'].initial
-            if m == 'cliente':
+            if model_name == 'cliente':
                 data['{}-limite_de_credito'.format(response.context['form'].prefix)] = data[
                     'limite_de_credito']
                 del data['limite_de_credito']
@@ -201,6 +209,13 @@ class CadastroEditarViewsTestCase(BaseTestCase):
             data['informacoes_adicionais'] = 'Objeto editado.'
             response = self.client.post(url, data, follow=True)
             self.assertEqual(response.status_code, 200)
+
+            # Assert form invalido
+            data[
+                '{}_form-nome_razao_social'.format(response.context['form'].prefix)] = ''
+            response = self.client.post(url, data, follow=True)
+            self.assertFormError(
+                response, 'form', 'nome_razao_social', 'Este campo é obrigatório.')
 
     def test_edit_produto_get_post_request(self):
         # Buscar objeto qualquer
@@ -227,6 +242,12 @@ class CadastroEditarViewsTestCase(BaseTestCase):
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
 
+        # Assert form invalido
+        data['categoria_desc'] = ''
+        response = self.client.post(url, data, follow=True)
+        self.assertFormError(
+            response, 'form', 'categoria_desc', 'Este campo é obrigatório.')
+
     def test_edit_marca_get_post_request(self):
         # Buscar objeto qualquer
         obj = Marca.objects.order_by('pk').last()
@@ -250,3 +271,40 @@ class CadastroEditarViewsTestCase(BaseTestCase):
         data['unidade_desc'] = 'Unidade Editada'
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
+
+
+class CadastroAjaxRequestViewsTestCase(BaseTestCase):
+
+    def test_info_cliente_post_request(self):
+        # Buscar objeto qualquer
+        obj = Cliente.objects.order_by('pk').last()
+        obj_pk = obj.pk
+        url = reverse('cadastro:infocliente')
+        data = {'pessoaId': obj_pk}
+        self.check_json_response(url, data, obj_pk, model='cadastro.cliente')
+
+    def test_info_transportadora_post_request(self):
+        # Buscar objeto qualquer
+        obj = Transportadora.objects.order_by('pk').last()
+        obj_pk = obj.pk
+        url = reverse('cadastro:infotransportadora')
+        data = {'transportadoraId': obj_pk}
+        self.check_json_response(
+            url, data, obj_pk, model='cadastro.transportadora')
+
+    def test_info_fornecedor_post_request(self):
+        # Buscar objeto qualquer
+        obj = Fornecedor.objects.order_by('pk').last()
+        obj_pk = obj.pk
+        url = reverse('cadastro:infofornecedor')
+        data = {'pessoaId': obj_pk}
+        self.check_json_response(
+            url, data, obj_pk, model='cadastro.fornecedor')
+
+    def test_info_produto_post_request(self):
+        # Buscar objeto qualquer
+        obj = Produto.objects.order_by('pk').last()
+        obj_pk = obj.pk
+        url = reverse('cadastro:infoproduto')
+        data = {'produtoId': obj_pk}
+        self.check_json_response(url, data, obj_pk, model='cadastro.produto')

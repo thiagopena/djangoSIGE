@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from djangosige.tests.test_case import BaseTestCase
-from djangosige.apps.cadastro.models import Cliente, Produto, Transportadora
+from djangosige.apps.cadastro.models import Cliente
 from djangosige.apps.vendas.models import CondicaoPagamento, OrcamentoVenda, PedidoVenda
 from djangosige.apps.estoque.models import LocalEstoque, DEFAULT_LOCAL_ID
 from django.core.urlresolvers import reverse
@@ -243,31 +243,6 @@ class VendasEditarViewsTestCase(BaseTestCase):
 
 class VendasAjaxRequestViewsTestCase(BaseTestCase):
 
-    def test_info_cliente_post_request(self):
-        # Buscar objeto qualquer
-        obj = Cliente.objects.order_by('pk').last()
-        obj_pk = obj.pk
-        url = reverse('vendas:infocliente')
-        data = {'pessoaId': obj_pk}
-        self.check_json_response(url, data, obj_pk, model='cadastro.cliente')
-
-    def test_info_transportadora_post_request(self):
-        # Buscar objeto qualquer
-        obj = Transportadora.objects.order_by('pk').last()
-        obj_pk = obj.pk
-        url = reverse('vendas:infotransportadora')
-        data = {'transportadoraId': obj_pk}
-        self.check_json_response(
-            url, data, obj_pk, model='cadastro.transportadora')
-
-    def test_info_produto_post_request(self):
-        # Buscar objeto qualquer
-        obj = Produto.objects.order_by('pk').last()
-        obj_pk = obj.pk
-        url = reverse('vendas:infoproduto')
-        data = {'produtoId': obj_pk}
-        self.check_json_response(url, data, obj_pk, model='cadastro.produto')
-
     def test_info_condicao_pagamento_post_request(self):
         # Buscar objeto qualquer
         obj = CondicaoPagamento.objects.order_by('pk').last()
@@ -322,7 +297,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_copiar_pedido_venda(self):
         # Buscar objeto qualquer
         obj = PedidoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:copiarvenda',
+        url = reverse('vendas:copiarpedidovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -333,7 +308,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_copiar_orcamento_venda(self):
         # Buscar objeto qualquer
         obj = OrcamentoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:copiarvenda',
+        url = reverse('vendas:copiarorcamentovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -344,7 +319,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_cancelar_pedido_venda(self):
         # Buscar objeto qualquer
         obj = PedidoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:cancelarvenda',
+        url = reverse('vendas:cancelarpedidovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -357,7 +332,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_cancelar_orcamento_venda(self):
         # Buscar objeto qualquer
         obj = OrcamentoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:cancelarvenda',
+        url = reverse('vendas:cancelarorcamentovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)

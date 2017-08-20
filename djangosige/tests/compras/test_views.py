@@ -194,15 +194,6 @@ class ComprasEditarViewsTestCase(BaseTestCase):
 
 class VendasAjaxRequestViewsTestCase(BaseTestCase):
 
-    def test_info_fornecedor_post_request(self):
-        # Buscar objeto qualquer
-        obj = Fornecedor.objects.order_by('pk').last()
-        obj_pk = obj.pk
-        url = reverse('compras:infofornecedor')
-        data = {'pessoaId': obj_pk}
-        self.check_json_response(
-            url, data, obj_pk, model='cadastro.fornecedor')
-
     def test_info_compra_post_request(self):
         # Buscar objeto qualquer
         obj = PedidoCompra.objects.order_by('pk').last()
@@ -249,7 +240,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_copiar_pedido_compra(self):
         # Buscar objeto qualquer
         obj = PedidoCompra.objects.order_by('pk').last()
-        url = reverse('compras:copiarcompra',
+        url = reverse('compras:copiarpedidocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -260,7 +251,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_copiar_orcamento_compra(self):
         # Buscar objeto qualquer
         obj = OrcamentoCompra.objects.order_by('pk').last()
-        url = reverse('compras:copiarcompra',
+        url = reverse('compras:copiarorcamentocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -272,7 +263,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_cancelar_pedido_compra(self):
         # Buscar objeto qualquer
         obj = PedidoCompra.objects.order_by('pk').last()
-        url = reverse('compras:cancelarcompra',
+        url = reverse('compras:cancelarpedidocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -285,7 +276,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_cancelar_orcamento_compra(self):
         # Buscar objeto qualquer
         obj = OrcamentoCompra.objects.order_by('pk').last()
-        url = reverse('compras:cancelarcompra',
+        url = reverse('compras:cancelarorcamentocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -318,7 +309,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
                             valor_unit='20.00', subtotal='40.00')
         item2.compra_id = obj
         item2.save()
-        url = reverse('compras:recebercompra',
+        url = reverse('compras:receberpedidocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)

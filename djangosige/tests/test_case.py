@@ -2,6 +2,7 @@
 
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.contrib.auth.models import Permission
 
 import json
 
@@ -22,6 +23,20 @@ class BaseTestCase(TestCase):
                 TEST_USERNAME, TEST_EMAIL, TEST_PASSWORD)
 
         self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
+
+    def check_user_get_permission(self, url, permission_codename):
+        if not isinstance(permission_codename, list):
+            permission_codename = [permission_codename]
+        self.user.is_superuser = False
+        perms = Permission.objects.get(codename__in=permission_codename)
+        self.user.user_permissions.remove(perms)
+        self.user.save()
+        response = self.client.get(url, follow=True)
+        message_tags = " ".join(str(m.tags)
+                                for m in list(response.context['messages']))
+        self.assertIn("permission_warning", message_tags)
+        self.user.is_superuser = True
+        self.user.save()
 
     def check_list_view_delete(self, url, deleted_object):
         # Testar GET request lista
