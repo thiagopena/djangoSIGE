@@ -470,7 +470,7 @@ class ContaPagarHojeListView(ContaPagarAtrasadasListView):
     success_url = reverse_lazy('financeiro:listacontapagarhojeview')
 
     def get_context_data(self, **kwargs):
-        context = super(ContaPagarAtrasadasListView,
+        context = super(ContaPagarHojeListView,
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'CONTAS A PAGAR DO DIA ' + \
             datetime.now().date().strftime('%d/%m/%Y')
