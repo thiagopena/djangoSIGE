@@ -962,7 +962,7 @@ $.Admin.autocompleteField = {
 
 
 $.Admin.vendaForm = {
-    init: function(req_urls, invalid) {
+    init: function(req_urls) {
         var _this = this;
         var cli_input = $('#id_cliente');
         var transportadora_input = $('#id_transportadora')
@@ -1862,7 +1862,6 @@ $.Admin.vendaForm = {
     },
 
     handleClienteInfo: function(data){
-
         if(typeof data === 'undefined' || !data){
             $('.display-cliente-field').text('');
         }else{

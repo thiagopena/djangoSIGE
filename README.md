@@ -53,6 +53,7 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 - Cadastro de produtos, clientes, empresas, fornecedores e transportadoras
 - Login/Logout
 - Criação de perfil para cada usuário.
+- Definição de permissões para usuários.
 - Criação e geração de PDF para orçamentos e pedidos de compra/venda
 - Módulo financeiro (Plano de Contas, Fluxo de Caixa e Lançamentos)
 - Módulo para controle de estoque
@@ -69,6 +70,7 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 - [geraldo](https://github.com/marinho/geraldo)
 - [jQuery-Mask-Plugin](https://igorescobar.github.io/jQuery-Mask-Plugin/)
 - [DataTables](https://datatables.net/)
+- [JQuery multiselect](http://loudev.com/)
 
 ## Ajuda
 
