@@ -32,6 +32,12 @@ ID_DEST_OPCOES = (
 class Categoria(models.Model):
     categoria_desc = models.CharField(max_length=32)
 
+    class Meta:
+        verbose_name = "Categoria"
+        permissions = (
+            ("view_categoria", "Can view categoria"),
+        )
+
     def __unicode__(self):
         s = u'%s' % (self.categoria_desc)
         return s
@@ -43,6 +49,12 @@ class Categoria(models.Model):
 
 class Marca(models.Model):
     marca_desc = models.CharField(max_length=32)
+
+    class Meta:
+        verbose_name = "Marca"
+        permissions = (
+            ("view_marca", "Can view marca"),
+        )
 
     def __unicode__(self):
         s = u'%s' % (self.marca_desc)
@@ -56,6 +68,12 @@ class Marca(models.Model):
 class Unidade(models.Model):
     sigla_unidade = models.CharField(max_length=3)
     unidade_desc = models.CharField(max_length=16)
+
+    class Meta:
+        verbose_name = "Unidade"
+        permissions = (
+            ("view_unidade", "Can view unidade"),
+        )
 
     def __unicode__(self):
         s = u'(%s) %s' % (self.sigla_unidade, self.unidade_desc)
@@ -99,6 +117,12 @@ class Produto(models.Model):
     estoque_atual = models.DecimalField(max_digits=16, decimal_places=2, validators=[
                                         MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     controlar_estoque = models.BooleanField(default=True)
+
+    class Meta:
+        verbose_name = "Produto"
+        permissions = (
+            ("view_produto", "Can view produto"),
+        )
 
     @property
     def format_unidade(self):

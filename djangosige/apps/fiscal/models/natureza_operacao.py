@@ -22,6 +22,12 @@ class NaturezaOperacao(models.Model):
     id_dest = models.CharField(
         max_length=1, choices=ID_DEST_OPCOES, null=True, blank=True)
 
+    class Meta:
+        verbose_name = "Natureza da Operação"
+        permissions = (
+            ("view_naturezaoperacao", "Can view natureza operacao"),
+        )
+
     def set_values_by_cfop(self):
         if self.cfop:
             if self.cfop[0] == '1':

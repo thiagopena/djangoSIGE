@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import ListView, View
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from django.core import serializers
+
+from djangosige.apps.base.custom_views import CustomView, CustomCreateView, CustomListView, CustomUpdateView
 
 from djangosige.apps.compras.forms import OrcamentoCompraForm, PedidoCompraForm, ItensCompraFormSet, PagamentoFormSet
 from djangosige.apps.compras.models import OrcamentoCompra, PedidoCompra, ItensCompra, Pagamento
-from djangosige.apps.cadastro.models import Pessoa, Fornecedor, MinhaEmpresa
+from djangosige.apps.cadastro.models import MinhaEmpresa
 from djangosige.apps.estoque.models import ProdutoEstocado, EntradaEstoque, ItensMovimento
 from djangosige.apps.login.models import Usuario
 from djangosige.configs.settings import MEDIA_ROOT
@@ -19,10 +18,9 @@ from .report_compras import CompraReport
 from geraldo.generators import PDFGenerator
 from datetime import datetime
 import io
-import json
 
 
-class AdicionarCompraView(CreateView):
+class AdicionarCompraView(CustomCreateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
@@ -40,7 +38,9 @@ class AdicionarCompraView(CreateView):
         produtos_form = ItensCompraFormSet(prefix='produtos_form')
         pagamento_form = PagamentoFormSet(prefix='pagamento_form')
 
-        return self.render_to_response(self.get_context_data(form=form, produtos_form=produtos_form, pagamento_form=pagamento_form))
+        return self.render_to_response(self.get_context_data(form=form,
+                                                             produtos_form=produtos_form,
+                                                             pagamento_form=pagamento_form))
 
     def post(self, request, form_class, *args, **kwargs):
         self.object = None
@@ -81,16 +81,9 @@ class AdicionarCompraView(CreateView):
 
             return self.form_valid(form)
 
-        return self.form_invalid(form, produtos_form, pagamento_form)
-
-    def form_valid(self, form):
-        super(AdicionarCompraView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form, produtos_form, pagamento_form):
-        return self.render_to_response(self.get_context_data(form=form, produtos_form=produtos_form, pagamento_form=pagamento_form))
+        return self.form_invalid(form=form,
+                                 produtos_form=produtos_form,
+                                 pagamento_form=pagamento_form)
 
 
 class AdicionarOrcamentoCompraView(AdicionarCompraView):
@@ -98,6 +91,7 @@ class AdicionarOrcamentoCompraView(AdicionarCompraView):
     template_name = "compras/orcamento_compra/orcamento_compra_add.html"
     success_url = reverse_lazy('compras:listaorcamentocompraview')
     success_message = "<b>Orçamento de compra %(id)s </b>adicionado com sucesso."
+    permission_codename = 'add_orcamentocompra'
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR ORÇAMENTO DE COMPRA'
@@ -119,6 +113,7 @@ class AdicionarPedidoCompraView(AdicionarCompraView):
     template_name = "compras/pedido_compra/pedido_compra_add.html"
     success_url = reverse_lazy('compras:listapedidocompraview')
     success_message = "<b>Pedido de compra %(id)s </b>adicionado com sucesso."
+    permission_codename = 'add_pedidocompra'
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR PEDIDO DE COMPRA'
@@ -134,21 +129,11 @@ class AdicionarPedidoCompraView(AdicionarCompraView):
         return super(AdicionarPedidoCompraView, self).post(request, form_class, *args, **kwargs)
 
 
-class CompraListView(ListView):
-
-    def get_queryset(self, object):
-        return object.objects.all()
+class CompraListView(CustomListView):
 
     def get_context_data(self, **kwargs):
         context = super(CompraListView, self).get_context_data(**kwargs)
         return self.view_context(context)
-
-    def post(self, request, object, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = object.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
 
 
 class OrcamentoCompraListView(CompraListView):
@@ -156,23 +141,15 @@ class OrcamentoCompraListView(CompraListView):
     model = OrcamentoCompra
     context_object_name = 'all_orcamentos'
     success_url = reverse_lazy('compras:listaorcamentocompraview')
+    permission_codename = 'view_orcamentocompra'
 
     def view_context(self, context):
         context['title_complete'] = 'ORÇAMENTOS DE COMPRA'
         context['add_url'] = reverse_lazy('compras:addorcamentocompraview')
         return context
 
-    def get_queryset(self):
-        return super(OrcamentoCompraListView, self).get_queryset(object=OrcamentoCompra)
 
-    def post(self, request, *args, **kwargs):
-        return super(OrcamentoCompraListView, self).post(request, OrcamentoCompra)
-
-
-class OrcamentoCompraVencidosListView(CompraListView):
-    template_name = 'compras/orcamento_compra/orcamento_compra_list.html'
-    model = OrcamentoCompra
-    context_object_name = 'all_orcamentos'
+class OrcamentoCompraVencidosListView(OrcamentoCompraListView):
     success_url = reverse_lazy('compras:listaorcamentocompravencidosview')
 
     def view_context(self, context):
@@ -183,11 +160,8 @@ class OrcamentoCompraVencidosListView(CompraListView):
     def get_queryset(self):
         return OrcamentoCompra.objects.filter(data_vencimento__lte=datetime.now().date(), status='0')
 
-    def post(self, request, *args, **kwargs):
-        return super(OrcamentoCompraVencidosListView, self).post(request, OrcamentoCompra)
 
-
-class OrcamentoCompraVencimentoHojeListView(OrcamentoCompraVencidosListView):
+class OrcamentoCompraVencimentoHojeListView(OrcamentoCompraListView):
     success_url = reverse_lazy('compras:listaorcamentocomprahojeview')
 
     def view_context(self, context):
@@ -205,17 +179,12 @@ class PedidoCompraListView(CompraListView):
     model = PedidoCompra
     context_object_name = 'all_pedidos'
     success_url = reverse_lazy('compras:listapedidocompraview')
+    permission_codename = 'view_pedidocompra'
 
     def view_context(self, context):
         context['title_complete'] = 'PEDIDOS DE COMPRA'
         context['add_url'] = reverse_lazy('compras:addpedidocompraview')
         return context
-
-    def get_queryset(self):
-        return super(PedidoCompraListView, self).get_queryset(object=PedidoCompra)
-
-    def post(self, request, *args, **kwargs):
-        return super(PedidoCompraListView, self).post(request, PedidoCompra)
 
 
 class PedidoCompraAtrasadosListView(PedidoCompraListView):
@@ -228,9 +197,6 @@ class PedidoCompraAtrasadosListView(PedidoCompraListView):
 
     def get_queryset(self):
         return PedidoCompra.objects.filter(data_entrega__lte=datetime.now().date(), status='0')
-
-    def post(self, request, *args, **kwargs):
-        return super(PedidoCompraAtrasadosListView, self).post(request, PedidoCompra)
 
 
 class PedidoCompraEntregaHojeListView(PedidoCompraListView):
@@ -246,7 +212,7 @@ class PedidoCompraEntregaHojeListView(PedidoCompraListView):
         return PedidoCompra.objects.filter(data_entrega=datetime.now().date(), status='0')
 
 
-class EditarCompraView(UpdateView):
+class EditarCompraView(CustomUpdateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
@@ -276,7 +242,9 @@ class EditarCompraView(UpdateView):
         if len(pagamentos):
             pagamento_form.extra = 0
 
-        return self.render_to_response(self.get_context_data(form=form, produtos_form=produtos_form, pagamento_form=pagamento_form))
+        return self.render_to_response(self.get_context_data(form=form,
+                                                             produtos_form=produtos_form,
+                                                             pagamento_form=pagamento_form))
 
     def post(self, request, form_class, *args, **kwargs):
         # Tirar . dos campos decimais
@@ -315,16 +283,9 @@ class EditarCompraView(UpdateView):
 
             return self.form_valid(form)
 
-        return self.form_invalid(form, produtos_form, pagamento_form)
-
-    def form_valid(self, form):
-        super(EditarCompraView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form, produtos_form, pagamento_form):
-        return self.render_to_response(self.get_context_data(form=form, produtos_form=produtos_form, pagamento_form=pagamento_form))
+        return self.form_invalid(form=form,
+                                 produtos_form=produtos_form,
+                                 pagamento_form=pagamento_form)
 
 
 class EditarOrcamentoCompraView(EditarCompraView):
@@ -333,6 +294,7 @@ class EditarOrcamentoCompraView(EditarCompraView):
     template_name = "compras/orcamento_compra/orcamento_compra_edit.html"
     success_url = reverse_lazy('compras:listaorcamentocompraview')
     success_message = "<b>Orçamento de compra %(id)s </b>editado com sucesso."
+    permission_codename = 'change_orcamentocompra'
 
     def view_context(self, context):
         context['title_complete'] = 'EDITAR ORÇAMENTO DE COMPRA N°' + \
@@ -358,6 +320,7 @@ class EditarPedidoCompraView(EditarCompraView):
     template_name = "compras/pedido_compra/pedido_compra_edit.html"
     success_url = reverse_lazy('compras:listapedidocompraview')
     success_message = "<b>Pedido de compra %(id)s </b>editado com sucesso."
+    permission_codename = 'change_pedidocompra'
 
     def view_context(self, context):
         context['title_complete'] = 'EDITAR PEDIDO DE COMPRA N°' + \
@@ -376,125 +339,8 @@ class EditarPedidoCompraView(EditarCompraView):
         return super(EditarPedidoCompraView, self).post(request, form_class, *args, **kwargs)
 
 
-class InfoFornecedor(View):
-
-    def post(self, request, *args, **kwargs):
-        obj_list = []
-        pessoa = Pessoa.objects.get(pk=request.POST['pessoaId'])
-        fornecedor = Fornecedor.objects.get(pk=request.POST['pessoaId'])
-        obj_list.append(fornecedor)
-
-        if pessoa.endereco_padrao:
-            obj_list.append(pessoa.endereco_padrao)
-        if pessoa.email_padrao:
-            obj_list.append(pessoa.email_padrao)
-        if pessoa.telefone_padrao:
-            obj_list.append(pessoa.telefone_padrao)
-
-        if pessoa.tipo_pessoa == 'PJ':
-            obj_list.append(pessoa.pessoa_jur_info)
-        elif pessoa.tipo_pessoa == 'PF':
-            obj_list.append(pessoa.pessoa_fis_info)
-
-        data = serializers.serialize('json', obj_list, fields=('cnpj', 'inscricao_estadual', 'responsavel', 'cpf', 'rg', 'logradouro', 'numero', 'bairro',
-                                                               'municipio', 'cmun', 'uf', 'pais', 'complemento', 'cep', 'email', 'telefone',))
-
-        return HttpResponse(data, content_type='application/json')
-
-
-class InfoCompra(View):
-
-    def post(self, request, *args, **kwargs):
-        compra = PedidoCompra.objects.get(pk=request.POST['compraId'])
-        itens_compra = compra.itens_compra.all()
-        pagamentos = compra.parcela_pagamento.all()
-        data = []
-
-        pedido_dict = {}
-        pedido_dict['model'] = 'compras.pedidocompra'
-        pedido_dict['pk'] = compra.id
-        pedido_fields_dict = {}
-        pedido_fields_dict['emit'] = compra.fornecedor.id
-        pedido_fields_dict['local'] = compra.get_local_dest_id()
-        pedido_fields_dict['status'] = compra.get_status_display()
-        pedido_fields_dict['desconto'] = compra.format_desconto()
-        pedido_fields_dict['frete'] = compra.format_frete()
-        pedido_fields_dict['despesas'] = compra.format_despesas()
-        pedido_fields_dict['seguro'] = compra.format_seguro()
-        pedido_fields_dict['total_icms'] = compra.format_vicms()
-        pedido_fields_dict['total_ipi'] = compra.format_vipi()
-        pedido_fields_dict['valor_total'] = compra.format_valor_total()
-        pedido_fields_dict['total_sem_desconto'] = compra.format_total_sem_desconto(
-        )
-        pedido_fields_dict['forma_pag'] = compra.get_forma_pagamento()
-        pedido_fields_dict['n_itens'] = str(len(itens_compra))
-        pedido_fields_dict['valor_total_produtos'] = compra.format_total_produtos(
-        )
-
-        if compra.cond_pagamento:
-            pedido_fields_dict['n_parcelas'] = compra.cond_pagamento.n_parcelas
-        else:
-            pedido_fields_dict['n_parcelas'] = 1
-
-        pedido_dict['fields'] = pedido_fields_dict
-
-        data.append(pedido_dict)
-
-        for item in itens_compra:
-            itens_compra_dict = {}
-            itens_compra_dict['model'] = 'compras.itenscompra'
-            itens_compra_dict['pk'] = item.id
-            itens_fields_dict = {}
-            itens_hidden_fields_dict = {}
-            itens_editable_fields_dict = {}
-            itens_fields_dict['produto_id'] = item.produto.id
-            itens_fields_dict[
-                'controlar_estoque'] = item.produto.controlar_estoque
-            itens_fields_dict['produto'] = item.produto.descricao
-            itens_hidden_fields_dict['codigo'] = item.produto.codigo
-            itens_hidden_fields_dict['unidade'] = item.produto.get_sigla_unidade(
-            )
-            itens_hidden_fields_dict['ncm'] = item.produto.ncm
-            itens_fields_dict['quantidade'] = item.format_quantidade()
-            itens_fields_dict['valor_unit'] = item.format_valor_unit()
-            itens_fields_dict['desconto'] = item.format_desconto()
-            itens_hidden_fields_dict['subtotal'] = item.format_valor_attr(
-                'subtotal')
-
-            itens_fields_dict['impostos'] = item.format_total_impostos()
-            itens_fields_dict['total'] = item.format_total_com_imposto()
-            itens_fields_dict['vprod'] = item.format_vprod()
-
-            itens_hidden_fields_dict['vicms'] = item.format_valor_attr('vicms')
-            itens_hidden_fields_dict['vipi'] = item.format_valor_attr('vipi')
-
-            itens_editable_fields_dict[
-                'editable_field_inf_ad_prod'] = item.inf_ad_prod
-
-            itens_compra_dict['fields'] = itens_fields_dict
-            itens_compra_dict['hidden_fields'] = itens_hidden_fields_dict
-            itens_compra_dict['editable_fields'] = itens_editable_fields_dict
-
-            data.append(itens_compra_dict)
-
-        for pagamento in pagamentos:
-            pagamento_dict = {}
-            pagamento_dict['model'] = 'compras.pagamento'
-            pagamento_dict['pk'] = pagamento.id
-            pagamento_fields_dict = {}
-            pagamento_fields_dict['id'] = pagamento.id
-            pagamento_fields_dict['vencimento'] = pagamento.format_vencimento
-            pagamento_fields_dict[
-                'valor_parcela'] = pagamento.format_valor_parcela
-
-            pagamento_dict['fields'] = pagamento_fields_dict
-
-            data.append(pagamento_dict)
-
-        return HttpResponse(json.dumps(data), content_type='application/json')
-
-
-class GerarPedidoCompraView(View):
+class GerarPedidoCompraView(CustomView):
+    permission_codename = ['add_pedidocompra', 'change_pedidocompra', ]
 
     def get(self, request, *args, **kwargs):
         orcamento_id = kwargs.get('pk', None)
@@ -530,35 +376,31 @@ class GerarPedidoCompraView(View):
         return redirect(reverse_lazy('compras:editarpedidocompraview', kwargs={'pk': novo_pedido.id}))
 
 
-class CancelarCompraView(View):
+class CancelarOrcamentoCompraView(CustomView):
+    permission_codename = 'change_orcamentocompra'
 
     def get(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
-
-        if PedidoCompra.objects.filter(id=compra_id).exists():
-            instance = PedidoCompra.objects.get(id=compra_id)
-            redirect_url = 'compras:editarpedidocompraview'
-        else:
-            instance = OrcamentoCompra.objects.get(id=compra_id)
-            redirect_url = 'compras:editarorcamentocompraview'
-
+        instance = OrcamentoCompra.objects.get(id=compra_id)
         instance.status = '2'
         instance.save()
+        return redirect(reverse_lazy('compras:editarorcamentocompraview', kwargs={'pk': instance.id}))
 
-        return redirect(reverse_lazy(redirect_url, kwargs={'pk': instance.id}))
 
-
-class GerarCopiaCompraView(View):
+class CancelarPedidoCompraView(CustomView):
+    permission_codename = 'change_pedidocompra'
 
     def get(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
-        if PedidoCompra.objects.filter(id=compra_id).exists():
-            instance = PedidoCompra.objects.get(id=compra_id)
-            redirect_url = 'compras:editarpedidocompraview'
-        else:
-            instance = OrcamentoCompra.objects.get(id=compra_id)
-            redirect_url = 'compras:editarorcamentocompraview'
+        instance = PedidoCompra.objects.get(id=compra_id)
+        instance.status = '2'
+        instance.save()
+        return redirect(reverse_lazy('compras:editarpedidocompraview', kwargs={'pk': instance.id}))
 
+
+class GerarCopiaCompraView(CustomView):
+
+    def get(self, request, instance, redirect_url, *args, **kwargs):
         itens_compra = instance.itens_compra.all()
         pagamentos = instance.parcela_pagamento.all()
 
@@ -582,7 +424,28 @@ class GerarCopiaCompraView(View):
         return redirect(reverse_lazy(redirect_url, kwargs={'pk': instance.id}))
 
 
-class ReceberCompraView(View):
+class GerarCopiaOrcamentoCompraView(GerarCopiaCompraView):
+    permission_codename = 'add_orcamentocompra'
+
+    def get(self, request, *args, **kwargs):
+        compra_id = kwargs.get('pk', None)
+        instance = OrcamentoCompra.objects.get(id=compra_id)
+        redirect_url = 'compras:editarorcamentocompraview'
+        return super(GerarCopiaOrcamentoCompraView, self).get(request, instance, redirect_url, *args, **kwargs)
+
+
+class GerarCopiaPedidoCompraView(GerarCopiaCompraView):
+    permission_codename = 'add_pedidocompra'
+
+    def get(self, request, *args, **kwargs):
+        compra_id = kwargs.get('pk', None)
+        instance = PedidoCompra.objects.get(id=compra_id)
+        redirect_url = 'compras:editarpedidocompraview'
+        return super(GerarCopiaPedidoCompraView, self).get(request, instance, redirect_url, *args, **kwargs)
+
+
+class ReceberPedidoCompraView(CustomView):
+    permission_codename = 'change_pedidocompra'
 
     def get(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
@@ -641,7 +504,7 @@ class ReceberCompraView(View):
         return redirect(reverse_lazy('compras:listapedidocompraview'))
 
 
-class GerarPDFCompra(View):
+class GerarPDFCompra(CustomView):
 
     def gerar_pdf(self, title, compra, user_id):
         resp = HttpResponse(content_type='application/pdf')
@@ -721,6 +584,7 @@ class GerarPDFCompra(View):
 
 
 class GerarPDFOrcamentoCompra(GerarPDFCompra):
+    permission_codename = 'change_orcamentocompra'
 
     def get(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
@@ -735,6 +599,7 @@ class GerarPDFOrcamentoCompra(GerarPDFCompra):
 
 
 class GerarPDFPedidoCompra(GerarPDFCompra):
+    permission_codename = 'change_pedidocompra'
 
     def get(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)

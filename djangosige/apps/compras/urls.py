@@ -40,7 +40,6 @@ urlpatterns = [
         views.PedidoCompraEntregaHojeListView.as_view(), name='listapedidocomprahojeview'),
 
     # Request ajax
-    url(r'infofornecedor/$', views.InfoFornecedor.as_view(), name='infofornecedor'),
     url(r'infocompra/$', views.InfoCompra.as_view(), name='infocompra'),
 
     # Gerar pdf orcamento
@@ -52,13 +51,19 @@ urlpatterns = [
     # Gerar pedido a partir de um orçamento
     url(r'gerarpedidocompra/(?P<pk>[0-9]+)/$',
         views.GerarPedidoCompraView.as_view(), name='gerarpedidocompra'),
-    # Copiar orcamento/pedido cancelado ou realizado
-    url(r'copiarcompra/(?P<pk>[0-9]+)/$',
-        views.GerarCopiaCompraView.as_view(), name='copiarcompra'),
-    # Cancelar Pedido/Orcamento de compra
-    url(r'cancelarcompra/(?P<pk>[0-9]+)/$',
-        views.CancelarCompraView.as_view(), name='cancelarcompra'),
+    # Copiar orcamento cancelado ou realizado
+    url(r'copiarorcamentocompra/(?P<pk>[0-9]+)/$',
+        views.GerarCopiaOrcamentoCompraView.as_view(), name='copiarorcamentocompra'),
+    # Copiar pedido cancelado ou realizado
+    url(r'copiarpedidocompra/(?P<pk>[0-9]+)/$',
+        views.GerarCopiaPedidoCompraView.as_view(), name='copiarpedidocompra'),
+    # Cancelar Pedido de compra
+    url(r'cancelarpedidocompra/(?P<pk>[0-9]+)/$',
+        views.CancelarPedidoCompraView.as_view(), name='cancelarpedidocompra'),
+    # Cancelar Orcamento de compra
+    url(r'cancelarorcamentocompra/(?P<pk>[0-9]+)/$',
+        views.CancelarOrcamentoCompraView.as_view(), name='cancelarorcamentocompra'),
     # Receber Pedido de compra
-    url(r'recebercompra/(?P<pk>[0-9]+)/$',
-        views.ReceberCompraView.as_view(), name='recebercompra'),
+    url(r'receberpedidocompra/(?P<pk>[0-9]+)/$',
+        views.ReceberPedidoCompraView.as_view(), name='receberpedidocompra'),
 ]

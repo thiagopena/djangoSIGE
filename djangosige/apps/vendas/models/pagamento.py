@@ -47,6 +47,12 @@ class CondicaoPagamento(models.Model):
     dias_recorrencia = models.IntegerField(default=0)
     parcela_inicial = models.IntegerField(default=0)  # Dias
 
+    class Meta:
+        verbose_name = "Condição de Pagamento"
+        permissions = (
+            ("view_condicaopagamento", "Can view condicao pagamento"),
+        )
+
     def __unicode__(self):
         s = u'%s' % (self.descricao)
         return s

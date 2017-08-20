@@ -51,10 +51,6 @@ urlpatterns = [
     ), name='editarcondicaopagamentoview'),
 
     # Request ajax views
-    url(r'infocliente/$', views.InfoCliente.as_view(), name='infocliente'),
-    url(r'infotransportadora/$', views.InfoTransportadora.as_view(),
-        name='infotransportadora'),
-    url(r'infoproduto/$', views.InfoProduto.as_view(), name='infoproduto'),
     url(r'infocondpagamento/$', views.InfoCondicaoPagamento.as_view(),
         name='infocondpagamento'),
     url(r'infovenda/$', views.InfoVenda.as_view(), name='infovenda'),
@@ -68,10 +64,16 @@ urlpatterns = [
     # Gerar pedido a partir de um orçamento
     url(r'gerarpedidovenda/(?P<pk>[0-9]+)/$',
         views.GerarPedidoVendaView.as_view(), name='gerarpedidovenda'),
-    # Copiar orcamento/pedido cancelado ou baixado
-    url(r'copiarvenda/(?P<pk>[0-9]+)/$',
-        views.GerarCopiaVendaView.as_view(), name='copiarvenda'),
-    # Cancelar Pedido/Orcamento de venda
-    url(r'cancelarvenda/(?P<pk>[0-9]+)/$',
-        views.CancelarVendaView.as_view(), name='cancelarvenda'),
+    # Copiar orcamento cancelado ou baixado
+    url(r'copiarorcamentovenda/(?P<pk>[0-9]+)/$',
+        views.GerarCopiaOrcamentoVendaView.as_view(), name='copiarorcamentovenda'),
+    # Copiar pedido cancelado ou baixado
+    url(r'copiarpedidovenda/(?P<pk>[0-9]+)/$',
+        views.GerarCopiaPedidoVendaView.as_view(), name='copiarpedidovenda'),
+    # Cancelar Orcamento de venda
+    url(r'cancelarorcamentovenda/(?P<pk>[0-9]+)/$',
+        views.CancelarOrcamentoVendaView.as_view(), name='cancelarorcamentovenda'),
+    # Cancelar Pedido de venda
+    url(r'cancelarpedidovenda/(?P<pk>[0-9]+)/$',
+        views.CancelarPedidoVendaView.as_view(), name='cancelarpedidovenda'),
 ]

@@ -7,9 +7,7 @@ from django.views.generic.edit import UpdateView
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
-
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
+from django.contrib.auth.models import Permission
 
 from django.db import DatabaseError
 from django.db.models.query_utils import Q
@@ -22,26 +20,25 @@ from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template import loader
 
+from djangosige.apps.base.views_mixins import SuperUserRequiredMixin
+
 from .forms import UserLoginForm, UserRegistrationForm, PasswordResetForm, SetPasswordForm, PerfilUsuarioForm
 from .models import Usuario
-from djangosige.configs.settings import DEFAULT_FROM_EMAIL, SESSION_EXPIRE_AT_BROWSER_CLOSE
+from djangosige.configs.settings import DEFAULT_FROM_EMAIL
 
 from djangosige.apps.cadastro.forms import MinhaEmpresaForm
 from djangosige.apps.cadastro.models import MinhaEmpresa
 
+import operator
+from functools import reduce
 
-class SuperUserRequiredMixin(object):
 
-    @method_decorator(login_required(login_url='login:loginview'))
-    def dispatch(self, request, *args, **kwargs):
-        if not request.user.is_superuser:
-            messages.add_message(
-                request,
-                messages.WARNING,
-                u'Apenas o administrador tem permissão para realizar esta operação.',
-                'permission_warning')
-            return redirect('base:index')
-        return super(SuperUserRequiredMixin, self).dispatch(request, *args, **kwargs)
+DEFAULT_PERMISSION_MODELS = ['cliente', 'fornecedor', 'produto',
+                             'empresa', 'transportadora', 'unidade', 'marca', 'categoria', 'orcamentocompra', 'pedidocompra', 'condicaopagamento', 'orcamentovenda', 'pedidovenda',
+                             'naturezaoperacao', 'notafiscalentrada', 'notafiscalsaida', 'grupofiscal', 'lancamento', 'planocontasgrupo', 'localestoque', 'movimentoestoque', ]
+
+CUSTOM_PERMISSIONS = ['configurar_nfe', 'emitir_notafiscal', 'cancelar_notafiscal', 'gerar_danfe', 'consultar_cadastro', 'inutilizar_notafiscal', 'consultar_notafiscal',
+                      'baixar_notafiscal', 'manifestacao_destinatario', 'faturar_pedidovenda', 'faturar_pedidocompra', 'acesso_fluxodecaixa', 'consultar_estoque', ]
 
 
 class UserFormView(View):
@@ -63,7 +60,6 @@ class UserFormView(View):
             user = form.authenticate_user(username=username, password=password)
             if user:
                 if not request.POST.get('remember_me', None):
-                    SESSION_EXPIRE_AT_BROWSER_CLOSE = True
                     request.session.set_expiry(0)
                 login(request, user)
                 return redirect('base:index')
@@ -88,7 +84,6 @@ class UserRegistrationFormView(SuperUserRequiredMixin, SuccessMessageMixin, Form
         form = self.form_class(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             password_confirm = form.cleaned_data['confirm']
             if password == password_confirm:
@@ -386,3 +381,32 @@ class UsuarioDetailView(SuperUserRequiredMixin, TemplateView):
 class DeletarUsuarioView(SuperUserRequiredMixin, DeleteView):
     model = User
     success_url = reverse_lazy('login:usuariosview')
+
+
+class EditarPermissoesUsuarioView(SuperUserRequiredMixin, TemplateView):
+    template_name = 'login/editar_permissoes_user.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EditarPermissoesUsuarioView,
+                        self).get_context_data(**kwargs)
+        user = User.objects.get(pk=self.kwargs['pk'])
+        context['user'] = user
+        condition = reduce(operator.or_, [Q(codename__icontains=s) for s in [
+                           'add_', 'change_', 'view_', 'delete_']])
+        context['default_permissions'] = Permission.objects.filter(
+            condition, content_type__model__in=DEFAULT_PERMISSION_MODELS)
+        context['custom_permissions'] = Permission.objects.filter(
+            codename__in=CUSTOM_PERMISSIONS)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        user = User.objects.get(pk=self.kwargs['pk'])
+        if not user.is_superuser:
+            user.user_permissions.clear()
+            for nova_permissao_codename in request.POST.getlist('select_permissoes'):
+                nova_permissao = Permission.objects.get(
+                    codename=nova_permissao_codename)
+                user.user_permissions.add(nova_permissao)
+        messages.success(
+            self.request, 'Permissões do usuário <b>{0}</b> atualizadas com sucesso.'.format(user.username))
+        return redirect(reverse_lazy('login:usuariodetailview', kwargs={'pk': self.kwargs['pk']}))

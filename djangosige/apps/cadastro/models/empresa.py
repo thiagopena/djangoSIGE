@@ -22,6 +22,12 @@ class Empresa(Pessoa):
     cnae = models.CharField(max_length=10, blank=True, null=True)
     iest = models.CharField(max_length=32, null=True, blank=True)
 
+    class Meta:
+        verbose_name = "Empresa"
+        permissions = (
+            ("view_empresa", "Can view empresa"),
+        )
+
     @property
     def caminho_completo_logo(self):
         if self.logo_file.name != 'imagens/logo.png':

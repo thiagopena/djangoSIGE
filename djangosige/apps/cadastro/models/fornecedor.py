@@ -7,3 +7,9 @@ from .base import Pessoa
 
 class Fornecedor(Pessoa):
     ramo = models.CharField(max_length=64, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Fornecedor"
+        permissions = (
+            ("view_fornecedor", "Can view fornecedor"),
+        )

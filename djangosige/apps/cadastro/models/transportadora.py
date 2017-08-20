@@ -5,7 +5,12 @@ from .base import Pessoa, UF_SIGLA
 
 
 class Transportadora(Pessoa):
-    pass
+
+    class Meta:
+        verbose_name = "Transportadora"
+        permissions = (
+            ("view_transportadora", "Can view transportadora"),
+        )
 
 
 class Veiculo(models.Model):

@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic.base import TemplateView
-from django.views.generic import ListView, View
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
+
+from djangosige.apps.base.custom_views import CustomView, CustomCreateView, CustomListView, CustomUpdateView, CustomTemplateView
 
 from djangosige.apps.fiscal.forms import NotaFiscalSaidaForm, NotaFiscalEntradaForm, AutXMLFormSet, ConfiguracaoNotaFiscalForm, EmissaoNotaFiscalForm, CancelamentoNotaFiscalForm, \
     ConsultarCadastroForm, InutilizarNotasForm, ConsultarNotaForm, BaixarNotaForm, ManifestacaoDestinatarioForm
@@ -55,7 +54,7 @@ class NotaFiscalViewMixin(object):
             item.save()
 
 
-class AdicionarNotaFiscalView(CreateView, NotaFiscalViewMixin):
+class AdicionarNotaFiscalView(CustomCreateView, NotaFiscalViewMixin):
 
     def get_context_data(self, **kwargs):
         context = super(AdicionarNotaFiscalView,
@@ -99,16 +98,7 @@ class AdicionarNotaFiscalView(CreateView, NotaFiscalViewMixin):
 
             return self.form_valid(form)
 
-        return self.form_invalid(form, aut_form)
-
-    def form_valid(self, form):
-        super(AdicionarNotaFiscalView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form, aut_form):
-        return self.render_to_response(self.get_context_data(form=form, aut_form=aut_form,))
+        return self.form_invalid(form=form, aut_form=aut_form)
 
 
 class AdicionarNotaFiscalSaidaView(AdicionarNotaFiscalView):
@@ -116,6 +106,7 @@ class AdicionarNotaFiscalSaidaView(AdicionarNotaFiscalView):
     template_name = "fiscal/nota_fiscal/nota_fiscal_add.html"
     success_url = reverse_lazy('fiscal:listanotafiscalsaidaview')
     success_message = "Nota fiscal N°<b>%(n_nf)s </b>gerada com sucesso."
+    permission_codename = 'add_notafiscalsaida'
 
     def view_context(self, context):
         context['title_complete'] = 'GERAR NOTA FISCAL'
@@ -161,21 +152,11 @@ class AdicionarNotaFiscalSaidaView(AdicionarNotaFiscalView):
         return super(AdicionarNotaFiscalSaidaView, self).post(request, form_class, *args, **kwargs)
 
 
-class NotaFiscalListView(ListView, NotaFiscalViewMixin):
+class NotaFiscalListView(CustomListView, NotaFiscalViewMixin):
 
     def get_context_data(self, **kwargs):
         context = super(NotaFiscalListView, self).get_context_data(**kwargs)
         return self.view_context(context)
-
-    def get_queryset(self, object):
-        return object.objects.all()
-
-    def post(self, request, object, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = object.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
 
 
 class NotaFiscalSaidaListView(NotaFiscalListView):
@@ -183,6 +164,7 @@ class NotaFiscalSaidaListView(NotaFiscalListView):
     model = NotaFiscalSaida
     context_object_name = 'all_notas'
     success_url = reverse_lazy('fiscal:listanotafiscalsaidaview')
+    permission_codename = 'view_notafiscalsaida'
 
     def view_context(self, context):
         context['title_complete'] = 'NOTAS FISCAIS'
@@ -204,6 +186,7 @@ class NotaFiscalEntradaListView(NotaFiscalListView):
     model = NotaFiscalEntrada
     context_object_name = 'all_notas'
     success_url = reverse_lazy('fiscal:listanotafiscalentradaview')
+    permission_codename = 'view_notafiscalentrada'
 
     def view_context(self, context):
         context[
@@ -221,7 +204,7 @@ class NotaFiscalEntradaListView(NotaFiscalListView):
         return super(NotaFiscalEntradaListView, self).post(request, NotaFiscalEntrada)
 
 
-class EditarNotaFiscalView(UpdateView, NotaFiscalViewMixin):
+class EditarNotaFiscalView(CustomUpdateView, NotaFiscalViewMixin):
 
     def get_context_data(self, **kwargs):
         context = super(EditarNotaFiscalView, self).get_context_data(**kwargs)
@@ -234,12 +217,6 @@ class EditarNotaFiscalView(UpdateView, NotaFiscalViewMixin):
         else:
             return self.success_message % dict(cleaned_data, n_nf=self.object.n_nf_entrada)
 
-    def form_valid(self, form):
-        super(EditarNotaFiscalView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
 
 class EditarNotaFiscalSaidaView(EditarNotaFiscalView):
     form_class = NotaFiscalSaidaForm
@@ -247,6 +224,7 @@ class EditarNotaFiscalSaidaView(EditarNotaFiscalView):
     template_name = "fiscal/nota_fiscal/nota_fiscal_edit.html"
     success_url = reverse_lazy('fiscal:listanotafiscalsaidaview')
     success_message = "Nota fiscal N°<b>%(n_nf)s </b>editada com sucesso."
+    permission_codename = 'change_notafiscalsaida'
 
     def view_context(self, context):
         context['title_complete'] = 'EDITAR NOTA FISCAL DE SAÍDA ' + \
@@ -295,7 +273,7 @@ class EditarNotaFiscalSaidaView(EditarNotaFiscalView):
 
             return self.form_valid(form)
 
-        return self.form_invalid(form, aut_form)
+        return self.form_invalid(form=form, aut_form=aut_form)
 
     def form_invalid(self, form, aut_form):
         errors_validacao = ErrosValidacaoNotaFiscal.objects.filter(
@@ -311,6 +289,7 @@ class EditarNotaFiscalEntradaView(EditarNotaFiscalView):
     template_name = "fiscal/nota_fiscal/nota_fiscal_edit.html"
     success_url = reverse_lazy('fiscal:listanotafiscalentradaview')
     success_message = "Nota fiscal N°<b>%(n_nf)s </b>editada com sucesso."
+    permission_codename = 'change_notafiscalentrada'
 
     def view_context(self, context):
         context['title_complete'] = 'EDITAR NOTA FISCAL DE ENTRADA ' + \
@@ -338,14 +317,12 @@ class EditarNotaFiscalEntradaView(EditarNotaFiscalView):
 
             return self.form_valid(form)
 
-        return self.form_invalid(form)
-
-    def form_invalid(self, form):
-        return self.render_to_response(self.get_context_data(form=form,))
+        return self.form_invalid(form=form)
 
 
 # Gerar nota fiscal a partir de um pedido de venda
-class GerarNotaFiscalSaidaView(View):
+class GerarNotaFiscalSaidaView(CustomView):
+    permission_codename = ['add_notafiscalsaida', 'change_notafiscalsaida']
 
     def get(self, request, *args, **kwargs):
         pedido_id = kwargs.get('pk', None)
@@ -400,9 +377,10 @@ class GerarNotaFiscalSaidaView(View):
         return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': nova_nota.id}))
 
 
-class ConfiguracaoNotaFiscalView(TemplateView):
+class ConfiguracaoNotaFiscalView(CustomTemplateView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_config.html'
     success_url = reverse_lazy('fiscal:configuracaonotafiscal')
+    permission_codename = 'configurar_nfe'
 
     def get_context_data(self, **kwargs):
         context = super(ConfiguracaoNotaFiscalView,
@@ -442,7 +420,8 @@ class ConfiguracaoNotaFiscalView(TemplateView):
         return self.render_to_response(self.get_context_data(form=form, object=self.object,))
 
 
-class ValidarNotaView(View):
+class ValidarNotaView(CustomView):
+    permission_codename = 'change_notafiscalsaida'
 
     def get(self, request, *args, **kwargs):
         processador_nota = ProcessadorNotaFiscal()
@@ -458,8 +437,9 @@ class ValidarNotaView(View):
         return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': nfe_id}))
 
 
-class EmitirNotaView(TemplateView):
+class EmitirNotaView(CustomTemplateView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_sefaz.html'
+    permission_codename = ['change_notafiscalsaida', 'emitir_notafiscal']
 
     def emitir_nota(self):
         processador_nota = ProcessadorNotaFiscal()
@@ -511,7 +491,8 @@ class EmitirNotaView(TemplateView):
         return self.render_to_response(self.get_context_data(form=form, object=self.object,))
 
 
-class GerarCopiaNotaView(View):
+class GerarCopiaNotaView(CustomView):
+    permission_codename = ['add_notafiscalsaida', 'change_notafiscalsaida']
 
     def get(self, request, *args, **kwargs):
         nota_id = kwargs.get('pk', None)
@@ -546,7 +527,7 @@ class GerarCopiaNotaView(View):
         return redirect(reverse_lazy(redirect_url, kwargs={'pk': instance.id}))
 
 
-class ImportarNotaView(View):
+class ImportarNotaView(CustomView):
 
     def post(self, request, *args, **kwargs):
         if len(request.FILES):
@@ -565,19 +546,25 @@ class ImportarNotaView(View):
 
 
 class ImportarNotaSaidaView(ImportarNotaView):
+    permission_codename = ['add_notafiscalsaida',
+                           'view_notafiscalsaida', 'change_notafiscalsaida']
 
     def get_redirect_url(self):
         return redirect(reverse_lazy('fiscal:listanotafiscalsaidaview'))
 
 
 class ImportarNotaEntradaView(ImportarNotaView):
+    permission_codename = ['add_notafiscalentrada',
+                           'view_notafiscalentrada', 'change_notafiscalentrada']
 
     def get_redirect_url(self):
         return redirect(reverse_lazy('fiscal:listanotafiscalentradaview'))
 
 
-class CancelarNotaView(TemplateView):
+class CancelarNotaView(CustomTemplateView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_sefaz.html'
+    permission_codename = ['view_notafiscalsaida',
+                           'change_notafiscalsaida', 'cancelar_notafiscal']
 
     def cancelar_nota(self):
         processador_nota = ProcessadorNotaFiscal()
@@ -628,7 +615,9 @@ class CancelarNotaView(TemplateView):
         return self.render_to_response(self.get_context_data(form=form, object=self.object,))
 
 
-class GerarDanfeView(View):
+class GerarDanfeView(CustomView):
+    permission_codename = ['view_notafiscalsaida',
+                           'change_notafiscalsaida', 'gerar_danfe']
 
     def get(self, request, *args, **kwargs):
         nota_id = kwargs.get('pk', None)
@@ -648,7 +637,9 @@ class GerarDanfeView(View):
             return resp
 
 
-class GerarDanfceView(View):
+class GerarDanfceView(CustomView):
+    permission_codename = ['view_notafiscalsaida',
+                           'change_notafiscalsaida', 'gerar_danfe']
 
     def get(self, request, *args, **kwargs):
         nota_id = kwargs.get('pk', None)
@@ -668,8 +659,9 @@ class GerarDanfceView(View):
             return resp
 
 
-class ConsultarCadastroView(TemplateView):
+class ConsultarCadastroView(CustomTemplateView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_sefaz.html'
+    permission_codename = ['view_notafiscalsaida', 'consultar_cadastro']
 
     def consultar_cadastro(self, empresa, salvar_arquivos):
         processador_nota = ProcessadorNotaFiscal()
@@ -713,8 +705,10 @@ class ConsultarCadastroView(TemplateView):
         return self.render_to_response(self.get_context_data(form=form,))
 
 
-class InutilizarNotasView(TemplateView):
+class InutilizarNotasView(CustomTemplateView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_sefaz.html'
+    permission_codename = ['view_notafiscalsaida',
+                           'change_notafiscalsaida', 'inutilizar_notafiscal']
 
     def inutilizar_notas(self, empresa, ambiente, modelo, serie, numero_inicial, numero_final, justificativa, salvar_arquivos):
         processador_nota = ProcessadorNotaFiscal()
@@ -767,8 +761,10 @@ class InutilizarNotasView(TemplateView):
         return self.render_to_response(self.get_context_data(form=form,))
 
 
-class ConsultarNotaView(TemplateView):
+class ConsultarNotaView(CustomTemplateView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_sefaz.html'
+    permission_codename = ['view_notafiscalsaida',
+                           'change_notafiscalsaida', 'consultar_notafiscal']
 
     def consultar_nota(self, chave, ambiente, salvar_arquivos):
         processador_nota = ProcessadorNotaFiscal()
@@ -828,8 +824,10 @@ class ConsultarNotaView(TemplateView):
         return self.render_to_response(self.get_context_data(form=form,))
 
 
-class BaixarNotaView(TemplateView):
+class BaixarNotaView(CustomTemplateView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_sefaz.html'
+    permission_codename = ['view_notafiscalsaida',
+                           'change_notafiscalsaida', 'baixar_notafiscal']
 
     def baixar_nota(self, chave, ambiente, ambiente_nacional, salvar_arquivos):
         processador_nota = ProcessadorNotaFiscal()
@@ -892,8 +890,9 @@ class BaixarNotaView(TemplateView):
         return self.render_to_response(self.get_context_data(form=form,))
 
 
-class ManifestacaoDestinatarioView(TemplateView):
+class ManifestacaoDestinatarioView(CustomTemplateView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_sefaz.html'
+    permission_codename = ['view_notafiscalsaida', 'manifestacao_destinatario']
 
     def efetuar_manifesto(self, chave, cnpj, ambiente, tipo_manifesto, justificativa, ambiente_nacional, salvar_arquivos):
         processador_nota = ProcessadorNotaFiscal()

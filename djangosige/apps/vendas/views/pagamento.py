@@ -1,22 +1,22 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import ListView, View
-from django.contrib import messages
-from django.shortcuts import redirect
+from django.views.generic import View
 from django.http import HttpResponse
 from django.core import serializers
+
+from djangosige.apps.base.custom_views import CustomCreateView, CustomListView, CustomUpdateView
 
 from djangosige.apps.vendas.forms import CondicaoPagamentoForm
 from djangosige.apps.vendas.models import CondicaoPagamento
 
 
-class AdicionarCondicaoPagamentoView(CreateView):
+class AdicionarCondicaoPagamentoView(CustomCreateView):
     form_class = CondicaoPagamentoForm
     template_name = "vendas/pagamento/condicao_pagamento_add.html"
     success_url = reverse_lazy('vendas:listacondicaopagamentoview')
     success_message = "Condição de pagamento <b>%(descricao)s </b>adicionada com sucesso."
+    permission_codename = 'add_condicaopagamento'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
@@ -29,18 +29,13 @@ class AdicionarCondicaoPagamentoView(CreateView):
             'vendas:listacondicaopagamentoview')
         return context
 
-    def form_valid(self, form):
-        super(AdicionarCondicaoPagamentoView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
 
-
-class CondicaoPagamentoListView(ListView):
+class CondicaoPagamentoListView(CustomListView):
     template_name = 'vendas/pagamento/condicao_pagamento_list.html'
     model = CondicaoPagamento
     context_object_name = 'all_cond_pagamento'
     success_url = reverse_lazy('vendas:listacondicaopagamentoview')
+    permission_codename = 'view_condicaopagamento'
 
     def get_context_data(self, **kwargs):
         context = super(CondicaoPagamentoListView,
@@ -49,23 +44,14 @@ class CondicaoPagamentoListView(ListView):
         context['add_url'] = reverse_lazy('vendas:addcondicaopagamentoview')
         return context
 
-    def get_queryset(self):
-        return CondicaoPagamento.objects.all()
 
-    def post(self, request, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = CondicaoPagamento.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
-
-
-class EditarCondicaoPagamentoView(UpdateView):
+class EditarCondicaoPagamentoView(CustomUpdateView):
     form_class = CondicaoPagamentoForm
     model = CondicaoPagamento
     template_name = "vendas/pagamento/condicao_pagamento_edit.html"
     success_url = reverse_lazy('vendas:listacondicaopagamentoview')
     success_message = "Condição de pagamento <b>%(descricao)s </b>editada com sucesso."
+    permission_codename = 'change_condicaopagamento'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
@@ -76,12 +62,6 @@ class EditarCondicaoPagamentoView(UpdateView):
         context['return_url'] = reverse_lazy(
             'vendas:listacondicaopagamentoview')
         return context
-
-    def form_valid(self, form):
-        super(EditarCondicaoPagamentoView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
 
 
 class InfoCondicaoPagamento(View):

@@ -60,6 +60,13 @@ class MovimentoEstoque(models.Model):
                                       MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     observacoes = models.CharField(max_length=1055, null=True, blank=True)
 
+    class Meta:
+        verbose_name = "Movimento de Estoque"
+        permissions = (
+            ("view_movimentoestoque", "Can view movimento estoque"),
+            ("consultar_estoque", "Pode consultar estoque"),
+        )
+
     @property
     def format_data_movimento(self):
         return '%s' % date(self.data_movimento, "d/m/Y")

@@ -1,16 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from django.views.generic import ListView
-from django.views.generic.edit import CreateView, UpdateView
-from django.contrib import messages
-from django.shortcuts import redirect
+from djangosige.apps.base.custom_views import CustomCreateView, CustomListView, CustomUpdateView
 
 from djangosige.apps.cadastro.forms import PessoaJuridicaForm, PessoaFisicaForm, EnderecoFormSet, TelefoneFormSet, EmailFormSet, \
     SiteFormSet, BancoFormSet, DocumentoFormSet
 from djangosige.apps.cadastro.models import PessoaFisica, PessoaJuridica, Endereco, Telefone, Email, Site, Banco, Documento
 
 
-class AdicionarPessoaView(CreateView):
+class AdicionarPessoaView(CustomCreateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, nome_razao_social=self.object.nome_razao_social)
@@ -138,39 +135,23 @@ class AdicionarPessoaView(CreateView):
         pessoa_fisica_form = PessoaFisicaForm(
             request.POST, prefix='pessoa_fis_form')
 
-        return self.form_invalid(form, pessoa_juridica_form, pessoa_fisica_form, endereco_form, banco_form, documento_form, formsets, veiculo_form)
-
-    def form_valid(self, form):
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form, pessoa_juridica_form, pessoa_fisica_form, endereco_form, banco_form, documento_form, formsets, veiculo_form):
-        return self.render_to_response(self.get_context_data(form=form,
-                                                             pessoa_juridica_form=pessoa_juridica_form,
-                                                             pessoa_fisica_form=pessoa_fisica_form,
-                                                             endereco_form=endereco_form,
-                                                             banco_form=banco_form,
-                                                             documento_form=documento_form,
-                                                             formsets=formsets,
-                                                             veiculo_form=veiculo_form))
+        return self.form_invalid(form=form,
+                                 pessoa_juridica_form=pessoa_juridica_form,
+                                 pessoa_fisica_form=pessoa_fisica_form,
+                                 endereco_form=endereco_form,
+                                 banco_form=banco_form,
+                                 documento_form=documento_form,
+                                 formsets=formsets,
+                                 veiculo_form=veiculo_form)
 
 
-class PessoasListView(ListView):
+class PessoasListView(CustomListView):
 
-    def get_queryset(self, object):
-        return object.objects.all()
-
-    # Remover items selecionados da database
-    def post(self, request, object, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = object.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
+    def __init__(self, *args, **kwargs):
+        super(PessoasListView, self).__init__(*args, **kwargs)
 
 
-class EditarPessoaView(UpdateView):
+class EditarPessoaView(CustomUpdateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, nome_razao_social=self.object.nome_razao_social)
@@ -254,11 +235,9 @@ class EditarPessoaView(UpdateView):
         if form.is_valid():
             self.object = form.save(commit=False)
             if self.object.tipo_pessoa == 'PJ':
-                # , instance=self.object)
                 pessoa_form = PessoaJuridicaForm(
                     request.POST, prefix='pessoa_jur_form')
             else:
-                # , instance=self.object)
                 pessoa_form = PessoaFisicaForm(
                     request.POST, prefix='pessoa_fis_form')
 
@@ -339,21 +318,12 @@ class EditarPessoaView(UpdateView):
             pessoa_fisica_form = PessoaFisicaForm(
                 request.POST, prefix='pessoa_fis_form', instance=self.object)
 
-        return self.form_invalid(form, pessoa_juridica_form, pessoa_fisica_form, endereco_form, banco_form, documento_form, formsets, veiculo_form, logo_file=logo_file)
-
-    def form_valid(self, form):
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form, pessoa_juridica_form, pessoa_fisica_form, endereco_form, banco_form, documento_form, formsets, veiculo_form, *args, **kwargs):
-        logo_file = kwargs.pop('logo_file', None)
-        return self.render_to_response(self.get_context_data(form=form,
-                                                             pessoa_juridica_form=pessoa_juridica_form,
-                                                             pessoa_fisica_form=pessoa_fisica_form,
-                                                             endereco_form=endereco_form,
-                                                             banco_form=banco_form,
-                                                             documento_form=documento_form,
-                                                             formsets=formsets,
-                                                             veiculo_form=veiculo_form,
-                                                             logo_file=logo_file))
+        return self.form_invalid(form=form,
+                                 pessoa_juridica_form=pessoa_juridica_form,
+                                 pessoa_fisica_form=pessoa_fisica_form,
+                                 endereco_form=endereco_form,
+                                 banco_form=banco_form,
+                                 documento_form=documento_form,
+                                 formsets=formsets,
+                                 veiculo_form=veiculo_form,
+                                 logo_file=logo_file)

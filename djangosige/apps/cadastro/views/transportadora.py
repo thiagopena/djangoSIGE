@@ -11,8 +11,7 @@ from .base import AdicionarPessoaView, PessoasListView, EditarPessoaView
 class AdicionarTransportadoraView(AdicionarPessoaView):
     template_name = "cadastro/pessoa_add.html"
     success_url = reverse_lazy('cadastro:listatransportadorasview')
-    success_message = """ Transportadora <b>%(nome_razao_social)s
-    </b>adicionada com sucesso."""
+    success_message = "Transportadora <b>%(nome_razao_social)s</b>adicionada com sucesso."
 
     def get_context_data(self, **kwargs):
         context = super(AdicionarTransportadoraView,
@@ -53,22 +52,13 @@ class TransportadorasListView(PessoasListView):
         context['tipo_pessoa'] = 'transportadora'
         return context
 
-    def get_queryset(self):
-        return super(
-            TransportadorasListView, self).get_queryset(object=Transportadora)
-
-    def post(self, request, *args, **kwargs):
-        return super(
-            TransportadorasListView, self).post(request, Transportadora)
-
 
 class EditarTransportadoraView(EditarPessoaView):
     form_class = TransportadoraForm
     model = Transportadora
     template_name = "cadastro/pessoa_edit.html"
     success_url = reverse_lazy('cadastro:listatransportadorasview')
-    success_message = """ Transportadora <b>%(nome_razao_social)s
-                            </b>editada com sucesso."""
+    success_message = "Transportadora <b>%(nome_razao_social)s</b>editada com sucesso."
 
     def get_context_data(self, **kwargs):
         context = super(EditarTransportadoraView,

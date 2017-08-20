@@ -13,6 +13,12 @@ class PlanoContasGrupo(models.Model):
     tipo_grupo = models.CharField(max_length=1, choices=TIPO_GRUPO_ESCOLHAS)
     descricao = models.CharField(max_length=255)
 
+    class Meta:
+        verbose_name = "Grupo do Plano de Contas"
+        permissions = (
+            ("view_planocontasgrupo", "Can view plano contas"),
+        )
+
     def __unicode__(self):
         s = u'%s' % (self.descricao)
         return s

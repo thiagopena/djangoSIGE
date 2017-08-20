@@ -40,6 +40,12 @@ class Lancamento(models.Model):
     movimento_caixa = models.ForeignKey(
         'financeiro.MovimentoCaixa', related_name="movimento_caixa_lancamento", on_delete=models.SET_NULL, null=True, blank=True)
 
+    class Meta:
+        verbose_name = "Lançamento"
+        permissions = (
+            ("view_lancamento", "Can view lancamento"),
+        )
+
     def format_valor_liquido(self):
         return locale.format(u'%.2f', self.valor_liquido, 1)
 
@@ -98,6 +104,12 @@ class MovimentoCaixa(models.Model):
                                    MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     saidas = models.DecimalField(max_digits=13, decimal_places=2, validators=[
                                  MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+
+    class Meta:
+        verbose_name = "Movimento de Caixa"
+        permissions = (
+            ("acesso_fluxodecaixa", "Pode acessar o Fluxo de Caixa"),
+        )
 
     @property
     def format_data_movimento(self):

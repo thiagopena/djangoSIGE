@@ -38,6 +38,10 @@ urlpatterns = [
     url(r'deletaruser/(?P<pk>[0-9]+)/$',
         views.DeletarUsuarioView.as_view(), name='deletarusuarioview'),
 
+    # permissoes usuario
+    url(r'permissoesusuario/(?P<pk>[0-9]+)/$',
+        views.EditarPermissoesUsuarioView.as_view(), name='permissoesusuarioview'),
+
     # selecionar empresa
     url(r'selecionarempresa/$', views.SelecionarMinhaEmpresaView.as_view(),
         name='selecionarempresaview'),

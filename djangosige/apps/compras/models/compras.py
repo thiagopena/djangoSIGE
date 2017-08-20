@@ -193,7 +193,7 @@ class Compra(models.Model):
         if self.tipo_desconto == '0':
             return locale.format(u'%.2f', self.desconto, 1)
         else:
-            itens = ItensVenda.objects.filter(venda_id=self.id)
+            itens = ItensCompra.objects.filter(compra_id=self.id)
             tot = 0
             for it in itens:
                 tot += it.get_total_sem_desconto()
@@ -243,6 +243,12 @@ class OrcamentoCompra(Compra):
     status = models.CharField(
         max_length=1, choices=STATUS_ORCAMENTO_ESCOLHAS, default='0')
 
+    class Meta:
+        verbose_name = "Orçamento de Compra"
+        permissions = (
+            ("view_orcamentocompra", "Can view orcamento compra"),
+        )
+
     @property
     def format_data_vencimento(self):
         return '%s' % date(self.data_vencimento, "d/m/Y")
@@ -269,6 +275,13 @@ class PedidoCompra(Compra):
     data_entrega = models.DateField(null=True, blank=True)
     status = models.CharField(
         max_length=1, choices=STATUS_PEDIDO_COMPRA_ESCOLHAS, default='0')
+
+    class Meta:
+        verbose_name = "Pedido de Compra"
+        permissions = (
+            ("view_pedidocompra", "Can view pedido compra"),
+            ("faturar_pedidocompra", "Pode faturar Pedidos de Compra"),
+        )
 
     @property
     def format_data_entrega(self):

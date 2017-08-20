@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import ListView
-from django.contrib import messages
-from django.shortcuts import redirect
+
+from djangosige.apps.base.custom_views import CustomCreateView, CustomListView, CustomUpdateView
 
 from djangosige.apps.fiscal.forms import GrupoFiscalForm, ICMSForm, ICMSSNForm, ICMSUFDestForm, IPIForm, PISForm, COFINSForm
 from djangosige.apps.fiscal.models import GrupoFiscal, ICMS, ICMSSN, ICMSUFDest, IPI
@@ -12,11 +10,12 @@ from djangosige.apps.cadastro.models import MinhaEmpresa
 from djangosige.apps.login.models import Usuario
 
 
-class AdicionarGrupoFiscalView(CreateView):
+class AdicionarGrupoFiscalView(CustomCreateView):
     form_class = GrupoFiscalForm
     template_name = "fiscal/grupo_fiscal/grupo_fiscal_add.html"
     success_url = reverse_lazy('fiscal:listagrupofiscalview')
     success_message = "Grupo fiscal <b>%(descricao)s </b>adicionado com sucesso."
+    permission_codename = 'add_grupofiscal'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
@@ -70,8 +69,6 @@ class AdicionarGrupoFiscalView(CreateView):
             '.', '')
         request.POST = req_post
 
-        print(request.POST['ipi_form-valor_fixo'])
-
         form = GrupoFiscalForm(request.POST)
 
         # Tributação normal
@@ -112,29 +109,21 @@ class AdicionarGrupoFiscalView(CreateView):
         icms_form = ICMSForm(request.POST, prefix='icms_form')
         icmssn_form = ICMSSNForm(request.POST, prefix='icmssn_form')
 
-        return self.form_invalid(form, icms_form, icmssn_form, icms_dest_form, ipi_form, pis_form, cofins_form)
-
-    def form_valid(self, form):
-        super(AdicionarGrupoFiscalView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form, icms_form, icmssn_form, icms_dest_form, ipi_form, pis_form, cofins_form):
-        return self.render_to_response(self.get_context_data(form=form,
-                                                             icms_form=icms_form,
-                                                             icmssn_form=icmssn_form,
-                                                             icms_dest_form=icms_dest_form,
-                                                             ipi_form=ipi_form,
-                                                             pis_form=pis_form,
-                                                             cofins_form=cofins_form))
+        return self.form_invalid(form=form,
+                                 icms_form=icms_form,
+                                 icmssn_form=icmssn_form,
+                                 icms_dest_form=icms_dest_form,
+                                 ipi_form=ipi_form,
+                                 pis_form=pis_form,
+                                 cofins_form=cofins_form)
 
 
-class GrupoFiscalListView(ListView):
+class GrupoFiscalListView(CustomListView):
     template_name = 'fiscal/grupo_fiscal/grupo_fiscal_list.html'
     model = GrupoFiscal
     context_object_name = 'all_grupos'
     success_url = reverse_lazy('fiscal:listagrupofiscalview')
+    permission_codename = 'view_grupofiscal'
 
     def get_context_data(self, **kwargs):
         context = super(GrupoFiscalListView, self).get_context_data(**kwargs)
@@ -142,23 +131,14 @@ class GrupoFiscalListView(ListView):
         context['add_url'] = reverse_lazy('fiscal:addgrupofiscalview')
         return context
 
-    def get_queryset(self):
-        return GrupoFiscal.objects.all()
 
-    def post(self, request, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = GrupoFiscal.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
-
-
-class EditarGrupoFiscalView(UpdateView):
+class EditarGrupoFiscalView(CustomUpdateView):
     form_class = GrupoFiscalForm
     model = GrupoFiscal
     template_name = "fiscal/grupo_fiscal/grupo_fiscal_edit.html"
     success_url = reverse_lazy('fiscal:listagrupofiscalview')
     success_message = "Grupo fiscal <b>%(descricao)s </b>editado com sucesso."
+    permission_codename = 'change_grupofiscal'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
@@ -282,19 +262,10 @@ class EditarGrupoFiscalView(UpdateView):
         icms_form = ICMSForm(request.POST, prefix='icms_form')
         icmssn_form = ICMSSNForm(request.POST, prefix='icmssn_form')
 
-        return self.form_invalid(form, icms_form, icmssn_form, icms_dest_form, ipi_form, pis_form, cofins_form)
-
-    def form_valid(self, form):
-        super(EditarGrupoFiscalView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form, icms_form, icmssn_form, icms_dest_form, ipi_form, pis_form, cofins_form):
-        return self.render_to_response(self.get_context_data(form=form,
-                                                             icms_form=icms_form,
-                                                             icmssn_form=icmssn_form,
-                                                             icms_dest_form=icms_dest_form,
-                                                             ipi_form=ipi_form,
-                                                             pis_form=pis_form,
-                                                             cofins_form=cofins_form))
+        return self.form_invalid(form=form,
+                                 icms_form=icms_form,
+                                 icmssn_form=icmssn_form,
+                                 icms_dest_form=icms_dest_form,
+                                 ipi_form=ipi_form,
+                                 pis_form=pis_form,
+                                 cofins_form=cofins_form)

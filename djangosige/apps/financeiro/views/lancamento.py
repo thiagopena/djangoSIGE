@@ -1,20 +1,20 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import ListView, View
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import JsonResponse
 
-from itertools import chain
-from datetime import datetime
+from djangosige.apps.base.custom_views import CustomView, CustomCreateView, CustomListView, CustomUpdateView
 
 from djangosige.apps.financeiro.forms import ContaPagarForm, ContaReceberForm, SaidaForm, EntradaForm
-from djangosige.apps.financeiro.models import Saida, Entrada, MovimentoCaixa
+from djangosige.apps.financeiro.models import Lancamento, Saida, Entrada, MovimentoCaixa
 from djangosige.apps.vendas.models import PedidoVenda
 from djangosige.apps.compras.models import PedidoCompra
 from djangosige.apps.estoque.models import SaidaEstoque, ItensMovimento, ProdutoEstocado
+
+from itertools import chain
+from datetime import datetime
 
 
 class MovimentoCaixaMixin(object):
@@ -92,7 +92,8 @@ class MovimentoCaixaMixin(object):
             pass
 
 
-class AdicionarLancamentoBaseView(CreateView, MovimentoCaixaMixin):
+class AdicionarLancamentoBaseView(CustomCreateView, MovimentoCaixaMixin):
+    permission_codename = 'add_lancamento'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
@@ -145,15 +146,6 @@ class AdicionarLancamentoBaseView(CreateView, MovimentoCaixaMixin):
             return self.form_valid(form)
 
         return self.form_invalid(form)
-
-    def form_valid(self, form):
-        super(AdicionarLancamentoBaseView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form):
-        return self.render_to_response(self.get_context_data(form=form))
 
 
 class AdicionarContaPagarView(AdicionarLancamentoBaseView):
@@ -212,7 +204,8 @@ class AdicionarSaidaView(AdicionarLancamentoBaseView):
         return context
 
 
-class EditarLancamentoBaseView(UpdateView, MovimentoCaixaMixin):
+class EditarLancamentoBaseView(CustomUpdateView, MovimentoCaixaMixin):
+    permission_codename = 'change_lancamento'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
@@ -326,15 +319,6 @@ class EditarLancamentoBaseView(UpdateView, MovimentoCaixaMixin):
 
         return self.form_invalid(form)
 
-    def form_valid(self, form):
-        super(EditarLancamentoBaseView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form):
-        return self.render_to_response(self.get_context_data(form=form))
-
 
 class EditarContaPagarView(EditarLancamentoBaseView):
     form_class = ContaPagarForm
@@ -391,21 +375,24 @@ class EditarSaidaView(EditarLancamentoBaseView):
         return context
 
 
-class LancamentoListBaseView(ListView, MovimentoCaixaMixin):
+class LancamentoListBaseView(CustomListView, MovimentoCaixaMixin):
+    permission_codename = 'view_lancamento'
 
     def get_queryset(self, object, status):
         return object.objects.filter(status__in=status)
 
     # Remover items selecionados da database
-    def post(self, request, object, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = object.objects.get(id=key)
-                if(instance.movimento_caixa):
-                    self.remover_valor_movimento_caixa(
-                        instance, instance.movimento_caixa, instance.valor_liquido)
-                    self.verificar_remocao_movimento(instance.movimento_caixa)
-                instance.delete()
+    def post(self, request, *args, **kwargs):
+        if self.check_user_delete_permission(request, Lancamento):
+            for key, value in request.POST.items():
+                if value == "on":
+                    instance = self.model.objects.get(id=key)
+                    if(instance.movimento_caixa):
+                        self.remover_valor_movimento_caixa(
+                            instance, instance.movimento_caixa, instance.valor_liquido)
+                        self.verificar_remocao_movimento(
+                            instance.movimento_caixa)
+                    instance.delete()
         return redirect(self.success_url)
 
 
@@ -427,20 +414,22 @@ class LancamentoListView(LancamentoListBaseView):
         return all_lancamentos
 
     def post(self, request, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                if Entrada.objects.filter(id=key).exists():
-                    instance = Entrada.objects.get(id=key)
-                elif Saida.objects.filter(id=key).exists():
-                    instance = Saida.objects.get(id=key)
-                else:
-                    raise ValueError(
-                        'Entrada/Saida para o lancamento escolhido nao existe.')
-                if(instance.movimento_caixa):
-                    self.remover_valor_movimento_caixa(
-                        instance, instance.movimento_caixa, instance.valor_liquido)
-                    self.verificar_remocao_movimento(instance.movimento_caixa)
-                instance.delete()
+        if self.check_user_delete_permission(request, Lancamento):
+            for key, value in request.POST.items():
+                if value == "on":
+                    if Entrada.objects.filter(id=key).exists():
+                        instance = Entrada.objects.get(id=key)
+                    elif Saida.objects.filter(id=key).exists():
+                        instance = Saida.objects.get(id=key)
+                    else:
+                        raise ValueError(
+                            'Entrada/Saida para o lancamento escolhido nao existe.')
+                    if(instance.movimento_caixa):
+                        self.remover_valor_movimento_caixa(
+                            instance, instance.movimento_caixa, instance.valor_liquido)
+                        self.verificar_remocao_movimento(
+                            instance.movimento_caixa)
+                    instance.delete()
         return redirect(self.success_url)
 
 
@@ -459,9 +448,6 @@ class ContaPagarListView(LancamentoListBaseView):
     def get_queryset(self):
         return super(ContaPagarListView, self).get_queryset(object=Saida, status=['1', '2'])
 
-    def post(self, request, *args, **kwargs):
-        return super(ContaPagarListView, self).post(request, Saida)
-
 
 class ContaPagarAtrasadasListView(LancamentoListBaseView):
     template_name = 'financeiro/lancamento/lancamento_list.html'
@@ -478,9 +464,6 @@ class ContaPagarAtrasadasListView(LancamentoListBaseView):
 
     def get_queryset(self):
         return Saida.objects.filter(data_vencimento__lt=datetime.now().date(), status__in=['1', '2'])
-
-    def post(self, request, *args, **kwargs):
-        return super(ContaPagarAtrasadasListView, self).post(request, Saida)
 
 
 class ContaPagarHojeListView(ContaPagarAtrasadasListView):
@@ -513,9 +496,6 @@ class ContaReceberListView(LancamentoListBaseView):
     def get_queryset(self):
         return super(ContaReceberListView, self).get_queryset(object=Entrada, status=['1', '2'])
 
-    def post(self, request, *args, **kwargs):
-        return super(ContaReceberListView, self).post(request, Entrada)
-
 
 class ContaReceberAtrasadasListView(LancamentoListBaseView):
     template_name = 'financeiro/lancamento/lancamento_list.html'
@@ -532,9 +512,6 @@ class ContaReceberAtrasadasListView(LancamentoListBaseView):
 
     def get_queryset(self):
         return Entrada.objects.filter(data_vencimento__lt=datetime.now().date(), status__in=['1', '2'])
-
-    def post(self, request, *args, **kwargs):
-        return super(ContaReceberAtrasadasListView, self).post(request, Entrada)
 
 
 class ContaReceberHojeListView(ContaReceberAtrasadasListView):
@@ -567,9 +544,6 @@ class EntradaListView(LancamentoListBaseView):
     def get_queryset(self):
         return super(EntradaListView, self).get_queryset(object=Entrada, status=['0', ])
 
-    def post(self, request, *args, **kwargs):
-        return super(EntradaListView, self).post(request, Entrada)
-
 
 class SaidaListView(LancamentoListBaseView):
     template_name = 'financeiro/lancamento/lancamento_list.html'
@@ -586,11 +560,9 @@ class SaidaListView(LancamentoListBaseView):
     def get_queryset(self):
         return super(SaidaListView, self).get_queryset(object=Saida, status=['0', ])
 
-    def post(self, request, *args, **kwargs):
-        return super(SaidaListView, self).post(request, Saida)
 
-
-class GerarLancamentoView(View, MovimentoCaixaMixin):
+class GerarLancamentoView(CustomView, MovimentoCaixaMixin):
+    permission_codename = ['add_lancamento', 'change_lancamento']
 
     def post(self, request, *args, **kwargs):
         conta_id = request.POST['contaId']
@@ -647,7 +619,8 @@ class GerarLancamentoView(View, MovimentoCaixaMixin):
                 object.save()
 
 
-class FaturarPedidoVendaView(View, MovimentoCaixaMixin):
+class FaturarPedidoVendaView(CustomView, MovimentoCaixaMixin):
+    permission_codename = 'vendas.faturar_pedidovenda'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
@@ -733,7 +706,6 @@ class FaturarPedidoVendaView(View, MovimentoCaixaMixin):
             entrada.valor_total = pagamento.valor_parcela
             entrada.valor_liquido = pagamento.valor_parcela
             entrada.save()
-            # entrada.grupo_plano
             mvmt = None
             created = None
             if pagamento.vencimento:
@@ -759,7 +731,8 @@ class FaturarPedidoVendaView(View, MovimentoCaixaMixin):
         return redirect(reverse_lazy('vendas:listapedidovendaview'))
 
 
-class FaturarPedidoCompraView(View, MovimentoCaixaMixin):
+class FaturarPedidoCompraView(CustomView, MovimentoCaixaMixin):
+    permission_codename = 'compras.faturar_pedidocompra'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
@@ -780,7 +753,6 @@ class FaturarPedidoCompraView(View, MovimentoCaixaMixin):
             saida.valor_total = pagamento.valor_parcela
             saida.valor_liquido = pagamento.valor_parcela
             saida.save()
-            # saida.grupo_plano
             mvmt = None
             created = None
             if pagamento.vencimento:

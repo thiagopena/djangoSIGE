@@ -17,11 +17,11 @@
 
 	{% if saida %}
 	req_urls.info_emit_url = "{% url 'cadastro:infoempresa' %}";
-	req_urls.info_dest_url = "{% url 'vendas:infocliente' %}"
+	req_urls.info_dest_url = "{% url 'cadastro:infocliente' %}"
 	req_urls.info_venda_url = "{% url 'vendas:infovenda' %}"
 	var tipo_nf = 'saida';
 	{% elif entrada %}
-	req_urls.info_emit_url = "{% url 'compras:infofornecedor' %}"
+	req_urls.info_emit_url = "{% url 'cadastro:infofornecedor' %}"
 	req_urls.info_dest_url = "{% url 'cadastro:infoempresa' %}"
 	req_urls.info_compra_url = "{% url 'compras:infocompra' %}"
 	var tipo_nf = 'entrada';

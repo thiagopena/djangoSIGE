@@ -19,3 +19,9 @@ class Cliente(Pessoa):
     indicador_ie = models.CharField(
         max_length=1, choices=INDICADOR_IE_DEST, default='9')
     id_estrangeiro = models.CharField(max_length=20, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Cliente"
+        permissions = (
+            ("view_cliente", "Can view cliente"),
+        )

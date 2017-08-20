@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic.list import ListView
+
+from djangosige.apps.base.custom_views import CustomListView
 
 from djangosige.apps.cadastro.models import Produto
 from djangosige.apps.estoque.models import LocalEstoque
 
 
-class ConsultaEstoqueView(ListView):
+class ConsultaEstoqueView(CustomListView):
     template_name = "estoque/consulta/consulta_estoque.html"
     success_url = reverse_lazy('estoque:consultaestoqueview')
     context_object_name = 'produtos_filtrados'
+    permission_codename = 'consultar_estoque'
 
     def get_context_data(self, **kwargs):
         context = super(ConsultaEstoqueView, self).get_context_data(**kwargs)

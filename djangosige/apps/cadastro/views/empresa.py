@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic import View
-from django.core import serializers
-from django.http import HttpResponse
 
 from djangosige.apps.cadastro.forms import EmpresaForm
-from djangosige.apps.cadastro.models import Empresa, Pessoa
+from djangosige.apps.cadastro.models import Empresa
 
 from .base import AdicionarPessoaView, PessoasListView, EditarPessoaView
 
@@ -15,6 +12,7 @@ class AdicionarEmpresaView(AdicionarPessoaView):
     template_name = "cadastro/pessoa_add.html"
     success_url = reverse_lazy('cadastro:listaempresasview')
     success_message = "Empresa <b>%(nome_razao_social)s </b>adicionada com sucesso."
+    permission_codename = 'add_empresa'
 
     def get_context_data(self, **kwargs):
         context = super(AdicionarEmpresaView, self).get_context_data(**kwargs)
@@ -38,6 +36,7 @@ class EmpresasListView(PessoasListView):
     model = Empresa
     context_object_name = 'all_empresas'
     success_url = reverse_lazy('cadastro:listaempresasview')
+    permission_codename = 'view_empresa'
 
     def get_context_data(self, **kwargs):
         context = super(EmpresasListView, self).get_context_data(**kwargs)
@@ -46,12 +45,6 @@ class EmpresasListView(PessoasListView):
         context['tipo_pessoa'] = 'empresa'
         return context
 
-    def get_queryset(self):
-        return super(EmpresasListView, self).get_queryset(object=Empresa)
-
-    def post(self, request, *args, **kwargs):
-        return super(EmpresasListView, self).post(request, Empresa)
-
 
 class EditarEmpresaView(EditarPessoaView):
     form_class = EmpresaForm
@@ -59,6 +52,7 @@ class EditarEmpresaView(EditarPessoaView):
     template_name = "cadastro/pessoa_edit.html"
     success_url = reverse_lazy('cadastro:listaempresasview')
     success_message = "Empresa <b>%(nome_razao_social)s </b>editada com sucesso."
+    permission_codename = 'change_empresa'
 
     def get_context_data(self, **kwargs):
         context = super(EditarEmpresaView, self).get_context_data(**kwargs)
@@ -82,19 +76,3 @@ class EditarEmpresaView(EditarPessoaView):
                           prefix='empresa_form', instance=self.object, request=request)
         logo_file = Empresa.objects.get(pk=self.object.pk).logo_file
         return super(EditarEmpresaView, self).post(request, form, logo_file=logo_file, *args, **kwargs)
-
-
-class InfoEmpresa(View):
-
-    def post(self, request, *args, **kwargs):
-        pessoa = Pessoa.objects.get(pk=request.POST['pessoaId'])
-        obj_list = []
-        obj_list.append(pessoa.pessoa_jur_info)
-
-        if pessoa.endereco_padrao:
-            obj_list.append(pessoa.endereco_padrao)
-
-        data = serializers.serialize('json', obj_list, fields=('cnpj', 'inscricao_estadual', 'logradouro', 'numero', 'bairro',
-                                                               'municipio', 'cmun', 'uf', 'pais', 'complemento', 'cep',))
-
-        return HttpResponse(data, content_type='application/json')

@@ -1,29 +1,25 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import ListView, View
-from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import HttpResponse
-from django.core import serializers
+
+from djangosige.apps.base.custom_views import CustomView, CustomCreateView, CustomListView, CustomUpdateView
 
 from djangosige.apps.vendas.forms import OrcamentoVendaForm, PedidoVendaForm, ItensVendaFormSet, PagamentoFormSet
 from djangosige.apps.vendas.models import OrcamentoVenda, PedidoVenda, ItensVenda, Pagamento
-from djangosige.apps.cadastro.models import Pessoa, Cliente, Transportadora, Produto, MinhaEmpresa
-from djangosige.apps.fiscal.models import ICMS, ICMSSN, IPI, ICMSUFDest
+from djangosige.apps.cadastro.models import MinhaEmpresa
 from djangosige.apps.login.models import Usuario
 from djangosige.configs.settings import MEDIA_ROOT
 
 from geraldo.generators import PDFGenerator
 from datetime import datetime
 import io
-import json
 
 from .report_vendas import VendaReport
 
 
-class AdicionarVendaView(CreateView):
+class AdicionarVendaView(CustomCreateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
@@ -42,7 +38,9 @@ class AdicionarVendaView(CreateView):
         produtos_form = ItensVendaFormSet(prefix='produtos_form')
         pagamento_form = PagamentoFormSet(prefix='pagamento_form')
 
-        return self.render_to_response(self.get_context_data(form=form, produtos_form=produtos_form, pagamento_form=pagamento_form))
+        return self.render_to_response(self.get_context_data(form=form,
+                                                             produtos_form=produtos_form,
+                                                             pagamento_form=pagamento_form))
 
     def post(self, request, form_class, *args, **kwargs):
         self.object = None
@@ -82,16 +80,9 @@ class AdicionarVendaView(CreateView):
 
             return self.form_valid(form)
 
-        return self.form_invalid(form, produtos_form, pagamento_form)
-
-    def form_valid(self, form):
-        super(AdicionarVendaView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form, produtos_form, pagamento_form):
-        return self.render_to_response(self.get_context_data(form=form, produtos_form=produtos_form, pagamento_form=pagamento_form, invalid=True))
+        return self.form_invalid(form=form,
+                                 produtos_form=produtos_form,
+                                 pagamento_form=pagamento_form)
 
 
 class AdicionarOrcamentoVendaView(AdicionarVendaView):
@@ -99,6 +90,7 @@ class AdicionarOrcamentoVendaView(AdicionarVendaView):
     template_name = "vendas/orcamento_venda/orcamento_venda_add.html"
     success_url = reverse_lazy('vendas:listaorcamentovendaview')
     success_message = "<b>Orçamento de venda %(id)s </b>adicionado com sucesso."
+    permission_codename = 'add_orcamentovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR ORÇAMENTO DE VENDA'
@@ -119,6 +111,7 @@ class AdicionarPedidoVendaView(AdicionarVendaView):
     template_name = "vendas/pedido_venda/pedido_venda_add.html"
     success_url = reverse_lazy('vendas:listapedidovendaview')
     success_message = "<b>Pedido de venda %(id)s </b>adicionado com sucesso."
+    permission_codename = 'add_pedidovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR PEDIDO DE VENDA'
@@ -134,21 +127,11 @@ class AdicionarPedidoVendaView(AdicionarVendaView):
         return super(AdicionarPedidoVendaView, self).post(request, form_class, *args, **kwargs)
 
 
-class VendaListView(ListView):
-
-    def get_queryset(self, object):
-        return object.objects.all()
+class VendaListView(CustomListView):
 
     def get_context_data(self, **kwargs):
         context = super(VendaListView, self).get_context_data(**kwargs)
         return self.view_context(context)
-
-    def post(self, request, object, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = object.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
 
 
 class OrcamentoVendaListView(VendaListView):
@@ -156,23 +139,15 @@ class OrcamentoVendaListView(VendaListView):
     model = OrcamentoVenda
     context_object_name = 'all_orcamentos'
     success_url = reverse_lazy('vendas:listaorcamentovendaview')
+    permission_codename = 'view_orcamentovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'ORÇAMENTOS DE VENDA'
         context['add_url'] = reverse_lazy('vendas:addorcamentovendaview')
         return context
 
-    def get_queryset(self):
-        return super(OrcamentoVendaListView, self).get_queryset(object=OrcamentoVenda)
 
-    def post(self, request, *args, **kwargs):
-        return super(OrcamentoVendaListView, self).post(request, OrcamentoVenda)
-
-
-class OrcamentoVendaVencidosListView(VendaListView):
-    template_name = 'vendas/orcamento_venda/orcamento_venda_list.html'
-    model = OrcamentoVenda
-    context_object_name = 'all_orcamentos'
+class OrcamentoVendaVencidosListView(OrcamentoVendaListView):
     success_url = reverse_lazy('vendas:listaorcamentovendavencidoview')
 
     def view_context(self, context):
@@ -183,11 +158,8 @@ class OrcamentoVendaVencidosListView(VendaListView):
     def get_queryset(self):
         return OrcamentoVenda.objects.filter(data_vencimento__lte=datetime.now().date(), status='0')
 
-    def post(self, request, *args, **kwargs):
-        return super(OrcamentoVendaVencidosListView, self).post(request, OrcamentoVenda)
 
-
-class OrcamentoVendaVencimentoHojeListView(OrcamentoVendaVencidosListView):
+class OrcamentoVendaVencimentoHojeListView(OrcamentoVendaListView):
     success_url = reverse_lazy('vendas:listaorcamentovendahojeview')
 
     def view_context(self, context):
@@ -205,23 +177,15 @@ class PedidoVendaListView(VendaListView):
     model = PedidoVenda
     context_object_name = 'all_pedidos'
     success_url = reverse_lazy('vendas:listapedidovendaview')
+    permission_codename = 'view_pedidovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'PEDIDOS DE VENDA'
         context['add_url'] = reverse_lazy('vendas:addpedidovendaview')
         return context
 
-    def get_queryset(self):
-        return super(PedidoVendaListView, self).get_queryset(object=PedidoVenda)
 
-    def post(self, request, *args, **kwargs):
-        return super(PedidoVendaListView, self).post(request, PedidoVenda)
-
-
-class PedidoVendaAtrasadosListView(VendaListView):
-    template_name = 'vendas/pedido_venda/pedido_venda_list.html'
-    model = PedidoVenda
-    context_object_name = 'all_pedidos'
+class PedidoVendaAtrasadosListView(PedidoVendaListView):
     success_url = reverse_lazy('vendas:listapedidovendaatrasadosview')
 
     def view_context(self, context):
@@ -232,11 +196,8 @@ class PedidoVendaAtrasadosListView(VendaListView):
     def get_queryset(self):
         return PedidoVenda.objects.filter(data_entrega__lte=datetime.now().date(), status='0')
 
-    def post(self, request, *args, **kwargs):
-        return super(PedidoVendaAtrasadosListView, self).post(request, PedidoVenda)
 
-
-class PedidoVendaEntregaHojeListView(PedidoVendaAtrasadosListView):
+class PedidoVendaEntregaHojeListView(PedidoVendaListView):
     success_url = reverse_lazy('vendas:listapedidovendahojeview')
 
     def view_context(self, context):
@@ -249,7 +210,7 @@ class PedidoVendaEntregaHojeListView(PedidoVendaAtrasadosListView):
         return PedidoVenda.objects.filter(data_entrega=datetime.now().date(), status='0')
 
 
-class EditarVendaView(UpdateView):
+class EditarVendaView(CustomUpdateView):
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
@@ -318,16 +279,9 @@ class EditarVendaView(UpdateView):
 
             return self.form_valid(form)
 
-        return self.form_invalid(form, produtos_form, pagamento_form)
-
-    def form_valid(self, form):
-        super(EditarVendaView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form, produtos_form, pagamento_form):
-        return self.render_to_response(self.get_context_data(form=form, produtos_form=produtos_form, pagamento_form=pagamento_form))
+        return self.form_invalid(form=form,
+                                 produtos_form=produtos_form,
+                                 pagamento_form=pagamento_form)
 
 
 class EditarOrcamentoVendaView(EditarVendaView):
@@ -336,6 +290,7 @@ class EditarOrcamentoVendaView(EditarVendaView):
     template_name = "vendas/orcamento_venda/orcamento_venda_edit.html"
     success_url = reverse_lazy('vendas:listaorcamentovendaview')
     success_message = "<b>Orçamento de venda %(id)s </b>editado com sucesso."
+    permission_codename = 'change_orcamentovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'EDITAR ORÇAMENTO DE VENDA N°' + \
@@ -360,6 +315,7 @@ class EditarPedidoVendaView(EditarVendaView):
     template_name = "vendas/pedido_venda/pedido_venda_edit.html"
     success_url = reverse_lazy('vendas:listapedidovendaview')
     success_message = "<b>Pedido de venda %(id)s </b>editado com sucesso."
+    permission_codename = 'change_pedidovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'EDITAR PEDIDO DE VENDA N°' + \
@@ -378,204 +334,8 @@ class EditarPedidoVendaView(EditarVendaView):
         return super(EditarPedidoVendaView, self).post(request, form_class, *args, **kwargs)
 
 
-class InfoCliente(View):
-
-    def post(self, request, *args, **kwargs):
-        obj_list = []
-        pessoa = Pessoa.objects.get(pk=request.POST['pessoaId'])
-        cliente = Cliente.objects.get(pk=request.POST['pessoaId'])
-        obj_list.append(cliente)
-
-        if pessoa.endereco_padrao:
-            obj_list.append(pessoa.endereco_padrao)
-        if pessoa.email_padrao:
-            obj_list.append(pessoa.email_padrao)
-        if pessoa.telefone_padrao:
-            obj_list.append(pessoa.telefone_padrao)
-
-        if pessoa.tipo_pessoa == 'PJ':
-            obj_list.append(pessoa.pessoa_jur_info)
-        elif pessoa.tipo_pessoa == 'PF':
-            obj_list.append(pessoa.pessoa_fis_info)
-
-        data = serializers.serialize('json', obj_list, fields=('indicador_ie', 'limite_de_credito', 'cnpj', 'inscricao_estadual', 'responsavel', 'cpf', 'rg', 'id_estrangeiro', 'logradouro', 'numero', 'bairro',
-                                                               'municipio', 'cmun', 'uf', 'pais', 'complemento', 'cep', 'email', 'telefone',))
-
-        return HttpResponse(data, content_type='application/json')
-
-
-class InfoTransportadora(View):
-
-    def post(self, request, *args, **kwargs):
-        veiculos = Transportadora.objects.get(
-            pk=request.POST['transportadoraId']).veiculo.all()
-        data = serializers.serialize(
-            'json', veiculos, fields=('id', 'descricao',))
-
-        return HttpResponse(data, content_type='application/json')
-
-
-class InfoProduto(View):
-
-    def get(self, request, *args, **kwargs):
-        try:
-            data = serializers.serialize('json', Produto.objects.all())
-        except:
-            data = ""
-
-        return HttpResponse(data, content_type='application/json')
-
-    def post(self, request, *args, **kwargs):
-        obj_list = []
-        pro = Produto.objects.get(pk=request.POST['produtoId'])
-        obj_list.append(pro)
-
-        if pro.grupo_fiscal:
-            if pro.grupo_fiscal.regime_trib == '0':
-                icms, created = ICMS.objects.get_or_create(
-                    grupo_fiscal=pro.grupo_fiscal)
-            else:
-                icms, created = ICMSSN.objects.get_or_create(
-                    grupo_fiscal=pro.grupo_fiscal)
-
-            ipi, created = IPI.objects.get_or_create(
-                grupo_fiscal=pro.grupo_fiscal)
-            icms_dest, created = ICMSUFDest.objects.get_or_create(
-                grupo_fiscal=pro.grupo_fiscal)
-            obj_list.append(icms)
-            obj_list.append(ipi)
-            obj_list.append(icms_dest)
-
-        data = serializers.serialize('json', obj_list, fields=('venda', 'controlar_estoque', 'estoque_atual',
-                                                               'tipo_ipi', 'p_ipi', 'valor_fixo', 'p_icms', 'p_red_bc', 'p_icmsst', 'p_red_bcst', 'p_mvast',
-                                                               'p_fcp_dest', 'p_icms_dest', 'p_icms_inter', 'p_icms_inter_part',
-                                                               'ipi_incluido_preco', 'incluir_bc_icms', 'incluir_bc_icmsst', 'icmssn_incluido_preco',
-                                                               'icmssnst_incluido_preco', 'icms_incluido_preco', 'icmsst_incluido_preco'))
-        return HttpResponse(data, content_type='application/json')
-
-
-class InfoVenda(View):
-
-    def post(self, request, *args, **kwargs):
-        venda = PedidoVenda.objects.get(pk=request.POST['vendaId'])
-        itens_venda = venda.itens_venda.all()
-        pagamentos = venda.parcela_pagamento.all()
-        data = []
-
-        pedido_dict = {}
-        pedido_dict['model'] = 'vendas.pedidovenda'
-        pedido_dict['pk'] = venda.id
-        pedido_fields_dict = {}
-        pedido_fields_dict['dest'] = venda.cliente.id
-        pedido_fields_dict['local'] = venda.get_local_orig_id()
-        pedido_fields_dict['status'] = venda.get_status_display()
-        pedido_fields_dict['desconto'] = venda.format_desconto()
-        pedido_fields_dict['frete'] = venda.format_frete()
-        pedido_fields_dict['despesas'] = venda.format_despesas()
-        pedido_fields_dict['seguro'] = venda.format_seguro()
-        pedido_fields_dict['impostos'] = venda.format_impostos()
-        pedido_fields_dict['valor_total'] = venda.format_valor_total()
-        pedido_fields_dict['total_sem_desconto'] = venda.format_total_sem_desconto(
-        )
-        pedido_fields_dict['ind_final'] = venda.ind_final
-        pedido_fields_dict['forma_pag'] = venda.get_forma_pagamento()
-        pedido_fields_dict['n_itens'] = str(len(itens_venda))
-        pedido_fields_dict[
-            'valor_total_produtos'] = venda.format_total_produtos()
-
-        if venda.cond_pagamento:
-            pedido_fields_dict['n_parcelas'] = venda.cond_pagamento.n_parcelas
-        else:
-            pedido_fields_dict['n_parcelas'] = 1
-
-        pedido_dict['fields'] = pedido_fields_dict
-
-        data.append(pedido_dict)
-
-        for item in itens_venda:
-            itens_venda_dict = {}
-            itens_venda_dict['model'] = 'vendas.itensvenda'
-            itens_venda_dict['pk'] = item.id
-            itens_fields_dict = {}
-            itens_hidden_fields_dict = {}
-            itens_editable_fields_dict = {}
-            itens_fields_dict['produto_id'] = item.produto.id
-            itens_fields_dict[
-                'controlar_estoque'] = item.produto.controlar_estoque
-            itens_fields_dict['produto'] = item.produto.descricao
-            itens_hidden_fields_dict['codigo'] = item.produto.codigo
-            itens_hidden_fields_dict['unidade'] = item.produto.get_sigla_unidade(
-            )
-            itens_hidden_fields_dict['cfop'] = item.produto.get_cfop_padrao()
-            itens_hidden_fields_dict['ncm'] = item.produto.ncm
-            itens_fields_dict['quantidade'] = item.format_quantidade()
-            itens_fields_dict['valor_unit'] = item.format_valor_unit()
-            itens_fields_dict['desconto'] = item.format_desconto()
-            itens_hidden_fields_dict['frete'] = item.format_valor_attr(
-                'valor_rateio_frete')
-            itens_hidden_fields_dict['despesas'] = item.format_valor_attr(
-                'valor_rateio_despesas')
-            itens_hidden_fields_dict['seguro'] = item.format_valor_attr(
-                'valor_rateio_seguro')
-            itens_hidden_fields_dict['subtotal'] = item.format_valor_attr(
-                'subtotal')
-
-            itens_fields_dict['impostos'] = item.format_total_impostos()
-            itens_fields_dict['total'] = item.format_total_com_imposto()
-            itens_fields_dict['vprod'] = item.format_vprod()
-
-            itens_hidden_fields_dict['vicms'] = item.format_valor_attr('vicms')
-            itens_hidden_fields_dict['vipi'] = item.format_valor_attr('vipi')
-            itens_hidden_fields_dict['vicms_st'] = item.format_valor_attr(
-                'vicms_st')
-            itens_hidden_fields_dict['vfcp'] = item.format_valor_attr('vfcp')
-            itens_hidden_fields_dict['vicmsufdest'] = item.format_valor_attr(
-                'vicmsufdest')
-            itens_hidden_fields_dict['vicmsufremet'] = item.format_valor_attr(
-                'vicmsufremet')
-            itens_hidden_fields_dict['aliq_pis'] = item.get_aliquota_pis()
-            itens_hidden_fields_dict['aliq_cofins'] = item.get_aliquota_cofins(
-            )
-            itens_hidden_fields_dict['mot_des_icms'] = item.get_mot_deson_icms(
-            )
-
-            itens_editable_fields_dict['editable_field_vq_bcpis'] = item.format_valor_attr(
-                'vq_bcpis')
-            itens_editable_fields_dict['editable_field_vq_bccofins'] = item.format_valor_attr(
-                'vq_bccofins')
-            itens_editable_fields_dict['editable_field_vpis'] = item.format_valor_attr(
-                'vpis')
-            itens_editable_fields_dict['editable_field_vcofins'] = item.format_valor_attr(
-                'vcofins')
-            itens_editable_fields_dict['editable_field_vicms_deson'] = item.format_valor_attr(
-                'vicms_deson')
-            itens_editable_fields_dict[
-                'editable_field_inf_ad_prod'] = item.inf_ad_prod
-
-            itens_venda_dict['fields'] = itens_fields_dict
-            itens_venda_dict['hidden_fields'] = itens_hidden_fields_dict
-            itens_venda_dict['editable_fields'] = itens_editable_fields_dict
-
-            data.append(itens_venda_dict)
-
-        for pagamento in pagamentos:
-            pagamento_dict = {}
-            pagamento_dict['model'] = 'vendas.pagamento'
-            pagamento_dict['pk'] = pagamento.id
-            pagamento_fields_dict = {}
-            pagamento_fields_dict['id'] = pagamento.id
-            pagamento_fields_dict['vencimento'] = pagamento.format_vencimento
-            pagamento_fields_dict[
-                'valor_parcela'] = pagamento.format_valor_parcela
-
-            pagamento_dict['fields'] = pagamento_fields_dict
-
-            data.append(pagamento_dict)
-
-        return HttpResponse(json.dumps(data), content_type='application/json')
-
-
-class GerarPedidoVendaView(View):
+class GerarPedidoVendaView(CustomView):
+    permission_codename = ['add_pedidovenda', 'change_pedidovenda', ]
 
     def get(self, request, *args, **kwargs):
         orcamento_id = kwargs.get('pk', None)
@@ -611,35 +371,31 @@ class GerarPedidoVendaView(View):
         return redirect(reverse_lazy('vendas:editarpedidovendaview', kwargs={'pk': novo_pedido.id}))
 
 
-class CancelarVendaView(View):
+class CancelarOrcamentoVendaView(CustomView):
+    permission_codename = 'change_orcamentovenda'
 
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
-
-        if PedidoVenda.objects.filter(id=venda_id).exists():
-            instance = PedidoVenda.objects.get(id=venda_id)
-            redirect_url = 'vendas:editarpedidovendaview'
-        else:
-            instance = OrcamentoVenda.objects.get(id=venda_id)
-            redirect_url = 'vendas:editarorcamentovendaview'
-
+        instance = OrcamentoVenda.objects.get(id=venda_id)
         instance.status = '2'
         instance.save()
+        return redirect(reverse_lazy('vendas:editarorcamentovendaview', kwargs={'pk': instance.id}))
 
-        return redirect(reverse_lazy(redirect_url, kwargs={'pk': instance.id}))
 
-
-class GerarCopiaVendaView(View):
+class CancelarPedidoVendaView(CustomView):
+    permission_codename = 'change_pedidovenda'
 
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
-        if PedidoVenda.objects.filter(id=venda_id).exists():
-            instance = PedidoVenda.objects.get(id=venda_id)
-            redirect_url = 'vendas:editarpedidovendaview'
-        else:
-            instance = OrcamentoVenda.objects.get(id=venda_id)
-            redirect_url = 'vendas:editarorcamentovendaview'
+        instance = PedidoVenda.objects.get(id=venda_id)
+        instance.status = '2'
+        instance.save()
+        return redirect(reverse_lazy('vendas:editarpedidovendaview', kwargs={'pk': instance.id}))
 
+
+class GerarCopiaVendaView(CustomView):
+
+    def get(self, request, instance, redirect_url, *args, **kwargs):
         itens_venda = instance.itens_venda.all()
         pagamentos = instance.parcela_pagamento.all()
 
@@ -663,7 +419,27 @@ class GerarCopiaVendaView(View):
         return redirect(reverse_lazy(redirect_url, kwargs={'pk': instance.id}))
 
 
-class GerarPDFVenda(View):
+class GerarCopiaOrcamentoVendaView(GerarCopiaVendaView):
+    permission_codename = 'add_orcamentovenda'
+
+    def get(self, request, *args, **kwargs):
+        venda_id = kwargs.get('pk', None)
+        instance = OrcamentoVenda.objects.get(id=venda_id)
+        redirect_url = 'vendas:editarorcamentovendaview'
+        return super(GerarCopiaOrcamentoVendaView, self).get(request, instance, redirect_url, *args, **kwargs)
+
+
+class GerarCopiaPedidoVendaView(GerarCopiaVendaView):
+    permission_codename = 'add_pedidovenda'
+
+    def get(self, request, *args, **kwargs):
+        venda_id = kwargs.get('pk', None)
+        instance = PedidoVenda.objects.get(id=venda_id)
+        redirect_url = 'vendas:editarpedidovendaview'
+        return super(GerarCopiaPedidoVendaView, self).get(request, instance, redirect_url, *args, **kwargs)
+
+
+class GerarPDFVenda(CustomView):
 
     def gerar_pdf(self, title, venda, user_id):
         resp = HttpResponse(content_type='application/pdf')
@@ -744,6 +520,7 @@ class GerarPDFVenda(View):
 
 
 class GerarPDFOrcamentoVenda(GerarPDFVenda):
+    permission_codename = 'change_orcamentovenda'
 
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
@@ -758,6 +535,7 @@ class GerarPDFOrcamentoVenda(GerarPDFVenda):
 
 
 class GerarPDFPedidoVenda(GerarPDFVenda):
+    permission_codename = 'change_pedidovenda'
 
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)

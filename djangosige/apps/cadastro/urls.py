@@ -99,4 +99,9 @@ urlpatterns = [
 
     # Informacoes de dada empresa (Ajax request)
     url(r'infoempresa/$', views.InfoEmpresa.as_view(), name='infoempresa'),
+    url(r'infofornecedor/$', views.InfoFornecedor.as_view(), name='infofornecedor'),
+    url(r'infocliente/$', views.InfoCliente.as_view(), name='infocliente'),
+    url(r'infotransportadora/$', views.InfoTransportadora.as_view(),
+        name='infotransportadora'),
+    url(r'infoproduto/$', views.InfoProduto.as_view(), name='infoproduto'),
 ]

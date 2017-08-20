@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
-#from djangosige.configs.settings import APP_ROOT, STATIC_URL
-#import csv
 import re
 
 from django.db import models

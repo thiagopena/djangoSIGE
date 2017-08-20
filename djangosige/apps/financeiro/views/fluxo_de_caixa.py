@@ -1,18 +1,20 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic.list import ListView
 from django.contrib import messages
+
+from djangosige.apps.base.custom_views import CustomListView
 
 from djangosige.apps.financeiro.models import MovimentoCaixa
 
 from datetime import datetime
 
 
-class FluxoCaixaView(ListView):
+class FluxoCaixaView(CustomListView):
     template_name = "financeiro/fluxo_de_caixa/fluxo.html"
     success_url = reverse_lazy('financeiro:fluxodecaixaview')
     context_object_name = 'movimentos'
+    permission_codename = 'acesso_fluxodecaixa'
 
     def get_queryset(self):
         try:

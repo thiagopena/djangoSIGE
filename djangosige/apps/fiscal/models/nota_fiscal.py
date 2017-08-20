@@ -203,6 +203,20 @@ class NotaFiscalSaida(NotaFiscal):
                                 MinValueValidator(Decimal('0.00'))], null=True, blank=True)
     grupo_cobr = models.BooleanField(default=True)
 
+    class Meta:
+        verbose_name = "Nota Fiscal"
+        permissions = (
+            ("view_notafiscal", "Can view nota fiscal"),
+            ("emitir_notafiscal", "Pode emitir notas fiscais"),
+            ("cancelar_notafiscal", "Pode cancelar notas fiscais"),
+            ("gerar_danfe", "Pode gerar DANFE/DANFCE"),
+            ("consultar_cadastro", "Pode consultar cadastro no SEFAZ"),
+            ("inutilizar_notafiscal", "Pode inutilizar notas fiscais"),
+            ("consultar_notafiscal", "Pode consultar notas fiscais"),
+            ("baixar_notafiscal", "Pode baixar notas fiscais"),
+            ("manifestacao_destinatario", "Pode efetuar manifestação do destinatário"),
+        )
+
     @property
     def estado(self):
         if self.emit_saida:
@@ -236,6 +250,12 @@ class NotaFiscalEntrada(NotaFiscal):
         'cadastro.Fornecedor', related_name="emit_nfe_entrada", on_delete=models.SET_NULL, null=True, blank=True)
     dest_entrada = models.ForeignKey(
         'cadastro.Empresa', related_name="dest_nfe_entrada", on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Nota Fiscal de Fornecedor"
+        permissions = (
+            ("view_notafiscalentrada", "Can view nota fiscal entrada"),
+        )
 
     @property
     def estado(self):
@@ -281,6 +301,14 @@ class ConfiguracaoNotaFiscal(models.Model):
     csc = models.CharField(max_length=64, null=True, blank=True)
     cidtoken = models.CharField(max_length=8, null=True, blank=True)
 
+    class Meta:
+        default_permissions = ()
+        verbose_name = "Configuração NF-e"
+        permissions = (
+            ("view_configuracaonotafiscal", "Can view configuracao nota fiscal"),
+            ("configurar_nfe", "Pode modificar configuração de NF-e"),
+        )
+
     @property
     def leiaute_logo_vertical(self):
         if self.orientacao_logo_danfe == 'H':
@@ -297,8 +325,6 @@ class ErrosValidacaoNotaFiscal(models.Model):
                             related_name="erros_nfe", on_delete=models.CASCADE)
     tipo = models.CharField(
         max_length=1, choices=ERROS_NFE_TIPOS, null=True, blank=True)
-    #local       = models.CharField(max_length=64, null=True, blank=True)
-    #campo       = models.CharField(max_length=64, null=True, blank=True)
     descricao = models.CharField(max_length=255, null=True, blank=True)
 
 

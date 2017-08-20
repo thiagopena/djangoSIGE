@@ -4,6 +4,9 @@
 {%block content%}
 <section class="content">
   <div class="container-fluid block">
+    
+    {% include 'base/msg_sucesso.html' %}
+
     <div class="block-header">
       <h2>USUÁRIO</h2>
     </div>
@@ -12,7 +15,7 @@
         <div class="header">
           <h2>
             <a href="{%url 'login:usuariosview'%}"><i class="material-icons">&#xE5C4;</i></a>
-            <span><b>Usuário: </b>{%if user_match %}{{user_match.username}}{%endif%}</span>
+            <span><b>Usuário: </b>{{user_match.username}}{% if user_match.is_superuser %} (Admin){% endif %}</span>
           </h2>
           <div class="header-btn">
             {%if not user_match.is_superuser%} 
@@ -60,7 +63,7 @@
               </table>
 
             </div>
-
+            <a href="{% url 'login:permissoesusuarioview' user_match.id %}" style="margin:15px;float:right;" class="btn btn-primary">EDITAR PERMISSÕES</a>
         </div>
       </div>
     </div>

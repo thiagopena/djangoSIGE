@@ -20,6 +20,7 @@
        <div class="body">
          <table class="table table-hover">
            <tbody>
+            {% if perms.cadastro.view_cliente %}
             <tr>
               <td> 
                 <a href="{% url 'cadastro:listaclientesview' %}">
@@ -29,6 +30,8 @@
                 </a>              
               </td>
             </tr> 
+            {% endif %}
+            {% if perms.cadastro.view_fornecedor %}
             <tr>
               <td> 
                 <a href="{% url 'cadastro:listafornecedoresview' %}">
@@ -38,6 +41,8 @@
                 </a>              
               </td>
             </tr> 
+            {% endif %}
+            {% if perms.cadastro.view_produto %}
             <tr>
               <td> 
                 <a href="{% url 'cadastro:listaprodutosview' %}">
@@ -47,6 +52,8 @@
                 </a>              
               </td>
             </tr> 
+            {% endif %}
+            {% if perms.cadastro.view_empresa %}
             <tr>
               <td> 
                 <a href="{% url 'cadastro:listaempresasview' %}">
@@ -56,6 +63,8 @@
                 </a>              
               </td>
             </tr> 
+            {% endif %}
+            {% if perms.cadastro.view_transportadora %}
             <tr>
               <td> 
                 <a href="{% url 'cadastro:listatransportadorasview' %}">
@@ -65,6 +74,7 @@
                 </a>              
               </td>
             </tr> 
+            {% endif %}
           </tbody>
         </table>
       </div>
@@ -80,6 +90,7 @@
     <div class="body">
       <table class="table table-hover">
         <tbody>
+          {% if perms.cadastro.view_transportadora %}
           <tr {% if agenda_hoje.orcamento_venda_hoje %}class="hoje"{% endif %}>
             <td> 
               <a href="{% url 'vendas:listaorcamentovendahojeview' %}">
@@ -89,6 +100,8 @@
               </a>              
             </td>
           </tr> 
+          {% endif %}
+          {% if perms.compras.view_orcamentocompra %}
           <tr {% if agenda_hoje.orcamento_compra_hoje %}class="hoje"{% endif %}>
             <td> 
               <a href="{% url 'compras:listaorcamentocomprahojeview' %}">
@@ -98,6 +111,8 @@
               </a>              
             </td>
           </tr> 
+          {% endif %}
+          {% if perms.vendas.view_pedidovenda %}
           <tr {% if agenda_hoje.pedido_venda_hoje %}class="hoje"{% endif %}>
             <td> 
               <a href="{% url 'vendas:listapedidovendahojeview' %}">
@@ -107,6 +122,8 @@
               </a>              
             </td>
           </tr> 
+          {% endif %}
+          {% if perms.compras.view_pedidocompra %}
           <tr {% if agenda_hoje.pedido_compra_hoje %}class="hoje"{% endif %}>
             <td> 
               <a href="{% url 'compras:listapedidocomprahojeview' %}">
@@ -116,6 +133,8 @@
               </a>              
             </td>
           </tr> 
+          {% endif %}
+          {% if perms.financeiro.view_lancamento %}
           <tr {% if agenda_hoje.contas_receber_hoje %}class="hoje"{% endif %}>
             <td> 
               <a href="{% url 'financeiro:listacontareceberhojeview' %}">
@@ -133,7 +152,8 @@
                 </div>
               </a>              
             </td>
-          </tr>  
+          </tr>
+          {% endif %}
         </tbody>
       </table>
     </div>
@@ -149,6 +169,7 @@
   <div class="body">
     <table class="table table-hover">
       <tbody>
+        {% if perms.cadastro.view_transportadora %}
         <tr {% if alertas.produtos_baixo_estoque %}class="alerta"{% endif %}>
           <td> 
             <a href="{% url 'cadastro:listaprodutosbaixoestoqueview' %}">
@@ -158,6 +179,8 @@
             </a>              
           </td>
         </tr> 
+        {% endif %}
+        {% if perms.vendas.view_orcamentovenda %}
         <tr {% if alertas.orcamentos_venda_vencidos %}class="alerta"{% endif %}>
           <td> 
             <a href="{% url 'vendas:listaorcamentovendavencidoview' %}">
@@ -167,6 +190,8 @@
             </a>              
           </td>
         </tr> 
+        {% endif %}
+        {% if perms.compras.view_orcamentocompra %}
         <tr {% if alertas.orcamentos_compra_vencidos %}class="alerta"{% endif %}>
           <td> 
             <a href="{% url 'compras:listaorcamentocompravencidosview' %}">
@@ -176,6 +201,8 @@
             </a>              
           </td>
         </tr>
+        {% endif %}
+        {% if perms.vendas.view_pedidovenda %}
         <tr {% if alertas.pedidos_venda_atrasados %}class="alerta"{% endif %}>
           <td> 
             <a href="{% url 'vendas:listapedidovendaatrasadosview' %}">
@@ -185,6 +212,8 @@
             </a>              
           </td>
         </tr> 
+        {% endif %}
+        {% if perms.compras.view_pedidocompra %}
         <tr {% if alertas.pedidos_compra_atrasados %}class="alerta"{% endif %}>
           <td> 
             <a href="{% url 'compras:listapedidocompraatrasadosview' %}">
@@ -194,6 +223,8 @@
             </a>              
           </td>
         </tr> 
+        {% endif %}
+        {% if perms.financeiro.view_lancamento %}
         <tr {% if alertas.contas_receber_atrasadas %}class="alerta"{% endif %}>
           <td> 
             <a href="{% url 'financeiro:listacontareceberatrasadasview' %}">
@@ -212,6 +243,7 @@
             </a>              
           </td>
         </tr> 
+        {% endif %}
       </tbody>
     </table>
   </div>
@@ -221,6 +253,7 @@
 
 </div>
 
+{% if perms.financeiro.acesso_fluxodecaixa %}
 <div class="row clearfix">
   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <div class="card">
@@ -272,6 +305,7 @@
     </div>
   </div>
 </div>
+{% endif %}
 
 </div>
 </section>

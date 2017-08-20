@@ -12,6 +12,7 @@ class AdicionarClienteView(AdicionarPessoaView):
     template_name = "cadastro/pessoa_add.html"
     success_url = reverse_lazy('cadastro:listaclientesview')
     success_message = "Cliente <b>%(nome_razao_social)s </b>adicionado com sucesso."
+    permission_codename = 'add_cliente'
 
     def get_context_data(self, **kwargs):
         context = super(AdicionarClienteView, self).get_context_data(**kwargs)
@@ -38,6 +39,7 @@ class ClientesListView(PessoasListView):
     model = Cliente
     context_object_name = 'all_clientes'
     success_url = reverse_lazy('cadastro:listaclientesview')
+    permission_codename = 'view_cliente'
 
     def get_context_data(self, **kwargs):
         context = super(ClientesListView, self).get_context_data(**kwargs)
@@ -46,12 +48,6 @@ class ClientesListView(PessoasListView):
         context['tipo_pessoa'] = 'cliente'
         return context
 
-    def get_queryset(self):
-        return super(ClientesListView, self).get_queryset(object=Cliente)
-
-    def post(self, request, *args, **kwargs):
-        return super(ClientesListView, self).post(request, Cliente)
-
 
 class EditarClienteView(EditarPessoaView):
     form_class = ClienteForm
@@ -59,6 +55,7 @@ class EditarClienteView(EditarPessoaView):
     template_name = "cadastro/pessoa_edit.html"
     success_url = reverse_lazy('cadastro:listaclientesview')
     success_message = "Cliente <b>%(nome_razao_social)s </b>editado com sucesso."
+    permission_codename = 'change_cliente'
 
     def get_context_data(self, **kwargs):
         context = super(EditarClienteView, self).get_context_data(**kwargs)

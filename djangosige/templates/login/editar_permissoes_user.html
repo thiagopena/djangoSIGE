@@ -1,0 +1,89 @@
+{%extends 'base/base.html'%}
+
+{%block title%}Permissões do usuário{%endblock%}
+{%block content%}
+<section class="content">
+  <div class="container-fluid block">
+    <div class="block-header">
+      <h2>USUÁRIO</h2>
+    </div>
+    <div>
+      <div class="card">
+        <div class="header">
+          <h2>
+            <a href="{%url 'login:usuariodetailview' user.id %}"><i class="material-icons">&#xE5C4;</i></a>
+            <span><b>Usuário: </b>{{user.username}}{% if user.is_superuser %} (Admin){% endif %}</span>
+          </h2>
+        </div>
+        <div class="body">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <form action="" method="post">
+              {% csrf_token %}
+                <select multiple="multiple"  id="id_select_permissoes" name="select_permissoes">
+                  {% for default_perm in default_permissions %}
+                  <optgroup label='{{default_perm.content_type.app_label|title}}'>
+                    <option value='{{default_perm.codename}}' {% if default_perm in user.user_permissions.all or user.is_superuser %}selected{% endif %} {% if user.is_superuser %}disabled='disabled'{% endif %}>
+                    {% if 'add' in default_perm.name %}
+                    Adicionar {{default_perm.content_type.name}}
+                    {% elif 'delete' in default_perm.name %}
+                    Deletar {{default_perm.content_type.name}}
+                    {% elif 'change' in default_perm.name %}
+                    Editar {{default_perm.content_type.name}}
+                    {% elif 'view' in default_perm.name %}
+                    Visualizar {{default_perm.content_type.name}}
+                    {% endif %}
+                    </option>
+                  </optgroup>
+                  {% endfor %}
+                  {% for custom_perm in custom_permissions %}
+                  <optgroup label='{{custom_perm.content_type.app_label|title}}'>
+                    <option value='{{custom_perm.codename}}' {% if custom_perm in user.user_permissions.all or user.is_superuser %}selected{% endif %} {% if user.is_superuser %}disabled='disabled'{% endif %}>
+                    {{custom_perm.name}}
+                    </option>
+                  </optgroup>
+                  {% endfor %}
+                </select>
+                {% if not user.is_superuser %}
+                <button class="btn btn-success" style="margin:15px;float:right;" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
+                {% endif %}
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    
+  </div>
+</section>
+
+
+{%endblock%}
+
+{% block js %}
+    
+  {% load staticfiles %}
+  <!-- Multiselect JS -->
+  <script src="{% static 'js/jquery.multi-select.js' %}"></script>
+  <link href="{% static 'css/multi-select.css' %}" media="screen" rel="stylesheet" type="text/css">
+
+  {% include 'base/load_jqueryui.html' %}
+
+  {% include 'base/tooltip_js.html' %}
+
+  <script type="text/javascript">
+      $('#id_select_permissoes').multiSelect({
+      selectableHeader: "<div class='custom-ms-header'>Permissões disponíveis<i class='material-icons' title='Esta é a lista de permissões do usuário disponíveis. Você pode escolhê-los(as) selecionando-os(as) abaixo.'>&#xE887;</i></div>",
+      selectionHeader: "<div class='custom-ms-header'>Permissões do usuário {{user.username}}<i class='material-icons' title='Esta é a lista de permissões do usuário disponíveis. Você pode removê-los(as) selecionando-os(as) abaixo.'>&#xE887;</i></div>",
+      selectableFooter: "<div class='custom-ms-footer'><a href='#' id='select-all'>selecionar todas</a></div>",
+      selectionFooter: "<div class='custom-ms-footer'><a href='#' id='deselect-all'>remover todas</a></div>"});
+      $('#select-all').click(function(){
+      $('#id_select_permissoes').multiSelect('select_all');
+        return false;
+      });
+      $('#deselect-all').click(function(){
+        $('#id_select_permissoes').multiSelect('deselect_all');
+        return false;
+      });
+  </script>
+  
+{% endblock %}

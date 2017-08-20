@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import CreateView
-from django.views.generic.detail import DetailView
-from django.views.generic import ListView
-from django.contrib import messages
 from django.shortcuts import redirect
 
 from itertools import chain
 from datetime import datetime
 from decimal import Decimal
 
+from djangosige.apps.base.custom_views import CustomDetailView, CustomCreateView, CustomListView
+
 from djangosige.apps.estoque.forms import EntradaEstoqueForm, SaidaEstoqueForm, TransferenciaEstoqueForm, ItensMovimentoFormSet
-from djangosige.apps.estoque.models import EntradaEstoque, SaidaEstoque, TransferenciaEstoque, ProdutoEstocado
+from djangosige.apps.estoque.models import MovimentoEstoque, EntradaEstoque, SaidaEstoque, TransferenciaEstoque, ProdutoEstocado
 
 
 class MovimentoEstoqueMixin(object):
@@ -67,7 +65,8 @@ class MovimentoEstoqueMixin(object):
             lista_produtos_estocados.append(prod_estocado_dest)
 
 
-class AdicionarMovimentoEstoqueBaseView(CreateView, MovimentoEstoqueMixin):
+class AdicionarMovimentoEstoqueBaseView(CustomCreateView, MovimentoEstoqueMixin):
+    permission_codename = 'add_movimentoestoque'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, pk=self.object.pk)
@@ -119,7 +118,7 @@ class AdicionarMovimentoEstoqueBaseView(CreateView, MovimentoEstoqueMixin):
 
             # Verificar se movimentos de estoque invalidos existem
             if len(pform.errors):
-                return self.form_invalid(form, itens_form)
+                return self.form_invalid(form=form, itens_form=itens_form)
             else:
                 self.object.save()
                 itens_form.save()
@@ -129,16 +128,7 @@ class AdicionarMovimentoEstoqueBaseView(CreateView, MovimentoEstoqueMixin):
                     prod_estocado.save()
                 return self.form_valid(form)
 
-        return self.form_invalid(form, itens_form)
-
-    def form_valid(self, form):
-        super(AdicionarMovimentoEstoqueBaseView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
-
-    def form_invalid(self, form, itens_form):
-        return self.render_to_response(self.get_context_data(form=form, itens_form=itens_form,))
+        return self.form_invalid(form=form, itens_form=itens_form)
 
 
 class AdicionarEntradaEstoqueView(AdicionarMovimentoEstoqueBaseView):
@@ -179,22 +169,13 @@ class AdicionarTransferenciaEstoqueView(AdicionarMovimentoEstoqueBaseView):
         return context
 
 
-class MovimentoEstoqueBaseListView(ListView):
-
-    def get_queryset(self, object):
-        return object.objects.all()
+class MovimentoEstoqueBaseListView(CustomListView):
+    permission_codename = 'view_movimentoestoque'
 
     def get_context_data(self, **kwargs):
         context = super(MovimentoEstoqueBaseListView,
                         self).get_context_data(**kwargs)
         return self.view_context(context)
-
-    def post(self, request, object, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = object.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
 
 
 class MovimentoEstoqueListView(MovimentoEstoqueBaseListView):
@@ -215,16 +196,17 @@ class MovimentoEstoqueListView(MovimentoEstoqueBaseListView):
         return all_movimentos
 
     def post(self, request, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                if EntradaEstoque.objects.filter(id=key).exists():
-                    instance = EntradaEstoque.objects.get(id=key)
-                elif SaidaEstoque.objects.filter(id=key).exists():
-                    instance = SaidaEstoque.objects.get(id=key)
-                elif TransferenciaEstoque.objects.filter(id=key).exists():
-                    instance = TransferenciaEstoque.objects.get(id=key)
+        if self.check_user_delete_permission(request, MovimentoEstoque):
+            for key, value in request.POST.items():
+                if value == "on":
+                    if EntradaEstoque.objects.filter(id=key).exists():
+                        instance = EntradaEstoque.objects.get(id=key)
+                    elif SaidaEstoque.objects.filter(id=key).exists():
+                        instance = SaidaEstoque.objects.get(id=key)
+                    elif TransferenciaEstoque.objects.filter(id=key).exists():
+                        instance = TransferenciaEstoque.objects.get(id=key)
 
-                instance.delete()
+                    instance.delete()
         return redirect(self.success_url)
 
 
@@ -239,12 +221,6 @@ class EntradaEstoqueListView(MovimentoEstoqueBaseListView):
         context['add_url'] = reverse_lazy('estoque:addentradaestoqueview')
         return context
 
-    def get_queryset(self):
-        return super(EntradaEstoqueListView, self).get_queryset(object=self.model)
-
-    def post(self, request, *args, **kwargs):
-        return super(EntradaEstoqueListView, self).post(request, self.model)
-
 
 class SaidaEstoqueListView(MovimentoEstoqueBaseListView):
     template_name = 'estoque/movimento/movimento_estoque_list.html'
@@ -256,12 +232,6 @@ class SaidaEstoqueListView(MovimentoEstoqueBaseListView):
         context['title_complete'] = 'SAÍDAS EM ESTOQUE'
         context['add_url'] = reverse_lazy('estoque:addsaidaestoqueview')
         return context
-
-    def get_queryset(self):
-        return super(SaidaEstoqueListView, self).get_queryset(object=self.model)
-
-    def post(self, request, *args, **kwargs):
-        return super(SaidaEstoqueListView, self).post(request, self.model)
 
 
 class TransferenciaEstoqueListView(MovimentoEstoqueBaseListView):
@@ -276,15 +246,10 @@ class TransferenciaEstoqueListView(MovimentoEstoqueBaseListView):
             'estoque:addtransferenciaestoqueview')
         return context
 
-    def get_queryset(self):
-        return super(TransferenciaEstoqueListView, self).get_queryset(object=self.model)
 
-    def post(self, request, *args, **kwargs):
-        return super(TransferenciaEstoqueListView, self).post(request, self.model)
-
-
-class DetalharMovimentoEstoqueBaseView(DetailView):
+class DetalharMovimentoEstoqueBaseView(CustomDetailView):
     template_name = "estoque/movimento/movimento_estoque_detail.html"
+    permission_codename = 'view_movimentoestoque'
 
     def get_context_data(self, **kwargs):
         context = super(DetalharMovimentoEstoqueBaseView,

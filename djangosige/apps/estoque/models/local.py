@@ -23,6 +23,12 @@ class LocalEstoque(models.Model):
     produtos_estoque = models.ManyToManyField(
         Produto, through='estoque.ProdutoEstocado')
 
+    class Meta:
+        verbose_name = "Local de Estoque"
+        permissions = (
+            ("view_localestoque", "Can view local estoque"),
+        )
+
     def __unicode__(self):
         s = u'%s' % (self.descricao)
         return s

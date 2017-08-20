@@ -350,7 +350,6 @@ class Venda(models.Model):
 
     def format_desconto(self):
         if self.tipo_desconto == '0':
-            # return 'R$ {0}'.format(locale.format(u'%.2f', self.desconto, 1))
             return locale.format(u'%.2f', self.desconto, 1)
         else:
             itens = ItensVenda.objects.filter(venda_id=self.id)
@@ -359,7 +358,6 @@ class Venda(models.Model):
                 tot += it.get_total_sem_desconto()
 
             v_desconto = tot * (self.desconto / 100)
-            # return 'R$ {0}'.format(locale.format(u'%.2f', v_desconto, 1))
             return locale.format(u'%.2f', v_desconto, 1)
 
     def format_seguro(self):
@@ -409,10 +407,15 @@ class Venda(models.Model):
 
 
 class OrcamentoVenda(Venda):
-    #descricao       = models.CharField(max_length=255)
     data_vencimento = models.DateField(null=True, blank=True)
     status = models.CharField(
         max_length=1, choices=STATUS_ORCAMENTO_ESCOLHAS, default='0')
+
+    class Meta:
+        verbose_name = "Orçamento de Venda"
+        permissions = (
+            ("view_orcamentovenda", "Can view orcamento venda"),
+        )
 
     @property
     def format_data_vencimento(self):
@@ -440,6 +443,13 @@ class PedidoVenda(Venda):
     data_entrega = models.DateField(null=True, blank=True)
     status = models.CharField(
         max_length=1, choices=STATUS_PEDIDO_VENDA_ESCOLHAS, default='0')
+
+    class Meta:
+        verbose_name = "Pedido de Venda"
+        permissions = (
+            ("view_pedidovenda", "Can view pedido venda"),
+            ("faturar_pedidovenda", "Pode faturar Pedidos de Venda"),
+        )
 
     @property
     def format_data_entrega(self):

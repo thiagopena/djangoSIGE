@@ -53,7 +53,7 @@
                 <td>{{orcamento.format_valor_total}}</td>
                 {% if orcamento.status == '0' %}
                 <td class="green_td" style="text-align:center;padding:0px;height:100%;"><a href="{% url 'vendas:gerarpedidovenda' orcamento.id %}" class="prevent-click-row" style="color:green;height:100%;width:100%;display:block;"><i class="material-icons" style="margin-top:8px;">&#xE86C;</i></a></td>
-                <td class="red_td" style="text-align:center;padding:0px;height:100%;"><a href="{% url 'vendas:cancelarvenda' orcamento.id %}" class="prevent-click-row" style="color:red;height:100%;width:100%;display:block;"><i class="material-icons" style="margin-top:8px;">&#xE033;</i></a></td>
+                <td class="red_td" style="text-align:center;padding:0px;height:100%;"><a href="{% url 'vendas:cancelarorcamentovenda' orcamento.id %}" class="prevent-click-row" style="color:red;height:100%;width:100%;display:block;"><i class="material-icons" style="margin-top:8px;">&#xE033;</i></a></td>
                 {% else %}
                 <td></td>
                 <td></td>

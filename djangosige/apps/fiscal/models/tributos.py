@@ -179,6 +179,12 @@ class GrupoFiscal(models.Model):
     descricao = models.CharField(max_length=255)
     regime_trib = models.CharField(max_length=1, choices=REGIME_TRIB_ESCOLHAS)
 
+    class Meta:
+        verbose_name = "Grupo Fiscal"
+        permissions = (
+            ("view_grupofiscal", "Can view grupo fiscal"),
+        )
+
     def __unicode__(self):
         s = u'%s' % (self.descricao)
         return s

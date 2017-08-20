@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic import ListView
-from django.contrib import messages
-from django.shortcuts import redirect
 from django.db.models import F
 
+from djangosige.apps.base.custom_views import CustomCreateView, CustomListView, CustomUpdateView
 from djangosige.apps.cadastro.forms import ProdutoForm, CategoriaForm, UnidadeForm, MarcaForm
 from djangosige.apps.cadastro.models import Produto, Categoria, Unidade, Marca, Fornecedor
 from djangosige.apps.estoque.models import ItensMovimento, EntradaEstoque, ProdutoEstocado
@@ -14,11 +11,12 @@ from djangosige.apps.estoque.models import ItensMovimento, EntradaEstoque, Produ
 from datetime import datetime
 
 
-class AdicionarProdutoView(CreateView):
+class AdicionarProdutoView(CustomCreateView):
     form_class = ProdutoForm
     template_name = "cadastro/produto/produto_add.html"
     success_url = reverse_lazy('cadastro:listaprodutosview')
     success_message = "Produto <b>%(descricao)s </b>adicionado com sucesso."
+    permission_codename = 'add_produto'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
@@ -104,37 +102,19 @@ class AdicionarProdutoView(CreateView):
 
         return self.form_invalid(form)
 
-    def form_valid(self, form):
-        super(AdicionarProdutoView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
 
-    def form_invalid(self, form):
-        return self.render_to_response(self.get_context_data(form=form,))
-
-
-class ProdutosListView(ListView):
+class ProdutosListView(CustomListView):
     template_name = 'cadastro/produto/produto_list.html'
     model = Produto
     context_object_name = 'all_produtos'
     success_url = reverse_lazy('cadastro:listaprodutosview')
+    permission_codename = 'view_produto'
 
     def get_context_data(self, **kwargs):
         context = super(ProdutosListView, self).get_context_data(**kwargs)
         context['title_complete'] = 'PRODUTOS CADASTRADOS'
         context['add_url'] = reverse_lazy('cadastro:addprodutoview')
         return context
-
-    def get_queryset(self):
-        return Produto.objects.all()
-
-    def post(self, request, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = Produto.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
 
 
 class ProdutosBaixoEstoqueListView(ProdutosListView):
@@ -150,12 +130,13 @@ class ProdutosBaixoEstoqueListView(ProdutosListView):
         return Produto.objects.filter(estoque_atual__lte=F('estoque_minimo'))
 
 
-class EditarProdutoView(UpdateView):
+class EditarProdutoView(CustomUpdateView):
     form_class = ProdutoForm
     model = Produto
     template_name = "cadastro/produto/produto_edit.html"
     success_url = reverse_lazy('cadastro:listaprodutosview')
     success_message = "Produto <b>%(descricao)s </b>editado com sucesso."
+    permission_codename = 'change_produto'
 
     def get_success_message(self, cleaned_data):
         return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
@@ -166,6 +147,7 @@ class EditarProdutoView(UpdateView):
         return context
 
     def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
         # Tirar . dos campos decimais
         req_post = request.POST.copy()
 
@@ -185,131 +167,98 @@ class EditarProdutoView(UpdateView):
 
         request.POST = req_post
 
-        return super(EditarProdutoView, self).post(request, *args, **kwargs)
+        form_class = self.get_form_class()
+        form = form_class(request.POST, instance=self.object)
 
-    def form_valid(self, form):
-        super(EditarProdutoView, self).form_valid(form)
-        messages.success(
-            self.request, self.get_success_message(form.cleaned_data))
-        return redirect(self.success_url)
+        if form.is_valid():
+            self.object = form.save()
+            return self.form_valid(form)
+
+        return self.form_invalid(form)
 
 
-class AdicionarCategoriaView(CreateView):
-    form_class = CategoriaForm
+class AdicionarOutrosBaseView(CustomCreateView):
     template_name = "base/popup_form.html"
-    success_url = reverse_lazy('cadastro:addcategoriaview')
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarCategoriaView,
+        context = super(AdicionarOutrosBaseView,
                         self).get_context_data(**kwargs)
-        context['titulo'] = 'Adicionar categoria'
+        context['titulo'] = 'Adicionar ' + self.model.__name__
         return context
 
 
-class CategoriasListView(ListView):
+class EditarOutrosBaseView(CustomUpdateView):
+    template_name = "base/popup_form.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(EditarOutrosBaseView,
+                        self).get_context_data(**kwargs)
+        context['titulo'] = 'Editar {0}: {1}'.format(
+            self.model.__name__, str(self.object))
+        return context
+
+
+class AdicionarCategoriaView(AdicionarOutrosBaseView):
+    form_class = CategoriaForm
+    model = Categoria
+    success_url = reverse_lazy('cadastro:addcategoriaview')
+    permission_codename = 'add_categoria'
+
+
+class CategoriasListView(CustomListView):
     model = Categoria
     template_name = 'cadastro/produto/categoria_list.html'
     context_object_name = 'all_categorias'
     success_url = reverse_lazy('cadastro:listacategoriasview')
-
-    def get_queryset(self):
-        return Categoria.objects.all()
-
-    def post(self, request, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = Categoria.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
+    permission_codename = 'view_categoria'
 
 
-class EditarCategoriaView(UpdateView):
+class EditarCategoriaView(EditarOutrosBaseView):
     form_class = CategoriaForm
     model = Categoria
-    template_name = "base/popup_form.html"
     success_url = reverse_lazy('cadastro:listacategoriasview')
-
-    def get_context_data(self, **kwargs):
-        context = super(EditarCategoriaView, self).get_context_data(**kwargs)
-        context['titulo'] = 'Editar categoria: ' + str(self.object)
-        return context
+    permission_codename = 'change_categoria'
 
 
-class AdicionarUnidadeView(CreateView):
+class AdicionarUnidadeView(AdicionarOutrosBaseView):
     form_class = UnidadeForm
-    template_name = "base/popup_form.html"
+    model = Unidade
     success_url = reverse_lazy('cadastro:addunidadeview')
-
-    def get_context_data(self, **kwargs):
-        context = super(AdicionarUnidadeView, self).get_context_data(**kwargs)
-        context['titulo'] = 'Adicionar unidade'
-        return context
+    permission_codename = 'add_unidade'
 
 
-class UnidadesListView(ListView):
+class UnidadesListView(CustomListView):
     model = Unidade
     template_name = 'cadastro/produto/unidade_list.html'
     context_object_name = 'all_unidades'
     success_url = reverse_lazy('cadastro:listaunidadesview')
-
-    def get_queryset(self):
-        return Unidade.objects.all()
-
-    def post(self, request, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = Unidade.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
+    permission_codename = 'view_unidade'
 
 
-class EditarUnidadeView(UpdateView):
+class EditarUnidadeView(EditarOutrosBaseView):
     form_class = UnidadeForm
     model = Unidade
-    template_name = "base/popup_form.html"
     success_url = reverse_lazy('cadastro:listaunidadesview')
-
-    def get_context_data(self, **kwargs):
-        context = super(EditarUnidadeView, self).get_context_data(**kwargs)
-        context['titulo'] = 'Editar unidade: ' + str(self.object)
-        return context
+    permission_codename = 'change_unidade'
 
 
-class AdicionarMarcaView(CreateView):
+class AdicionarMarcaView(AdicionarOutrosBaseView):
     form_class = MarcaForm
-    template_name = "base/popup_form.html"
+    model = Marca
     success_url = reverse_lazy('cadastro:addmarcaview')
-
-    def get_context_data(self, **kwargs):
-        context = super(AdicionarMarcaView, self).get_context_data(**kwargs)
-        context['titulo'] = 'Adicionar marca'
-        return context
+    permission_codename = 'add_marca'
 
 
-class MarcasListView(ListView):
+class MarcasListView(CustomListView):
     model = Marca
     template_name = 'cadastro/produto/marca_list.html'
     context_object_name = 'all_marcas'
     success_url = reverse_lazy('cadastro:listamarcasview')
-
-    def get_queryset(self):
-        return Marca.objects.all()
-
-    def post(self, request, *args, **kwargs):
-        for key, value in request.POST.items():
-            if value == "on":
-                instance = Marca.objects.get(id=key)
-                instance.delete()
-        return redirect(self.success_url)
+    permission_codename = 'view_marca'
 
 
-class EditarMarcaView(UpdateView):
+class EditarMarcaView(EditarOutrosBaseView):
     form_class = MarcaForm
     model = Marca
-    template_name = "base/popup_form.html"
     success_url = reverse_lazy('cadastro:listamarcasview')
-
-    def get_context_data(self, **kwargs):
-        context = super(EditarMarcaView, self).get_context_data(**kwargs)
-        context['titulo'] = 'Editar marca: ' + str(self.object)
-        return context
+    permission_codename = 'change_marca'
