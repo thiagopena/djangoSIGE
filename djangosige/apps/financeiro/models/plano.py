@@ -30,4 +30,4 @@ class PlanoContasGrupo(models.Model):
 
 class PlanoContasSubgrupo(PlanoContasGrupo):
     grupo = models.ForeignKey('financeiro.PlanoContasGrupo',
-                              related_name="plano_subgrupo", on_delete=models.CASCADE)
+                              related_name="subgrupos", on_delete=models.CASCADE)

@@ -38,11 +38,11 @@ class BaseTestCase(TestCase):
         self.user.is_superuser = True
         self.user.save()
 
-    def check_list_view_delete(self, url, deleted_object):
+    def check_list_view_delete(self, url, deleted_object, context_object_key='object_list'):
         # Testar GET request lista
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(deleted_object in response.context['object_list'])
+        self.assertTrue(deleted_object in response.context[context_object_key])
 
         # Deletar objeto criado por POST request
         data = {
@@ -50,7 +50,7 @@ class BaseTestCase(TestCase):
         }
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertFalse(deleted_object in response.context['object_list'])
+        self.assertFalse(deleted_object in response.context[context_object_key])
 
     def check_json_response(self, url, post_data, obj_pk, model):
         response = self.client.post(url, post_data, follow=True)

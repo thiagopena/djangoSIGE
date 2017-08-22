@@ -60,7 +60,7 @@
                       <label class="remove-entry-label" for="remover-entrada-{{ge.id}}"></label>
                     </td>
                   </tr>
-                    {% for sub in ge.plano_subgrupo.all %}
+                    {% for sub in ge.subgrupos.all %}
                   <tr class="plano-subgrupo-row accordion-{{ge.id}} in">
                     <td>{{sub.codigo}}</td>
                     <td>{{sub.descricao}}</td>
@@ -106,7 +106,7 @@
                       <label class="remove-entry-label" for="remover-entrada-{{gs.id}}"></label>
                     </td>
                   </tr>
-                    {% for sub in gs.plano_subgrupo.all %}
+                    {% for sub in gs.subgrupos.all %}
                   <tr class="plano-subgrupo-row accordion-{{gs.id}} in">
                     <td>{{sub.codigo}}</td>
                     <td>{{sub.descricao}}</td>
