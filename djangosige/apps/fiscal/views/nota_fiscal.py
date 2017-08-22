@@ -174,12 +174,6 @@ class NotaFiscalSaidaListView(NotaFiscalListView):
         context['saida'] = True
         return context
 
-    def get_queryset(self):
-        return super(NotaFiscalSaidaListView, self).get_queryset(object=NotaFiscalSaida)
-
-    def post(self, request, *args, **kwargs):
-        return super(NotaFiscalSaidaListView, self).post(request, NotaFiscalSaida)
-
 
 class NotaFiscalEntradaListView(NotaFiscalListView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_list.html'
@@ -196,12 +190,6 @@ class NotaFiscalEntradaListView(NotaFiscalListView):
             'fiscal:importarnotafiscalentrada')
         context['entrada'] = True
         return context
-
-    def get_queryset(self):
-        return super(NotaFiscalEntradaListView, self).get_queryset(object=NotaFiscalEntrada)
-
-    def post(self, request, *args, **kwargs):
-        return super(NotaFiscalEntradaListView, self).post(request, NotaFiscalEntrada)
 
 
 class EditarNotaFiscalView(CustomUpdateView, NotaFiscalViewMixin):
@@ -540,8 +528,6 @@ class ImportarNotaView(CustomView):
         else:
             messages.error(request, 'Arquivo XML não selecionado.')
 
-        # return redirect(reverse_lazy('fiscal:editarnotafiscalview',
-        # kwargs={'pk':self.object.pk}))
         return self.get_redirect_url()
 
 
