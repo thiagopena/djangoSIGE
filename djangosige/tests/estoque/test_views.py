@@ -257,7 +257,7 @@ class EstoqueEditarViewsTestCase(BaseTestCase):
         self.assertTemplateUsed(
             response, 'estoque/movimento/movimento_estoque_detail.html')
 
-    def test_edit_orcamento_compra_get_post_request(self):
+    def test_edit_local_estoque_get_post_request(self):
         # Buscar objeto qualquer
         obj = LocalEstoque.objects.order_by('pk').last()
         url = reverse('estoque:editarlocalview',
