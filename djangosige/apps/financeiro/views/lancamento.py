@@ -122,7 +122,6 @@ class AdicionarLancamentoBaseView(CustomCreateView, MovimentoCaixaMixin):
 
         if form.is_valid():
             self.object = form.save(commit=False)
-            self.object.save()
 
             if self.object.movimentar_caixa:
                 mvmt = None
@@ -143,6 +142,7 @@ class AdicionarLancamentoBaseView(CustomCreateView, MovimentoCaixaMixin):
                     mvmt.save()
                     self.object.movimento_caixa = mvmt
 
+            self.object.save()
             return self.form_valid(form)
 
         return self.form_invalid(form)
@@ -267,7 +267,6 @@ class EditarLancamentoBaseView(CustomUpdateView, MovimentoCaixaMixin):
                             else:
                                 mvmt.refresh_from_db()
 
-                            # self.adicionar_movimento_caixa(mvmt)
                             self.adicionar_novo_movimento_caixa(
                                 lancamento=self.object, novo_movimento=mvmt)
                             self.verificar_remocao_movimento(
