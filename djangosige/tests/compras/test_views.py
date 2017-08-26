@@ -183,6 +183,7 @@ class ComprasEditarViewsTestCase(BaseTestCase):
         data = response.context['form'].initial
         data.update(COMPRA_FORMSET_DATA)
         data.update(response.context['produtos_form'].initial[0])
+        self.replace_none_values_in_dictionary(data)
         data['observacoes'] = 'Pedido editado.'
         if data['orcamento'] is None:
             data['orcamento'] = ''

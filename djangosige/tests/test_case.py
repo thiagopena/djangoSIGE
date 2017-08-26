@@ -50,7 +50,8 @@ class BaseTestCase(TestCase):
         }
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertFalse(deleted_object in response.context[context_object_key])
+        self.assertFalse(deleted_object in response.context[
+                         context_object_key])
 
     def check_json_response(self, url, post_data, obj_pk, model):
         response = self.client.post(url, post_data, follow=True)
@@ -59,3 +60,8 @@ class BaseTestCase(TestCase):
         for c in response_content:
             if c['model'] == model:
                 self.assertEqual(c['pk'], obj_pk)
+
+    def replace_none_values_in_dictionary(self, dictionary):
+        for key, value in dictionary.items():
+            if value is None:
+                dictionary[key] = ''

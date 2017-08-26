@@ -190,7 +190,7 @@ class CadastroListarViewsTestCase(BaseTestCase):
 
 class CadastroEditarViewsTestCase(BaseTestCase):
 
-    def test_edit_pessoa__get_post_request(self):
+    def test_edit_pessoa_get_post_request(self):
         for model in PESSOA_MODELS:
             # Buscar objeto qualquer
             model_name = model.__name__.lower()
@@ -225,6 +225,7 @@ class CadastroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
+        self.replace_none_values_in_dictionary(data)
         data['inf_adicionais'] = 'Produto editado.'
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
