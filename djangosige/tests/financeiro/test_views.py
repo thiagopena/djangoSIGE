@@ -392,21 +392,6 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         self.assertTemplateUsed(
             response, 'financeiro/plano/plano.html')
 
-    def test_edit_grupo_get_post_request(self):
-        # Buscar objeto qualquer
-        obj = PlanoContasGrupo.objects.order_by('pk').last()
-        url = reverse('financeiro:editargrupoview',
-                      kwargs={'pk': obj.pk})
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-        data = response.context['form'].initial
-        data.update(SUBGRUPO_PLANO_CONTAS_FORMSET_DATA)
-        data['descricao'] = 'Grupo Editado editado.'
-        response = self.client.post(url, data, follow=True)
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(
-            response, 'financeiro/plano/plano.html')
-
     def test_edit_conta_pagar_get_post_request(self):
         # Buscar objeto qualquer
         obj = Saida.objects.filter(status='1').order_by('pk').last()
