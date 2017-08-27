@@ -61,12 +61,11 @@ class AdicionarGrupoFiscalView(CustomCreateView):
         self.object = None
 
         req_post = request.POST.copy()
-        req_post['ipi_form-valor_fixo'] = req_post['ipi_form-valor_fixo'].replace(
-            '.', '')
-        req_post['pis_form-valiq_pis'] = req_post['pis_form-valiq_pis'].replace(
-            '.', '')
-        req_post['cofins_form-valiq_cofins'] = req_post['cofins_form-valiq_cofins'].replace(
-            '.', '')
+        for key, value in req_post.items():
+            if ('valor' in key or
+                    'valiq' in key):
+                req_post[key] = req_post[key].replace('.', '')
+
         request.POST = req_post
 
         form = GrupoFiscalForm(request.POST)
