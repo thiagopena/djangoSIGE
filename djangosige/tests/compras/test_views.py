@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from djangosige.tests.test_case import BaseTestCase
+from djangosige.tests.test_case import BaseTestCase, replace_none_values_in_dictionary
 from djangosige.apps.cadastro.models import Fornecedor, Produto
 from djangosige.apps.compras.models import OrcamentoCompra, PedidoCompra, ItensCompra
 from djangosige.apps.estoque.models import LocalEstoque, DEFAULT_LOCAL_ID
@@ -183,7 +183,7 @@ class ComprasEditarViewsTestCase(BaseTestCase):
         data = response.context['form'].initial
         data.update(COMPRA_FORMSET_DATA)
         data.update(response.context['produtos_form'].initial[0])
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['observacoes'] = 'Pedido editado.'
         if data['orcamento'] is None:
             data['orcamento'] = ''

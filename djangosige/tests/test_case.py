@@ -61,7 +61,8 @@ class BaseTestCase(TestCase):
             if c['model'] == model:
                 self.assertEqual(c['pk'], obj_pk)
 
-    def replace_none_values_in_dictionary(self, dictionary):
-        for key, value in dictionary.items():
-            if value is None:
-                dictionary[key] = ''
+
+def replace_none_values_in_dictionary(dictionary):
+    for key, value in dictionary.items():
+        if value is None:
+            dictionary[key] = ''

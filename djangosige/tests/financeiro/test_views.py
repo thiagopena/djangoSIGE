@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from djangosige.tests.test_case import BaseTestCase
+from djangosige.tests.test_case import BaseTestCase, replace_none_values_in_dictionary
 from djangosige.apps.financeiro.models import MovimentoCaixa, Entrada, Saida, PlanoContasGrupo, PlanoContasSubgrupo
 from djangosige.apps.estoque.models import SaidaEstoque
 
@@ -400,7 +400,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Conta Pagar editada'
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -421,7 +421,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Conta Receber editada'
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -440,7 +440,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Recebimento editado'
         data['valor_total'] = locale.format(u'%.2f', Decimal(
             data['valor_total']) + Decimal('20.00'), 1)
@@ -472,7 +472,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
         novo_valor_entradas = Decimal(data['valor_liquido']) + Decimal('20.00')
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Recebimento editado'
         data['valor_total'] = locale.format(u'%.2f', Decimal(
             data['valor_total']) + Decimal('20.00'), 1)
@@ -505,7 +505,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         data = response.context['form'].initial
         novo_valor_entradas = MovimentoCaixa.objects.get(
             data_movimento=nova_data_pagamento).entradas + Decimal(data['valor_liquido']) + Decimal('20.00')
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Recebimento editado'
         data['valor_total'] = locale.format(u'%.2f', Decimal(
             data['valor_total']) + Decimal('20.00'), 1)
@@ -531,7 +531,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Recebimento editado'
         data['data_pagamento'] = ''
         data['data_vencimento'] = ''
@@ -553,7 +553,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Recebimento editado'
         data['valor_total'] = locale.format(
             u'%.2f', Decimal(data['valor_total']), 1)
@@ -580,7 +580,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Recebimento editado'
         data['valor_total'] = locale.format(
             u'%.2f', Decimal(data['valor_total']), 1)
@@ -609,7 +609,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Pagamento editado'
         data['valor_total'] = locale.format(u'%.2f', Decimal(
             data['valor_total']) + Decimal('20.00'), 1)
@@ -641,7 +641,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
         novo_valor_saidas = Decimal(data['valor_liquido']) + Decimal('20.00')
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Pagamento editado'
         data['valor_total'] = locale.format(u'%.2f', Decimal(
             data['valor_total']) + Decimal('20.00'), 1)
@@ -674,7 +674,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         data = response.context['form'].initial
         novo_valor_saidas = MovimentoCaixa.objects.get(
             data_movimento=nova_data_pagamento).saidas + Decimal(data['valor_liquido']) + Decimal('20.00')
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Pagamento editado'
         data['valor_total'] = locale.format(u'%.2f', Decimal(
             data['valor_total']) + Decimal('20.00'), 1)
@@ -700,7 +700,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Pagamento editado'
         data['data_pagamento'] = ''
         data['data_vencimento'] = ''
@@ -722,7 +722,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Pagamento editado'
         data['valor_total'] = locale.format(
             u'%.2f', Decimal(data['valor_total']), 1)
@@ -749,7 +749,7 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['descricao'] = 'Pagamento editado'
         data['valor_total'] = locale.format(
             u'%.2f', Decimal(data['valor_total']), 1)

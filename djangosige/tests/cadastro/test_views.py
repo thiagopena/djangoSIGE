@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from djangosige.tests.test_case import BaseTestCase
+from djangosige.tests.test_case import BaseTestCase, replace_none_values_in_dictionary
 from djangosige.apps.cadastro.models import Produto, Unidade, Marca, Categoria, Transportadora, Fornecedor, Cliente, Empresa
 from django.core.urlresolvers import reverse
 
@@ -225,7 +225,7 @@ class CadastroEditarViewsTestCase(BaseTestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         data = response.context['form'].initial
-        self.replace_none_values_in_dictionary(data)
+        replace_none_values_in_dictionary(data)
         data['inf_adicionais'] = 'Produto editado.'
         response = self.client.post(url, data, follow=True)
         self.assertEqual(response.status_code, 200)
