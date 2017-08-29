@@ -109,7 +109,7 @@ class AdicionarLancamentoBaseView(CustomCreateView, MovimentoCaixaMixin):
         self.object = None
         # Tirar . dos campos decimais
         req_post = request.POST.copy()
-        for key, value in req_post.items():
+        for key in req_post:
             if ('valor' in key or
                 'juros' in key or
                     'abatimento' in key):
@@ -219,7 +219,7 @@ class EditarLancamentoBaseView(CustomUpdateView, MovimentoCaixaMixin):
     def post(self, request, *args, **kwargs):
         # Tirar . dos campos decimais
         req_post = request.POST.copy()
-        for key, value in req_post.items():
+        for key in req_post:
             if ('valor' in key or
                 'juros' in key or
                     'abatimento' in key):

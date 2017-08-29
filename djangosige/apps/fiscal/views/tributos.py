@@ -61,7 +61,7 @@ class AdicionarGrupoFiscalView(CustomCreateView):
         self.object = None
 
         req_post = request.POST.copy()
-        for key, value in req_post.items():
+        for key in req_post:
             if ('valor' in key or
                     'valiq' in key):
                 req_post[key] = req_post[key].replace('.', '')

@@ -82,9 +82,9 @@ class AdicionarNotaFiscalView(CustomCreateView, NotaFiscalViewMixin):
 
         # Remover separados de milhar .
         req_post = request.POST.copy()
-        req_post['v_orig'] = req_post['v_orig'].replace('.', '')
-        req_post['v_desc'] = req_post['v_desc'].replace('.', '')
-        req_post['v_liq'] = req_post['v_liq'].replace('.', '')
+        for key in req_post:
+            if ('v_' in key):
+                req_post[key] = req_post[key].replace('.', '')
         request.POST = req_post
 
         form = self.get_form(form_class)

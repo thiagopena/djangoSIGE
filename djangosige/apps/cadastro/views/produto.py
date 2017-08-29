@@ -35,7 +35,7 @@ class AdicionarProdutoView(CustomCreateView):
         # Tirar . dos campos decimais
         req_post = request.POST.copy()
 
-        for key, value in req_post.items():
+        for key in req_post:
             if ('venda' in key or
                 'custo' in key or
                 'estoque_minimo' in key or
@@ -151,7 +151,7 @@ class EditarProdutoView(CustomUpdateView):
         # Tirar . dos campos decimais
         req_post = request.POST.copy()
 
-        for key, value in req_post.items():
+        for key in req_post:
             if ('venda' in key or
                 'custo' in key or
                 'estoque_minimo' in key or

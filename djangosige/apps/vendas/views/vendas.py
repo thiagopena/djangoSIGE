@@ -47,7 +47,7 @@ class AdicionarVendaView(CustomCreateView):
         # Tirar . dos campos decimais
         req_post = request.POST.copy()
 
-        for key, value in req_post.items():
+        for key in req_post:
             if ('desconto' in key or
                 'quantidade' in key or
                 'valor' in key or
@@ -245,7 +245,7 @@ class EditarVendaView(CustomUpdateView):
         # Tirar . dos campos decimais
         req_post = request.POST.copy()
 
-        for key, value in req_post.items():
+        for key in req_post:
             if ('desconto' in key or
                 'quantidade' in key or
                 'valor' in key or

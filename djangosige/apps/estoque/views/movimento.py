@@ -90,7 +90,7 @@ class AdicionarMovimentoEstoqueBaseView(CustomCreateView, MovimentoEstoqueMixin)
         self.object = None
         # Tirar . dos campos decimais
         req_post = request.POST.copy()
-        for key, value in req_post.items():
+        for key in req_post:
             if ('quantidade' in key or
                 'valor' in key or
                     'total' in key):
