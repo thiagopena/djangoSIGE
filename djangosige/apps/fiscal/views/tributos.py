@@ -192,12 +192,11 @@ class EditarGrupoFiscalView(CustomUpdateView):
 
     def post(self, request, *args, **kwargs):
         req_post = request.POST.copy()
-        req_post['ipi_form-valor_fixo'] = req_post['ipi_form-valor_fixo'].replace(
-            '.', '')
-        req_post['pis_form-valiq_pis'] = req_post['pis_form-valiq_pis'].replace(
-            '.', '')
-        req_post['cofins_form-valiq_cofins'] = req_post['cofins_form-valiq_cofins'].replace(
-            '.', '')
+        for key in req_post:
+            if ('valor' in key or
+                    'valiq' in key):
+                req_post[key] = req_post[key].replace('.', '')
+
         request.POST = req_post
 
         self.object = self.get_object()
