@@ -437,7 +437,6 @@ class ProcessadorNotaFiscal(object):
                 cliente.tipo_pessoa = 'PJ'
                 info_cliente.cnpj = str(nfe.infNFe.dest.CNPJ.valor)
                 info_cliente.suframa = str(nfe.infNFe.dest.ISUF.valor)
-                info_cliente.nome_fantasia = str(nfe.infNFe.dest.xFant.valor)
                 info_cliente.inscricao_estadual = str(nfe.infNFe.dest.IE.valor)
             elif nfe.infNFe.dest.CPF.valor:
                 info_cliente = PessoaFisica()
@@ -918,7 +917,6 @@ class ProcessadorNotaFiscal(object):
                 info_empresa = PessoaJuridica()
                 empresa.tipo_pessoa = 'PJ'
                 info_empresa.cnpj = str(nfe.infNFe.dest.CNPJ.valor)
-                info_empresa.nome_fantasia = str(nfe.infNFe.dest.xFant.valor)
                 info_empresa.inscricao_estadual = str(nfe.infNFe.dest.IE.valor)
 
                 ender_empresa = Endereco()
