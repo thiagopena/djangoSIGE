@@ -91,6 +91,42 @@
     },
     {
         "fields": {
+            "banco_padrao": null,
+            "criado_por": 1,
+            "data_criacao": "2017-09-06T12:29:27.848Z",
+            "data_edicao": "2017-09-06T12:29:27.930Z",
+            "email_padrao": null,
+            "endereco_padrao": 7,
+            "informacoes_adicionais": null,
+            "inscricao_municipal": null,
+            "nome_razao_social": "RAZAO SOCIAL",
+            "site_padrao": null,
+            "telefone_padrao": 5,
+            "tipo_pessoa": "PJ"
+        },
+        "model": "cadastro.pessoa",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "banco_padrao": null,
+            "criado_por": 1,
+            "data_criacao": "2017-09-06T12:35:21.229Z",
+            "data_edicao": "2017-09-06T12:35:21.303Z",
+            "email_padrao": null,
+            "endereco_padrao": 8,
+            "informacoes_adicionais": null,
+            "inscricao_municipal": null,
+            "nome_razao_social": "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+            "site_padrao": null,
+            "telefone_padrao": 6,
+            "tipo_pessoa": "PJ"
+        },
+        "model": "cadastro.pessoa",
+        "pk": 7
+    },
+    {
+        "fields": {
             "cnpj": "99.999.999/0001-91",
             "inscricao_estadual": "",
             "nome_fantasia": "Nome Fantasia",
@@ -148,6 +184,30 @@
         },
         "model": "cadastro.pessoajuridica",
         "pk": 5
+    },
+    {
+        "fields": {
+            "cnpj": "99999999000191",
+            "inscricao_estadual": "1111111111111",
+            "nome_fantasia": "Nome Fantasia",
+            "responsavel": null,
+            "sit_fiscal": null,
+            "suframa": null
+        },
+        "model": "cadastro.pessoajuridica",
+        "pk": 6
+    },
+    {
+        "fields": {
+            "cnpj": "99999999000191",
+            "inscricao_estadual": "",
+            "nome_fantasia": null,
+            "responsavel": null,
+            "sit_fiscal": null,
+            "suframa": null
+        },
+        "model": "cadastro.pessoajuridica",
+        "pk": 7
     },
     {
         "fields": {
@@ -259,6 +319,42 @@
     },
     {
         "fields": {
+            "bairro": "PILAR",
+            "cep": "30390350",
+            "cmun": "3106200",
+            "complemento": "",
+            "cpais": "1058",
+            "logradouro": "LOGRADOURO (RUA, PRACA, AVENIDA)",
+            "municipio": "Belo Horionte",
+            "numero": "140",
+            "pais": "BRASIL",
+            "pessoa_end": 6,
+            "tipo_endereco": null,
+            "uf": "MG"
+        },
+        "model": "cadastro.endereco",
+        "pk": 7
+    },
+    {
+        "fields": {
+            "bairro": "BARRO PRETO",
+            "cep": "30190110",
+            "cmun": "3106200",
+            "complemento": "",
+            "cpais": "1058",
+            "logradouro": "RUA DOIS",
+            "municipio": "Belo Horizonte",
+            "numero": "140",
+            "pais": "Brasil",
+            "pessoa_end": 7,
+            "tipo_endereco": null,
+            "uf": "MG"
+        },
+        "model": "cadastro.endereco",
+        "pk": 8
+    },
+    {
+        "fields": {
             "pessoa_tel": 1,
             "telefone": "(31) 33333-3333",
             "tipo_telefone": "FIX"
@@ -295,6 +391,24 @@
     },
     {
         "fields": {
+            "pessoa_tel": 6,
+            "telefone": "3133333333",
+            "tipo_telefone": null
+        },
+        "model": "cadastro.telefone",
+        "pk": 5
+    },
+    {
+        "fields": {
+            "pessoa_tel": 7,
+            "telefone": "3122222222",
+            "tipo_telefone": null
+        },
+        "model": "cadastro.telefone",
+        "pk": 6
+    },
+    {
+        "fields": {
             "agencia": "4444",
             "banco": "001",
             "conta": "12345678901",
@@ -312,6 +426,15 @@
         },
         "model": "cadastro.empresa",
         "pk": 3
+    },
+    {
+        "fields": {
+            "cnae": null,
+            "iest": null,
+            "logo_file": "imagens/logo.png"
+        },
+        "model": "cadastro.empresa",
+        "pk": 7
     },
     {
         "fields": {
@@ -345,6 +468,13 @@
         },
         "model": "cadastro.fornecedor",
         "pk": 2
+    },
+    {
+        "fields": {
+            "ramo": null
+        },
+        "model": "cadastro.fornecedor",
+        "pk": 6
     },
     {
         "fields": {},
@@ -555,6 +685,29 @@
     },
     {
         "fields": {
+            "categoria": null,
+            "cest": "",
+            "cfop_padrao": 5,
+            "codigo": "CODIGO DO PRODU",
+            "codigo_barras": "",
+            "controlar_estoque": false,
+            "custo": "10.00",
+            "descricao": "DESCRIÇÃO DO PRODUTO USADO PARA EMISSÃO",
+            "estoque_atual": "0.00",
+            "estoque_minimo": "0.00",
+            "grupo_fiscal": 3,
+            "inf_adicionais": "informações adicionais",
+            "marca": null,
+            "ncm": "01012100",
+            "origem": "0",
+            "unidade": 1,
+            "venda": "0.00"
+        },
+        "model": "cadastro.produto",
+        "pk": 7
+    },
+    {
+        "fields": {
             "auto_calcular_impostos": true,
             "compra_id": 1,
             "desconto": "0.00",
@@ -731,6 +884,28 @@
     },
     {
         "fields": {
+            "auto_calcular_impostos": true,
+            "compra_id": 6,
+            "desconto": "0.00",
+            "icms_incluido_preco": false,
+            "incluir_bc_icms": false,
+            "inf_ad_prod": "informações adicionais",
+            "ipi_incluido_preco": false,
+            "p_icms": "0.00",
+            "p_ipi": "0.00",
+            "produto": 7,
+            "quantidade": "100.00",
+            "subtotal": "1000.00",
+            "tipo_desconto": "0",
+            "valor_unit": "10.00",
+            "vicms": "0.00",
+            "vipi": "0.00"
+        },
+        "model": "compras.itenscompra",
+        "pk": 9
+    },
+    {
+        "fields": {
             "cond_pagamento": 1,
             "data_emissao": "2017-06-21",
             "desconto": "0.0000",
@@ -836,6 +1011,27 @@
     },
     {
         "fields": {
+            "cond_pagamento": null,
+            "data_emissao": null,
+            "desconto": "0.0000",
+            "despesas": "0.00",
+            "fornecedor": 6,
+            "frete": "0.00",
+            "local_dest": 1,
+            "mod_frete": "0",
+            "movimentar_estoque": true,
+            "observacoes": null,
+            "seguro": "0.00",
+            "tipo_desconto": "0",
+            "total_icms": "0.00",
+            "total_ipi": "0.00",
+            "valor_total": "1000.00"
+        },
+        "model": "compras.compra",
+        "pk": 6
+    },
+    {
+        "fields": {
             "data_vencimento": "2017-07-01",
             "status": "0"
         },
@@ -877,6 +1073,15 @@
         },
         "model": "compras.pedidocompra",
         "pk": 5
+    },
+    {
+        "fields": {
+            "data_entrega": null,
+            "orcamento": null,
+            "status": "3"
+        },
+        "model": "compras.pedidocompra",
+        "pk": 6
     },
     {
         "fields": {
@@ -2484,6 +2689,16 @@
     },
     {
         "fields": {
+            "cfop": "5101",
+            "descricao": null,
+            "id_dest": "2",
+            "tp_operacao": "1"
+        },
+        "model": "fiscal.naturezaoperacao",
+        "pk": 5
+    },
+    {
+        "fields": {
             "descricao": "Grupo1 (Simples Nacional): ICMS, IPI, COFINS, PIS",
             "regime_trib": "1"
         },
@@ -2497,6 +2712,14 @@
         },
         "model": "fiscal.grupofiscal",
         "pk": 2
+    },
+    {
+        "fields": {
+            "descricao": "Produto: DESCRIÇÃO DO PRODUTO USADO PARA EMISSÃO (Importado por XML)",
+            "regime_trib": "1"
+        },
+        "model": "fiscal.grupofiscal",
+        "pk": 3
     },
     {
         "fields": {
@@ -2561,6 +2784,24 @@
     },
     {
         "fields": {
+            "csosn": "400",
+            "grupo_fiscal": 3,
+            "icmssn_incluido_preco": false,
+            "icmssnst_incluido_preco": false,
+            "mod_bc": "0",
+            "mod_bcst": "0",
+            "p_cred_sn": "0.00",
+            "p_icms": "0.00",
+            "p_icmsst": "0.00",
+            "p_mvast": "0.00",
+            "p_red_bc": "0.00",
+            "p_red_bcst": "0.00"
+        },
+        "model": "fiscal.icmssn",
+        "pk": 2
+    },
+    {
+        "fields": {
             "c_enq": "",
             "cl_enq": "",
             "cnpj_prod": "",
@@ -2595,6 +2836,23 @@
     },
     {
         "fields": {
+            "c_enq": "999",
+            "cl_enq": "",
+            "cnpj_prod": "",
+            "cst": "99",
+            "grupo_fiscal": 3,
+            "incluir_bc_icms": false,
+            "incluir_bc_icmsst": false,
+            "ipi_incluido_preco": false,
+            "p_ipi": null,
+            "tipo_ipi": "0",
+            "valor_fixo": null
+        },
+        "model": "fiscal.ipi",
+        "pk": 3
+    },
+    {
+        "fields": {
             "cst": "01",
             "grupo_fiscal": 1,
             "p_pis": "0.65",
@@ -2615,6 +2873,16 @@
     },
     {
         "fields": {
+            "cst": "99",
+            "grupo_fiscal": 3,
+            "p_pis": "0.00",
+            "valiq_pis": "0.00"
+        },
+        "model": "fiscal.pis",
+        "pk": 3
+    },
+    {
+        "fields": {
             "cst": "01",
             "grupo_fiscal": 1,
             "p_cofins": "4.00",
@@ -2632,6 +2900,157 @@
         },
         "model": "fiscal.cofins",
         "pk": 2
+    },
+    {
+        "fields": {
+            "cst": "99",
+            "grupo_fiscal": 3,
+            "p_cofins": "0.00",
+            "valiq_cofins": "0.00"
+        },
+        "model": "fiscal.cofins",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "arquivo_proc": "",
+            "chave": "",
+            "dhemi": "2017-09-06T12:23:00Z",
+            "dhsaient": null,
+            "fin_nfe": "1",
+            "iddest": "1",
+            "ind_final": "0",
+            "ind_pres": "0",
+            "indpag": "1",
+            "inf_ad_fisco": "Nota fiscal teste1",
+            "inf_cpl": "Nota fiscal teste1",
+            "just_canc": null,
+            "mod": "55",
+            "natop": "Nota fiscal teste1",
+            "numero_lote": null,
+            "numero_protocolo": null,
+            "serie": "101",
+            "status_nfe": "3",
+            "tp_amb": "2",
+            "tp_emis": "1",
+            "tp_imp": "1",
+            "versao": "3.10"
+        },
+        "model": "fiscal.notafiscal",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "arquivo_proc": "",
+            "chave": "",
+            "dhemi": "2017-09-06T12:27:00Z",
+            "dhsaient": null,
+            "fin_nfe": "1",
+            "iddest": "2",
+            "ind_final": "0",
+            "ind_pres": "0",
+            "indpag": "1",
+            "inf_ad_fisco": "Nota fiscal teste2",
+            "inf_cpl": "Nota fiscal teste2",
+            "just_canc": null,
+            "mod": "55",
+            "natop": "Nota fiscal teste2",
+            "numero_lote": null,
+            "numero_protocolo": null,
+            "serie": "101",
+            "status_nfe": "3",
+            "tp_amb": "2",
+            "tp_emis": "1",
+            "tp_imp": "1",
+            "versao": "3.10"
+        },
+        "model": "fiscal.notafiscal",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "arquivo_proc": "",
+            "chave": "31170199999999000191551010000000341616824132",
+            "dhemi": "2017-01-16T12:28:32Z",
+            "dhsaient": null,
+            "fin_nfe": "1",
+            "iddest": "1",
+            "ind_final": "0",
+            "ind_pres": "1",
+            "indpag": "2",
+            "inf_ad_fisco": "",
+            "inf_cpl": "",
+            "just_canc": null,
+            "mod": "55",
+            "natop": "Venda de produto",
+            "numero_lote": null,
+            "numero_protocolo": null,
+            "serie": "101",
+            "status_nfe": "9",
+            "tp_amb": "2",
+            "tp_emis": "1",
+            "tp_imp": "1",
+            "versao": "3.10"
+        },
+        "model": "fiscal.notafiscal",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "dest_saida": 5,
+            "emit_saida": 3,
+            "grupo_cobr": true,
+            "n_fat": "4",
+            "n_nf_saida": "1",
+            "tpnf": "1",
+            "v_desc": "0.00",
+            "v_liq": "2100.00",
+            "v_orig": "2100.00",
+            "venda": 4
+        },
+        "model": "fiscal.notafiscalsaida",
+        "pk": 1
+    },
+    {
+        "fields": {
+            "dest_saida": 5,
+            "emit_saida": 3,
+            "grupo_cobr": true,
+            "n_fat": "5",
+            "n_nf_saida": "2",
+            "tpnf": "1",
+            "v_desc": "0.00",
+            "v_liq": "830.00",
+            "v_orig": "830.00",
+            "venda": 5
+        },
+        "model": "fiscal.notafiscalsaida",
+        "pk": 2
+    },
+    {
+        "fields": {
+            "compra": 6,
+            "dest_entrada": 7,
+            "emit_entrada": 6,
+            "n_nf_entrada": "34"
+        },
+        "model": "fiscal.notafiscalentrada",
+        "pk": 3
+    },
+    {
+        "fields": {
+            "ambiente": "2",
+            "arquivo_certificado_a1": "",
+            "cidtoken": null,
+            "csc": null,
+            "imp_danfe": "1",
+            "inserir_logo_danfe": true,
+            "orientacao_logo_danfe": "H",
+            "senha_certificado": null,
+            "serie_atual": "101"
+        },
+        "model": "fiscal.configuracaonotafiscal",
+        "pk": 1
     },
     {
         "fields": {

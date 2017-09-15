@@ -609,7 +609,7 @@ class ProcessadorNotaFiscal(object):
             else:
                 produto = Produto()
                 produto.descricao = str(det.prod.xProd.valor)
-                produto.codigo = str(det.prod.cProd.valor)
+                produto.codigo = str(det.prod.cProd.valor)[0:15]
                 produto.codigo_barras = str(det.prod.cEAN.valor)
                 produto.cest = str(det.prod.CEST.valor)
                 produto.origem = str(det.imposto.ICMS.orig.valor)
@@ -978,7 +978,7 @@ class ProcessadorNotaFiscal(object):
             else:
                 produto = Produto()
                 produto.descricao = str(det.prod.xProd.valor)
-                produto.codigo = str(det.prod.cProd.valor)
+                produto.codigo = str(det.prod.cProd.valor)[0:15]
                 produto.codigo_barras = str(det.prod.cEAN.valor)
                 produto.cest = str(det.prod.CEST.valor)
                 produto.origem = str(det.imposto.ICMS.orig.valor)

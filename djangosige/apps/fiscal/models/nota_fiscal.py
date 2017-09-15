@@ -77,6 +77,7 @@ IND_PRES_ESCOLHAS = (
     (u'2', u'Operação não presencial, pela Internet'),
     (u'3', u'Operação não presencial, Teleatendimento'),
     (u'4', u'NFC-e em operação com entrega a domicílio'),
+    (u'5', u'Operação presencial, fora do estabelecimento'),
     (u'9', u'Operação não presencial, outros.'),
 )
 

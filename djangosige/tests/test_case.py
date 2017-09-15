@@ -3,6 +3,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from django.contrib.auth.models import Permission
+from django.db.models.fields.files import FieldFile
 
 import json
 
@@ -64,5 +65,5 @@ class BaseTestCase(TestCase):
 
 def replace_none_values_in_dictionary(dictionary):
     for key, value in dictionary.items():
-        if value is None:
+        if value is None or isinstance(value, FieldFile):
             dictionary[key] = ''
