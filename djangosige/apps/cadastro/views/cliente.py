@@ -26,9 +26,10 @@ class AdicionarClienteView(AdicionarPessoaView):
         return super(AdicionarClienteView, self).get(request, form, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        request.POST._mutable = True
-        request.POST['cliente_form-limite_de_credito'] = request.POST['cliente_form-limite_de_credito'].replace(
+        req_post = request.POST.copy()
+        req_post['cliente_form-limite_de_credito'] = req_post['cliente_form-limite_de_credito'].replace(
             '.', '')
+        request.POST = req_post
         form = ClienteForm(request.POST, request.FILES,
                            prefix='cliente_form', request=request)
         return super(AdicionarClienteView, self).post(request, form, *args, **kwargs)
@@ -72,8 +73,10 @@ class EditarClienteView(EditarPessoaView):
         return super(EditarClienteView, self).get(request, form, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        request.POST['cliente_form-limite_de_credito'] = request.POST['cliente_form-limite_de_credito'].replace(
+        req_post = request.POST.copy()
+        req_post['cliente_form-limite_de_credito'] = req_post['cliente_form-limite_de_credito'].replace(
             '.', '')
+        request.POST = req_post
         self.object = self.get_object()
         form_class = self.get_form_class()
         form = form_class(request.POST, request.FILES,
