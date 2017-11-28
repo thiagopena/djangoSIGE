@@ -12,6 +12,7 @@ class AdicionarTransportadoraView(AdicionarPessoaView):
     template_name = "cadastro/pessoa_add.html"
     success_url = reverse_lazy('cadastro:listatransportadorasview')
     success_message = "Transportadora <b>%(nome_razao_social)s</b>adicionada com sucesso."
+    permission_codename = 'add_transportadora'
 
     def get_context_data(self, **kwargs):
         context = super(AdicionarTransportadoraView,
@@ -43,6 +44,7 @@ class TransportadorasListView(PessoasListView):
     model = Transportadora
     context_object_name = 'all_transportadoras'
     success_url = reverse_lazy('cadastro:listatransportadorasview')
+    permission_codename = 'view_transportadora'
 
     def get_context_data(self, **kwargs):
         context = super(TransportadorasListView,
@@ -59,6 +61,7 @@ class EditarTransportadoraView(EditarPessoaView):
     template_name = "cadastro/pessoa_edit.html"
     success_url = reverse_lazy('cadastro:listatransportadorasview')
     success_message = "Transportadora <b>%(nome_razao_social)s</b>editada com sucesso."
+    permission_codename = 'change_transportadora'
 
     def get_context_data(self, **kwargs):
         context = super(EditarTransportadoraView,
