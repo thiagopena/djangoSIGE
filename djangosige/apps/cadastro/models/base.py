@@ -122,7 +122,7 @@ class Pessoa(models.Model):
         'cadastro.Banco', related_name="ban_padrao", on_delete=models.CASCADE, null=True, blank=True)
 
     # Sobre o objeto
-    criado_por = models.ForeignKey(User, null=True, blank=True)
+    criado_por = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     data_criacao = models.DateTimeField(editable=False)
     data_edicao = models.DateTimeField()
 

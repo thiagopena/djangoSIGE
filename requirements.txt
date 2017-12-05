@@ -1,4 +1,4 @@
-Django>=1.10.1
+Django==1.10.1
 https://github.com/thiagopena/geraldo/archive/master.zip
 https://github.com/thiagopena/PySIGNFe/archive/master.zip
 dj-database-url==0.4.2
