@@ -45,10 +45,17 @@ class Lancamento(models.Model):
         permissions = (
             ("view_lancamento", "Can view lancamento"),
         )
-
+        
     def format_valor_liquido(self):
         return locale.format(u'%.2f', self.valor_liquido, 1)
-
+        
+    def format_abatimento(self):
+        return locale.format(u'%.2f', self.abatimento, 1)
+        
+    def format_juros(self):
+        return locale.format(u'%.2f', self.juros, 1)
+        
+   
     @property
     def format_data_vencimento(self):
         return '%s' % date(self.data_vencimento, "d/m/Y")

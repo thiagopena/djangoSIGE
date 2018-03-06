@@ -22,6 +22,10 @@
               <a id="pagar_conta" href="javascript:void(0);" class="btn btn-success">PAGAR CONTA</a>
               {% elif object.status != '0' and form.cliente %}
               <a id="receber_conta" href="javascript:void(0);" class="btn btn-success">RECEBER CONTA</a>
+              <a id="gerar_pdf_lancamento" href="{% url 'financeiro:gerarpdflancamentoentrada' object.id %}" class="btn btn-primary">GERAR PDF</a>
+              {% endif %}
+              {% if object.status != '1' and form.cliente %}
+              <a id="gerar_pdf_lancamento" href="{% url 'financeiro:gerarpdflancamentoentrada' object.id %}" class="btn btn-primary">GERAR PDF</a>
               {% endif %}
             </div>
             <div><small>Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>
