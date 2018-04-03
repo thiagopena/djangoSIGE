@@ -17,7 +17,7 @@ class LoginRequiredMiddleware(MiddlewareMixin):
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         # Caso o user ja esteja logado:
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             for url in self.exceptions:
                 if url.match(request.path):
                     return redirect('base:index')
