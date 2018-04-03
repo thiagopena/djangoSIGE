@@ -3,7 +3,7 @@
 from django.db import models
 from django.template.defaultfilters import date
 from django.core.validators import MinValueValidator
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from decimal import Decimal
 
@@ -279,7 +279,7 @@ class Venda(models.Model):
         max_length=1, choices=MOD_FRETE_ESCOLHAS, default='9')
     # Estoque
     local_orig = models.ForeignKey(
-        'estoque.LocalEstoque', related_name="venda_local_estoque", default=DEFAULT_LOCAL_ID)
+        'estoque.LocalEstoque', related_name="venda_local_estoque", default=DEFAULT_LOCAL_ID, on_delete=models.PROTECT)
     movimentar_estoque = models.BooleanField(default=True)
     # Info
     data_emissao = models.DateField(null=True, blank=True)

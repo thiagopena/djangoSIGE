@@ -3,7 +3,7 @@
 from django.db import models
 from django.core.validators import MinValueValidator
 from decimal import Decimal
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.template.defaultfilters import date
 
 from . import DEFAULT_LOCAL_ID
@@ -86,7 +86,7 @@ class EntradaEstoque(MovimentoEstoque):
     fornecedor = models.ForeignKey(
         'cadastro.Fornecedor', related_name="entrada_estoque_fornecedor", on_delete=models.SET_NULL, null=True, blank=True)
     local_dest = models.ForeignKey(
-        'estoque.LocalEstoque', related_name="entrada_estoque_local", default=DEFAULT_LOCAL_ID)
+        'estoque.LocalEstoque', related_name="entrada_estoque_local", default=DEFAULT_LOCAL_ID, on_delete=models.PROTECT)
 
     def get_edit_url(self):
         return reverse_lazy('estoque:detalharentradaestoqueview', kwargs={'pk': self.id})
@@ -101,7 +101,7 @@ class SaidaEstoque(MovimentoEstoque):
     pedido_venda = models.ForeignKey(
         'vendas.PedidoVenda', related_name="saida_estoque", on_delete=models.SET_NULL, null=True, blank=True)
     local_orig = models.ForeignKey(
-        'estoque.LocalEstoque', related_name="saida_estoque_local", default=DEFAULT_LOCAL_ID)
+        'estoque.LocalEstoque', related_name="saida_estoque_local", default=DEFAULT_LOCAL_ID, on_delete=models.PROTECT)
 
     def get_edit_url(self):
         return reverse_lazy('estoque:detalharsaidaestoqueview', kwargs={'pk': self.id})

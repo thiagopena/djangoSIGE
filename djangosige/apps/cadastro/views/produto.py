@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.db.models import F
 
 from djangosige.apps.base.custom_views import CustomCreateView, CustomListView, CustomUpdateView

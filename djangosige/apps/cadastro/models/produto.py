@@ -90,9 +90,12 @@ class Produto(models.Model):
     codigo_barras = models.CharField(
         max_length=16, null=True, blank=True)  # GTIN/EAN
     descricao = models.CharField(max_length=255)
-    categoria = models.ForeignKey(Categoria, null=True, blank=True)
-    marca = models.ForeignKey(Marca, null=True, blank=True)
-    unidade = models.ForeignKey(Unidade, null=True, blank=True)
+    categoria = models.ForeignKey(
+        Categoria, null=True, blank=True, on_delete=models.PROTECT)
+    marca = models.ForeignKey(
+        Marca, null=True, blank=True, on_delete=models.PROTECT)
+    unidade = models.ForeignKey(
+        Unidade, null=True, blank=True, on_delete=models.PROTECT)
     custo = models.DecimalField(max_digits=16, decimal_places=2, validators=[
                                 MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
     venda = models.DecimalField(max_digits=16, decimal_places=2, validators=[
@@ -107,9 +110,9 @@ class Produto(models.Model):
     # Código Especificador da Substituição Tributária
     cest = models.CharField(max_length=7, null=True, blank=True)
     cfop_padrao = models.ForeignKey(
-        'fiscal.NaturezaOperacao', null=True, blank=True)
+        'fiscal.NaturezaOperacao', null=True, blank=True, on_delete=models.PROTECT)
     grupo_fiscal = models.ForeignKey(
-        'fiscal.GrupoFiscal', null=True, blank=True)
+        'fiscal.GrupoFiscal', null=True, blank=True, on_delete=models.PROTECT)
 
     # Estoque
     estoque_minimo = models.DecimalField(max_digits=16, decimal_places=2, validators=[
