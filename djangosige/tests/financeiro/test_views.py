@@ -4,7 +4,7 @@ from djangosige.tests.test_case import BaseTestCase, replace_none_values_in_dict
 from djangosige.apps.financeiro.models import MovimentoCaixa, Entrada, Saida, PlanoContasGrupo, PlanoContasSubgrupo
 from djangosige.apps.estoque.models import SaidaEstoque
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Q
 
 from datetime import datetime, timedelta
