@@ -42,6 +42,8 @@ class UserRegistrationFormViewTestCase(BaseTestCase):
         url = reverse('login:registrarview')
         self.user.is_superuser = True
         self.user.save()
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
+
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'login/registrar.html')
@@ -50,6 +52,8 @@ class UserRegistrationFormViewTestCase(BaseTestCase):
         url = reverse('login:registrarview')
         self.user.is_superuser = True
         self.user.save()
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
+
         data = {
             'username': 'newUser',
             'password': 'password1234',
@@ -76,6 +80,8 @@ class UserRegistrationFormViewTestCase(BaseTestCase):
         # Assert usuario redirect para index se nao e administrador
         self.user.is_superuser = False
         self.user.save()
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
+
         response = self.client.get(url)
         self.assertEqual(response.url, '/')
 
@@ -178,6 +184,7 @@ class UsuariosListViewTestCase(BaseTestCase):
         url = reverse('login:usuariosview')
         self.user.is_superuser = True
         self.user.save()
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
 
         # Testar GET request lista
         obj = User.objects.create()
@@ -201,6 +208,8 @@ class UsuarioDetailViewTestCase(BaseTestCase):
         url = reverse('login:usuariodetailview', kwargs={'pk': self.user.pk})
         self.user.is_superuser = True
         self.user.save()
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
+
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'login/detalhe_users.html')
@@ -213,6 +222,8 @@ class DeletarUsuarioViewTestCase(BaseTestCase):
         url = reverse('login:deletarusuarioview', kwargs={'pk': new_user.pk})
         self.user.is_superuser = True
         self.user.save()
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
+
         response = self.client.post(url, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertFalse(new_user in response.context['object_list'])

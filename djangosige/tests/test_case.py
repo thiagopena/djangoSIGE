@@ -32,12 +32,15 @@ class BaseTestCase(TestCase):
         perms = Permission.objects.get(codename__in=permission_codename)
         self.user.user_permissions.remove(perms)
         self.user.save()
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
+        
         response = self.client.get(url, follow=True)
         message_tags = " ".join(str(m.tags)
                                 for m in list(response.context['messages']))
         self.assertIn("permission_warning", message_tags)
         self.user.is_superuser = True
         self.user.save()
+        self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
 
     def check_list_view_delete(self, url, deleted_object, context_object_key='object_list'):
         # Testar GET request lista
