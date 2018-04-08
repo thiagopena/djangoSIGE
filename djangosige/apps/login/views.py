@@ -48,7 +48,7 @@ class UserFormView(View):
     def get(self, request):
         form = self.form_class(None)
 
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return redirect('base:index')
         return render(request, self.template_name, {'form': form})
 
