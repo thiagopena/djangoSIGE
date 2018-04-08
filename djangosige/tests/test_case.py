@@ -33,7 +33,7 @@ class BaseTestCase(TestCase):
         self.user.user_permissions.remove(perms)
         self.user.save()
         self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
-        
+
         response = self.client.get(url, follow=True)
         message_tags = " ".join(str(m.tags)
                                 for m in list(response.context['messages']))
