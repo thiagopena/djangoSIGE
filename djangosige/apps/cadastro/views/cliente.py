@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 
 from djangosige.apps.cadastro.forms import ClienteForm
 from djangosige.apps.cadastro.models import Cliente

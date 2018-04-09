@@ -1,5 +1,12 @@
-Django==1.10.1
 https://github.com/thiagopena/geraldo/archive/master.zip
 https://github.com/thiagopena/PySIGNFe/archive/master.zip
-dj-database-url==0.4.2
-python-decouple==3.0
+Django==2.0.*
+dj-database-url==0.5.*
+python-decouple==3.1
+pytz==2018.3
+reportlab==3.4.*
+six==1.11.*
+cryptography==2.2.*
+lxml==4.2.*
+pyOpenSSL==17.5.*
+signxml==2.5.*

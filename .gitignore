@@ -43,3 +43,4 @@ djangosige/media/imagens/usuarios/
 .env
 .venv/
 *.sqlite3
+env/

@@ -4,7 +4,7 @@ from djangosige.tests.test_case import BaseTestCase, replace_none_values_in_dict
 from djangosige.apps.cadastro.models import Fornecedor, Produto
 from djangosige.apps.compras.models import OrcamentoCompra, PedidoCompra, ItensCompra
 from djangosige.apps.estoque.models import LocalEstoque, DEFAULT_LOCAL_ID
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from datetime import datetime, timedelta
 

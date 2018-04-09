@@ -13,7 +13,7 @@ from django.db import DatabaseError
 from django.db.models.query_utils import Q
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
@@ -48,7 +48,7 @@ class UserFormView(View):
     def get(self, request):
         form = self.form_class(None)
 
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return redirect('base:index')
         return render(request, self.template_name, {'form': form})
 

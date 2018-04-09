@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.views.generic import View
 from django.http import HttpResponse
 from django.core import serializers
