@@ -5,5 +5,7 @@ python:
   - "3.6"
 install:
   - pip install -r requirements.txt
+env:
+  - SECRET_KEY=0#pny4oox9s#+#5dkde25dj79b-o^sdbz4kiumg#e1qx3ky
 script:
   - python manage.py test
