@@ -5,6 +5,8 @@ before_install:
   - sudo dpkg-reconfigure locales
   - sudo update-locale LANG=pt_BR.UTF-8
   - sudo cat /etc/default/locale
+  - sudo /etc/init.d/postgresql stop
+  - sudo /etc/init.d/postgresql start
 python:
   - "3.4"
   - "3.5"
