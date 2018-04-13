@@ -1,4 +1,5 @@
-FROM alpine
+FROM alpine:latest
+LABEL maintainer="lukasgarcya@hotmail.com"
 RUN mkdir -p /opt/djangoSIGE/
 WORKDIR /opt/djangoSIGE/
 COPY requirements.txt /opt/djangoSIGE/
