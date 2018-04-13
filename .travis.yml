@@ -1,6 +1,4 @@
 language: python
-addons:
-  postgresql: "0.6"
 python:
   - "3.4"
   - "3.5"
