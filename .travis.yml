@@ -4,6 +4,7 @@ before_install:
   - sudo locale-gen pt_BR.UTF-8
   - sudo dpkg-reconfigure locales
   - sudo update-locale LANG=pt_BR.UTF-8
+  - sudo cat /etc/default/locale
 python:
   - "3.4"
   - "3.5"
