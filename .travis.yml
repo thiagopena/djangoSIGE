@@ -1,9 +1,6 @@
 language: python
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install language-pack-pt-base
-  - sudo /etc/init.d/postgresql stop
-  - sudo /etc/init.d/postgresql start
+addons:
+  postgresql: "0.6"
 python:
   - "3.4"
   - "3.5"
