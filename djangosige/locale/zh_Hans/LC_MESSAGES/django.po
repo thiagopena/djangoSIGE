@@ -1,0 +1,954 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: djangosige/apps/cadastro/forms/cliente.py:31
+#: djangosige/apps/cadastro/forms/fornecedor.py:28
+#: djangosige/apps/cadastro/forms/inline_formsets.py:52
+#: djangosige/apps/cadastro/forms/transportadora.py:27
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-05 16:59+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: djangosige/apps/cadastro/forms/cliente.py:30
+#: djangosige/apps/cadastro/forms/empresa.py:29
+#: djangosige/apps/cadastro/forms/fornecedor.py:27
+#: djangosige/apps/cadastro/forms/transportadora.py:26
+msgid "Razão Social"
+msgstr "社会原因"
+
+#: djangosige/apps/cadastro/forms/cliente.py:32
+msgid "Limite de Crédito"
+msgstr "信用限额"
+
+#: djangosige/apps/cadastro/forms/cliente.py:33
+msgid "Indicador da IE do Destinatário"
+msgstr "IE指示的收货人"
+
+#: djangosige/apps/cadastro/forms/cliente.py:34
+#: djangosige/apps/cadastro/forms/empresa.py:31
+#: djangosige/apps/cadastro/forms/fornecedor.py:30
+msgid "Inscrição Municipal"
+msgstr "注册城市"
+
+#: djangosige/apps/cadastro/forms/cliente.py:35
+msgid "Documento legal (Estrangeiro)"
+msgstr "法律文件（海外）"
+
+#: djangosige/apps/cadastro/forms/cliente.py:36
+#: djangosige/apps/cadastro/forms/empresa.py:34
+#: djangosige/apps/cadastro/forms/fornecedor.py:31
+#: djangosige/apps/cadastro/forms/transportadora.py:28
+msgid "Informações Adicionais"
+msgstr "额外信息"
+
+#: djangosige/apps/cadastro/forms/empresa.py:30
+msgid "CNAE"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/empresa.py:32
+msgid "Logo"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/empresa.py:33
+msgid "IE do substituto tributário"
+msgstr "税收的替代品"
+
+#: djangosige/apps/cadastro/forms/empresa.py:58
+msgid "Minha Empresa"
+msgstr "我的公司"
+
+#: djangosige/apps/cadastro/forms/fornecedor.py:29
+msgid "Ramo"
+msgstr "分支"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:18
+#: djangosige/apps/cadastro/forms/inline_formsets.py:111
+#: djangosige/apps/estoque/forms/movimento.py:52
+#: djangosige/apps/estoque/forms/movimento.py:74
+msgid "Tipo"
+msgstr "类型"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:19
+msgid "Logradouro"
+msgstr "庭院"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:20
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:113
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:140
+msgid "Número"
+msgstr "数"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:21
+msgid "Bairro"
+msgstr "邻域"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:22
+msgid "Complemento"
+msgstr "补充"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:23
+msgid "País"
+msgstr "国家"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:24
+msgid "Código do País"
+msgstr "国家代码"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:25
+msgid "Município (sem acentuação)"
+msgstr "乡镇（不一致）"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:26
+msgid "Código do município"
+msgstr "县代码"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:27
+msgid "CEP (Apenas dígitos)"
+msgstr "邮政编码（仅指）"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:28
+#: djangosige/apps/cadastro/forms/transportadora.py:52
+msgid "UF"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:51
+msgid "Telefone"
+msgstr "电话"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:66
+msgid "Email"
+msgstr "邮箱"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:79
+msgid "Site"
+msgstr "网站"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:92
+msgid "Banco"
+msgstr "银行"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:93
+msgid "Agência"
+msgstr "代理"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:94
+msgid "Conta"
+msgstr "帐户"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:95
+msgid "Dígito"
+msgstr "数字"
+
+#: djangosige/apps/cadastro/forms/inline_formsets.py:112
+msgid "Documento"
+msgstr "文件"
+
+#: djangosige/apps/cadastro/forms/pessoa_forms.py:34
+msgid "Nome Fantasia"
+msgstr "花哨的名字"
+
+#: djangosige/apps/cadastro/forms/pessoa_forms.py:35
+msgid "CNPJ"
+msgstr "身份证号"
+
+#: djangosige/apps/cadastro/forms/pessoa_forms.py:36
+msgid "Inscrição Estadual"
+msgstr "国家注册"
+
+#: djangosige/apps/cadastro/forms/pessoa_forms.py:37
+msgid "Responsável"
+msgstr "负责"
+
+#: djangosige/apps/cadastro/forms/pessoa_forms.py:38
+msgid "Situação Fiscal"
+msgstr "财政状况"
+
+#: djangosige/apps/cadastro/forms/pessoa_forms.py:39
+msgid "Inscrição SUFRAMA"
+msgstr "SUFRAMA注册"
+
+#: djangosige/apps/cadastro/forms/pessoa_forms.py:64
+msgid "CPF"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/pessoa_forms.py:65
+msgid "RG"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/pessoa_forms.py:66
+#, fuzzy
+#| msgid "Documento"
+msgid "Nascimento"
+msgstr "文件"
+
+#: djangosige/apps/cadastro/forms/produto.py:53
+#, fuzzy
+#| msgid "Código do País"
+msgid "Código"
+msgstr "国家代码"
+
+#: djangosige/apps/cadastro/forms/produto.py:54
+msgid "Código de Barras (GTIN/EAN)"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:55
+#: djangosige/apps/cadastro/forms/transportadora.py:50
+#: djangosige/apps/estoque/forms/local.py:18
+#: djangosige/apps/financeiro/forms/lancamento.py:58
+#: djangosige/apps/financeiro/forms/plano.py:20
+#: djangosige/apps/financeiro/forms/plano.py:34
+#: djangosige/apps/fiscal/forms/natureza_operacao.py:22
+#: djangosige/apps/fiscal/forms/tributos.py:20
+#: djangosige/apps/vendas/forms/pagamento.py:45
+#, fuzzy
+#| msgid "Inscrição SUFRAMA"
+msgid "Descrição"
+msgstr "SUFRAMA注册"
+
+#: djangosige/apps/cadastro/forms/produto.py:56
+#: djangosige/apps/cadastro/forms/produto.py:79
+msgid "Categoria"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:57
+#: djangosige/apps/cadastro/forms/produto.py:92
+msgid "Marca"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:58
+msgid "Unidade"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:59
+msgid "NCM"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:60
+#, fuzzy
+#| msgid "Informações Adicionais"
+msgid "Informações adicionais"
+msgstr "额外信息"
+
+#: djangosige/apps/cadastro/forms/produto.py:61
+msgid "Origem"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:62
+msgid "CEST"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:63
+msgid "CFOP (Padrão)"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:64
+msgid "Grupo Fiscal (Padrão)"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:65
+msgid "Qtd. em estoque mínima"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:66
+msgid "Controlar estoque deste produto?"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:106
+msgid "Nome descritivo"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/produto.py:107
+msgid "Sigla"
+msgstr ""
+
+#: djangosige/apps/cadastro/forms/transportadora.py:51
+msgid "Placa"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:59
+#: djangosige/apps/vendas/forms/vendas.py:64
+msgid "Data de Emissão"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:60
+#: djangosige/apps/estoque/forms/movimento.py:54
+#: djangosige/apps/financeiro/forms/lancamento.py:115
+msgid "Fornecedor"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:61
+#: djangosige/apps/vendas/forms/vendas.py:68
+msgid "Modalidade do frete"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:62
+msgid "Localização de estoque de destino dos produtos"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:63
+#: djangosige/apps/vendas/forms/vendas.py:70
+msgid "Movimentar estoque?"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:64
+#: djangosige/apps/vendas/forms/vendas.py:72
+msgid "Vendedor"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:65
+#: djangosige/apps/vendas/forms/vendas.py:73
+msgid "Total (R$)"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:66
+#: djangosige/apps/compras/forms/compras.py:178
+#: djangosige/apps/vendas/forms/vendas.py:74
+#: djangosige/apps/vendas/forms/vendas.py:225
+msgid "Tipo de desconto"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:67
+#: djangosige/apps/compras/forms/compras.py:179
+#: djangosige/apps/vendas/forms/vendas.py:75
+#: djangosige/apps/vendas/forms/vendas.py:226
+#, python-format
+msgid "Desconto (% ou R$)"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:68
+#: djangosige/apps/vendas/forms/vendas.py:76
+msgid "Frete (R$)"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:69
+#: djangosige/apps/vendas/forms/vendas.py:77
+msgid "Despesas (R$)"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:70
+#: djangosige/apps/vendas/forms/vendas.py:78
+msgid "Seguro (R$)"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:71
+msgid "Valor total IPI (R$)"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:72
+msgid "Valor total ICMS (R$)"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:73
+#: djangosige/apps/vendas/forms/vendas.py:80
+msgid "Condição de pagamento"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:74
+#: djangosige/apps/estoque/forms/movimento.py:30
+#: djangosige/apps/vendas/forms/vendas.py:81
+msgid "Observações"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:89
+#: djangosige/apps/vendas/forms/vendas.py:96
+msgid "Data de Vencimento"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:90
+#: djangosige/apps/compras/forms/compras.py:108
+#: djangosige/apps/financeiro/forms/lancamento.py:92
+#: djangosige/apps/financeiro/forms/lancamento.py:116
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:57
+#: djangosige/apps/vendas/forms/vendas.py:97
+#: djangosige/apps/vendas/forms/vendas.py:115
+msgid "Status"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:107
+#: djangosige/apps/vendas/forms/vendas.py:114
+msgid "Data de Entrega"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:109
+#: djangosige/apps/vendas/forms/vendas.py:116
+msgid "Orçamento"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:174
+#: djangosige/apps/estoque/forms/movimento.py:129
+#: djangosige/apps/vendas/forms/vendas.py:220
+msgid "Produto"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:175
+#: djangosige/apps/estoque/forms/movimento.py:130
+#: djangosige/apps/vendas/forms/vendas.py:221
+msgid "Quantidade"
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:176
+#: djangosige/apps/estoque/forms/movimento.py:131
+#: djangosige/apps/vendas/forms/vendas.py:222
+msgid "Vl. Unit."
+msgstr ""
+
+#: djangosige/apps/compras/forms/compras.py:177
+#: djangosige/apps/estoque/forms/movimento.py:132
+#: djangosige/apps/vendas/forms/vendas.py:223
+msgid "Subtotal"
+msgstr ""
+
+#: djangosige/apps/compras/forms/pagamento.py:25
+#: djangosige/apps/vendas/forms/pagamento.py:25
+msgid "Ind. Parcela"
+msgstr ""
+
+#: djangosige/apps/compras/forms/pagamento.py:26
+#: djangosige/apps/vendas/forms/pagamento.py:26
+#, fuzzy
+#| msgid "Documento"
+msgid "Vencimento"
+msgstr "文件"
+
+#: djangosige/apps/compras/forms/pagamento.py:27
+#: djangosige/apps/vendas/forms/pagamento.py:27
+msgid "Valor"
+msgstr ""
+
+#: djangosige/apps/estoque/forms/movimento.py:28
+msgid "Nº de itens"
+msgstr ""
+
+#: djangosige/apps/estoque/forms/movimento.py:29
+msgid "Valor total dos produtos (R$)"
+msgstr ""
+
+#: djangosige/apps/estoque/forms/movimento.py:51
+msgid "Data da entrada"
+msgstr ""
+
+#: djangosige/apps/estoque/forms/movimento.py:53
+msgid "Pedido de compra"
+msgstr ""
+
+#: djangosige/apps/estoque/forms/movimento.py:55
+#: djangosige/apps/estoque/forms/movimento.py:96
+msgid "Local de destino"
+msgstr ""
+
+#: djangosige/apps/estoque/forms/movimento.py:73
+msgid "Data da saída"
+msgstr ""
+
+#: djangosige/apps/estoque/forms/movimento.py:75
+msgid "Pedido de venda"
+msgstr ""
+
+#: djangosige/apps/estoque/forms/movimento.py:76
+#: djangosige/apps/estoque/forms/movimento.py:95
+msgid "Local de origem"
+msgstr ""
+
+#: djangosige/apps/estoque/forms/movimento.py:94
+msgid "Data da transferência"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/lancamento.py:59
+msgid "Grupo (Plano de contas)"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/lancamento.py:60
+msgid "Conta corrente (Banco/Agência/Conta)"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/lancamento.py:61
+msgid "Data do pagamento"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/lancamento.py:62
+msgid "Data de vencimento"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/lancamento.py:63
+msgid "Valor total (bruto)"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/lancamento.py:64
+msgid "Abatimento"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/lancamento.py:65
+msgid "Juros"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/lancamento.py:66
+msgid "Valor líquido"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/lancamento.py:67
+msgid "Movimentar Caixa?"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/lancamento.py:91
+#: djangosige/apps/vendas/forms/vendas.py:65
+msgid "Cliente"
+msgstr ""
+
+#: djangosige/apps/financeiro/forms/plano.py:21
+msgid "Tipo de lançamento"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/natureza_operacao.py:21
+msgid "CFOP"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/natureza_operacao.py:23
+msgid "Tipo de operação"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/natureza_operacao.py:24
+msgid "Local destino da operação"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:56
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:166
+msgid "Versão"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:58
+msgid "Natureza da Operação"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:59
+msgid "Forma de pagamento"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:60
+msgid "Modelo"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:61
+msgid "Série"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:62
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:167
+msgid "Data e hora de emissão"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:63
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:168
+msgid "Data e hora de Saída/Entrada"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:64
+msgid "Destino da operação"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:65
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:169
+msgid "Tipo impressão da DANFE"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:66
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:170
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:193
+msgid "Forma de emissão"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:67
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:171
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:194
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:289
+msgid "Ambiente"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:68
+msgid "Finalidade da emissão"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:69
+msgid "Consumidor final"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:70
+msgid "Tipo de atendimento"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:71
+#, fuzzy
+#| msgid "Informações Adicionais"
+msgid "Informações Adicionais de Interesse do Fisco"
+msgstr "额外信息"
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:72
+msgid "Informações Complementares de interesse do Contribuinte"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:77
+msgid "Nota fiscal com este número já existe"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:114
+msgid "Venda"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:115
+#, fuzzy
+#| msgid "Minha Empresa"
+msgid "Emitente (Empresa)"
+msgstr "我的公司"
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:116
+msgid "Destinatário (Cliente)"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:117
+msgid "Número da fatura"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:118
+msgid "Tipo de Operação"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:119
+msgid "Valor original da fatura"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:120
+msgid "Valor do desconto"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:121
+msgid "Valor líquido da fatura"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:123
+msgid "Inserir dados de cobrança (Fatura/Duplicatas) na NF-e?"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:124
+msgid "Arquivo de processamento (*_procNFe.xml)"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:141
+msgid "Compra"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:142
+msgid "Emitente (Fornecedor)"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:143
+#, fuzzy
+#| msgid "Minha Empresa"
+msgid "Destinatário (Empresa)"
+msgstr "我的公司"
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:190
+msgid "Justificativa do cancelamento"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:191
+msgid "Chave"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:192
+msgid "Número do protocolo"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:273
+#, fuzzy
+#| msgid "CEP (Apenas dígitos)"
+msgid "CPF/CNPJ (Apenas digitos)"
+msgstr "邮政编码（仅指）"
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:287
+msgid "Certificado A1"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:288
+msgid "Série atual"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:290
+msgid "Tipo de impressão DANFE"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:291
+msgid "Senha do certificado"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:292
+msgid "Inserir logo da empresa no DANFE?"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:293
+msgid "Orientação do logo"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:294
+msgid "Código de Segurança do Contribuinte"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/nota_fiscal.py:295
+msgid "Identificador do CSC"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:21
+msgid "Regime Tributário"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:67
+msgid "CST ICMS"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:68
+#: djangosige/apps/fiscal/forms/tributos.py:124
+msgid "Modalidade de determinação da BC do ICMS"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:69
+#: djangosige/apps/fiscal/forms/tributos.py:125
+msgid "Alíquota ICMS"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:70
+#: djangosige/apps/fiscal/forms/tributos.py:126
+#, python-format
+msgid "% da Redução de BC"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:71
+#: djangosige/apps/fiscal/forms/tributos.py:127
+msgid "Modalidade de determinação da BC do ICMS ST"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:72
+#: djangosige/apps/fiscal/forms/tributos.py:128
+msgid "% Margem de valor Adicionado do ICMS ST"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:73
+#: djangosige/apps/fiscal/forms/tributos.py:129
+#, python-format
+msgid "% da Redução de BC do ICMS ST"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:74
+#: djangosige/apps/fiscal/forms/tributos.py:130
+msgid "Alíquota ICMS ST"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:75
+msgid "Motivo da desoneração do ICMS"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:76
+#, python-format
+msgid "% do diferimento"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:77
+#, python-format
+msgid "% da BC operação própria"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:78
+msgid "UF para qual é devido o ICMS ST"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:79
+#: djangosige/apps/fiscal/forms/tributos.py:131
+msgid "ICMS incluso no preço"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:80
+#: djangosige/apps/fiscal/forms/tributos.py:132
+msgid "ICMS-ST incluso no preço"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:122
+msgid "CSOSN"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:123
+msgid "Alíquota aplicável de cálculo do crédito"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:163
+#, python-format
+msgid "% do ICMS relativo ao FCP de destino"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:164
+msgid "Alíquota interna da UF de destino"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:165
+msgid "Alíquota interestadual das UF envolvidas"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:166
+msgid "% provisório de partilha do ICMS Interestadual"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:200
+msgid "CST IPI"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:201
+msgid "Classe de enquadramento para Cigarros e Bebidas"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:202
+msgid "Código de Enquadramento Legal"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:203
+msgid "CNPJ do produtor da mercadoria"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:204
+msgid "Alíquota do IPI"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:205
+msgid "Tipo de cáculo"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:206
+msgid "Vl. fixo IPI (por produto)"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:207
+msgid "IPI incluso no preço"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:208
+msgid "Incluir IPI na BC do ICMS"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:209
+msgid "Incluir IPI na BC do ICMS-ST"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:235
+msgid "CST PIS"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:236
+msgid "Alíquota do PIS (em %)"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:237
+msgid "Alíquota do PIS por produto (em R$)"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:264
+msgid "CST COFINS"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:265
+msgid "Alíquota do COFINS (em %)"
+msgstr ""
+
+#: djangosige/apps/fiscal/forms/tributos.py:266
+msgid "Alíquota do COFINS por produto (em R$)"
+msgstr ""
+
+#: djangosige/apps/login/forms.py:23
+msgid "person"
+msgstr "用户名"
+
+#: djangosige/apps/login/forms.py:24
+msgid "lock"
+msgstr "密码"
+
+#: djangosige/apps/vendas/forms/pagamento.py:46
+msgid "Forma"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/pagamento.py:47
+msgid "Número de parcelas"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/pagamento.py:48
+msgid "Recorrência (dias)"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/pagamento.py:49
+msgid "1ª parcela em (dias)"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/vendas.py:66
+msgid "Consumidor final?"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/vendas.py:67
+msgid "Transportadora"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/vendas.py:69
+msgid "Localização de estoque de origem dos produtos"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/vendas.py:71
+msgid "Veículo"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/vendas.py:79
+msgid "Impostos (R$)"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/vendas.py:227
+msgid "Frete(R$)"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/vendas.py:228
+msgid "Despesas(R$)"
+msgstr ""
+
+#: djangosige/apps/vendas/forms/vendas.py:229
+msgid "Seguro(R$)"
+msgstr ""
+
+#: djangosige/templates/login/login.html:21
+msgid "Digite seu nome de usuário e a senha para entrar"
+msgstr "请输入您的用户名和密码"
+
+#: djangosige/templates/login/login.html:41
+msgid "Lembrar"
+msgstr "下次自动登录"
+
+#: djangosige/templates/login/login.html:44
+msgid "ENTRAR"
+msgstr "登录"
+
+#: djangosige/templates/login/login.html:49
+msgid "Esqueceu a senha?"
+msgstr "忘记密码了？"
+
+#: djangosige/templates/login/login.html:50
+msgid "*caso seja seu primeiro login, leia a "
+msgstr "当你第一次登录，阅读"
+
+#: djangosige/templates/login/login.html:50
+msgid "documentação"
+msgstr "文档"
+
+#: djangosige/templates/login/logo.html:4
+msgid "Sistema integrado de gestão baseado em Django"
+msgstr "基于Django的管理集成系统"
