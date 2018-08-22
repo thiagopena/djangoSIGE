@@ -157,7 +157,6 @@ class ForgotPasswordView(FormView):
                         return self.form_invalid(form)
 
                 except Exception as e:
-                    raise
                     form.add_error(field=None, error=e)
                     return self.form_invalid(form)
 
