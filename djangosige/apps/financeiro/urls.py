@@ -89,4 +89,8 @@ urlpatterns = [
     # Fluxo de caixa
     #/financeiro/fluxodecaixa
     url(r'fluxodecaixa/$', views.FluxoCaixaView.as_view(), name='fluxodecaixaview'),
+    
+    # Gerar pdf entrada
+    url(r'gerarpdflancamentoentrada/(?P<pk>[0-9]+)/$',
+        views.GerarPDFEntrada.as_view(), name='gerarpdflancamentoentrada'),
 ]

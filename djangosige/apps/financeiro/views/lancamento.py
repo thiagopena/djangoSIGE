@@ -4,6 +4,8 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.http import JsonResponse
+from django.http import HttpResponse
+
 
 from djangosige.apps.base.custom_views import CustomView, CustomCreateView, CustomListView, CustomUpdateView
 
@@ -13,8 +15,20 @@ from djangosige.apps.vendas.models import PedidoVenda
 from djangosige.apps.compras.models import PedidoCompra
 from djangosige.apps.estoque.models import SaidaEstoque, ItensMovimento, ProdutoEstocado
 
+
+from djangosige.apps.cadastro.models import MinhaEmpresa
+from djangosige.apps.login.models import Usuario
+from djangosige.configs.settings import MEDIA_ROOT
+
 from itertools import chain
 from datetime import datetime
+
+from geraldo.generators import PDFGenerator
+import io
+
+from .report_financeiro import LancamentoReport, TopoPagina
+
+
 
 
 class MovimentoCaixaMixin(object):
@@ -775,3 +789,97 @@ class FaturarPedidoCompraView(CustomView, MovimentoCaixaMixin):
             request, "<b>Pedido de compra {0} </b>realizado com sucesso.".format(str(pedido.id)))
 
         return redirect(reverse_lazy('compras:listapedidocompraview'))
+        
+# Gerar pdf
+
+class GerarPDFLancamento(CustomView):
+    
+    def gerar_pdf(self, title, lancamento, user_id):
+        resp = HttpResponse(content_type='application/pdf')
+
+        lancamento_pdf = io.BytesIO()
+        lancamento_report = LancamentoReport(queryset=[lancamento,  ])
+        lancamento_report.title = title
+
+        lancamento_report.band_page_footer = lancamento_report.banda_foot
+
+        try:
+            usuario = Usuario.objects.get(pk=user_id)
+            m_empresa = MinhaEmpresa.objects.get(m_usuario=usuario)
+            flogo = m_empresa.m_empresa.logo_file
+            logo_path = '{0}{1}'.format(MEDIA_ROOT, flogo.name)
+            if flogo != 'imagens/logo.png':
+                lancamento_report.topo_pagina.inserir_logo(logo_path)
+
+            lancamento_report.band_page_footer.inserir_nome_empresa(
+                m_empresa.m_empresa.nome_razao_social)
+            if m_empresa.m_empresa.endereco_padrao:
+                lancamento_report.band_page_footer.inserir_endereco_empresa(
+                    m_empresa.m_empresa.endereco_padrao.format_endereco_completo)
+            if m_empresa.m_empresa.telefone_padrao:
+                lancamento_report.band_page_footer.inserir_telefone_empresa(
+                    m_empresa.m_empresa.telefone_padrao.telefone)
+        except ValueError:
+            pass
+        
+        lancamento_report.topo_pagina.inserir_data_vencimento(lancamento.data_vencimento)
+        if isinstance(lancamento, Entrada):
+            lancamento_report.topo_pagina.inserir_data_vencimento(
+                lancamento.data_vencimento)
+                
+        elif isinstance(lancamento, Entrada):
+            lancamento_report.topo_pagina.inserir_data_pagamento(lancamento.data_pagamento)
+        lancamento_report.band_page_header = lancamento_report.topo_pagina
+
+
+        try:
+
+            if lancamento.entrada.cliente.tipo_pessoa == 'PJ':
+                lancamento_report.dados_cliente.inserir_informacoes_pj()
+            elif lancamento.entrada.cliente.tipo_pessoa == 'PF':
+                lancamento_report.dados_cliente.inserir_informacoes_pf()
+            
+        except ValueError:
+            pass
+        
+        if lancamento.entrada.cliente.endereco_padrao:
+            lancamento_report.dados_cliente.inserir_informacoes_endereco()
+        if lancamento.entrada.cliente.telefone_padrao:
+            lancamento_report.dados_cliente.inserir_informacoes_telefone()
+        if lancamento.entrada.cliente.email_padrao:
+            lancamento_report.dados_cliente.inserir_informacoes_email()
+
+        lancamento_report.band_page_header.child_bands.append(
+            lancamento_report.dados_cliente)
+        
+        lancamento_report.band_page_header.child_bands.append(
+            lancamento_report.valor_total)
+
+        lancamento_report.generate_by(PDFGenerator, filename=lancamento_pdf)
+        pdf = lancamento_pdf.getvalue()
+        resp.write(pdf)
+
+        return resp
+
+
+class GerarPDFEntrada(GerarPDFLancamento):
+    permission_codename = 'add_lancamento'
+
+    def get(self, request, *args, **kwargs):
+        lancamento_id = kwargs.get('pk', None)
+        try:
+            if not lancamento_id:
+                return HttpResponse('Objeto não encontrado.')
+                
+
+            obj = Entrada.objects.get(pk=lancamento_id)
+            title = 'Recibo de  nº {}'.format(lancamento_id)
+
+        except VelueError:
+            pass
+
+
+        return self.gerar_pdf(title, obj, request.user.id)
+
+
+
