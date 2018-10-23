@@ -123,7 +123,7 @@ class ForgotPasswordView(FormView):
             data = form.cleaned_data["email_or_username"]
             associated_user = User.objects.filter(
                 Q(email=data) | Q(username=data)).first()
-
+            
             if associated_user:
                 try:
                     if associated_user.email:
@@ -131,7 +131,7 @@ class ForgotPasswordView(FormView):
                             'email': associated_user.email,
                             'domain': request.META['HTTP_HOST'],
                             'site_name': 'djangoSIGE',
-                            'uid': urlsafe_base64_encode(force_bytes(associated_user.pk)),
+                            'uid': urlsafe_base64_encode(force_bytes(associated_user.pk)).decode(encoding="utf-8"),
                             'user': associated_user,
                             'token': default_token_generator.make_token(associated_user),
                             'protocol': 'http://',
