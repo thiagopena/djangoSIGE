@@ -63,7 +63,7 @@ class MovimentoEstoque(models.Model):
     class Meta:
         verbose_name = "Movimento de Estoque"
         permissions = (
-            ("view_movimentoestoque", "Can view movimento estoque"),
+            ("can_view_movimentoestoque", "Can view movimento estoque"),
             ("consultar_estoque", "Pode consultar estoque"),
         )
 

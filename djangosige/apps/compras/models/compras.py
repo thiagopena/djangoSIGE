@@ -246,7 +246,7 @@ class OrcamentoCompra(Compra):
     class Meta:
         verbose_name = "Orçamento de Compra"
         permissions = (
-            ("view_orcamentocompra", "Can view orcamento compra"),
+            ("can_view_orcamentocompra", "Can view orcamento compra"),
         )
 
     @property
@@ -279,7 +279,7 @@ class PedidoCompra(Compra):
     class Meta:
         verbose_name = "Pedido de Compra"
         permissions = (
-            ("view_pedidocompra", "Can view pedido compra"),
+            ("can_view_pedidocompra", "Can view pedido compra"),
             ("faturar_pedidocompra", "Pode faturar Pedidos de Compra"),
         )
 

@@ -11,5 +11,5 @@ class Fornecedor(Pessoa):
     class Meta:
         verbose_name = "Fornecedor"
         permissions = (
-            ("view_fornecedor", "Can view fornecedor"),
+            ("can_view_fornecedor", "Can view fornecedor"),
         )

@@ -25,7 +25,7 @@ class NaturezaOperacao(models.Model):
     class Meta:
         verbose_name = "Natureza da Operação"
         permissions = (
-            ("view_naturezaoperacao", "Can view natureza operacao"),
+            ("can_view_naturezaoperacao", "Can view natureza operacao"),
         )
 
     def set_values_by_cfop(self):

@@ -25,7 +25,7 @@ class Empresa(Pessoa):
     class Meta:
         verbose_name = "Empresa"
         permissions = (
-            ("view_empresa", "Can view empresa"),
+            ("can_view_empresa", "Can view empresa"),
         )
 
     @property

@@ -43,7 +43,7 @@ class Lancamento(models.Model):
     class Meta:
         verbose_name = "Lançamento"
         permissions = (
-            ("view_lancamento", "Can view lancamento"),
+            ("can_view_lancamento", "Can view lancamento"),
         )
 
     def format_valor_liquido(self):
