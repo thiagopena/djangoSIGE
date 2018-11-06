@@ -11,7 +11,10 @@ from datetime import datetime, timedelta
 from decimal import Decimal
 import json
 import locale
-locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
+try:
+    locale.setlocale(locale.LC_ALL, 'pt_BR.utf8')
+except locale.Error:
+    locale.setlocale(locale.LC_ALL, '')
 
 
 SUBGRUPO_PLANO_CONTAS_FORMSET_DATA = {

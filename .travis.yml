@@ -8,14 +8,15 @@ before_install:
   - sudo /etc/init.d/postgresql stop
   - sudo /etc/init.d/postgresql start
 python:
-  - "3.4"
   - "3.5"
   - "3.6"
 install:
   - pip install -r requirements.txt
+  - pip install -r requirements_test.txt
 env:
   global:
     - SECRET_KEY=0#pny4oox9s#+#5dkde25dj79b-o^sdbz4kiumg#e1qx3ky
     - ALLOWED_HOSTS=localhost
 script:
+  - python manage.py makemigrations
   - python manage.py test

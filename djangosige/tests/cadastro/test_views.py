@@ -204,9 +204,16 @@ class CadastroEditarViewsTestCase(BaseTestCase):
                 data['{}-limite_de_credito'.format(response.context['form'].prefix)] = data[
                     'limite_de_credito']
                 del data['limite_de_credito']
+            elif model_name == 'transportadora':
+                data['veiculo_form-TOTAL_FORMS'] = 1
+                data['veiculo_form-INITIAL_FORMS'] = 0
+                data['veiculo_form-0-descricao'] = 'Veiculo1'
+                data['veiculo_form-0-placa'] = 'XXXXXXXX'
+                data['veiculo_form-0-uf'] = 'SP'
 
             # Inserir informacoes adicionais
             data['informacoes_adicionais'] = 'Objeto editado.'
+            data.update(INLINE_FORMSET_DATA)
             response = self.client.post(url, data, follow=True)
             self.assertEqual(response.status_code, 200)
 
