@@ -8,9 +8,6 @@ class Transportadora(Pessoa):
 
     class Meta:
         verbose_name = "Transportadora"
-        # permissions = (
-        #     ("can_view_transportadora", "Can view transportadora"),
-        # )
 
 
 class Veiculo(models.Model):

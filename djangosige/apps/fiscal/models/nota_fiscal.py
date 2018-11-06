@@ -207,7 +207,6 @@ class NotaFiscalSaida(NotaFiscal):
     class Meta:
         verbose_name = "Nota Fiscal"
         permissions = (
-            # ("can_view_notafiscal", "Can view nota fiscal"),
             ("emitir_notafiscal", "Pode emitir notas fiscais"),
             ("cancelar_notafiscal", "Pode cancelar notas fiscais"),
             ("gerar_danfe", "Pode gerar DANFE/DANFCE"),
@@ -254,9 +253,6 @@ class NotaFiscalEntrada(NotaFiscal):
 
     class Meta:
         verbose_name = "Nota Fiscal de Fornecedor"
-        # permissions = (
-        #     ("can_view_notafiscalentrada", "Can view nota fiscal entrada"),
-        # )
 
     @property
     def estado(self):
@@ -306,7 +302,6 @@ class ConfiguracaoNotaFiscal(models.Model):
         default_permissions = ()
         verbose_name = "Configuração NF-e"
         permissions = (
-            # ("can_view_configuracaonotafiscal", "Can view configuracao nota fiscal"),
             ("configurar_nfe", "Pode modificar configuração de NF-e"),
         )
 

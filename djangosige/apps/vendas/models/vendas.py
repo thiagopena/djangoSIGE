@@ -413,9 +413,6 @@ class OrcamentoVenda(Venda):
 
     class Meta:
         verbose_name = "Orçamento de Venda"
-        # permissions = (
-        #     ("can_view_orcamentovenda", "Can view orcamento venda"),
-        # )
 
     @property
     def format_data_vencimento(self):
@@ -447,7 +444,6 @@ class PedidoVenda(Venda):
     class Meta:
         verbose_name = "Pedido de Venda"
         permissions = (
-            ("can_view_pedidovenda", "Can view pedido venda"),
             ("faturar_pedidovenda", "Pode faturar Pedidos de Venda"),
         )
 

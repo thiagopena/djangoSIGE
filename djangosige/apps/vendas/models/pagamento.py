@@ -49,9 +49,6 @@ class CondicaoPagamento(models.Model):
 
     class Meta:
         verbose_name = "Condição de Pagamento"
-        # permissions = (
-        #     ("can_view_condicaopagamento", "Can view condicao pagamento"),
-        # )
 
     def __unicode__(self):
         s = u'%s' % (self.descricao)
