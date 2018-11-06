@@ -42,9 +42,9 @@ class Lancamento(models.Model):
 
     class Meta:
         verbose_name = "Lançamento"
-        permissions = (
-            ("can_view_lancamento", "Can view lancamento"),
-        )
+        # permissions = (
+        #     ("can_view_lancamento", "Can view lancamento"),
+        # )
 
     def format_valor_liquido(self):
         return locale.format(u'%.2f', self.valor_liquido, 1)

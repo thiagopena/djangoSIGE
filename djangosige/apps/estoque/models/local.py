@@ -25,9 +25,9 @@ class LocalEstoque(models.Model):
 
     class Meta:
         verbose_name = "Local de Estoque"
-        permissions = (
-            ("can_view_localestoque", "Can view local estoque"),
-        )
+        # permissions = (
+        #     ("can_view_localestoque", "Can view local estoque"),
+        # )
 
     def __unicode__(self):
         s = u'%s' % (self.descricao)

@@ -24,9 +24,9 @@ class Empresa(Pessoa):
 
     class Meta:
         verbose_name = "Empresa"
-        permissions = (
-            ("can_view_empresa", "Can view empresa"),
-        )
+        # permissions = (
+        #     ("can_view_empresa", "Can view empresa"),
+        # )
 
     @property
     def caminho_completo_logo(self):

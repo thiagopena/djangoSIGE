@@ -245,9 +245,9 @@ class OrcamentoCompra(Compra):
 
     class Meta:
         verbose_name = "Orçamento de Compra"
-        permissions = (
-            ("can_view_orcamentocompra", "Can view orcamento compra"),
-        )
+        # permissions = (
+        #     ("can_view_orcamentocompra", "Can view orcamento compra"),
+        # )
 
     @property
     def format_data_vencimento(self):

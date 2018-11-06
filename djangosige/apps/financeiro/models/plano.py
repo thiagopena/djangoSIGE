@@ -15,9 +15,9 @@ class PlanoContasGrupo(models.Model):
 
     class Meta:
         verbose_name = "Grupo do Plano de Contas"
-        permissions = (
-            ("can_view_planocontasgrupo", "Can view plano contas"),
-        )
+        # permissions = (
+        #     ("can_view_planocontasgrupo", "Can view plano contas"),
+        # )
 
     def __unicode__(self):
         s = u'%s' % (self.descricao)
