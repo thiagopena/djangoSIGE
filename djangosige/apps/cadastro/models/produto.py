@@ -34,9 +34,6 @@ class Categoria(models.Model):
 
     class Meta:
         verbose_name = "Categoria"
-        permissions = (
-            ("view_categoria", "Can view categoria"),
-        )
 
     def __unicode__(self):
         s = u'%s' % (self.categoria_desc)
@@ -52,9 +49,6 @@ class Marca(models.Model):
 
     class Meta:
         verbose_name = "Marca"
-        permissions = (
-            ("view_marca", "Can view marca"),
-        )
 
     def __unicode__(self):
         s = u'%s' % (self.marca_desc)
@@ -71,9 +65,6 @@ class Unidade(models.Model):
 
     class Meta:
         verbose_name = "Unidade"
-        permissions = (
-            ("view_unidade", "Can view unidade"),
-        )
 
     def __unicode__(self):
         s = u'(%s) %s' % (self.sigla_unidade, self.unidade_desc)
@@ -123,9 +114,6 @@ class Produto(models.Model):
 
     class Meta:
         verbose_name = "Produto"
-        permissions = (
-            ("view_produto", "Can view produto"),
-        )
 
     @property
     def format_unidade(self):

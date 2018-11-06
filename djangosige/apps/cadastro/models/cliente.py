@@ -22,6 +22,3 @@ class Cliente(Pessoa):
 
     class Meta:
         verbose_name = "Cliente"
-        permissions = (
-            ("view_cliente", "Can view cliente"),
-        )

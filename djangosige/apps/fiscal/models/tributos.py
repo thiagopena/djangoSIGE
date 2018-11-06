@@ -181,9 +181,6 @@ class GrupoFiscal(models.Model):
 
     class Meta:
         verbose_name = "Grupo Fiscal"
-        permissions = (
-            ("view_grupofiscal", "Can view grupo fiscal"),
-        )
 
     def __unicode__(self):
         s = u'%s' % (self.descricao)
