@@ -19,11 +19,12 @@ def removerAcentosECaracteresEspeciais(palavra):
     palavraSemAcento = u"".join(
         [c for c in nfkd if not unicodedata.combining(c)])
 
-    # Usa expressão regular para retornar a palavra apenas com números, letras e espaço
-    return re.sub('[^a-zA-Z0-9 \\\]', '', palavraSemAcento)
+    # Usa expressão regular para retornar a palavra apenas com números, letras
+    # e espaço
+    return re.sub(r"[^a-zA-Z0-9 \\\]", '', palavraSemAcento)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     f = open('codigos_municipios.csv', encoding="utf8")
     reader = csv.reader(f)
     for i, row in enumerate(reader):

@@ -1,36 +1,35 @@
 from django.conf.urls import url
 from . import views
-#from django.contrib.auth import authenticate
 
 app_name = 'login'
 urlpatterns = [
-    #/login/
+    # login/
     url(r'^$', views.UserFormView.as_view(), name='loginview'),
 
-    #/login/registrar/
+    # login/registrar/
     url(r'registrar/$', views.UserRegistrationFormView.as_view(),
         name='registrarview'),
 
-    #/login/esqueceu/:
+    # login/esqueceu/:
     url(r'^esqueceu/$', views.ForgotPasswordView.as_view(), name='esqueceuview'),
 
-    #/login/trocarsenha/:
+    # login/trocarsenha/:
     url(r'^trocarsenha/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)$',
         views.PasswordResetConfirmView.as_view(), name='trocarsenhaview'),
 
     # logout
     url(r'^logout/$', views.UserLogoutView.as_view(), name='logoutview'),
 
-    #/login/perfil/
+    # login/perfil/
     url(r'^perfil/$', views.MeuPerfilView.as_view(), name='perfilview'),
 
-    #/login/editarperfil/
+    # login/editarperfil/
     url(r'^editarperfil/$', views.EditarPerfilView.as_view(), name='editarperfilview'),
 
-    #/login/usuarios/
+    # login/usuarios/
     url(r'^usuarios/$', views.UsuariosListView.as_view(), name='usuariosview'),
 
-    #/login/usuarios/(id_usuario)
+    # login/usuarios/(id_usuario)
     url(r'usuarios/(?P<pk>[0-9]+)/$',
         views.UsuarioDetailView.as_view(), name='usuariodetailview'),
 

@@ -2,8 +2,6 @@
 
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
-#from djangosige.apps.financeiro.models import ContaPagar, ContaReceber
 from djangosige.apps.financeiro.models import Saida, Entrada, STATUS_CONTA_ENTRADA_ESCOLHAS, STATUS_CONTA_SAIDA_ESCOLHAS
 from djangosige.apps.financeiro.models import PlanoContasGrupo
 from djangosige.apps.login.models import Usuario
@@ -75,7 +73,7 @@ class EntradaForm(LancamentoForm):
         self.fields['status'].initial = '0'
 
         if PlanoContasGrupo.objects.filter(tipo_grupo='1').count():
-            self.fields['grupo_plano'].choices = ((grupo.id,  str(grupo.codigo) + ' - ' + str(
+            self.fields['grupo_plano'].choices = ((grupo.id, str(grupo.codigo) + ' - ' + str(
                 grupo.descricao)) for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='0'))
         else:
             self.fields['grupo_plano'].choices = ((None, '----------'),)
@@ -99,7 +97,7 @@ class SaidaForm(LancamentoForm):
         self.fields['status'].initial = '0'
 
         if PlanoContasGrupo.objects.filter(tipo_grupo='1').count():
-            self.fields['grupo_plano'].choices = ((grupo.id,  str(grupo.codigo) + ' - ' + str(
+            self.fields['grupo_plano'].choices = ((grupo.id, str(grupo.codigo) + ' - ' + str(
                 grupo.descricao)) for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='1'))
         else:
             self.fields['grupo_plano'].choices = ((None, '----------'),)

@@ -37,21 +37,12 @@ TP_IMP_ESCOLHAS = (
     (u'0', u'Sem geração de DANFE'),
     (u'1', u'DANFE normal, Retrato'),
     (u'2', u'DANFE normal, Paisagem'),
-    #(u'3', u'DANFE Simplificado'),
     (u'4', u'DANFE NFC-e'),
-    #(u'5', u'DANFE NFC-e em mensagem eletrônica'),
 )
 
 TP_EMIS_ESCOLHAS = (
     (u'1', u'Emissão normal'),
     (u'2', u'Emissão em contingência'),
-    #(u'2', u'Contingência FS-IA, com impressão do DANFE em formulário de segurança'),
-    #(u'3', u'Contingência SCAN (Sistema de Contingência do Ambiente Nacional)'),
-    #(u'4', u'Contingência DPEC (Declaração Prévia da Emissão em Contingência)'),
-    #(u'5', u'Contingência FS-DA, com impressão do DANFE em formulário de segurança'),
-    #(u'6', u'Contingência SVC-AN (SEFAZ Virtual de Contingência do AN)'),
-    #(u'7', u'Contingência SVC-RS (SEFAZ Virtual de Contingência do RS)'),
-    #(u'9', u'Contingência off-line da NFC-e'),
 )
 
 TP_AMB_ESCOLHAS = (
@@ -82,7 +73,6 @@ IND_PRES_ESCOLHAS = (
 )
 
 VERSOES = (
-    #('2.00', 'v2.00'),
     ('3.10', 'v3.10'),
 )
 

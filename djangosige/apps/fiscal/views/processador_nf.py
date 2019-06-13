@@ -101,7 +101,6 @@ class ProcessadorNotaFiscal(object):
 
             nfe.infNFe.dest.xNome.valor = nota_obj.dest_saida.nome_razao_social
             nfe.infNFe.dest.indIEDest.valor = nota_obj.dest_saida.indicador_ie
-            #nfe.infNFe.dest.IM.valor = nota_obj.dest_saida.inscricao_municipal
 
             if nota_obj.dest_saida.endereco_padrao:
                 nfe.infNFe.dest.enderDest.xLgr.valor = nota_obj.dest_saida.endereco_padrao.logradouro
@@ -150,7 +149,6 @@ class ProcessadorNotaFiscal(object):
                 det.prod.qCom.valor = item.quantidade
                 det.prod.vUnCom.valor = item.valor_unit
                 det.prod.vProd.valor = item.vprod
-                # det.prod.cEANTrib.valor =
                 det.prod.uTrib.valor = det.prod.uCom.valor
                 det.prod.qTrib.valor = det.prod.qCom.valor
                 det.prod.vUnTrib.valor = det.prod.vUnCom.valor
@@ -158,7 +156,6 @@ class ProcessadorNotaFiscal(object):
                 det.prod.vSeg.valor = item.valor_rateio_seguro
                 det.prod.vDesc.valor = item.get_valor_desconto()
                 det.prod.vOutro.valor = item.valor_rateio_despesas
-                #det.prod.indTot.valor   = 1
 
                 # Impostos
                 if item.produto.grupo_fiscal:
@@ -219,10 +216,6 @@ class ProcessadorNotaFiscal(object):
                                 det.imposto.ICMS.UFST.valor = icms_obj.ufst
                                 det.imposto.ICMS.pBCOp.valor = icms_obj.p_bc_op
 
-                            # Repasse ICMSST (todo)
-                            # elif icms_obj.cst == '41r':
-                            #    det.imposto.ICMS.repasse      = True
-
                     # ICMSUFDest (vendas interestaduais para consumidor final
                     # nao contribuinte)
                     icms_dest = item.produto.grupo_fiscal.icms_dest_padrao.get()
@@ -242,8 +235,6 @@ class ProcessadorNotaFiscal(object):
                         det.imposto.IPI.CST.valor = ipi_obj.cst
                         det.imposto.IPI.clEnq.valor = ipi_obj.cl_enq
                         det.imposto.IPI.CNPJProd.valor = ipi_obj.get_cnpj_prod_apenas_digitos()
-                        #det.imposto.IPI.cSelo.valor     = ipi_obj.cselo
-                        #det.imposto.IPI.qSelo.valor     = ipi_obj.qselo
                         det.imposto.IPI.cEnq.valor = ipi_obj.c_enq
 
                         if ipi_obj.tipo_ipi == '1':
@@ -308,7 +299,6 @@ class ProcessadorNotaFiscal(object):
         nfe.infNFe.total.ICMSTot.vFrete.valor = nota_obj.venda.frete
         nfe.infNFe.total.ICMSTot.vSeg.valor = nota_obj.venda.seguro
         nfe.infNFe.total.ICMSTot.vDesc.valor = nota_obj.venda.get_valor_desconto_total()
-        #nfe.infNFe.total.ICMSTot.vII.valor     = nota_obj.venda.get_valor_total_attr('vii')
         nfe.infNFe.total.ICMSTot.vIPI.valor = nota_obj.venda.get_valor_total_attr(
             'vipi')
         nfe.infNFe.total.ICMSTot.vPIS.valor = nota_obj.venda.get_valor_total_attr(
@@ -337,7 +327,6 @@ class ProcessadorNotaFiscal(object):
         if nota_obj.venda.veiculo:
             nfe.infNFe.transp.veicTransp.placa.valor = nota_obj.venda.veiculo.placa
             nfe.infNFe.transp.veicTransp.UF.valor = nota_obj.venda.veiculo.uf
-            #nfe.infNFe.transp.veicTransp.RNTC.valor  = nota_obj.venda.veiculo.rntc
 
         # Cobranca
         if nota_obj.grupo_cobr:
@@ -412,7 +401,7 @@ class ProcessadorNotaFiscal(object):
             nota_saida.v_desc = nfe.infNFe.cobr.fat.vDesc.valor
             nota_saida.v_liq = nfe.infNFe.cobr.fat.vLiq.valor
 
-        ##Cliente (destinatario)
+        # Cliente (destinatario)
         clientes = []
 
         if nfe.infNFe.dest.CNPJ.valor:
@@ -429,7 +418,6 @@ class ProcessadorNotaFiscal(object):
             cliente = Cliente()
             cliente.nome_razao_social = nfe.infNFe.dest.xNome.valor
             cliente.indicador_ie = str(nfe.infNFe.dest.indIEDest.valor)
-            #cliente.inscricao_municipal = str(nfe.infNFe.dest.IM.valor)
             cliente.criado_por = request.user
 
             if nfe.infNFe.dest.CNPJ.valor:
@@ -478,7 +466,7 @@ class ProcessadorNotaFiscal(object):
             nota_saida.dest_saida = cliente
             venda.cliente = cliente
 
-        ##Empresa (emitente)
+        # Empresa (emitente)
         empresas = []
 
         if nfe.infNFe.emit.CNPJ.valor:
@@ -839,7 +827,7 @@ class ProcessadorNotaFiscal(object):
         nota_entrada.inf_cpl = str(nfe.infNFe.infAdic.infCpl.valor)
         nota_entrada.status_nfe = u'9'  # Importada
 
-        ##Fornecedor (emitente)
+        # Fornecedor (emitente)
         fornecedores = []
 
         if nfe.infNFe.emit.CNPJ.valor:
@@ -901,7 +889,7 @@ class ProcessadorNotaFiscal(object):
             nota_entrada.emit_entrada = fornecedor
             compra.fornecedor = fornecedor
 
-        ##Empresa (destinatario)
+        # Empresa (destinatario)
         empresas = []
 
         if nfe.infNFe.dest.CNPJ.valor:
@@ -1198,11 +1186,12 @@ class ProcessadorNotaFiscal(object):
         for err in processo.envio.erros:
             e = ErrosValidacaoNotaFiscal(nfe=nota_obj)
             e.tipo = u'0'
-            err.replace("\\","")
+            err.replace("\\", "")
             elemento_xml = err.split("'")
-            if(array[1] not in temp_list):
+            if(elemento_xml[1] not in temp_list):
                 temp_list.append(elemento_xml[1])
-                e.descricao = "Elemento: " + elemento_xml[1] + " Não foi preenchido ou está incorreto."
+                e.descricao = "Elemento: " + \
+                    elemento_xml[1] + " Não foi preenchido ou está incorreto."
                 e.save()
 
         for alerta in processo.envio.alertas:
@@ -1217,9 +1206,11 @@ class ProcessadorNotaFiscal(object):
                 e.tipo = u'0'
                 err_nf.replace("\\", "")
                 elemento_xml = err_nf.split("'")
-                if (array[1] not in temp_list):
-                    temp_list.append(array[1])
-                    e.descricao = "Elemento: " + elemento_xml[1] + " Não foi preenchido ou está incorreto."
+                if (elemento_xml[1] not in temp_list):
+                    temp_list.append(elemento_xml[1])
+                    e.descricao = "Elemento: " + \
+                        elemento_xml[1] + \
+                        " Não foi preenchido ou está incorreto."
                     e.save()
 
             for alerta_nf in nf.alertas:

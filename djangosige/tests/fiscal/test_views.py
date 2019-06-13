@@ -58,14 +58,14 @@ class FiscalAdicionarViewsTestCase(BaseTestCase):
 
         data = {
             'descricao': 'Grupo Fiscal Teste1',
-            'regime_trib': '1', # Simples
-            'icmssn_form-csosn': '102', # Tributada sem permissao de credito
+            'regime_trib': '1',  # Simples
+            'icmssn_form-csosn': '102',  # Tributada sem permissao de credito
             'icmssn_form-mod_bcst': '4',
             'icmssn_form-mod_bc': '3',
-            'ipi_form-cst': '02', # Entrada isenta
-            'ipi_form-tipo_ipi': '0', # Nao sujeito ao IPI
-            'pis_form-cst': '07', # Operacao isenta da contribuicao
-            'cofins_form-cst': '07', # Operacao isenta da contribuicao
+            'ipi_form-cst': '02',  # Entrada isenta
+            'ipi_form-tipo_ipi': '0',  # Nao sujeito ao IPI
+            'pis_form-cst': '07',  # Operacao isenta da contribuicao
+            'cofins_form-cst': '07',  # Operacao isenta da contribuicao
             'icms_dest_form-p_fcp_dest': '2',
             'icms_dest_form-p_icms_dest': '18',
             'icms_dest_form-p_icms_inter': '7.00',
@@ -127,7 +127,8 @@ class FiscalAdicionarViewsTestCase(BaseTestCase):
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(isinstance(response.context['object'], NotaFiscalSaida))
+        self.assertTrue(isinstance(response.context[
+                        'object'], NotaFiscalSaida))
 
 
 class FiscalListarViewsTestCase(BaseTestCase):
@@ -138,7 +139,8 @@ class FiscalListarViewsTestCase(BaseTestCase):
             'fiscal:listanaturezaoperacaoview'), deleted_object=obj)
 
     def test_list_grupo_fiscal_view_deletar_objeto(self):
-        obj = GrupoFiscal.objects.create(descricao='Grupo Fiscal Delete Teste', regime_trib='0')
+        obj = GrupoFiscal.objects.create(
+            descricao='Grupo Fiscal Delete Teste', regime_trib='0')
         self.check_list_view_delete(url=reverse(
             'fiscal:listagrupofiscalview'), deleted_object=obj)
 
@@ -183,7 +185,8 @@ class FiscalEditarViewsTestCase(BaseTestCase):
             data['icms_form-mod_bcst'] = response.context['icms_form'].initial['mod_bcst']
         elif response.context['icmssn_form'].initial:
             data['icmssn_form-mod_bc'] = response.context['icmssn_form'].initial['mod_bc']
-            data['icmssn_form-mod_bcst'] = response.context['icmssn_form'].initial['mod_bcst']
+            data[
+                'icmssn_form-mod_bcst'] = response.context['icmssn_form'].initial['mod_bcst']
         data['ipi_form-tipo_ipi'] = response.context['ipi_form'].initial['tipo_ipi']
         data['descricao'] = 'Grupo Fiscal Editado.'
         response = self.client.post(url, data, follow=True)

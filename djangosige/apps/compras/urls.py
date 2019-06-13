@@ -6,36 +6,36 @@ from . import views
 app_name = 'compras'
 urlpatterns = [
     # Orcamentos de compra
-    #/compras/orcamentocompra/adicionar/
+    # compras/orcamentocompra/adicionar/
     url(r'orcamentocompra/adicionar/$',
         views.AdicionarOrcamentoCompraView.as_view(), name='addorcamentocompraview'),
-    #/compras/orcamentocompra/listaorcamentocompra
+    # compras/orcamentocompra/listaorcamentocompra
     url(r'orcamentocompra/listaorcamentocompra/$',
         views.OrcamentoCompraListView.as_view(), name='listaorcamentocompraview'),
-    #/compras/orcamentocompra/editar/
+    # compras/orcamentocompra/editar/
     url(r'orcamentocompra/editar/(?P<pk>[0-9]+)/$',
         views.EditarOrcamentoCompraView.as_view(), name='editarorcamentocompraview'),
-    #/compras/orcamentocompra/listaorcamentocompra/vencidos/
+    # compras/orcamentocompra/listaorcamentocompra/vencidos/
     url(r'orcamentocompra/listaorcamentocompra/vencidos/$',
         views.OrcamentoCompraVencidosListView.as_view(), name='listaorcamentocompravencidosview'),
-    #/compras/orcamentocompra/listaorcamentocompra/hoje/
+    # compras/orcamentocompra/listaorcamentocompra/hoje/
     url(r'orcamentocompra/listaorcamentocompra/hoje/$',
         views.OrcamentoCompraVencimentoHojeListView.as_view(), name='listaorcamentocomprahojeview'),
 
     # Pedidos de compra
-    #/compras/pedidocompra/adicionar/
+    # compras/pedidocompra/adicionar/
     url(r'pedidocompra/adicionar/$',
         views.AdicionarPedidoCompraView.as_view(), name='addpedidocompraview'),
-    #/compras/pedidocompra/listapedidocompra
+    # compras/pedidocompra/listapedidocompra
     url(r'pedidocompra/listapedidocompra/$',
         views.PedidoCompraListView.as_view(), name='listapedidocompraview'),
-    #/compras/pedidocompra/editar/
+    # compras/pedidocompra/editar/
     url(r'pedidocompra/editar/(?P<pk>[0-9]+)/$',
         views.EditarPedidoCompraView.as_view(), name='editarpedidocompraview'),
-    #/compras/pedidocompra/listapedidocompra/atrasados/
+    # compras/pedidocompra/listapedidocompra/atrasados/
     url(r'pedidocompra/listapedidocompra/atrasados/$',
         views.PedidoCompraAtrasadosListView.as_view(), name='listapedidocompraatrasadosview'),
-    #/compras/pedidocompra/listapedidocompra/hoje/
+    # compras/pedidocompra/listapedidocompra/hoje/
     url(r'pedidocompra/listapedidocompra/hoje/$',
         views.PedidoCompraEntregaHojeListView.as_view(), name='listapedidocomprahojeview'),
 

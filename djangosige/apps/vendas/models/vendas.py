@@ -17,7 +17,6 @@ STATUS_ORCAMENTO_ESCOLHAS = (
     (u'0', u'Aberto'),
     (u'1', u'Baixado'),
     (u'2', u'Cancelado'),
-    #(u'3', u'Vencido'),
 )
 
 STATUS_PEDIDO_VENDA_ESCOLHAS = (
