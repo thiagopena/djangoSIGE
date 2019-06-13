@@ -111,7 +111,7 @@ class ItensMovimentoForm(forms.ModelForm):
         self.fields['subtotal'].localize = True
 
         self.fields['produto'].choices = (
-            (prod.id,  str(prod)) for prod in Produto.objects.filter(controlar_estoque=True))
+            (prod.id, str(prod)) for prod in Produto.objects.filter(controlar_estoque=True))
         self.fields['produto'].choices.insert(0, ((None, '----------')))
 
     class Meta:

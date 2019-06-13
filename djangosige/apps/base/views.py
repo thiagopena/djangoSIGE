@@ -28,7 +28,6 @@ class IndexView(TemplateView):
         quantidade_cadastro['clientes'] = Cliente.objects.all().count()
         quantidade_cadastro['fornecedores'] = Fornecedor.objects.all().count()
         quantidade_cadastro['produtos'] = Produto.objects.all().count()
-        #quantidade_cadastro['servicos'] = Servico.objects.all().count()
         quantidade_cadastro['empresas'] = Empresa.objects.all().count()
         quantidade_cadastro[
             'transportadoras'] = Transportadora.objects.all().count()

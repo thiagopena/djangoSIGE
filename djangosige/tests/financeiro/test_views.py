@@ -457,8 +457,10 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         # Verificar se movimento de caixa foi atualizado
         movimento_editado = MovimentoCaixa.objects.get(
             data_movimento=data_movimento)
-        self.assertEqual(valor_saldo_final_antigo +
-                         Decimal('20.00'), movimento_editado.saldo_final)
+        self.assertEqual(
+            valor_saldo_final_antigo + Decimal('20.00'),
+            movimento_editado.saldo_final
+        )
 
     def test_edit_recebimento_com_data_pagamento_diferente_e_movimento_criado_get_post_request(self):
         # Buscar entrada com movimento de caixa e data_pagamento
@@ -626,8 +628,10 @@ class FinanceiroEditarViewsTestCase(BaseTestCase):
         # Verificar se movimento de caixa foi atualizado
         movimento_editado = MovimentoCaixa.objects.get(
             data_movimento=data_movimento)
-        self.assertEqual(valor_saldo_final_antigo -
-                         Decimal('20.00'), movimento_editado.saldo_final)
+        self.assertEqual(
+            valor_saldo_final_antigo - Decimal('20.00'),
+            movimento_editado.saldo_final
+        )
 
     def test_edit_pagamento_com_data_pagamento_diferente_e_movimento_criado_get_post_request(self):
         # Buscar saida com movimento de caixa e data_pagamento

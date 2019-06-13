@@ -38,7 +38,7 @@ class CheckPermissionMixin(object):
             self.permission_codename = [self.permission_codename]
         perms = []
         for permission in self.permission_codename:
-            if not '.' in permission:
+            if '.' not in permission:
                 permission = str(
                     request.resolver_match.app_name) + '.' + str(permission)
             perms.append(permission)

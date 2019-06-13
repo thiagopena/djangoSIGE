@@ -20,14 +20,14 @@ class MovimentoEstoqueMixin(object):
         lista_produtos.append(prod)
 
         # Modificar valor do estoque atual dos produtos
-        if not prod.estoque_atual is None and isinstance(self.object, EntradaEstoque):
+        if prod.estoque_atual is not None and isinstance(self.object, EntradaEstoque):
             prod_estocado = ProdutoEstocado.objects.get_or_create(
                 local=self.object.local_dest, produto=itens_mvmt_obj.produto)[0]
             prod_estocado.quantidade = prod_estocado.quantidade + itens_mvmt_obj.quantidade
             lista_produtos_estocados.append(prod_estocado)
             prod.estoque_atual = prod.estoque_atual + itens_mvmt_obj.quantidade
 
-        elif not prod.estoque_atual is None and isinstance(self.object, SaidaEstoque):
+        elif prod.estoque_atual is not None and isinstance(self.object, SaidaEstoque):
             prod_estocado = ProdutoEstocado.objects.get_or_create(
                 local=self.object.local_orig, produto=itens_mvmt_obj.produto)[0]
 

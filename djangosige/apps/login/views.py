@@ -123,7 +123,7 @@ class ForgotPasswordView(FormView):
             data = form.cleaned_data["email_or_username"]
             associated_user = User.objects.filter(
                 Q(email=data) | Q(username=data)).first()
-            
+
             if associated_user:
                 try:
                     if associated_user.email:

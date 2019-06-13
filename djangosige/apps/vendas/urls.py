@@ -6,47 +6,47 @@ from . import views
 app_name = 'vendas'
 urlpatterns = [
     # Orcamentos de venda
-    #/vendas/orcamentovenda/adicionar/
+    # vendas/orcamentovenda/adicionar/
     url(r'orcamentovenda/adicionar/$',
         views.AdicionarOrcamentoVendaView.as_view(), name='addorcamentovendaview'),
-    #/vendas/orcamentovenda/listaorcamentovenda
+    # vendas/orcamentovenda/listaorcamentovenda
     url(r'orcamentovenda/listaorcamentovenda/$',
         views.OrcamentoVendaListView.as_view(), name='listaorcamentovendaview'),
-    #/vendas/orcamentovenda/editar/
+    # vendas/orcamentovenda/editar/
     url(r'orcamentovenda/editar/(?P<pk>[0-9]+)/$',
         views.EditarOrcamentoVendaView.as_view(), name='editarorcamentovendaview'),
-    #/vendas/orcamentovenda/listaorcamentovenda/vencidos
+    # vendas/orcamentovenda/listaorcamentovenda/vencidos
     url(r'orcamentovenda/listaorcamentovenda/vencidos/$',
         views.OrcamentoVendaVencidosListView.as_view(), name='listaorcamentovendavencidoview'),
-    #/vendas/orcamentovenda/listaorcamentovenda/hoje
+    # vendas/orcamentovenda/listaorcamentovenda/hoje
     url(r'orcamentovenda/listaorcamentovenda/hoje/$',
         views.OrcamentoVendaVencimentoHojeListView.as_view(), name='listaorcamentovendahojeview'),
 
     # Pedidos de venda
-    #/vendas/pedidovenda/adicionar/
+    # vendas/pedidovenda/adicionar/
     url(r'pedidovenda/adicionar/$',
         views.AdicionarPedidoVendaView.as_view(), name='addpedidovendaview'),
-    #/vendas/pedidovenda/listapedidovenda
+    # vendas/pedidovenda/listapedidovenda
     url(r'pedidovenda/listapedidovenda/$',
         views.PedidoVendaListView.as_view(), name='listapedidovendaview'),
-    #/vendas/pedidovenda/editar/
+    # vendas/pedidovenda/editar/
     url(r'pedidovenda/editar/(?P<pk>[0-9]+)/$',
         views.EditarPedidoVendaView.as_view(), name='editarpedidovendaview'),
-    #/vendas/pedidovenda/listapedidovenda/atrasados
+    # vendas/pedidovenda/listapedidovenda/atrasados
     url(r'pedidovenda/listapedidovenda/atrasados/$',
         views.PedidoVendaAtrasadosListView.as_view(), name='listapedidovendaatrasadosview'),
-    #/vendas/pedidovenda/listapedidovenda/hoje
+    # vendas/pedidovenda/listapedidovenda/hoje
     url(r'pedidovenda/listapedidovenda/hoje/$',
         views.PedidoVendaEntregaHojeListView.as_view(), name='listapedidovendahojeview'),
 
     # Condicao pagamento
-    #/vendas/pagamento/adicionar/
+    # vendas/pagamento/adicionar/
     url(r'pagamento/adicionar/$', views.AdicionarCondicaoPagamentoView.as_view(),
         name='addcondicaopagamentoview'),
-    #/vendas/pagamento/listacondicaopagamento
+    # vendas/pagamento/listacondicaopagamento
     url(r'pagamento/listacondicaopagamento/$',
         views.CondicaoPagamentoListView.as_view(), name='listacondicaopagamentoview'),
-    #/vendas/pagamento/editar/
+    # vendas/pagamento/editar/
     url(r'pagamento/editar/(?P<pk>[0-9]+)/$', views.EditarCondicaoPagamentoView.as_view(
     ), name='editarcondicaopagamentoview'),
 

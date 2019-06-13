@@ -638,8 +638,8 @@ class FaturarPedidoVendaView(CustomView, MovimentoCaixaMixin):
                         local=pedido.local_orig, produto=item.produto)
                     if item.quantidade > item.produto.estoque_atual:
                         erros = True
-                        messages.warning(request, 'Aviso: A venda não pode ser faturada. O estoque atual do produto ' + str(item.produto.descricao)
-                                         + ' é de apenas ' + str(item.produto.estoque_atual))
+                        messages.warning(request, 'Aviso: A venda não pode ser faturada. O estoque atual do produto ' + str(item.produto.descricao) +
+                                         ' é de apenas ' + str(item.produto.estoque_atual))
                     elif item.quantidade > prod_estocado.quantidade:
                         erros = True
                         messages.warning(request, 'Aviso: A venda não pode ser faturada. O estoque atual do produto ' + str(item.produto.descricao) +
