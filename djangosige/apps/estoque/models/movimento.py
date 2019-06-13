@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 
+import operator
 from django.db import models
 from django.core.validators import MinValueValidator
 from decimal import Decimal
+from django.dispatch import receiver
+from django.db.models.signals import pre_delete
 from django.urls import reverse_lazy
 from django.template.defaultfilters import date
 
@@ -75,6 +78,27 @@ class MovimentoEstoque(models.Model):
 
     def format_valor_total(self):
         return locale.format(u'%.2f', self.valor_total, 1)
+
+
+@receiver(
+    pre_delete,
+    sender=MovimentoEstoque,
+    dispatch_uid="movimento_estoque_delete"
+)
+def reajusta_estoque_produtos(sender, instance, using, **kwargs):
+    if hasattr(instance, "entradaestoque"):
+        operation = operator.sub
+    elif hasattr(instance, "saidaestoque"):
+        operation = operator.add
+    else:
+        return
+    for item in instance.itens_movimento.all():
+        produto = item.produto
+        produto.estoque_atual = operation(produto.estoque_atual, item.quantidade)
+        produto.save()
+        for produto_estocado in produto.produto_estocado.all():
+            produto_estocado.quantidade = operation(produto_estocado.quantidade, item.quantidade)
+            produto_estocado.save()
 
 
 class EntradaEstoque(MovimentoEstoque):

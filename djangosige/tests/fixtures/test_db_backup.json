@@ -9,7 +9,7 @@
             "endereco_padrao": 1,
             "informacoes_adicionais": "",
             "inscricao_municipal": "",
-            "nome_razao_social": "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+            "nome_razao_social": "Pessoa1",
             "site_padrao": null,
             "telefone_padrao": 1,
             "tipo_pessoa": "PJ"
@@ -62,7 +62,7 @@
             "email_padrao": null,
             "endereco_padrao": 5,
             "informacoes_adicionais": "",
-            "inscricao_municipal": null,
+            "inscricao_municipal": "",
             "nome_razao_social": "Transportadora1",
             "site_padrao": null,
             "telefone_padrao": null,
@@ -98,7 +98,7 @@
             "email_padrao": null,
             "endereco_padrao": 7,
             "informacoes_adicionais": null,
-            "inscricao_municipal": null,
+            "inscricao_municipal": "",
             "nome_razao_social": "RAZAO SOCIAL",
             "site_padrao": null,
             "telefone_padrao": 5,
@@ -116,8 +116,8 @@
             "email_padrao": null,
             "endereco_padrao": 8,
             "informacoes_adicionais": null,
-            "inscricao_municipal": null,
-            "nome_razao_social": "NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL",
+            "inscricao_municipal": "",
+            "nome_razao_social": "Empresa1",
             "site_padrao": null,
             "telefone_padrao": 6,
             "tipo_pessoa": "PJ"
@@ -429,8 +429,8 @@
     },
     {
         "fields": {
-            "cnae": null,
-            "iest": null,
+            "cnae": "",
+            "iest": "",
             "logo_file": "imagens/logo.png"
         },
         "model": "cadastro.empresa",
@@ -471,7 +471,7 @@
     },
     {
         "fields": {
-            "ramo": null
+            "ramo": ""
         },
         "model": "cadastro.fornecedor",
         "pk": 6
