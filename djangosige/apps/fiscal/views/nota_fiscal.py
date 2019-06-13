@@ -6,6 +6,7 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 
 from djangosige.apps.base.custom_views import CustomView, CustomCreateView, CustomListView, CustomUpdateView, CustomTemplateView
+from djangosige.apps.base.views_mixins import FormValidationMessageMixin
 
 from djangosige.apps.fiscal.forms import NotaFiscalSaidaForm, NotaFiscalEntradaForm, AutXMLFormSet, ConfiguracaoNotaFiscalForm, EmissaoNotaFiscalForm, CancelamentoNotaFiscalForm, \
     ConsultarCadastroForm, InutilizarNotasForm, ConsultarNotaForm, BaixarNotaForm, ManifestacaoDestinatarioForm
@@ -365,9 +366,10 @@ class GerarNotaFiscalSaidaView(CustomView):
         return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': nova_nota.id}))
 
 
-class ConfiguracaoNotaFiscalView(CustomTemplateView):
+class ConfiguracaoNotaFiscalView(FormValidationMessageMixin, CustomTemplateView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_config.html'
     success_url = reverse_lazy('fiscal:configuracaonotafiscal')
+    success_message = "Emissão de NF-e configurada"
     permission_codename = 'configurar_nfe'
 
     def get_context_data(self, **kwargs):
@@ -400,9 +402,6 @@ class ConfiguracaoNotaFiscalView(CustomTemplateView):
             return self.form_valid(form)
 
         return self.form_invalid(form)
-
-    def form_valid(self, form):
-        return redirect(self.success_url)
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form, object=self.object,))
