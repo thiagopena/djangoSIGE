@@ -64,6 +64,7 @@ BANCOS = [
     ('249', '249 - BANCO INVESTCRED UNIBANCO S.A.'),
     ('250', '250 - BANCO SCHAHIN S.A.'),
     ('254', '254 - PARANÁ BANCO S.A.'),
+    ('260', '260 - NU PAGAMENTOS S.A.'),
     ('263', '263 - BANCO CACIQUE S.A.'),
     ('265', '265 - BANCO FATOR S.A.'),
     ('266', '266 - BANCO CEDULA S.A.'),
