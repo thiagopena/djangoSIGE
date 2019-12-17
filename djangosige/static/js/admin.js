@@ -3235,6 +3235,36 @@ $.Admin.cookies = {
         return cookieValue;
     },
 }
+/* DinamicMenu()
+* dinamic activate menu
+*/
+$.Admin.dinamicMenu = {
+    init: function() {
+        var url = window.location;
+
+        // for sidebar menu entirely but not cover treeview
+        $('.menu .list a').filter(function () {
+          return this.href == url;
+        }).parent().addClass('active');
+
+
+        // for treeview
+        var element = $('.menu .list a').filter(function () {
+            var aux = this.href.split('/').slice(0, this.href.length-2).join("/");
+          return this.href == url || url.href.indexOf(aux) ==
+            0;
+        });
+
+        if (1 in element){
+            element = $(element[1]);
+            if (element.has("i").length == 0) {
+                element.addClass('toggled waves-effect waves-block');
+                element.parents('li').addClass('active');
+                element.parent().parents('ul').show().siblings('a').addClass('toggled waves-effect waves-block')
+            }
+        }
+    }
+};
 
 $(function () {
     $.Admin.barraLateral.init();
@@ -3242,6 +3272,7 @@ $(function () {
     $.Admin.table.init();
     $.Admin.formset.init();
     $.Admin.validation.init();
+    $.Admin.dinamicMenu.init();
 
     setTimeout(function () { $('.page-loader-wrapper').fadeOut(); }, 50);
 });
