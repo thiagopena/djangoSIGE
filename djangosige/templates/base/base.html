@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    {% load staticfiles %}
+    {% load static %}
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -43,9 +43,9 @@
     <!-- Overlay -->
     <div class="overlay"></div>
     <!--  #Overlay -->
-    
+
     {%block side_top_bars%}
-    
+
     <!-- Top Bar -->
     <nav class="navbar topbar">
         <div class="container-fluid">
@@ -63,7 +63,7 @@
                     <span>{% now "H:i" %}</span>
                     <!-- #Main icone, data e horario -->
                 </div>
-                
+
             </div>
 
             <!-- Icones ajuda e logout -->
@@ -72,7 +72,7 @@
 
                     <li><a href="https://github.com/thiagopena/djangoSIGE" title="Ajuda" ><i class="material-icons">&#xE8FD;</i></a></li>
                     <li><a id="logout-btn" href="{% url 'login:logoutview' %}" title="Sair" ><i class="material-icons">&#xE879;</i></a></li>
-                    
+
                 </ul>
             </div>
             <!-- #Icones ajuda e logout -->
@@ -437,7 +437,7 @@
             <!-- #Footer -->
         </aside>
         <!-- #Barra lateral -->
-        
+
     </section>
     {% endblock %}
 
@@ -451,7 +451,7 @@
 
     <!-- Datatables Js -->
     <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
-    
+
     <!-- Sige Js -->
     <script src="{% static 'js/admin.js' %}"></script>
 
