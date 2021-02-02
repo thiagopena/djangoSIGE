@@ -219,7 +219,7 @@ class Compra(models.Model):
 
     def get_local_dest_id(self):
         if self.local_dest:
-            return self.local_dest.id
+            return self.local_dest_id
         else:
             return ""
 

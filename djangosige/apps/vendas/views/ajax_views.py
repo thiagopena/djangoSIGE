@@ -20,7 +20,7 @@ class InfoVenda(View):
         pedido_dict['model'] = 'vendas.pedidovenda'
         pedido_dict['pk'] = venda.id
         pedido_fields_dict = {}
-        pedido_fields_dict['dest'] = venda.cliente.id
+        pedido_fields_dict['dest'] = venda.cliente_id
         pedido_fields_dict['local'] = venda.get_local_orig_id()
         pedido_fields_dict['status'] = venda.get_status_display()
         pedido_fields_dict['desconto'] = venda.format_desconto()

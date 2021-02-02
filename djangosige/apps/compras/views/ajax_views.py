@@ -20,7 +20,7 @@ class InfoCompra(View):
         pedido_dict['model'] = 'compras.pedidocompra'
         pedido_dict['pk'] = compra.id
         pedido_fields_dict = {}
-        pedido_fields_dict['emit'] = compra.fornecedor.id
+        pedido_fields_dict['emit'] = compra.fornecedor_id
         pedido_fields_dict['local'] = compra.get_local_dest_id()
         pedido_fields_dict['status'] = compra.get_status_display()
         pedido_fields_dict['desconto'] = compra.format_desconto()

@@ -237,9 +237,9 @@ class EditarCompraView(CustomUpdateView):
         itens_compra = ItensCompra.objects.filter(compra_id=self.object.pk)
         pagamentos = Pagamento.objects.filter(compra_id=self.object.pk)
 
-        if len(itens_compra):
+        if itens_compra.count():
             produtos_form.extra = 0
-        if len(pagamentos):
+        if pagamentos.count():
             pagamento_form.extra = 0
 
         return self.render_to_response(self.get_context_data(form=form,
@@ -558,7 +558,8 @@ class GerarPDFCompra(CustomView):
             compra_report.dados_fornecedor)
 
         compra_report.dados_produtos.band_detail.set_band_height(
-            len(ItensCompra.objects.filter(compra_id=compra)))
+            ItensCompra.objects.filter(compra_id=compra).count()
+        )
         compra_report.banda_produtos.elements.append(
             compra_report.dados_produtos)
         compra_report.band_page_header.child_bands.append(

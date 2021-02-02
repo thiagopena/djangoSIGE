@@ -234,9 +234,9 @@ class EditarVendaView(CustomUpdateView):
         pagamento_form = PagamentoFormSet(
             instance=self.object, prefix='pagamento_form')
 
-        if ItensVenda.objects.filter(venda_id=self.object.pk).count():
+        if ItensVenda.objects.filter(venda_id=self.object.pk).exists():
             produtos_form.extra = 0
-        if Pagamento.objects.filter(venda_id=self.object.pk).count():
+        if Pagamento.objects.filter(venda_id=self.object.pk).exists():
             pagamento_form.extra = 0
 
         return self.render_to_response(self.get_context_data(form=form, produtos_form=produtos_form, pagamento_form=pagamento_form))
@@ -493,7 +493,8 @@ class GerarPDFVenda(CustomView):
             venda_report.dados_cliente)
 
         venda_report.dados_produtos.band_detail.set_band_height(
-            len(ItensVenda.objects.filter(venda_id=venda)))
+            ItensVenda.objects.filter(venda_id=venda).count()
+        )
         venda_report.banda_produtos.elements.append(
             venda_report.dados_produtos)
         venda_report.band_page_header.child_bands.append(
