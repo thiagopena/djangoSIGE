@@ -8,7 +8,7 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 ## Dependências
 
 - [Python](https://www.python.org/downloads/) - Versão 3.5+
-- [django](http://www.djangoproject.com) == 2.1.3
+- [django](http://www.djangoproject.com) == 3.1.7
 - [geraldo](https://github.com/thiagopena/geraldo) - Geração de PDF para pedidos de venda/compra
 - [PySIGNFe](https://github.com/thiagopena/PySIGNFe) (Opcional) - Necessário para a geração de NF-e, NFC-e, comunicação com SEFAZ, geração do DANFE, etc.
 - [apache2](https://www.apache.org/) (Opcional)
@@ -16,38 +16,45 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 
 ## Instalação:
 
+0. Instalar as bibliotecas/pacotes (no Linux):
+
+```bash
+sudo apt install -y libxml2 gcc python3-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip
+sudo apt update
+```
+
 1. Instalar dependências:
 
-    ```bash
-    pip install -r requirements.txt
-    ```
+```bash
+pip install -r requirements.txt
+```
 
 2. Edite o conteúdo do arquivo **djangosige/configs/configs.py**
 
 3. Gere um `.env` local
 
-    ```bash
-    python contrib/env_gen.py
-    ```
+```bash
+python contrib/env_gen.py
+```
 
 
 4. Sincronize a base de dados:
 
-    ```bash
-    python manage.py migrate
-    ```
+```bash
+python manage.py migrate
+```
 
 5. Crie um usuário (Administrador do sistema):
 
-    ```bash
-    python manage.py createsuperuser
-    ```
+```bash
+python manage.py createsuperuser
+```
 
 6. Teste a instalação carregando o servidor de desenvolvimento (http://localhost:8000 no navegador):
 
-    ```bash
-    python manage.py runserver
-    ```
+```bash
+python manage.py runserver
+```
 
 ## Implementações
 

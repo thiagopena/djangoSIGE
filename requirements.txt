@@ -1,6 +1,6 @@
 https://github.com/thiagopena/geraldo/archive/master.zip
 https://github.com/thiagopena/PySIGNFe/archive/master.zip
-django>=2.1.9
+Django==3.1.7
 dj-database-url==0.5.*
 python-decouple==3.1
 pytz==2018.3
