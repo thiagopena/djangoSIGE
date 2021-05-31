@@ -1,0 +1,29 @@
+[tool.poetry]
+name = "djangosige"
+version = "0.1.0"
+description = "ERP em Django"
+authors = ["wfoschiera <wfoschiera@gmail.com>"]
+license = "AGPL"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+dj-database-url = "==0.5.*"
+python-decouple = "==3.1"
+pytz = "==2018.3"
+reportlab = "==3.4.*"
+six = "==1.11.*"
+cryptography = ">=2.3"
+lxml = "==4.2.*"
+pyopenssl = "==17.5.*"
+signxml = "==2.5.*"
+mock = "^4.0.3"
+flake8 = "^3.9.2"
+Django = "3.1.8"
+geraldo = {url = "https://github.com/thiagopena/geraldo/archive/master.zip"}
+pysignfe = {url = "https://github.com/thiagopena/PySIGNFe/archive/master.zip"}
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
