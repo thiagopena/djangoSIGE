@@ -16,41 +16,38 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 
 ## Instalação:
 
-0. Instalar as bibliotecas/pacotes (no Linux):
-
+1. Instalar as bibliotecas/pacotes (no Linux):
 ```bash
-sudo apt install -y libxml2 gcc python3-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip
-sudo apt update
+  sudo apt install -y libxml2 gcc python3-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip
+  sudo apt update
 ```
-
 1. Instalar dependências:
-
 ```bash
-pip install -r requirements.txt
+  pip install -r requirements.txt
 ```
+1. Certifique-se de que a versão Django é 3.1.8. Caso instale uma versão mais recente, receberá a mensagem de erro abaixo:
 
-2. Edite o conteúdo do arquivo **djangosige/configs/configs.py**
+  ```python
+django.core.exceptions.ImproperlyConfigured: 
+  ```
+1. Edite o conteúdo do arquivo **djangosige/configs/configs.py**
 
-3. Gere um `.env` local
+1.  Gere um `.env` local
 
 ```bash
 python contrib/env_gen.py
 ```
-
-
-4. Sincronize a base de dados:
+1. Sincronize a base de dados:
 
 ```bash
 python manage.py migrate
 ```
 
-5. Crie um usuário (Administrador do sistema):
-
+1. Crie um usuário (Administrador do sistema):
 ```bash
 python manage.py createsuperuser
 ```
-
-6. Teste a instalação carregando o servidor de desenvolvimento (http://localhost:8000 no navegador):
+1. Teste a instalação carregando o servidor de desenvolvimento (http://localhost:8000 no navegador):
 
 ```bash
 python manage.py runserver
