@@ -139,7 +139,6 @@ six = "*"
 [package.source]
 type = "url"
 url = "https://github.com/thiagopena/geraldo/archive/master.zip"
-
 [[package]]
 name = "gunicorn"
 version = "20.1.0"
@@ -264,7 +263,6 @@ python-versions = "*"
 [package.source]
 type = "url"
 url = "https://github.com/thiagopena/PySIGNFe/archive/master.zip"
-
 [[package]]
 name = "python-decouple"
 version = "3.1"
@@ -347,8 +345,8 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 
 [metadata]
 lock-version = "1.1"
-python-versions = "^3.6"
-content-hash = "954545267a52e57edfee95cad01b4bfe5e1482677cc3d5f219658f9fcbd2556a"
+python-versions = "3.6.13"
+content-hash = "45c558d99aa9955976e4249e39e47ad88274188789b4f7d8263ca5d597ef5314"
 
 [metadata.files]
 asgiref = [
