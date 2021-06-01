@@ -139,6 +139,7 @@ six = "*"
 [package.source]
 type = "url"
 url = "https://github.com/thiagopena/geraldo/archive/master.zip"
+
 [[package]]
 name = "gunicorn"
 version = "20.1.0"
@@ -213,6 +214,14 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "psycopg2"
+version = "2.8.6"
+description = "psycopg2 - Python-PostgreSQL Database Adapter"
+category = "main"
+optional = false
+python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*"
+
+[[package]]
 name = "pycodestyle"
 version = "2.7.0"
 description = "Python style guide checker"
@@ -263,6 +272,7 @@ python-versions = "*"
 [package.source]
 type = "url"
 url = "https://github.com/thiagopena/PySIGNFe/archive/master.zip"
+
 [[package]]
 name = "python-decouple"
 version = "3.1"
@@ -346,7 +356,7 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=1.2.3)", "pytest-flake8", "pyt
 [metadata]
 lock-version = "1.1"
 python-versions = "3.6.13"
-content-hash = "45c558d99aa9955976e4249e39e47ad88274188789b4f7d8263ca5d597ef5314"
+content-hash = "ce548549f3698a975ae6a195c0dd747545ce0e752e797ed3b277fcfd53c18a7c"
 
 [metadata.files]
 asgiref = [
@@ -539,6 +549,23 @@ pillow = [
     {file = "Pillow-8.2.0-pp37-pypy37_pp73-manylinux2010_x86_64.whl", hash = "sha256:22fd0f42ad15dfdde6c581347eaa4adb9a6fc4b865f90b23378aa7914895e120"},
     {file = "Pillow-8.2.0-pp37-pypy37_pp73-win32.whl", hash = "sha256:e98eca29a05913e82177b3ba3d198b1728e164869c613d76d0de4bde6768a50e"},
     {file = "Pillow-8.2.0.tar.gz", hash = "sha256:a787ab10d7bb5494e5f76536ac460741788f1fbce851068d73a87ca7c35fc3e1"},
+]
+psycopg2 = [
+    {file = "psycopg2-2.8.6-cp27-cp27m-win32.whl", hash = "sha256:068115e13c70dc5982dfc00c5d70437fe37c014c808acce119b5448361c03725"},
+    {file = "psycopg2-2.8.6-cp27-cp27m-win_amd64.whl", hash = "sha256:d160744652e81c80627a909a0e808f3c6653a40af435744de037e3172cf277f5"},
+    {file = "psycopg2-2.8.6-cp34-cp34m-win32.whl", hash = "sha256:b8cae8b2f022efa1f011cc753adb9cbadfa5a184431d09b273fb49b4167561ad"},
+    {file = "psycopg2-2.8.6-cp34-cp34m-win_amd64.whl", hash = "sha256:f22ea9b67aea4f4a1718300908a2fb62b3e4276cf00bd829a97ab5894af42ea3"},
+    {file = "psycopg2-2.8.6-cp35-cp35m-win32.whl", hash = "sha256:26e7fd115a6db75267b325de0fba089b911a4a12ebd3d0b5e7acb7028bc46821"},
+    {file = "psycopg2-2.8.6-cp35-cp35m-win_amd64.whl", hash = "sha256:00195b5f6832dbf2876b8bf77f12bdce648224c89c880719c745b90515233301"},
+    {file = "psycopg2-2.8.6-cp36-cp36m-win32.whl", hash = "sha256:a49833abfdede8985ba3f3ec641f771cca215479f41523e99dace96d5b8cce2a"},
+    {file = "psycopg2-2.8.6-cp36-cp36m-win_amd64.whl", hash = "sha256:f974c96fca34ae9e4f49839ba6b78addf0346777b46c4da27a7bf54f48d3057d"},
+    {file = "psycopg2-2.8.6-cp37-cp37m-win32.whl", hash = "sha256:6a3d9efb6f36f1fe6aa8dbb5af55e067db802502c55a9defa47c5a1dad41df84"},
+    {file = "psycopg2-2.8.6-cp37-cp37m-win_amd64.whl", hash = "sha256:56fee7f818d032f802b8eed81ef0c1232b8b42390df189cab9cfa87573fe52c5"},
+    {file = "psycopg2-2.8.6-cp38-cp38-win32.whl", hash = "sha256:ad2fe8a37be669082e61fb001c185ffb58867fdbb3e7a6b0b0d2ffe232353a3e"},
+    {file = "psycopg2-2.8.6-cp38-cp38-win_amd64.whl", hash = "sha256:56007a226b8e95aa980ada7abdea6b40b75ce62a433bd27cec7a8178d57f4051"},
+    {file = "psycopg2-2.8.6-cp39-cp39-win32.whl", hash = "sha256:2c93d4d16933fea5bbacbe1aaf8fa8c1348740b2e50b3735d1b0bf8154cbf0f3"},
+    {file = "psycopg2-2.8.6-cp39-cp39-win_amd64.whl", hash = "sha256:d5062ae50b222da28253059880a871dc87e099c25cb68acf613d9d227413d6f7"},
+    {file = "psycopg2-2.8.6.tar.gz", hash = "sha256:fb23f6c71107c37fd667cb4ea363ddeb936b348bbd6449278eb92c189699f543"},
 ]
 pycodestyle = [
     {file = "pycodestyle-2.7.0-py2.py3-none-any.whl", hash = "sha256:514f76d918fcc0b55c6680472f0a37970994e07bbb80725808c17089be302068"},
