@@ -4,11 +4,10 @@ Sistema Integrado de Gestão Empresarial baseado em Django
 
 Projeto independente open-source desenvolvido em Python 3 no Windows, testado no GNU/Linux e Windows.
 
-
 ## Dependências
 
-- [Python](https://www.python.org/downloads/) - Versão 3.5+
-- [django](http://www.djangoproject.com) == 3.1.7
+- [Python](https://www.python.org/downloads/) - Versão 3.6
+- [django](http://www.djangoproject.com) == 3.1.8
 - [geraldo](https://github.com/thiagopena/geraldo) - Geração de PDF para pedidos de venda/compra
 - [PySIGNFe](https://github.com/thiagopena/PySIGNFe) (Opcional) - Necessário para a geração de NF-e, NFC-e, comunicação com SEFAZ, geração do DANFE, etc.
 - [apache2](https://www.apache.org/) (Opcional)
@@ -18,27 +17,23 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 
 1. Instalar as bibliotecas/pacotes (no Linux):
 ```bash
-  sudo apt install -y libxml2 gcc python3-dev libxml2-dev libxslt1-dev zlib1g-dev python3-pip
-  sudo apt update
+  sudo apt-get install libxml2-dev libxslt1-dev python-lxml
 ```
 1. Instalar dependências:
 ```bash
-  pip install -r requirements.txt
+  poetry install
 ```
 1. Certifique-se de que a versão Django é 3.1.8. Caso instale uma versão mais recente, receberá a mensagem de erro abaixo:
-
   ```python
 django.core.exceptions.ImproperlyConfigured: 
   ```
 1. Edite o conteúdo do arquivo **djangosige/configs/configs.py**
 
 1.  Gere um `.env` local
-
 ```bash
-python contrib/env_gen.py
+cp contrib/env-sample .env
 ```
 1. Sincronize a base de dados:
-
 ```bash
 python manage.py migrate
 ```

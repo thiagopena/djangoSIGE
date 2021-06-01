@@ -1,0 +1,50 @@
+name: Python application
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:11.5
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        ports: ['5432:5432']
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.6
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.6
+    - name: Copying configurations
+      run: |
+        cp contrib/env-sample .env
+    - name: Install OS dependencies
+      run: |
+        sudo apt-get install libxml2-dev libxslt1-dev python-lxml
+    - name: Install dependencies
+      run: |
+        pip install poetry
+        poetry install
+    - name: Lint with flake8
+      run: |
+        poetry run flake8 .
+#    - name: Test with pytest
+#      run: |
+#        poetry run pytest djangosige --cov=djangosige --cov-report=xml
+#    - name: Posting Coverage
+#      uses: codecov/codecov-action@v1.0.12
+#      with:
+#        token: ${{ secrets.CODECOV_TOKEN }}
+#        fail_ci_if_error: false
+#        verbose: true
+#        file: ./coverage.xml
