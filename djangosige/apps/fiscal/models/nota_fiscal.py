@@ -8,7 +8,7 @@ from decimal import Decimal
 import os
 import re
 
-from djangosige.configs.settings import MEDIA_ROOT, APP_ROOT
+from djangosige.configs.settings import MEDIA_ROOT, BASE_DIR
 
 
 IND_PAG_ESCOLHAS = (
@@ -161,10 +161,10 @@ class NotaFiscal(models.Model):
     @property
     def caminho_proc_completo(self):
         if self.arquivo_proc:
-            if APP_ROOT in self.arquivo_proc.name:
+            if BASE_DIR in self.arquivo_proc.name:
                 return self.arquivo_proc.name
             else:
-                return os.path.join(APP_ROOT, self.arquivo_proc.url)
+                return os.path.join(BASE_DIR, self.arquivo_proc.url)
         else:
             return ''
 
