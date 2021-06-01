@@ -23,7 +23,7 @@ geraldo = {url = "https://github.com/thiagopena/geraldo/archive/master.zip"}
 pysignfe = {url = "https://github.com/thiagopena/PySIGNFe/archive/master.zip"}
 importlib-metadata = "^4.4.0"
 gunicorn = "^20.1.0"
-psycopg2 = "^2.8.6"
+psycopg2-binary = "^2.8.6"
 
 [tool.poetry.dev-dependencies]
 
