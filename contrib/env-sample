@@ -1,0 +1,4 @@
+DEBUG=True
+SECRET_KEY='DEV_LOCAL_SEM_SECRET'
+ALLOWED_HOSTS=localhost,127.0.0.1
+DATABASE_URL=postgres://postgres:postgres@localhost/testdb
