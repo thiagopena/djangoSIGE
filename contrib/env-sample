@@ -2,3 +2,14 @@ DEBUG=True
 SECRET_KEY='DEV_LOCAL_SEM_SECRET'
 ALLOWED_HOSTS=localhost,127.0.0.1
 DATABASE_URL=postgres://postgres:postgres@localhost/testdb
+SESSION_EXPIRE_AT_BROWSER_CLOSE=False
+#CLOUDINARY_URL='api_key.api_secret@cloudname' definir essa variavel apenas no Heroku
+
+#DATABASE_URL=postgres://USER:PASSWORD@HOST:PORT/NAME
+#DEFAULT_FROM_EMAIL=
+#EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+#EMAIL_HOST=
+#EMAIL_PORT=
+#EMAIL_USE_TLS=
+#EMAIL_HOST_USER=
+#EMAIL_HOST_PASSWORD=
