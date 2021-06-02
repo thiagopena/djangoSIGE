@@ -155,11 +155,11 @@ COLLECTFAST_ENABLED = False
 
 # Storage configuration in
 if CLOUDINARY_URL:
-    # CLOUDINARY_STORAGE = {    # pragma: no cover
-    #     'CLOUD_NAME': config('CLOUD_NAME'),
-    #     'API_KEY': config('API_KEY'),
-    #     'API_SECRET': config('API_SECRET')
-    # }
+    CLOUDINARY_STORAGE = {    # pragma: no cover
+        'CLOUD_NAME': config('CLOUD_NAME'),
+        'API_KEY': config('API_KEY'),
+        'API_SECRET': config('API_SECRET')
+    }
 
     # static assets
     STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'  # pragma: no cover
