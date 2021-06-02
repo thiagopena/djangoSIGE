@@ -28,6 +28,17 @@ DATABASES = {
     'default': config('DATABASE_URL', default=default_db_url, cast=parse_database)
 }
 
+SESSION_EXPIRE_AT_BROWSER_CLOSE = config('SESSION_EXPIRE_AT_BROWSER_CLOSE', cast=bool)
+
+LOGIN_NOT_REQUIRED = (
+    r'^/login/$',
+    r'/login/esqueceu/',
+    r'/login/trocarsenha/',
+    r'/logout/',
+)
+
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -36,7 +47,10 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
+    'collectfast',
     'django.contrib.staticfiles',
+    'cloudinary',
 
     # djangosige apps:
     'djangosige.apps.base',
@@ -123,25 +137,37 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 # Configurações do ambiente de desenvolvimento
-STATIC_URL = '/static/'
+STATIC_URL = '/sige/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = '/media/'
+MEDIA_URL = '/sige/media/'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
-
-# STATICFILES_DIRS = [
-    # BASE_DIR / 'static',
-# ]
-
-FIXTURE_DIRS = [
-    BASE_DIR / 'fixtures',
+# print(BASE_DIR / 'static')
+STATICFILES_DIRS = [
+    BASE_DIR / 'static/',
+    BASE_DIR / 'media/',
 ]
 
-SESSION_EXPIRE_AT_BROWSER_CLOSE = config('SESSION_EXPIRE_AT_BROWSER_CLOSE', cast=bool)
+FIXTURE_DIRS = [
+    BASE_DIR / 'fixtures/',
+]
 
-LOGIN_NOT_REQUIRED = (
-    r'^/login/$',
-    r'/login/esqueceu/',
-    r'/login/trocarsenha/',
-    r'/logout/',
-)
+CLOUDINARY_URL = config('CLOUDINARY_URL', default=False)
+
+COLLECTFAST_ENABLED = False
+
+# Storage configuration in
+if CLOUDINARY_URL:
+  # CLOUDINARY_STORAGE = {    # pragma: no cover
+  #     'CLOUD_NAME': config('CLOUD_NAME'),
+  #     'API_KEY': config('API_KEY'),
+  #     'API_SECRET': config('API_SECRET')
+  # }
+
+  # static assets
+  STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'  # pragma: no cover
+  ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'  # pragma: no cover
+
+  # Media assets
+  DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  # pragma: no cover
+  COLLECTFAST_ENABLED = True
