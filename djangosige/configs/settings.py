@@ -37,8 +37,6 @@ LOGIN_NOT_REQUIRED = (
     r'/logout/',
 )
 
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -138,15 +136,15 @@ USE_TZ = True
 
 # Configurações do ambiente de desenvolvimento
 STATIC_URL = '/sige/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = '/sige/media/'
-MEDIA_ROOT = BASE_DIR / 'mediafiles'
-# print(BASE_DIR / 'static')
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static/',
-#     BASE_DIR / 'media/',
-# ]
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# STATICFILES_DIRS = (
+#     BASE_DIR / 'static',
+#     BASE_DIR / 'media',
+# )
 
 FIXTURE_DIRS = [
     BASE_DIR / 'fixtures/',
@@ -158,16 +156,16 @@ COLLECTFAST_ENABLED = False
 
 # Storage configuration in
 if CLOUDINARY_URL:
-  # CLOUDINARY_STORAGE = {    # pragma: no cover
-  #     'CLOUD_NAME': config('CLOUD_NAME'),
-  #     'API_KEY': config('API_KEY'),
-  #     'API_SECRET': config('API_SECRET')
-  # }
+    # CLOUDINARY_STORAGE = {    # pragma: no cover
+    #     'CLOUD_NAME': config('CLOUD_NAME'),
+    #     'API_KEY': config('API_KEY'),
+    #     'API_SECRET': config('API_SECRET')
+    # }
 
-  # static assets
-  STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'  # pragma: no cover
-  ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'  # pragma: no cover
+    # static assets
+    STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'  # pragma: no cover
+    ADMIN_MEDIA_PREFIX = STATIC_URL + 'admin/'  # pragma: no cover
 
-  # Media assets
-  DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  # pragma: no cover
-  COLLECTFAST_ENABLED = True
+    # Media assets
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'  # pragma: no cover
+    COLLECTFAST_ENABLED = True
