@@ -122,20 +122,22 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
+# Configurações do ambiente de desenvolvimento
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'mediafiles'
+
+# STATICFILES_DIRS = [
+    # BASE_DIR / 'static',
+# ]
 
 FIXTURE_DIRS = [
     BASE_DIR / 'fixtures',
 ]
 
-MEDIA_ROOT = BASE_DIR / 'media/'
-MEDIA_URL = 'media/'
-
-SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+SESSION_EXPIRE_AT_BROWSER_CLOSE = config('SESSION_EXPIRE_AT_BROWSER_CLOSE', cast=bool)
 
 LOGIN_NOT_REQUIRED = (
     r'^/login/$',
