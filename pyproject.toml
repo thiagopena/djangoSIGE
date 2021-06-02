@@ -24,6 +24,9 @@ pysignfe = {url = "https://github.com/thiagopena/PySIGNFe/archive/master.zip"}
 importlib-metadata = "^4.4.0"
 gunicorn = "^20.1.0"
 psycopg2-binary = "^2.8.6"
+cloudinary = "^1.25.0"
+django-cloudinary-storage = "^0.3.0"
+Collectfast = "^2.2.0"
 
 [tool.poetry.dev-dependencies]
 
