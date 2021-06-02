@@ -136,15 +136,15 @@ USE_TZ = True
 
 # Configurações do ambiente de desenvolvimento
 STATIC_URL = '/sige/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+# STATIC_ROOT = BASE_DIR / 'static'
 
 MEDIA_URL = '/sige/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# STATICFILES_DIRS = (
-#     BASE_DIR / 'static',
-#     BASE_DIR / 'media',
-# )
+STATICFILES_DIRS = (
+     BASE_DIR / 'static',
+     BASE_DIR / 'media',
+)
 
 FIXTURE_DIRS = [
     BASE_DIR / 'fixtures/',
