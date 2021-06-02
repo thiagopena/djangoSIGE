@@ -142,8 +142,8 @@ MEDIA_URL = '/sige/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_DIRS = (
-     BASE_DIR / 'static',
-     BASE_DIR / 'media',
+    BASE_DIR / 'static',
+    BASE_DIR / 'media',
 )
 
 FIXTURE_DIRS = [
