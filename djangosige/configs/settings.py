@@ -143,10 +143,10 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/sige/media/'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
 # print(BASE_DIR / 'static')
-STATICFILES_DIRS = [
-    BASE_DIR / 'static/',
-    BASE_DIR / 'media/',
-]
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'static/',
+#     BASE_DIR / 'media/',
+# ]
 
 FIXTURE_DIRS = [
     BASE_DIR / 'fixtures/',
