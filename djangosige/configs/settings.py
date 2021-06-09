@@ -48,20 +48,42 @@ INSTALLED_APPS = [
 ]
 
 
+# Internationalization
+# https://docs.djangoproject.com/en/1.10/topics/i18n/
+
+# LANGUAGE_CODE = 'zh-Hans'
+LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'pt-br'
+
+LANGUAGES = (
+  # ('zh-hans', '中文简体'),
+  ('zh-Hans', '中文简体'),
+  ('en', 'English'),
+  ('pt-br', 'Portugal'),
+)
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
+
     # Middleware para paginas que exigem login
     'djangosige.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'djangosige.urls'
+
+LOCALE_PATHS = (
+    os.path.join(APP_ROOT, 'locale/'),
+)
+print(LOCALE_PATHS)
 
 TEMPLATES = [
     {
@@ -71,6 +93,7 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
+                'django.template.context_processors.i18n',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
@@ -105,14 +128,11 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-#LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'pt-br'
 
 #TIME_ZONE = 'UTC'
-TIME_ZONE = 'America/Sao_Paulo'
+TIME_ZONE = 'Asia/Shanghai'
+# TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
 
@@ -145,3 +165,4 @@ LOGIN_NOT_REQUIRED = (
     r'/login/trocarsenha/',
     r'/logout/',
 )
+
