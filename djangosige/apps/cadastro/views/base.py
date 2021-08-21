@@ -177,17 +177,17 @@ class EditarPessoaView(CustomUpdateView):
         email_form = EmailFormSet(instance=self.object, prefix='email_form')
         site_form = SiteFormSet(instance=self.object, prefix='site_form')
 
-        if Telefone.objects.filter(pessoa_tel=self.object.pk).count():
+        if Telefone.objects.filter(pessoa_tel=self.object.pk).exists():
             telefone_form.extra = 0
-        if Endereco.objects.filter(pessoa_end=self.object.pk).count():
+        if Endereco.objects.filter(pessoa_end=self.object.pk).exists():
             endereco_form.extra = 0
-        if Email.objects.filter(pessoa_email=self.object.pk).count():
+        if Email.objects.filter(pessoa_email=self.object.pk).exists():
             email_form.extra = 0
-        if Site.objects.filter(pessoa_site=self.object.pk).count():
+        if Site.objects.filter(pessoa_site=self.object.pk).exists():
             site_form.extra = 0
-        if Banco.objects.filter(pessoa_banco=self.object.pk).count():
+        if Banco.objects.filter(pessoa_banco=self.object.pk).exists():
             banco_form.extra = 0
-        if Documento.objects.filter(pessoa_documento=self.object.pk).count():
+        if Documento.objects.filter(pessoa_documento=self.object.pk).exists():
             documento_form.extra = 0
 
         formsets = [telefone_form, email_form, site_form]

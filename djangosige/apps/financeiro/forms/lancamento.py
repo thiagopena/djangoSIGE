@@ -24,14 +24,13 @@ class LancamentoForm(forms.ModelForm):
                 m_empresa = MinhaEmpresa.objects.get(
                     m_usuario=usuario).m_empresa
                 if m_empresa:
-                    if Banco.objects.filter(pessoa_banco=m_empresa).count():
-                        self.fields['conta_corrente'].choices = (
-                            (None, '----------'),)
+                    if Banco.objects.filter(pessoa_banco=m_empresa).exists():
+                        self.fields['conta_corrente'].choices = ((None, '----------'),)
                         self.fields['conta_corrente'].choices += (
-                            (conta.id, str(conta)) for conta in Banco.objects.filter(pessoa_banco=m_empresa))
+                            (conta.id, str(conta)) for conta in Banco.objects.filter(pessoa_banco=m_empresa)
+                        )
                     else:
-                        self.fields['conta_corrente'].choices = (
-                            (None, '----------'),)
+                        self.fields['conta_corrente'].choices = ((None, '----------'),)
             except:
                 self.fields['conta_corrente'].choices = ((None, '----------'),)
         else:
@@ -72,9 +71,11 @@ class EntradaForm(LancamentoForm):
         super(EntradaForm, self).__init__(*args, **kwargs)
         self.fields['status'].initial = '0'
 
-        if PlanoContasGrupo.objects.filter(tipo_grupo='1').count():
-            self.fields['grupo_plano'].choices = ((grupo.id, str(grupo.codigo) + ' - ' + str(
-                grupo.descricao)) for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='0'))
+        if PlanoContasGrupo.objects.filter(tipo_grupo='1').exists():
+            self.fields['grupo_plano'].choices = (
+                (grupo.id, str(grupo.codigo) + ' - ' + str(grupo.descricao))
+                for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='0')
+            )
         else:
             self.fields['grupo_plano'].choices = ((None, '----------'),)
 
@@ -96,9 +97,11 @@ class SaidaForm(LancamentoForm):
         super(SaidaForm, self).__init__(*args, **kwargs)
         self.fields['status'].initial = '0'
 
-        if PlanoContasGrupo.objects.filter(tipo_grupo='1').count():
-            self.fields['grupo_plano'].choices = ((grupo.id, str(grupo.codigo) + ' - ' + str(
-                grupo.descricao)) for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='1'))
+        if PlanoContasGrupo.objects.filter(tipo_grupo='1').exists():
+            self.fields['grupo_plano'].choices = (
+                (grupo.id, str(grupo.codigo) + ' - ' + str(grupo.descricao))
+                for grupo in PlanoContasGrupo.objects.filter(tipo_grupo='1')
+            )
         else:
             self.fields['grupo_plano'].choices = ((None, '----------'),)
 

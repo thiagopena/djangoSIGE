@@ -69,9 +69,8 @@ class IndexView(TemplateView):
         except (MovimentoCaixa.DoesNotExist, ObjectDoesNotExist):
             ultimo_mvmt = MovimentoCaixa.objects.filter(
                 data_movimento__lt=data_atual)
-            if ultimo_mvmt:
-                context['saldo'] = ultimo_mvmt.latest(
-                    'data_movimento').saldo_final
+            if ultimo_mvmt.exists():
+                context['saldo'] = ultimo_mvmt.latest('data_movimento').saldo_final
             else:
                 context['saldo'] = '0,00'
 

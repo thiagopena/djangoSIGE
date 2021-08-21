@@ -79,8 +79,7 @@ class EditarTransportadoraView(EditarPessoaView):
 
         veiculo_form = VeiculoFormSet(
             instance=self.object, prefix='veiculo_form')
-        if Veiculo.objects.filter(
-                transportadora_veiculo=self.object.pk).count():
+        if Veiculo.objects.filter(transportadora_veiculo=self.object.pk).exists():
             veiculo_form.extra = 0
 
         return super(

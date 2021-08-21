@@ -229,7 +229,7 @@ class EditarNotaFiscalSaidaView(EditarNotaFiscalView):
 
         aut_form = AutXMLFormSet(instance=self.object, prefix='aut_form')
 
-        if AutXML.objects.filter(nfe=self.object.pk).count():
+        if AutXML.objects.filter(nfe=self.object.pk).exists():
             aut_form.extra = 0
 
         errors_validacao = ErrosValidacaoNotaFiscal.objects.filter(

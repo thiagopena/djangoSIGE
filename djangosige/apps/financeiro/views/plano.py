@@ -57,7 +57,7 @@ class PlanoContasView(CustomTemplateView):
                     else:
                         id_list = []
                         for g in PlanoContasGrupo.objects.filter(tipo_grupo=tipo):
-                            if not PlanoContasSubgrupo.objects.filter(id=g.id).count():
+                            if not PlanoContasSubgrupo.objects.filter(id=g.id).exists():
                                 id_list.append(g.id)
 
                         for i, obj in enumerate(PlanoContasGrupo.objects.filter(pk__in=id_list), start=1):

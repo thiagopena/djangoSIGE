@@ -1219,11 +1219,17 @@ class ProcessadorNotaFiscal(object):
                 e.descricao = alerta_nf
                 e.save()
 
-        if ErrosValidacaoNotaFiscal.objects.filter(nfe=nota_obj).filter(tipo='0').count():
-            nota_obj.status_nfe = u'3'
-            return self.salvar_mensagem(message='Erros de validação encontrados. Verifique a tab \"Validação\" para mais detalhes.', erro=True)
+        if ErrosValidacaoNotaFiscal.objects.filter(nfe=nota_obj).filter(tipo='0').exists():
+            nota_obj.status_nfe = '3'
+            return self.salvar_mensagem(
+                message=(
+                    'Erros de validação encontrados. Verifique a tab 'Validação' para mais'
+                    ' detalhes.'
+                ),
+                erro=True,
+            )
         else:
-            nota_obj.status_nfe = u'6'
+            nota_obj.status_nfe = '6'
             nota_obj.save()
             return self.salvar_mensagem(message='XML Validado', erro=False)
 

@@ -40,6 +40,4 @@ class Migration(migrations.Migration):
         ('estoque', '0001_initial'),
     ]
 
-    operations = [
-        migrations.RunPython(load_fixture),
-    ]
+    operations = [migrations.RunPython(load_fixture, migrations.RunPython.noop)]

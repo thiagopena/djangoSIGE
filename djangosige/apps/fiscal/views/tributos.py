@@ -160,25 +160,23 @@ class EditarGrupoFiscalView(CustomUpdateView):
             icmssn_form = ICMSSNForm(
                 grupo_fiscal=self.object, prefix='icmssn_form')
 
-        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
-            icms_dest_form = ICMSUFDestForm(
-                grupo_fiscal=self.object, prefix='icms_dest_form')
+        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).exists():
+            icms_dest_form = ICMSUFDestForm(grupo_fiscal=self.object, prefix='icms_dest_form')
         else:
             icms_dest_form = ICMSUFDestForm(prefix='icms_dest_form')
 
-        if IPI.objects.filter(grupo_fiscal=self.object).count():
+        if IPI.objects.filter(grupo_fiscal=self.object).exists():
             ipi_form = IPIForm(grupo_fiscal=self.object, prefix='ipi_form')
         else:
             ipi_form = IPIForm(prefix='ipi_form')
 
-        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
+        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).exists():
             pis_form = PISForm(grupo_fiscal=self.object, prefix='pis_form')
         else:
             pis_form = PISForm(prefix='pis_form')
 
-        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
-            cofins_form = COFINSForm(
-                grupo_fiscal=self.object, prefix='cofins_form')
+        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).exists():
+            cofins_form = COFINSForm(grupo_fiscal=self.object, prefix='cofins_form')
         else:
             cofins_form = COFINSForm(prefix='cofins_form')
 
@@ -203,28 +201,27 @@ class EditarGrupoFiscalView(CustomUpdateView):
         form_class = self.get_form_class()
         form = form_class(request.POST, instance=self.object)
 
-        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
+        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).exists():
             icms_dest_form = ICMSUFDestForm(
-                request.POST, prefix='icms_dest_form', grupo_fiscal=self.object)
+                request.POST, prefix='icms_dest_form', grupo_fiscal=self.object
+            )
         else:
-            icms_dest_form = ICMSUFDestForm(
-                request.POST, prefix='icms_dest_form')
+            icms_dest_form = ICMSUFDestForm(request.POST, prefix='icms_dest_form')
 
-        if IPI.objects.filter(grupo_fiscal=self.object).count():
-            ipi_form = IPIForm(request.POST, prefix='ipi_form',
-                               grupo_fiscal=self.object)
+        if IPI.objects.filter(grupo_fiscal=self.object).exists():
+            ipi_form = IPIForm(request.POST, prefix='ipi_form', grupo_fiscal=self.object)
         else:
             ipi_form = IPIForm(request.POST, prefix='ipi_form')
 
-        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
-            pis_form = PISForm(request.POST, prefix='pis_form',
-                               grupo_fiscal=self.object)
+        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).exists():
+            pis_form = PISForm(request.POST, prefix='pis_form', grupo_fiscal=self.object)
         else:
             pis_form = PISForm(request.POST, prefix='pis_form')
 
-        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).count():
+        if ICMSUFDest.objects.filter(grupo_fiscal=self.object).exists():
             cofins_form = COFINSForm(
-                request.POST, prefix='cofins_form', grupo_fiscal=self.object)
+                request.POST, prefix='cofins_form', grupo_fiscal=self.object
+            )
         else:
             cofins_form = COFINSForm(request.POST, prefix='cofins_form')
 
