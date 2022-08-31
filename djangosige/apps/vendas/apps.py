@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class VendasConfig(AppConfig):
-    name = 'vendas'
+    name = 'djangosige.apps.vendas'

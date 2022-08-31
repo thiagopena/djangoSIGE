@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from django.conf.urls import url
+from django.urls import re_path as url
 from . import views
 
-app_name = 'fiscal'
+app_name = 'djangosige.apps.fiscal'
 urlpatterns = [
     # Nota fiscal saida
     # fiscal/notafiscal/saida/adicionar/
