@@ -2,7 +2,7 @@ https://github.com/thiagopena/geraldo/archive/master.zip
 https://github.com/thiagopena/PySIGNFe/archive/master.zip
 Django>=4
 dj-database-url>=0.5.*
-python-decouple>=3.1
+python-decouple>=4.0
 pytz>=2022.1
 reportlab==3.4.*
 six==1.11.*

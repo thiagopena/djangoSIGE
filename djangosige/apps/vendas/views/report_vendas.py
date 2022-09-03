@@ -49,7 +49,7 @@ class TopoPagina(ReportBand):
         self.elements.append(txt)
 
         txt = SystemField(expression='Página %(page_number)s de %(last_page_number)s',
-                          top=3.1 * cm, left=0 * cm, width=19.4 * cm, height=0.5 * cm)
+                          top=4.0 * cm, left=0 * cm, width=19.4 * cm, height=0.5 * cm)
         txt.style = {'fontName': REPORT_FONT, 'fontSize': 8.5,
                      'alignment': TA_RIGHT, 'leading': 8.5}
         self.elements.append(txt)

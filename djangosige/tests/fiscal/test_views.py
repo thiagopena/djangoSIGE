@@ -88,7 +88,7 @@ class FiscalAdicionarViewsTestCase(BaseTestCase):
         dhatual = timezone.now().strftime('%d/%m/%Y %H:%M')
 
         data = {
-            'versao': '3.10',
+            'versao': '4.00',
             'natop': 'Natureza qualquer',
             'indpag': '0',
             'mod': '55',
