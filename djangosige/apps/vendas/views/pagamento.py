@@ -14,7 +14,7 @@ from djangosige.apps.vendas.models import CondicaoPagamento
 class AdicionarCondicaoPagamentoView(CustomCreateView):
     form_class = CondicaoPagamentoForm
     template_name = "vendas/pagamento/condicao_pagamento_add.html"
-    success_url = reverse_lazy('vendas:listacondicaopagamentoview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listacondicaopagamentoview')
     success_message = "Condição de pagamento <b>%(descricao)s </b>adicionada com sucesso."
     permission_codename = 'add_condicaopagamento'
 
@@ -26,7 +26,7 @@ class AdicionarCondicaoPagamentoView(CustomCreateView):
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'ADICIONAR CONDIÇÃO DE PAGAMENTO'
         context['return_url'] = reverse_lazy(
-            'vendas:listacondicaopagamentoview')
+            'djangosige.apps.vendas:listacondicaopagamentoview')
         return context
 
 
@@ -34,14 +34,14 @@ class CondicaoPagamentoListView(CustomListView):
     template_name = 'vendas/pagamento/condicao_pagamento_list.html'
     model = CondicaoPagamento
     context_object_name = 'all_cond_pagamento'
-    success_url = reverse_lazy('vendas:listacondicaopagamentoview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listacondicaopagamentoview')
     permission_codename = 'view_condicaopagamento'
 
     def get_context_data(self, **kwargs):
         context = super(CondicaoPagamentoListView,
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'CONDIÇÕES DE PAGAMENTO CADASTRADAS'
-        context['add_url'] = reverse_lazy('vendas:addcondicaopagamentoview')
+        context['add_url'] = reverse_lazy('djangosige.apps.vendas:addcondicaopagamentoview')
         return context
 
 
@@ -49,7 +49,7 @@ class EditarCondicaoPagamentoView(CustomUpdateView):
     form_class = CondicaoPagamentoForm
     model = CondicaoPagamento
     template_name = "vendas/pagamento/condicao_pagamento_edit.html"
-    success_url = reverse_lazy('vendas:listacondicaopagamentoview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listacondicaopagamentoview')
     success_message = "Condição de pagamento <b>%(descricao)s </b>editada com sucesso."
     permission_codename = 'change_condicaopagamento'
 
@@ -60,7 +60,7 @@ class EditarCondicaoPagamentoView(CustomUpdateView):
         context = super(EditarCondicaoPagamentoView,
                         self).get_context_data(**kwargs)
         context['return_url'] = reverse_lazy(
-            'vendas:listacondicaopagamentoview')
+            'djangosige.apps.vendas:listacondicaopagamentoview')
         return context
 
 

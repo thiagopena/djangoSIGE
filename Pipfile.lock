@@ -63,7 +63,7 @@
                 "sha256:ec2fa3ee81707a5232bf2dfbd6623fdb278e070d596effc7e2d788f2ada71a05",
                 "sha256:fd82eb4694be712fcae03c717ca2e0fc720657ac226b80bbb597e971fc6928c2"
             ],
-            "version": "==1.13.1"
+            "version": "==1.14.0"
         },
         "cryptography": {
             "hashes": [
@@ -210,7 +210,7 @@
                 "sha256:1317df14b43efee4337a4aa02914bf004f010cd56d6c4bd894e6474ec8c4fe2d"
             ],
             "index": "pypi",
-            "version": "==3.1"
+            "version": "==4.0"
         },
         "pytz": {
             "hashes": [

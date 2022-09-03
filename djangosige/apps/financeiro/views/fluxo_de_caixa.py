@@ -12,7 +12,7 @@ from datetime import datetime
 
 class FluxoCaixaView(CustomListView):
     template_name = "financeiro/fluxo_de_caixa/fluxo.html"
-    success_url = reverse_lazy('financeiro:fluxodecaixaview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:fluxodecaixaview')
     context_object_name = 'movimentos'
     permission_codename = 'acesso_fluxodecaixa'
 

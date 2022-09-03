@@ -25,10 +25,10 @@
                   <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Adicionar
                   <span class="caret"></span></button>
                   <ul class="dropdown-menu pull-right">
-                    <li><a href="{% url 'financeiro:addpagamentoview' %}">Pagamento</a></li>
-                    <li><a href="{% url 'financeiro:addcontapagarview' %}">Conta a pagar</a></li>
-                    <li><a href="{% url 'financeiro:addrecebimentoview' %}">Recebimento</a></li>
-                    <li><a href="{% url 'financeiro:addcontareceberview' %}">Conta a receber</a></li>
+                    <li><a href="{% url 'djangosige.apps.financeiro:addpagamentoview' %}">Pagamento</a></li>
+                    <li><a href="{% url 'djangosige.apps.financeiro:addcontapagarview' %}">Conta a pagar</a></li>
+                    <li><a href="{% url 'djangosige.apps.financeiro:addrecebimentoview' %}">Recebimento</a></li>
+                    <li><a href="{% url 'djangosige.apps.financeiro:addcontareceberview' %}">Conta a receber</a></li>
                   </ul>
                 </div>
                 {% endif %}
@@ -82,7 +82,7 @@
 
   <script type="text/javascript">
     var req_urls = {}
-    req_urls.gerar_lancamento_url = "{% url 'financeiro:gerarlancamento' %}"
+    req_urls.gerar_lancamento_url = "{% url 'djangosige.apps.financeiro:gerarlancamento' %}"
 
     $.Admin.maskInput.maskLancamento();
     $.Admin.lancamentoList.init(req_urls);

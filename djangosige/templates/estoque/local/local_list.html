@@ -40,7 +40,7 @@
               <tbody>
                {% if all_locais%}
                {% for local in all_locais %}
-               <tr class="clickable-row popup" href="{% url 'estoque:editarlocalview' local.id %}">
+               <tr class="clickable-row popup" href="{% url 'djangosige.apps.estoque:editarlocalview' local.id %}">
                 <td>{{local.id}}</td>
                 <td>{{local.descricao}}</td>
                 <td class="lista-remove">

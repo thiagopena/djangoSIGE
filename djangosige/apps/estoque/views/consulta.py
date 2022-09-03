@@ -10,7 +10,7 @@ from djangosige.apps.estoque.models import LocalEstoque
 
 class ConsultaEstoqueView(CustomListView):
     template_name = "estoque/consulta/consulta_estoque.html"
-    success_url = reverse_lazy('estoque:consultaestoqueview')
+    success_url = reverse_lazy('djangosige.apps.estoque:consultaestoqueview')
     context_object_name = 'produtos_filtrados'
     permission_codename = 'consultar_estoque'
 

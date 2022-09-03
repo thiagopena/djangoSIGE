@@ -20,7 +20,7 @@
               CATEGORIAS CADASTRADAS
             </h2>
               <div class="header-btn">
-                <a href="{% url 'cadastro:addcategoriaview' %}" class="btn btn-success popup" title="Adicionar categoria"><i class="material-icons">&#xE148;</i><span> ADICIONAR</span></a>
+                <a href="{% url 'djangosige.apps.cadastro:addcategoriaview' %}" class="btn btn-success popup" title="Adicionar categoria"><i class="material-icons">&#xE148;</i><span> ADICIONAR</span></a>
                 <button class="btn btn-red btn-remove"><i class="material-icons">&#xE872;</i></button>
               </div>
           </div>
@@ -42,7 +42,7 @@
               <tbody>
                {% if all_categorias%}
                {% for categoria in all_categorias %}
-               <tr class="clickable-row popup" href="{% url 'cadastro:editarcategoriaview' categoria.id %}">
+               <tr class="clickable-row popup" href="{% url 'djangosige.apps.cadastro:editarcategoriaview' categoria.id %}">
                 <td>{{categoria.id}}</td>
                 <td>{{categoria.categoria_desc}}</td>
                 <td class="lista-remove">

@@ -10,9 +10,9 @@
 
  <script type="text/javascript">
     var req_urls = {}
-    req_urls.info_cliente_url = "{% url 'cadastro:infocliente' %}"
-    req_urls.info_transportadora_url = "{% url 'cadastro:infotransportadora' %}"
-    req_urls.info_produto_url = "{% url 'cadastro:infoproduto' %}"
-    req_urls.info_pagamento_url = "{% url 'vendas:infocondpagamento' %}"
+    req_urls.info_cliente_url = "{% url 'djangosige.apps.cadastro:infocliente' %}"
+    req_urls.info_transportadora_url = "{% url 'djangosige.apps.cadastro:infotransportadora' %}"
+    req_urls.info_produto_url = "{% url 'djangosige.apps.cadastro:infoproduto' %}"
+    req_urls.info_pagamento_url = "{% url 'djangosige.apps.vendas:infocondpagamento' %}"
     $.Admin.vendaForm.init(req_urls);
   </script>

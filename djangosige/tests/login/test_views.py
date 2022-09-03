@@ -12,7 +12,7 @@ from django.db.models import Q
 class UserFormViewTestCase(BaseTestCase):
 
     def test_user_logged_in_redirect(self):
-        url = reverse('login:loginview')
+        url = reverse('djangosige.apps.login:loginview')
 
         # Assert login redirect se usuario logado
         response = self.client.get(url)
@@ -25,7 +25,7 @@ class UserFormViewTestCase(BaseTestCase):
         self.assertTemplateUsed(response, 'login/login.html')
 
     def test_user_login(self):
-        url = reverse('login:loginview')
+        url = reverse('djangosige.apps.login:loginview')
         self.client.logout()
         data = {
             'username': TEST_USERNAME,
@@ -39,7 +39,7 @@ class UserFormViewTestCase(BaseTestCase):
 class UserRegistrationFormViewTestCase(BaseTestCase):
 
     def test_registration_view_get_request(self):
-        url = reverse('login:registrarview')
+        url = reverse('djangosige.apps.login:registrarview')
         self.user.is_superuser = True
         self.user.save()
         self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
@@ -49,7 +49,7 @@ class UserRegistrationFormViewTestCase(BaseTestCase):
         self.assertTemplateUsed(response, 'login/registrar.html')
 
     def test_user_registration(self):
-        url = reverse('login:registrarview')
+        url = reverse('djangosige.apps.login:registrarview')
         self.user.is_superuser = True
         self.user.save()
         self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
@@ -76,7 +76,7 @@ class UserRegistrationFormViewTestCase(BaseTestCase):
             response, 'form', 'password', 'Senhas diferentes.')
 
     def test_superuser_required(self):
-        url = reverse('login:registrarview')
+        url = reverse('djangosige.apps.login:registrarview')
         # Assert usuario redirect para index se nao e administrador
         self.user.is_superuser = False
         self.user.save()
@@ -89,7 +89,7 @@ class UserRegistrationFormViewTestCase(BaseTestCase):
 class UserLogoutViewTestCase(BaseTestCase):
 
     def test_user_logout_redirect(self):
-        url = reverse('login:logoutview')
+        url = reverse('djangosige.apps.login:logoutview')
         response = self.client.get(url)
         self.assertEqual(response.url, '/login/')
 
@@ -97,7 +97,7 @@ class UserLogoutViewTestCase(BaseTestCase):
 class ForgotPasswordViewTestCase(BaseTestCase):
 
     def test_forgot_view_get_request(self):
-        url = reverse('login:esqueceuview')
+        url = reverse('djangosige.apps.login:esqueceuview')
 
         # Assert login redirect se usuario logado
         response = self.client.get(url)
@@ -113,7 +113,7 @@ class ForgotPasswordViewTestCase(BaseTestCase):
 class MeuPerfilViewTestCase(BaseTestCase):
 
     def test_perfil_get_request(self):
-        url = reverse('login:perfilview')
+        url = reverse('djangosige.apps.login:perfilview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
@@ -121,7 +121,7 @@ class MeuPerfilViewTestCase(BaseTestCase):
 class EditarPerfilViewTestCase(BaseTestCase):
 
     def test_editar_perfil_view(self):
-        url = reverse('login:editarperfilview')
+        url = reverse('djangosige.apps.login:editarperfilview')
         m_empresa = Empresa.objects.create()
         usuario = Usuario.objects.get(user=self.user)
 
@@ -147,7 +147,7 @@ class EditarPerfilViewTestCase(BaseTestCase):
 class SelecionarMinhaEmpresaViewTestCase(BaseTestCase):
 
     def test_selecionar_empresa_view(self):
-        url = reverse('login:selecionarempresaview')
+        url = reverse('djangosige.apps.login:selecionarempresaview')
         m_empresa = Empresa.objects.create()
         usuario = Usuario.objects.get(user=self.user)
         MinhaEmpresa.objects.filter(m_usuario=usuario).delete()
@@ -181,7 +181,7 @@ class SelecionarMinhaEmpresaViewTestCase(BaseTestCase):
 class UsuariosListViewTestCase(BaseTestCase):
 
     def test_deletar_usuario(self):
-        url = reverse('login:usuariosview')
+        url = reverse('djangosige.apps.login:usuariosview')
         self.user.is_superuser = True
         self.user.save()
         self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
@@ -205,7 +205,7 @@ class UsuariosListViewTestCase(BaseTestCase):
 class UsuarioDetailViewTestCase(BaseTestCase):
 
     def test_usuario_detail_get_request(self):
-        url = reverse('login:usuariodetailview', kwargs={'pk': self.user.pk})
+        url = reverse('djangosige.apps.login:usuariodetailview', kwargs={'pk': self.user.pk})
         self.user.is_superuser = True
         self.user.save()
         self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)
@@ -219,7 +219,7 @@ class DeletarUsuarioViewTestCase(BaseTestCase):
 
     def test_deletar_usuario_view(self):
         new_user = User.objects.create()
-        url = reverse('login:deletarusuarioview', kwargs={'pk': new_user.pk})
+        url = reverse('djangosige.apps.login:deletarusuarioview', kwargs={'pk': new_user.pk})
         self.user.is_superuser = True
         self.user.save()
         self.client.login(username=TEST_USERNAME, password=TEST_PASSWORD)

@@ -27,7 +27,7 @@
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="row" style="border-bottom: 1px solid #afabab;margin-bottom: 17px;">
               <h4 style="border-bottom: 1px solid #afabab;">Filtrar</h4>
-              <form role="form" action="{% url 'estoque:consultaestoqueview' %}" method="get">
+              <form role="form" action="{% url 'djangosige.apps.estoque:consultaestoqueview' %}" method="get">
               {% csrf_token %}
                 <div class="col-sm-5">
                   <div class="form-group">
@@ -36,7 +36,7 @@
                       <select class="form-control" id="produto_id" name="produto">
                         <option value="">Todos</option>
                       {% for produto in todos_produtos %}
-                          <option value="{{ produto.id }}" {% ifequal produto.id|stringformat:"s" request.GET.produto %}selected{% endifequal %}>{{ produto }}</option>
+                          <option value="{{ produto.id }}" {% if produto.id|stringformat:"s" == request.GET.produto %}selected{% endif %}>{{ produto }}</option>
                       {% endfor %}
                       </select>
                     </div>
@@ -50,7 +50,7 @@
                       <select class="form-control" id="local_id" name="local">
                         <option value="">Todos</option>
                       {% for local in todos_locais %}
-                          <option value="{{ local.id }}" {% ifequal local.id|stringformat:"s" request.GET.local %}selected{% endifequal %}>{{ local }}</option>
+                          <option value="{{ local.id }}" {% if local.id|stringformat:"s" == request.GET.local %}selected{% endif %}>{{ local }}</option>
                       {% endfor %}
                       </select>
                     </div>

@@ -15,7 +15,7 @@
     <tbody>
      {% if all_entradas %}
      {% for entrada in all_entradas %}
-     <tr class="clickable-row" data-href="{% url 'financeiro:editarrecebimentoview' entrada.id %}">
+     <tr class="clickable-row" data-href="{% url 'djangosige.apps.financeiro:editarrecebimentoview' entrada.id %}">
       <td>{{entrada.id}}</td>
       <td>{{entrada.descricao}}</td>
       <td>{{entrada.format_data_pagamento|default_if_none:""}}</td>

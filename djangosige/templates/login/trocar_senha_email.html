@@ -1,5 +1,5 @@
 Mensagem de recuperação de senha. Esta mensagem foi enviada pois ocorreu uma solicitação de troca de senha em seu DjangoSIGE.
 Abra o link abaixo e defina uma nova senha:
-{{protocol}}{{domain}}{% url 'login:trocarsenhaview' uidb64=uid token=token %}
+{{protocol}}{{domain}}{% url 'djangosige.apps.login:trocarsenhaview' uidb64=uid token=token %}
 
 Seu nome de usuário é: {{user}}

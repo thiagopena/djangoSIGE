@@ -7,15 +7,15 @@ verify_ssl = true
 
 [packages]
 django = ">=2.1.6"
-dj-database-url = "==0.5.*"
-python-decouple = "==3.1"
-pytz = "==2018.3"
-reportlab = "==3.4.*"
-six = "==1.11.*"
+dj-database-url = ">=0.5.*"
+python-decouple = ">=4.0"
+pytz = ">=2018.3"
+reportlab = ">=3.4.*"
+six = ">=1.11.*"
 cryptography = ">=2.3"
-lxml = "==4.2.*"
-pyopenssl = "==17.5.*"
-signxml = "==2.5.*"
+lxml = ">=4.2.*"
+pyopenssl = ">=17.5.*"
+signxml = ">=2.5.*"
 
 [requires]
-python_version = "3.6"
+python_version = "4.00"

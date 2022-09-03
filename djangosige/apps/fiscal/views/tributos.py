@@ -13,7 +13,7 @@ from djangosige.apps.login.models import Usuario
 class AdicionarGrupoFiscalView(CustomCreateView):
     form_class = GrupoFiscalForm
     template_name = "fiscal/grupo_fiscal/grupo_fiscal_add.html"
-    success_url = reverse_lazy('fiscal:listagrupofiscalview')
+    success_url = reverse_lazy('djangosige.apps.fiscal:listagrupofiscalview')
     success_message = "Grupo fiscal <b>%(descricao)s </b>adicionado com sucesso."
     permission_codename = 'add_grupofiscal'
 
@@ -24,7 +24,7 @@ class AdicionarGrupoFiscalView(CustomCreateView):
         context = super(AdicionarGrupoFiscalView,
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'ADICIONAR GRUPO FISCAL'
-        context['return_url'] = reverse_lazy('fiscal:listagrupofiscalview')
+        context['return_url'] = reverse_lazy('djangosige.apps.fiscal:listagrupofiscalview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -121,13 +121,13 @@ class GrupoFiscalListView(CustomListView):
     template_name = 'fiscal/grupo_fiscal/grupo_fiscal_list.html'
     model = GrupoFiscal
     context_object_name = 'all_grupos'
-    success_url = reverse_lazy('fiscal:listagrupofiscalview')
+    success_url = reverse_lazy('djangosige.apps.fiscal:listagrupofiscalview')
     permission_codename = 'view_grupofiscal'
 
     def get_context_data(self, **kwargs):
         context = super(GrupoFiscalListView, self).get_context_data(**kwargs)
         context['title_complete'] = 'GRUPOS FISCAIS CADASTRADOS'
-        context['add_url'] = reverse_lazy('fiscal:addgrupofiscalview')
+        context['add_url'] = reverse_lazy('djangosige.apps.fiscal:addgrupofiscalview')
         return context
 
 
@@ -135,7 +135,7 @@ class EditarGrupoFiscalView(CustomUpdateView):
     form_class = GrupoFiscalForm
     model = GrupoFiscal
     template_name = "fiscal/grupo_fiscal/grupo_fiscal_edit.html"
-    success_url = reverse_lazy('fiscal:listagrupofiscalview')
+    success_url = reverse_lazy('djangosige.apps.fiscal:listagrupofiscalview')
     success_message = "Grupo fiscal <b>%(descricao)s </b>editado com sucesso."
     permission_codename = 'change_grupofiscal'
 
@@ -144,7 +144,7 @@ class EditarGrupoFiscalView(CustomUpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(EditarGrupoFiscalView, self).get_context_data(**kwargs)
-        context['return_url'] = reverse_lazy('fiscal:listagrupofiscalview')
+        context['return_url'] = reverse_lazy('djangosige.apps.fiscal:listagrupofiscalview')
         return context
 
     def get(self, request, *args, **kwargs):

@@ -55,7 +55,7 @@ class CadastroAdicionarViewsTestCase(BaseTestCase):
     def test_add_views_get_request(self):
         for model in CADASTRO_MODELS:
             model_name = model.__name__.lower()
-            url = reverse('cadastro:add{}view'.format(model_name))
+            url = reverse('djangosige.apps.cadastro:add{}view'.format(model_name))
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
 
@@ -67,7 +67,7 @@ class CadastroAdicionarViewsTestCase(BaseTestCase):
     def test_add_pessoa_post_request(self):
         for model in PESSOA_MODELS:
             model_name = model.__name__.lower()
-            url = reverse('cadastro:add{}view'.format(model_name))
+            url = reverse('djangosige.apps.cadastro:add{}view'.format(model_name))
             pessoa_data = {
                 '{}_form-nome_razao_social'.format(model_name): 'Razao Social Qualquer',
                 '{}_form-tipo_pessoa'.format(model_name): 'PJ',
@@ -99,7 +99,7 @@ class CadastroAdicionarViewsTestCase(BaseTestCase):
                 response, 'form', 'nome_razao_social', 'Este campo é obrigatório.')
 
     def test_add_produto_post_request(self):
-        url = reverse('cadastro:addprodutoview')
+        url = reverse('djangosige.apps.cadastro:addprodutoview')
         produto_data = {
             'codigo': '000000000000010',
             'descricao': 'Produto Teste',
@@ -124,7 +124,7 @@ class CadastroAdicionarViewsTestCase(BaseTestCase):
                              'Este campo é obrigatório.')
 
     def test_add_categoria_post_request(self):
-        url = reverse('cadastro:addcategoriaview')
+        url = reverse('djangosige.apps.cadastro:addcategoriaview')
         data = {
             'categoria_desc': 'Categoria Teste',
         }
@@ -139,7 +139,7 @@ class CadastroAdicionarViewsTestCase(BaseTestCase):
             response, 'form', 'categoria_desc', 'Este campo é obrigatório.')
 
     def test_add_marca_post_request(self):
-        url = reverse('cadastro:addmarcaview')
+        url = reverse('djangosige.apps.cadastro:addmarcaview')
         data = {
             'marca_desc': 'Marca Teste',
         }
@@ -154,7 +154,7 @@ class CadastroAdicionarViewsTestCase(BaseTestCase):
                              'Este campo é obrigatório.')
 
     def test_add_unidade_post_request(self):
-        url = reverse('cadastro:addunidadeview')
+        url = reverse('djangosige.apps.cadastro:addunidadeview')
         data = {
             'sigla_unidade': 'UNT',
             'unidade_desc': 'Unidade Teste',
@@ -176,14 +176,14 @@ class CadastroListarViewsTestCase(BaseTestCase):
         for model in CADASTRO_MODELS:
             model_name = model.__name__.lower()
             if model_name == 'fornecedor':
-                url = reverse('cadastro:listafornecedoresview')
+                url = reverse('djangosige.apps.cadastro:listafornecedoresview')
             else:
-                url = reverse('cadastro:lista{}sview'.format(model_name))
+                url = reverse('djangosige.apps.cadastro:lista{}sview'.format(model_name))
 
             obj = model.objects.create()
             self.check_list_view_delete(url=url, deleted_object=obj)
 
-        url = reverse('cadastro:listaprodutosbaixoestoqueview')
+        url = reverse('djangosige.apps.cadastro:listaprodutosbaixoestoqueview')
         obj = Produto.objects.create()
         self.check_list_view_delete(url=url, deleted_object=obj)
 
@@ -195,7 +195,7 @@ class CadastroEditarViewsTestCase(BaseTestCase):
             # Buscar objeto qualquer
             model_name = model.__name__.lower()
             obj = model.objects.order_by('pk').last()
-            url = reverse('cadastro:editar{}view'.format(model_name),
+            url = reverse('djangosige.apps.cadastro:editar{}view'.format(model_name),
                           kwargs={'pk': obj.pk})
             response = self.client.get(url)
             self.assertEqual(response.status_code, 200)
@@ -227,7 +227,7 @@ class CadastroEditarViewsTestCase(BaseTestCase):
     def test_edit_produto_get_post_request(self):
         # Buscar objeto qualquer
         obj = Produto.objects.order_by('pk').last()
-        url = reverse('cadastro:editarprodutoview',
+        url = reverse('djangosige.apps.cadastro:editarprodutoview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -241,7 +241,7 @@ class CadastroEditarViewsTestCase(BaseTestCase):
     def test_edit_categoria_get_post_request(self):
         # Buscar objeto qualquer
         obj = Categoria.objects.order_by('pk').last()
-        url = reverse('cadastro:editarcategoriaview',
+        url = reverse('djangosige.apps.cadastro:editarcategoriaview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -259,7 +259,7 @@ class CadastroEditarViewsTestCase(BaseTestCase):
     def test_edit_marca_get_post_request(self):
         # Buscar objeto qualquer
         obj = Marca.objects.order_by('pk').last()
-        url = reverse('cadastro:editarmarcaview',
+        url = reverse('djangosige.apps.cadastro:editarmarcaview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -271,7 +271,7 @@ class CadastroEditarViewsTestCase(BaseTestCase):
     def test_edit_unidade_get_post_request(self):
         # Buscar objeto qualquer
         obj = Unidade.objects.order_by('pk').last()
-        url = reverse('cadastro:editarunidadeview',
+        url = reverse('djangosige.apps.cadastro:editarunidadeview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -287,7 +287,7 @@ class CadastroAjaxRequestViewsTestCase(BaseTestCase):
         # Buscar objeto qualquer
         obj = Cliente.objects.order_by('pk').last()
         obj_pk = obj.pk
-        url = reverse('cadastro:infocliente')
+        url = reverse('djangosige.apps.cadastro:infocliente')
         data = {'pessoaId': obj_pk}
         self.check_json_response(url, data, obj_pk, model='cadastro.cliente')
 
@@ -295,7 +295,7 @@ class CadastroAjaxRequestViewsTestCase(BaseTestCase):
         # Buscar objeto qualquer
         obj = Transportadora.objects.order_by('pk').last()
         obj_pk = obj.pk
-        url = reverse('cadastro:infotransportadora')
+        url = reverse('djangosige.apps.cadastro:infotransportadora')
         data = {'transportadoraId': obj_pk}
         self.check_json_response(
             url, data, obj_pk, model='cadastro.transportadora')
@@ -304,7 +304,7 @@ class CadastroAjaxRequestViewsTestCase(BaseTestCase):
         # Buscar objeto qualquer
         obj = Fornecedor.objects.order_by('pk').last()
         obj_pk = obj.pk
-        url = reverse('cadastro:infofornecedor')
+        url = reverse('djangosige.apps.cadastro:infofornecedor')
         data = {'pessoaId': obj_pk}
         self.check_json_response(
             url, data, obj_pk, model='cadastro.fornecedor')
@@ -313,6 +313,6 @@ class CadastroAjaxRequestViewsTestCase(BaseTestCase):
         # Buscar objeto qualquer
         obj = Produto.objects.order_by('pk').last()
         obj_pk = obj.pk
-        url = reverse('cadastro:infoproduto')
+        url = reverse('djangosige.apps.cadastro:infoproduto')
         data = {'produtoId': obj_pk}
         self.check_json_response(url, data, obj_pk, model='cadastro.produto')

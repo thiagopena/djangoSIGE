@@ -73,7 +73,7 @@ IND_PRES_ESCOLHAS = (
 )
 
 VERSOES = (
-    ('3.10', 'v3.10'),
+    ('4.00', 'v4.00'),
 )
 
 ORIENTACAO_LOGO_DANFE = (
@@ -114,7 +114,7 @@ def arquivo_proc_path(instance, filename):
 
 class NotaFiscal(models.Model):
     chave = models.CharField(max_length=44)
-    versao = models.CharField(max_length=4, choices=VERSOES, default='3.10')
+    versao = models.CharField(max_length=4, choices=VERSOES, default='4.00')
     natop = models.CharField(max_length=60)
     indpag = models.CharField(max_length=1, choices=IND_PAG_ESCOLHAS)
     mod = models.CharField(

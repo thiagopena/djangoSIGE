@@ -16,9 +16,9 @@
     <tbody>
      {% if all_empresas%}
      {% for empresa in all_empresas %}
-     <tr class="clickable-row" data-href="{% url 'cadastro:editarempresaview' empresa.id %}">
+     <tr class="clickable-row" data-href="{% url 'djangosige.apps.cadastro:editarempresaview' empresa.id %}">
       <td>{{empresa.id}}</td>
-      <td>{% ifequal empresa.id user_empresa.id %}Sim{% endifequal %}</td>
+      <td>{% if empresa.id == user_empresa.id %}Sim{% endif %}</td>
       <td>{{empresa.nome_razao_social}}</td>
       <td>{{empresa.pessoa_jur_info.cnpj|default_if_none:""}}</td>
       <td>{{empresa.pessoa_jur_info.inscricao_estadual|default_if_none:""}}</td>

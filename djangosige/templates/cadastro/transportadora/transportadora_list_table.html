@@ -14,10 +14,10 @@
     <tbody>
       {% if all_transportadoras%}
       {% for transportadora in all_transportadoras %}
-      <tr class="clickable-row" data-href="{% url 'cadastro:editartransportadoraview' transportadora.id %}">
+      <tr class="clickable-row" data-href="{% url 'djangosige.apps.cadastro:editartransportadoraview' transportadora.id %}">
         <td>{{transportadora.id}}</td>
         <td>{{transportadora.nome_razao_social}}</td>
-        <td>{% ifequal transportadora.tipo_pessoa "PJ" %}{{transportadora.pessoa_jur_info.cnpj|default_if_none:""}}{% else %}{{transportadora.pessoa_fis_info.cpf|default_if_none:""}}{% endifequal %}</td>
+        <td>{% if transportadora.tipo_pessoa == "PJ" %}{{transportadora.pessoa_jur_info.cnpj|default_if_none:""}}{% else %}{{transportadora.pessoa_fis_info.cpf|default_if_none:""}}{% endif %}</td>
         <td>{% if transportadora.endereco.all.0.uf %}{{transportadora.endereco.all.0.get_uf_display}}{% endif %}</td>
         <td>{{transportadora.endereco.all.0.municipio|default_if_none:""}}</td>
         <td class="lista-remove">

@@ -45,15 +45,15 @@
               <tbody>
                {% if all_orcamentos%}
                {% for orcamento in all_orcamentos %}
-               <tr class="clickable-row" data-href="{% url 'vendas:editarorcamentovendaview' orcamento.id %}">
+               <tr class="clickable-row" data-href="{% url 'djangosige.apps.vendas:editarorcamentovendaview' orcamento.id %}">
                 <td>{{orcamento.id}}</td>
                 <td><b>{{orcamento.get_status_display}}</b></td>
                 <td>{{orcamento.cliente|default_if_none:""}}</td>
                 <td>{{orcamento.format_data_vencimento|default_if_none:""}}</td>
                 <td>{{orcamento.format_valor_total}}</td>
                 {% if orcamento.status == '0' %}
-                <td class="green_td" style="text-align:center;padding:0px;height:100%;"><a href="{% url 'vendas:gerarpedidovenda' orcamento.id %}" class="prevent-click-row" style="color:green;height:100%;width:100%;display:block;"><i class="material-icons" style="margin-top:8px;">&#xE86C;</i></a></td>
-                <td class="red_td" style="text-align:center;padding:0px;height:100%;"><a href="{% url 'vendas:cancelarorcamentovenda' orcamento.id %}" class="prevent-click-row" style="color:red;height:100%;width:100%;display:block;"><i class="material-icons" style="margin-top:8px;">&#xE033;</i></a></td>
+                <td class="green_td" style="text-align:center;padding:0px;height:100%;"><a href="{% url 'djangosige.apps.vendas:gerarpedidovenda' orcamento.id %}" class="prevent-click-row" style="color:green;height:100%;width:100%;display:block;"><i class="material-icons" style="margin-top:8px;">&#xE86C;</i></a></td>
+                <td class="red_td" style="text-align:center;padding:0px;height:100%;"><a href="{% url 'djangosige.apps.vendas:cancelarorcamentovenda' orcamento.id %}" class="prevent-click-row" style="color:red;height:100%;width:100%;display:block;"><i class="material-icons" style="margin-top:8px;">&#xE033;</i></a></td>
                 {% else %}
                 <td></td>
                 <td></td>

@@ -41,22 +41,22 @@ VENDA_FORMSET_DATA = {
 class VendasAdicionarViewsTestCase(BaseTestCase):
 
     def test_add_orcamento_venda_view_get_request(self):
-        url = reverse('vendas:addorcamentovendaview')
+        url = reverse('djangosige.apps.vendas:addorcamentovendaview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_pedido_venda_view_get_request(self):
-        url = reverse('vendas:addpedidovendaview')
+        url = reverse('djangosige.apps.vendas:addpedidovendaview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_condicao_pagamento_view_get_request(self):
-        url = reverse('vendas:addcondicaopagamentoview')
+        url = reverse('djangosige.apps.vendas:addcondicaopagamentoview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_orcamento_venda_view_post_request(self):
-        url = reverse('vendas:addorcamentovendaview')
+        url = reverse('djangosige.apps.vendas:addorcamentovendaview')
         cli = Cliente.objects.order_by('id').last()
         local_orig = LocalEstoque.objects.get(pk=DEFAULT_LOCAL_ID)
 
@@ -89,7 +89,7 @@ class VendasAdicionarViewsTestCase(BaseTestCase):
             response, 'form', 'cliente', 'Este campo é obrigatório.')
 
     def test_add_pedido_venda_view_post_request(self):
-        url = reverse('vendas:addpedidovendaview')
+        url = reverse('djangosige.apps.vendas:addpedidovendaview')
         cli = Cliente.objects.order_by('id').last()
         local_orig = LocalEstoque.objects.get(pk=DEFAULT_LOCAL_ID)
 
@@ -122,7 +122,7 @@ class VendasAdicionarViewsTestCase(BaseTestCase):
             response, 'form', 'cliente', 'Este campo é obrigatório.')
 
     def test_add_condicao_pagamento_view_post_request(self):
-        url = reverse('vendas:addcondicaopagamentoview')
+        url = reverse('djangosige.apps.vendas:addcondicaopagamentoview')
 
         data = {
             'descricao': 'Condicao Pagamento Teste',
@@ -150,46 +150,46 @@ class VendasListarViewsTestCase(BaseTestCase):
         cli = Cliente.objects.order_by('id').last()
         obj = OrcamentoVenda.objects.create(cliente=cli)
         self.check_list_view_delete(url=reverse(
-            'vendas:listaorcamentovendaview'), deleted_object=obj)
+            'djangosige.apps.vendas:listaorcamentovendaview'), deleted_object=obj)
 
     def test_list_orcamento_venda_vencido_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = OrcamentoVenda.objects.create(
             cliente=cli, data_vencimento=datetime.now().date() - timedelta(days=1))
         self.check_list_view_delete(url=reverse(
-            'vendas:listaorcamentovendavencidoview'), deleted_object=obj)
+            'djangosige.apps.vendas:listaorcamentovendavencidoview'), deleted_object=obj)
 
     def test_list_orcamento_venda_vence_hoje_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = OrcamentoVenda.objects.create(
             cliente=cli, data_vencimento=datetime.now().date())
         self.check_list_view_delete(url=reverse(
-            'vendas:listaorcamentovendahojeview'), deleted_object=obj)
+            'djangosige.apps.vendas:listaorcamentovendahojeview'), deleted_object=obj)
 
     def test_list_pedido_venda_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = PedidoVenda.objects.create(cliente=cli)
         self.check_list_view_delete(url=reverse(
-            'vendas:listapedidovendaview'), deleted_object=obj)
+            'djangosige.apps.vendas:listapedidovendaview'), deleted_object=obj)
 
     def test_list_pedido_venda_atrasado_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = PedidoVenda.objects.create(
             cliente=cli, data_entrega=datetime.now().date() - timedelta(days=1))
         self.check_list_view_delete(url=reverse(
-            'vendas:listapedidovendaatrasadosview'), deleted_object=obj)
+            'djangosige.apps.vendas:listapedidovendaatrasadosview'), deleted_object=obj)
 
     def test_list_pedido_venda_entrega_hoje_view_deletar_objeto(self):
         cli = Cliente.objects.order_by('id').last()
         obj = PedidoVenda.objects.create(
             cliente=cli, data_entrega=datetime.now().date())
         self.check_list_view_delete(url=reverse(
-            'vendas:listapedidovendahojeview'), deleted_object=obj)
+            'djangosige.apps.vendas:listapedidovendahojeview'), deleted_object=obj)
 
     def test_list_condicao_pagamento_view_deletar_objeto(self):
         obj = CondicaoPagamento.objects.create(n_parcelas=6)
         self.check_list_view_delete(url=reverse(
-            'vendas:listacondicaopagamentoview'), deleted_object=obj)
+            'djangosige.apps.vendas:listacondicaopagamentoview'), deleted_object=obj)
 
 
 class VendasEditarViewsTestCase(BaseTestCase):
@@ -197,7 +197,7 @@ class VendasEditarViewsTestCase(BaseTestCase):
     def test_edit_orcamento_venda_get_post_request(self):
         # Buscar objeto qualquer
         obj = OrcamentoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:editarorcamentovendaview',
+        url = reverse('djangosige.apps.vendas:editarorcamentovendaview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -213,7 +213,7 @@ class VendasEditarViewsTestCase(BaseTestCase):
     def test_edit_pedido_venda_get_post_request(self):
         # Buscar objeto qualquer
         obj = PedidoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:editarpedidovendaview',
+        url = reverse('djangosige.apps.vendas:editarpedidovendaview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -231,7 +231,7 @@ class VendasEditarViewsTestCase(BaseTestCase):
     def test_edit_condicao_pagamento_get_post_request(self):
         # Buscar objeto qualquer
         obj = CondicaoPagamento.objects.order_by('pk').last()
-        url = reverse('vendas:editarcondicaopagamentoview',
+        url = reverse('djangosige.apps.vendas:editarcondicaopagamentoview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -247,7 +247,7 @@ class VendasAjaxRequestViewsTestCase(BaseTestCase):
         # Buscar objeto qualquer
         obj = CondicaoPagamento.objects.order_by('pk').last()
         obj_pk = obj.pk
-        url = reverse('vendas:infocondpagamento')
+        url = reverse('djangosige.apps.vendas:infocondpagamento')
         data = {'pagamentoId': obj_pk}
         self.check_json_response(
             url, data, obj_pk, model='vendas.condicaopagamento')
@@ -256,7 +256,7 @@ class VendasAjaxRequestViewsTestCase(BaseTestCase):
         # Buscar objeto qualquer
         obj = PedidoVenda.objects.order_by('pk').last()
         obj_pk = obj.pk
-        url = reverse('vendas:infovenda')
+        url = reverse('djangosige.apps.vendas:infovenda')
         data = {'vendaId': obj_pk}
         self.check_json_response(url, data, obj_pk, model='vendas.pedidovenda')
 
@@ -266,7 +266,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_gerar_pdf_orcamento_venda(self):
         # Buscar objeto qualquer
         obj = OrcamentoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:gerarpdforcamentovenda',
+        url = reverse('djangosige.apps.vendas:gerarpdforcamentovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -275,7 +275,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_gerar_pdf_pedido_venda(self):
         # Buscar objeto qualquer
         obj = PedidoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:gerarpdfpedidovenda',
+        url = reverse('djangosige.apps.vendas:gerarpdfpedidovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -285,7 +285,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
         # Criar novo orcamento e gerar pedido
         cli = Cliente.objects.order_by('id').last()
         obj = OrcamentoVenda.objects.create(cliente=cli)
-        url = reverse('vendas:gerarpedidovenda',
+        url = reverse('djangosige.apps.vendas:gerarpedidovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -297,7 +297,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_copiar_pedido_venda(self):
         # Buscar objeto qualquer
         obj = PedidoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:copiarpedidovenda',
+        url = reverse('djangosige.apps.vendas:copiarpedidovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -308,7 +308,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_copiar_orcamento_venda(self):
         # Buscar objeto qualquer
         obj = OrcamentoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:copiarorcamentovenda',
+        url = reverse('djangosige.apps.vendas:copiarorcamentovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -319,7 +319,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_cancelar_pedido_venda(self):
         # Buscar objeto qualquer
         obj = PedidoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:cancelarpedidovenda',
+        url = reverse('djangosige.apps.vendas:cancelarpedidovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -332,7 +332,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_cancelar_orcamento_venda(self):
         # Buscar objeto qualquer
         obj = OrcamentoVenda.objects.order_by('pk').last()
-        url = reverse('vendas:cancelarorcamentovenda',
+        url = reverse('djangosige.apps.vendas:cancelarorcamentovenda',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)

@@ -112,7 +112,7 @@ class EntradaEstoque(MovimentoEstoque):
         'estoque.LocalEstoque', related_name="entrada_estoque_local", default=DEFAULT_LOCAL_ID, on_delete=models.PROTECT)
 
     def get_edit_url(self):
-        return reverse_lazy('estoque:detalharentradaestoqueview', kwargs={'pk': self.id})
+        return reverse_lazy('djangosige.apps.estoque:detalharentradaestoqueview', kwargs={'pk': self.id})
 
     def get_tipo(self):
         return 'Entrada'
@@ -127,7 +127,7 @@ class SaidaEstoque(MovimentoEstoque):
         'estoque.LocalEstoque', related_name="saida_estoque_local", default=DEFAULT_LOCAL_ID, on_delete=models.PROTECT)
 
     def get_edit_url(self):
-        return reverse_lazy('estoque:detalharsaidaestoqueview', kwargs={'pk': self.id})
+        return reverse_lazy('djangosige.apps.estoque:detalharsaidaestoqueview', kwargs={'pk': self.id})
 
     def get_tipo(self):
         return 'Saída'
@@ -140,7 +140,7 @@ class TransferenciaEstoque(MovimentoEstoque):
         'estoque.LocalEstoque', related_name="transf_estoque_dest", on_delete=models.CASCADE)
 
     def get_edit_url(self):
-        return reverse_lazy('estoque:detalhartransferenciaestoqueview', kwargs={'pk': self.id})
+        return reverse_lazy('djangosige.apps.estoque:detalhartransferenciaestoqueview', kwargs={'pk': self.id})
 
     def get_tipo(self):
         return 'Transferência'

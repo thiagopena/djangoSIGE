@@ -105,13 +105,13 @@ class AdicionarNotaFiscalView(CustomCreateView, NotaFiscalViewMixin):
 class AdicionarNotaFiscalSaidaView(AdicionarNotaFiscalView):
     form_class = NotaFiscalSaidaForm
     template_name = "fiscal/nota_fiscal/nota_fiscal_add.html"
-    success_url = reverse_lazy('fiscal:listanotafiscalsaidaview')
+    success_url = reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview')
     success_message = "Nota fiscal N°<b>%(n_nf)s </b>gerada com sucesso."
     permission_codename = 'add_notafiscalsaida'
 
     def view_context(self, context):
         context['title_complete'] = 'GERAR NOTA FISCAL'
-        context['return_url'] = reverse_lazy('fiscal:listanotafiscalsaidaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview')
         context['saida'] = True
         return context
 
@@ -164,14 +164,14 @@ class NotaFiscalSaidaListView(NotaFiscalListView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_list.html'
     model = NotaFiscalSaida
     context_object_name = 'all_notas'
-    success_url = reverse_lazy('fiscal:listanotafiscalsaidaview')
+    success_url = reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview')
     permission_codename = 'view_notafiscalsaida'
 
     def view_context(self, context):
         context['title_complete'] = 'NOTAS FISCAIS'
-        context['add_url'] = reverse_lazy('fiscal:addnotafiscalsaidaview')
+        context['add_url'] = reverse_lazy('djangosige.apps.fiscal:addnotafiscalsaidaview')
         context['importar_nota_url'] = reverse_lazy(
-            'fiscal:importarnotafiscalsaida')
+            'djangosige.apps.fiscal:importarnotafiscalsaida')
         context['saida'] = True
         return context
 
@@ -180,15 +180,15 @@ class NotaFiscalEntradaListView(NotaFiscalListView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_list.html'
     model = NotaFiscalEntrada
     context_object_name = 'all_notas'
-    success_url = reverse_lazy('fiscal:listanotafiscalentradaview')
+    success_url = reverse_lazy('djangosige.apps.fiscal:listanotafiscalentradaview')
     permission_codename = 'view_notafiscalentrada'
 
     def view_context(self, context):
         context[
             'title_complete'] = 'NOTAS FISCAIS DE FORNECEDORES (ENTRADA DE MATERIAL)'
-        context['add_url'] = reverse_lazy('fiscal:addnotafiscalentradaview')
+        context['add_url'] = reverse_lazy('djangosige.apps.fiscal:addnotafiscalentradaview')
         context['importar_nota_url'] = reverse_lazy(
-            'fiscal:importarnotafiscalentrada')
+            'djangosige.apps.fiscal:importarnotafiscalentrada')
         context['entrada'] = True
         return context
 
@@ -211,14 +211,14 @@ class EditarNotaFiscalSaidaView(EditarNotaFiscalView):
     form_class = NotaFiscalSaidaForm
     model = NotaFiscalSaida
     template_name = "fiscal/nota_fiscal/nota_fiscal_edit.html"
-    success_url = reverse_lazy('fiscal:listanotafiscalsaidaview')
+    success_url = reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview')
     success_message = "Nota fiscal N°<b>%(n_nf)s </b>editada com sucesso."
     permission_codename = 'change_notafiscalsaida'
 
     def view_context(self, context):
         context['title_complete'] = 'EDITAR NOTA FISCAL DE SAÍDA ' + \
             str(self.object.serie) + '/' + str(self.object.n_nf_saida)
-        context['return_url'] = reverse_lazy('fiscal:listanotafiscalsaidaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview')
         context['saida'] = True
         return context
 
@@ -276,7 +276,7 @@ class EditarNotaFiscalEntradaView(EditarNotaFiscalView):
     form_class = NotaFiscalEntradaForm
     model = NotaFiscalEntrada
     template_name = "fiscal/nota_fiscal/nota_fiscal_edit.html"
-    success_url = reverse_lazy('fiscal:listanotafiscalentradaview')
+    success_url = reverse_lazy('djangosige.apps.fiscal:listanotafiscalentradaview')
     success_message = "Nota fiscal N°<b>%(n_nf)s </b>editada com sucesso."
     permission_codename = 'change_notafiscalentrada'
 
@@ -284,7 +284,7 @@ class EditarNotaFiscalEntradaView(EditarNotaFiscalView):
         context['title_complete'] = 'EDITAR NOTA FISCAL DE ENTRADA ' + \
             str(self.object.serie) + '/' + str(self.object.n_nf_entrada)
         context['return_url'] = reverse_lazy(
-            'fiscal:listanotafiscalentradaview')
+            'djangosige.apps.fiscal:listanotafiscalentradaview')
         context['entrada'] = True
         return context
 
@@ -363,12 +363,12 @@ class GerarNotaFiscalSaidaView(CustomView):
         nova_nota.dest_saida = pedido.cliente
         nova_nota.save()
 
-        return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': nova_nota.id}))
+        return redirect(reverse_lazy('djangosige.apps.fiscal:editarnotafiscalsaidaview', kwargs={'pk': nova_nota.id}))
 
 
 class ConfiguracaoNotaFiscalView(FormValidationMessageMixin, CustomTemplateView):
     template_name = 'fiscal/nota_fiscal/nota_fiscal_config.html'
-    success_url = reverse_lazy('fiscal:configuracaonotafiscal')
+    success_url = reverse_lazy('djangosige.apps.fiscal:configuracaonotafiscal')
     success_message = "Emissão de NF-e configurada"
     permission_codename = 'configurar_nfe'
 
@@ -421,7 +421,7 @@ class ValidarNotaView(CustomView):
         else:
             messages.success(self.request, processador_nota.message)
 
-        return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': nfe_id}))
+        return redirect(reverse_lazy('djangosige.apps.fiscal:editarnotafiscalsaidaview', kwargs={'pk': nfe_id}))
 
 
 class EmitirNotaView(CustomTemplateView):
@@ -437,7 +437,7 @@ class EmitirNotaView(CustomTemplateView):
         else:
             messages.success(self.request, processador_nota.message)
 
-        return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.id}))
+        return redirect(reverse_lazy('djangosige.apps.fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.id}))
 
     def get_context_data(self, **kwargs):
         context = super(EmitirNotaView, self).get_context_data(**kwargs)
@@ -446,7 +446,7 @@ class EmitirNotaView(CustomTemplateView):
         context['form_id'] = 'emitir_nota_form'
         context['saida'] = True
         context['return_url'] = reverse_lazy(
-            'fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.pk})
+            'djangosige.apps.fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.pk})
         return context
 
     def get_object(self, pk):
@@ -472,7 +472,7 @@ class EmitirNotaView(CustomTemplateView):
         return self.form_invalid(form)
 
     def form_valid(self, form):
-        return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.pk}))
+        return redirect(reverse_lazy('djangosige.apps.fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.pk}))
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form, object=self.object,))
@@ -485,7 +485,7 @@ class GerarCopiaNotaView(CustomView):
         nota_id = kwargs.get('pk', None)
 
         instance = NotaFiscalSaida.objects.get(id=nota_id)
-        redirect_url = 'fiscal:editarnotafiscalsaidaview'
+        redirect_url = 'djangosige.apps.fiscal:editarnotafiscalsaidaview'
 
         aut_xmls = instance.aut_xml.all()
 
@@ -535,7 +535,7 @@ class ImportarNotaSaidaView(ImportarNotaView):
                            'view_notafiscalsaida', 'change_notafiscalsaida']
 
     def get_redirect_url(self):
-        return redirect(reverse_lazy('fiscal:listanotafiscalsaidaview'))
+        return redirect(reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview'))
 
 
 class ImportarNotaEntradaView(ImportarNotaView):
@@ -543,7 +543,7 @@ class ImportarNotaEntradaView(ImportarNotaView):
                            'view_notafiscalentrada', 'change_notafiscalentrada']
 
     def get_redirect_url(self):
-        return redirect(reverse_lazy('fiscal:listanotafiscalentradaview'))
+        return redirect(reverse_lazy('djangosige.apps.fiscal:listanotafiscalentradaview'))
 
 
 class CancelarNotaView(CustomTemplateView):
@@ -560,7 +560,7 @@ class CancelarNotaView(CustomTemplateView):
         else:
             messages.success(self.request, processador_nota.message)
 
-        return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.id}))
+        return redirect(reverse_lazy('djangosige.apps.fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.id}))
 
     def get_context_data(self, **kwargs):
         context = super(CancelarNotaView, self).get_context_data(**kwargs)
@@ -569,7 +569,7 @@ class CancelarNotaView(CustomTemplateView):
         context['form_id'] = 'cancelar_nota_form'
         context['saida'] = True
         context['return_url'] = reverse_lazy(
-            'fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.pk})
+            'djangosige.apps.fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.pk})
         return context
 
     def get_object(self, pk):
@@ -594,7 +594,7 @@ class CancelarNotaView(CustomTemplateView):
         return self.form_invalid(form)
 
     def form_valid(self, form):
-        return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.pk}))
+        return redirect(reverse_lazy('djangosige.apps.fiscal:editarnotafiscalsaidaview', kwargs={'pk': self.object.pk}))
 
     def form_invalid(self, form):
         return self.render_to_response(self.get_context_data(form=form, object=self.object,))
@@ -615,7 +615,7 @@ class GerarDanfeView(CustomView):
 
         if processador_nota.erro:
             messages.error(self.request, processador_nota.message)
-            return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': nota_obj.id}))
+            return redirect(reverse_lazy('djangosige.apps.fiscal:editarnotafiscalsaidaview', kwargs={'pk': nota_obj.id}))
         else:
             messages.success(self.request, processador_nota.message)
             resp.write(danfe_pdf)
@@ -637,7 +637,7 @@ class GerarDanfceView(CustomView):
 
         if processador_nota.erro:
             messages.error(self.request, processador_nota.message)
-            return redirect(reverse_lazy('fiscal:editarnotafiscalsaidaview', kwargs={'pk': nota_obj.id}))
+            return redirect(reverse_lazy('djangosige.apps.fiscal:editarnotafiscalsaidaview', kwargs={'pk': nota_obj.id}))
         else:
             messages.success(self.request, processador_nota.message)
             resp.write(danfce_pdf)
@@ -665,7 +665,7 @@ class ConsultarCadastroView(CustomTemplateView):
         context['btn_text'] = 'CONSULTAR'
         context['form_id'] = 'consultar_cadastro_form'
         context['saida'] = True
-        context['return_url'] = reverse_lazy('fiscal:listanotafiscalsaidaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -713,7 +713,7 @@ class InutilizarNotasView(CustomTemplateView):
         context['btn_text'] = 'ENVIAR'
         context['form_id'] = 'inutilizar_notas_form'
         context['saida'] = True
-        context['return_url'] = reverse_lazy('fiscal:listanotafiscalsaidaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -768,7 +768,7 @@ class ConsultarNotaView(CustomTemplateView):
         context['btn_text'] = 'ENVIAR'
         context['form_id'] = 'consultar_nota_form'
         context['saida'] = True
-        context['return_url'] = reverse_lazy('fiscal:listanotafiscalsaidaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -832,7 +832,7 @@ class BaixarNotaView(CustomTemplateView):
         context['btn_text'] = 'ENVIAR'
         context['form_id'] = 'baixar_nota_form'
         context['saida'] = True
-        context['return_url'] = reverse_lazy('fiscal:listanotafiscalsaidaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -898,7 +898,7 @@ class ManifestacaoDestinatarioView(CustomTemplateView):
         context['btn_text'] = 'ENVIAR'
         context['form_id'] = 'manifestacao_destinatario_form'
         context['saida'] = True
-        context['return_url'] = reverse_lazy('fiscal:listanotafiscalsaidaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.fiscal:listanotafiscalsaidaview')
         return context
 
     def get(self, request, *args, **kwargs):

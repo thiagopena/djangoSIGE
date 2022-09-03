@@ -1004,7 +1004,7 @@
             "tipo_desconto": "0",
             "total_icms": "2.70",
             "total_ipi": "15.40",
-            "valor_total": "153.10"
+            "valor_total": "153.100"
         },
         "model": "compras.compra",
         "pk": 5
@@ -1177,7 +1177,7 @@
         "fields": {
             "compra_id": 3,
             "indice_parcela": 1,
-            "valor_parcela": "153.10",
+            "valor_parcela": "153.100",
             "vencimento": "2017-08-25"
         },
         "model": "compras.pagamento",
@@ -1931,8 +1931,8 @@
             "juros": "0.00",
             "movimentar_caixa": true,
             "movimento_caixa": 15,
-            "valor_liquido": "153.10",
-            "valor_total": "153.10"
+            "valor_liquido": "153.100",
+            "valor_total": "153.100"
         },
         "model": "financeiro.lancamento",
         "pk": 18
@@ -2373,7 +2373,7 @@
         "fields": {
             "data_movimento": "2017-08-25",
             "entradas": "0.00",
-            "saidas": "273.10",
+            "saidas": "274.00",
             "saldo_final": "840.50",
             "saldo_inicial": "1113.60"
         },
@@ -2934,7 +2934,7 @@
             "tp_amb": "2",
             "tp_emis": "1",
             "tp_imp": "1",
-            "versao": "3.10"
+            "versao": "4.00"
         },
         "model": "fiscal.notafiscal",
         "pk": 1
@@ -2962,7 +2962,7 @@
             "tp_amb": "2",
             "tp_emis": "1",
             "tp_imp": "1",
-            "versao": "3.10"
+            "versao": "4.00"
         },
         "model": "fiscal.notafiscal",
         "pk": 2
@@ -2990,7 +2990,7 @@
             "tp_amb": "2",
             "tp_emis": "1",
             "tp_imp": "1",
-            "versao": "3.10"
+            "versao": "4.00"
         },
         "model": "fiscal.notafiscal",
         "pk": 3

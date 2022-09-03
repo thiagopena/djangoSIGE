@@ -49,7 +49,7 @@ class UserFormView(View):
         form = self.form_class(None)
 
         if request.user.is_authenticated:
-            return redirect('base:index')
+            return redirect('djangosige.apps.base:index')
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
@@ -62,7 +62,7 @@ class UserFormView(View):
                 if not request.POST.get('remember_me', None):
                     request.session.set_expiry(0)
                 login(request, user)
-                return redirect('base:index')
+                return redirect('djangosige.apps.base:index')
 
         return render(request, self.template_name, {'form': form})
 
@@ -70,7 +70,7 @@ class UserFormView(View):
 class UserRegistrationFormView(SuperUserRequiredMixin, SuccessMessageMixin, FormView):
     form_class = UserRegistrationForm
     template_name = 'login/registrar.html'
-    success_url = reverse_lazy('login:usuariosview')
+    success_url = reverse_lazy('djangosige.apps.login:usuariosview')
     success_message = "Novo usuário <b>%(username)s</b> criado com sucesso."
 
     def get_success_message(self, cleaned_data):
@@ -94,7 +94,7 @@ class UserRegistrationFormView(SuperUserRequiredMixin, SuccessMessageMixin, Form
                 form.add_error('password', 'Senhas diferentes.')
                 return self.form_invalid(form)
 
-            return redirect("login:usuariosview")
+            return redirect("djangosige.apps.login:usuariosview")
 
         return render(request, self.template_name, {'form': form})
 
@@ -103,12 +103,12 @@ class UserLogoutView(View):
 
     def get(self, request):
         logout(request)
-        return redirect("login:loginview")
+        return redirect("djangosige.apps.login:loginview")
 
 
 class ForgotPasswordView(FormView):
     template_name = "login/esqueceu_senha.html"
-    success_url = reverse_lazy('login:loginview')
+    success_url = reverse_lazy('djangosige.apps.login:loginview')
     form_class = PasswordResetForm
 
     def post(self, request, *args, **kwargs):
@@ -171,7 +171,7 @@ class ForgotPasswordView(FormView):
 
 class PasswordResetConfirmView(FormView):
     template_name = "login/trocar_senha.html"
-    success_url = reverse_lazy('login:loginview')
+    success_url = reverse_lazy('djangosige.apps.login:loginview')
     form_class = SetPasswordForm
 
     def post(self, request, uidb64=None, token=None, *args, **kwargs):
@@ -220,7 +220,7 @@ class MeuPerfilView(TemplateView):
 class EditarPerfilView(UpdateView):
     form_class = PerfilUsuarioForm
     template_name = 'login/editar_perfil.html'
-    success_url = reverse_lazy('login:perfilview')
+    success_url = reverse_lazy('djangosige.apps.login:perfilview')
     success_message = "Perfil editado com sucesso."
 
     def get_success_message(self, cleaned_data):
@@ -303,7 +303,7 @@ class EditarPerfilView(UpdateView):
 class SelecionarMinhaEmpresaView(FormView):
     form_class = MinhaEmpresaForm
     template_name = "login/selecionar_minha_empresa.html"
-    success_url = reverse_lazy('login:selecionarempresaview')
+    success_url = reverse_lazy('djangosige.apps.login:selecionarempresaview')
 
     def get_form(self, form_class):
         try:
@@ -350,7 +350,7 @@ class UsuariosListView(SuperUserRequiredMixin, ListView):
     template_name = 'login/lista_users.html'
     model = User
     context_object_name = 'all_users'
-    success_url = reverse_lazy('login:usuariosview')
+    success_url = reverse_lazy('djangosige.apps.login:usuariosview')
 
     def get_queryset(self):
         return User.objects.all()
@@ -380,7 +380,7 @@ class UsuarioDetailView(SuperUserRequiredMixin, TemplateView):
 
 class DeletarUsuarioView(SuperUserRequiredMixin, DeleteView):
     model = User
-    success_url = reverse_lazy('login:usuariosview')
+    success_url = reverse_lazy('djangosige.apps.login:usuariosview')
 
 
 class EditarPermissoesUsuarioView(SuperUserRequiredMixin, TemplateView):
@@ -409,4 +409,4 @@ class EditarPermissoesUsuarioView(SuperUserRequiredMixin, TemplateView):
                 user.user_permissions.add(nova_permissao)
         messages.success(
             self.request, 'Permissões do usuário <b>{0}</b> atualizadas com sucesso.'.format(user.username))
-        return redirect(reverse_lazy('login:usuariodetailview', kwargs={'pk': self.kwargs['pk']}))
+        return redirect(reverse_lazy('djangosige.apps.login:usuariodetailview', kwargs={'pk': self.kwargs['pk']}))

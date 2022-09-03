@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 
 class SuperUserRequiredMixin(object):
 
-    @method_decorator(login_required(login_url='login:loginview'))
+    @method_decorator(login_required(login_url='djangosige.apps.login:loginview'))
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_superuser:
             messages.add_message(
@@ -16,7 +16,7 @@ class SuperUserRequiredMixin(object):
                 messages.WARNING,
                 u'Apenas o administrador tem permissão para realizar esta operação.',
                 'permission_warning')
-            return redirect('base:index')
+            return redirect('djangosige.apps.base:index')
         return super(SuperUserRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
@@ -30,7 +30,7 @@ class CheckPermissionMixin(object):
                 messages.WARNING,
                 u'Usuário não tem permissão para realizar esta operação.',
                 'permission_warning')
-            return redirect('base:index')
+            return redirect('djangosige.apps.base:index')
         return super(CheckPermissionMixin, self).dispatch(request, *args, **kwargs)
 
     def check_user_permissions(self, request):

@@ -20,11 +20,11 @@ class LoginRequiredMiddleware(MiddlewareMixin):
         if request.user.is_authenticated:
             for url in self.exceptions:
                 if url.match(request.path):
-                    return redirect('base:index')
+                    return redirect('djangosige.apps.base:index')
             return None
 
         for url in self.exceptions:
             if url.match(request.path):
                 return None
 
-        return redirect('login:loginview')
+        return redirect('djangosige.apps.login:loginview')

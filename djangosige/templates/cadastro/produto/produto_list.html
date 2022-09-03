@@ -41,7 +41,7 @@
               <tbody>
                {% if all_produtos%}
                {% for produto in all_produtos %}
-               <tr class="clickable-row" data-href="{% url 'cadastro:editarprodutoview' produto.id %}">
+               <tr class="clickable-row" data-href="{% url 'djangosige.apps.cadastro:editarprodutoview' produto.id %}">
                 <td>{{produto.codigo}}</td>
                 <td>{{produto.descricao}}</td>
                 <td>{%if produto.categoria%}{{produto.categoria}}{%else%}---{%endif%}</td>

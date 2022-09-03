@@ -88,13 +88,13 @@ class AdicionarVendaView(CustomCreateView):
 class AdicionarOrcamentoVendaView(AdicionarVendaView):
     form_class = OrcamentoVendaForm
     template_name = "vendas/orcamento_venda/orcamento_venda_add.html"
-    success_url = reverse_lazy('vendas:listaorcamentovendaview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listaorcamentovendaview')
     success_message = "<b>Orçamento de venda %(id)s </b>adicionado com sucesso."
     permission_codename = 'add_orcamentovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR ORÇAMENTO DE VENDA'
-        context['return_url'] = reverse_lazy('vendas:listaorcamentovendaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.vendas:listaorcamentovendaview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -109,13 +109,13 @@ class AdicionarOrcamentoVendaView(AdicionarVendaView):
 class AdicionarPedidoVendaView(AdicionarVendaView):
     form_class = PedidoVendaForm
     template_name = "vendas/pedido_venda/pedido_venda_add.html"
-    success_url = reverse_lazy('vendas:listapedidovendaview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listapedidovendaview')
     success_message = "<b>Pedido de venda %(id)s </b>adicionado com sucesso."
     permission_codename = 'add_pedidovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR PEDIDO DE VENDA'
-        context['return_url'] = reverse_lazy('vendas:listapedidovendaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.vendas:listapedidovendaview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -138,21 +138,21 @@ class OrcamentoVendaListView(VendaListView):
     template_name = 'vendas/orcamento_venda/orcamento_venda_list.html'
     model = OrcamentoVenda
     context_object_name = 'all_orcamentos'
-    success_url = reverse_lazy('vendas:listaorcamentovendaview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listaorcamentovendaview')
     permission_codename = 'view_orcamentovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'ORÇAMENTOS DE VENDA'
-        context['add_url'] = reverse_lazy('vendas:addorcamentovendaview')
+        context['add_url'] = reverse_lazy('djangosige.apps.vendas:addorcamentovendaview')
         return context
 
 
 class OrcamentoVendaVencidosListView(OrcamentoVendaListView):
-    success_url = reverse_lazy('vendas:listaorcamentovendavencidoview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listaorcamentovendavencidoview')
 
     def view_context(self, context):
         context['title_complete'] = 'ORÇAMENTOS DE VENDA VENCIDOS'
-        context['add_url'] = reverse_lazy('vendas:addorcamentovendaview')
+        context['add_url'] = reverse_lazy('djangosige.apps.vendas:addorcamentovendaview')
         return context
 
     def get_queryset(self):
@@ -160,12 +160,12 @@ class OrcamentoVendaVencidosListView(OrcamentoVendaListView):
 
 
 class OrcamentoVendaVencimentoHojeListView(OrcamentoVendaListView):
-    success_url = reverse_lazy('vendas:listaorcamentovendahojeview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listaorcamentovendahojeview')
 
     def view_context(self, context):
         context['title_complete'] = 'ORÇAMENTOS DE VENDA COM VENCIMENTO DIA ' + \
             datetime.now().date().strftime('%d/%m/%Y')
-        context['add_url'] = reverse_lazy('vendas:addorcamentovendaview')
+        context['add_url'] = reverse_lazy('djangosige.apps.vendas:addorcamentovendaview')
         return context
 
     def get_queryset(self):
@@ -176,21 +176,21 @@ class PedidoVendaListView(VendaListView):
     template_name = 'vendas/pedido_venda/pedido_venda_list.html'
     model = PedidoVenda
     context_object_name = 'all_pedidos'
-    success_url = reverse_lazy('vendas:listapedidovendaview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listapedidovendaview')
     permission_codename = 'view_pedidovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'PEDIDOS DE VENDA'
-        context['add_url'] = reverse_lazy('vendas:addpedidovendaview')
+        context['add_url'] = reverse_lazy('djangosige.apps.vendas:addpedidovendaview')
         return context
 
 
 class PedidoVendaAtrasadosListView(PedidoVendaListView):
-    success_url = reverse_lazy('vendas:listapedidovendaatrasadosview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listapedidovendaatrasadosview')
 
     def view_context(self, context):
         context['title_complete'] = 'PEDIDOS DE VENDA ATRASADOS'
-        context['add_url'] = reverse_lazy('vendas:addpedidovendaview')
+        context['add_url'] = reverse_lazy('djangosige.apps.vendas:addpedidovendaview')
         return context
 
     def get_queryset(self):
@@ -198,12 +198,12 @@ class PedidoVendaAtrasadosListView(PedidoVendaListView):
 
 
 class PedidoVendaEntregaHojeListView(PedidoVendaListView):
-    success_url = reverse_lazy('vendas:listapedidovendahojeview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listapedidovendahojeview')
 
     def view_context(self, context):
         context['title_complete'] = 'PEDIDOS DE VENDA COM ENTREGA DIA ' + \
             datetime.now().date().strftime('%d/%m/%Y')
-        context['add_url'] = reverse_lazy('vendas:addpedidovendaview')
+        context['add_url'] = reverse_lazy('djangosige.apps.vendas:addpedidovendaview')
         return context
 
     def get_queryset(self):
@@ -288,14 +288,14 @@ class EditarOrcamentoVendaView(EditarVendaView):
     form_class = OrcamentoVendaForm
     model = OrcamentoVenda
     template_name = "vendas/orcamento_venda/orcamento_venda_edit.html"
-    success_url = reverse_lazy('vendas:listaorcamentovendaview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listaorcamentovendaview')
     success_message = "<b>Orçamento de venda %(id)s </b>editado com sucesso."
     permission_codename = 'change_orcamentovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'EDITAR ORÇAMENTO DE VENDA N°' + \
             str(self.object.id)
-        context['return_url'] = reverse_lazy('vendas:listaorcamentovendaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.vendas:listaorcamentovendaview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -313,14 +313,14 @@ class EditarPedidoVendaView(EditarVendaView):
     form_class = PedidoVendaForm
     model = PedidoVenda
     template_name = "vendas/pedido_venda/pedido_venda_edit.html"
-    success_url = reverse_lazy('vendas:listapedidovendaview')
+    success_url = reverse_lazy('djangosige.apps.vendas:listapedidovendaview')
     success_message = "<b>Pedido de venda %(id)s </b>editado com sucesso."
     permission_codename = 'change_pedidovenda'
 
     def view_context(self, context):
         context['title_complete'] = 'EDITAR PEDIDO DE VENDA N°' + \
             str(self.object.id)
-        context['return_url'] = reverse_lazy('vendas:listapedidovendaview')
+        context['return_url'] = reverse_lazy('djangosige.apps.vendas:listapedidovendaview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -368,7 +368,7 @@ class GerarPedidoVendaView(CustomView):
             pagamento.save()
             novo_pedido.parcela_pagamento.add(pagamento)
 
-        return redirect(reverse_lazy('vendas:editarpedidovendaview', kwargs={'pk': novo_pedido.id}))
+        return redirect(reverse_lazy('djangosige.apps.vendas:editarpedidovendaview', kwargs={'pk': novo_pedido.id}))
 
 
 class CancelarOrcamentoVendaView(CustomView):
@@ -379,7 +379,7 @@ class CancelarOrcamentoVendaView(CustomView):
         instance = OrcamentoVenda.objects.get(id=venda_id)
         instance.status = '2'
         instance.save()
-        return redirect(reverse_lazy('vendas:editarorcamentovendaview', kwargs={'pk': instance.id}))
+        return redirect(reverse_lazy('djangosige.apps.vendas:editarorcamentovendaview', kwargs={'pk': instance.id}))
 
 
 class CancelarPedidoVendaView(CustomView):
@@ -390,7 +390,7 @@ class CancelarPedidoVendaView(CustomView):
         instance = PedidoVenda.objects.get(id=venda_id)
         instance.status = '2'
         instance.save()
-        return redirect(reverse_lazy('vendas:editarpedidovendaview', kwargs={'pk': instance.id}))
+        return redirect(reverse_lazy('djangosige.apps.vendas:editarpedidovendaview', kwargs={'pk': instance.id}))
 
 
 class GerarCopiaVendaView(CustomView):
@@ -425,7 +425,7 @@ class GerarCopiaOrcamentoVendaView(GerarCopiaVendaView):
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
         instance = OrcamentoVenda.objects.get(id=venda_id)
-        redirect_url = 'vendas:editarorcamentovendaview'
+        redirect_url = 'djangosige.apps.vendas:editarorcamentovendaview'
         return super(GerarCopiaOrcamentoVendaView, self).get(request, instance, redirect_url, *args, **kwargs)
 
 
@@ -435,7 +435,7 @@ class GerarCopiaPedidoVendaView(GerarCopiaVendaView):
     def get(self, request, *args, **kwargs):
         venda_id = kwargs.get('pk', None)
         instance = PedidoVenda.objects.get(id=venda_id)
-        redirect_url = 'vendas:editarpedidovendaview'
+        redirect_url = 'djangosige.apps.vendas:editarpedidovendaview'
         return super(GerarCopiaPedidoVendaView, self).get(request, instance, redirect_url, *args, **kwargs)
 
 

@@ -14,7 +14,7 @@ from datetime import datetime
 class AdicionarProdutoView(CustomCreateView):
     form_class = ProdutoForm
     template_name = "cadastro/produto/produto_add.html"
-    success_url = reverse_lazy('cadastro:listaprodutosview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listaprodutosview')
     success_message = "Produto <b>%(descricao)s </b>adicionado com sucesso."
     permission_codename = 'add_produto'
 
@@ -24,7 +24,7 @@ class AdicionarProdutoView(CustomCreateView):
     def get_context_data(self, **kwargs):
         context = super(AdicionarProdutoView, self).get_context_data(**kwargs)
         context['title_complete'] = 'CADASTRAR PRODUTO'
-        context['return_url'] = reverse_lazy('cadastro:listaprodutosview')
+        context['return_url'] = reverse_lazy('djangosige.apps.cadastro:listaprodutosview')
         return context
 
     def get(self, request, *args, **kwargs):
@@ -107,18 +107,18 @@ class ProdutosListView(CustomListView):
     template_name = 'cadastro/produto/produto_list.html'
     model = Produto
     context_object_name = 'all_produtos'
-    success_url = reverse_lazy('cadastro:listaprodutosview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listaprodutosview')
     permission_codename = 'view_produto'
 
     def get_context_data(self, **kwargs):
         context = super(ProdutosListView, self).get_context_data(**kwargs)
         context['title_complete'] = 'PRODUTOS CADASTRADOS'
-        context['add_url'] = reverse_lazy('cadastro:addprodutoview')
+        context['add_url'] = reverse_lazy('djangosige.apps.cadastro:addprodutoview')
         return context
 
 
 class ProdutosBaixoEstoqueListView(ProdutosListView):
-    success_url = reverse_lazy('cadastro:listaprodutosbaixoestoqueview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listaprodutosbaixoestoqueview')
 
     def get_context_data(self, **kwargs):
         context = super(ProdutosBaixoEstoqueListView,
@@ -134,7 +134,7 @@ class EditarProdutoView(CustomUpdateView):
     form_class = ProdutoForm
     model = Produto
     template_name = "cadastro/produto/produto_edit.html"
-    success_url = reverse_lazy('cadastro:listaprodutosview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listaprodutosview')
     success_message = "Produto <b>%(descricao)s </b>editado com sucesso."
     permission_codename = 'change_produto'
 
@@ -143,7 +143,7 @@ class EditarProdutoView(CustomUpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(EditarProdutoView, self).get_context_data(**kwargs)
-        context['return_url'] = reverse_lazy('cadastro:listaprodutosview')
+        context['return_url'] = reverse_lazy('djangosige.apps.cadastro:listaprodutosview')
         return context
 
     def post(self, request, *args, **kwargs):
@@ -201,7 +201,7 @@ class EditarOutrosBaseView(CustomUpdateView):
 class AdicionarCategoriaView(AdicionarOutrosBaseView):
     form_class = CategoriaForm
     model = Categoria
-    success_url = reverse_lazy('cadastro:addcategoriaview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:addcategoriaview')
     permission_codename = 'add_categoria'
 
 
@@ -209,21 +209,21 @@ class CategoriasListView(CustomListView):
     model = Categoria
     template_name = 'cadastro/produto/categoria_list.html'
     context_object_name = 'all_categorias'
-    success_url = reverse_lazy('cadastro:listacategoriasview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listacategoriasview')
     permission_codename = 'view_categoria'
 
 
 class EditarCategoriaView(EditarOutrosBaseView):
     form_class = CategoriaForm
     model = Categoria
-    success_url = reverse_lazy('cadastro:listacategoriasview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listacategoriasview')
     permission_codename = 'change_categoria'
 
 
 class AdicionarUnidadeView(AdicionarOutrosBaseView):
     form_class = UnidadeForm
     model = Unidade
-    success_url = reverse_lazy('cadastro:addunidadeview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:addunidadeview')
     permission_codename = 'add_unidade'
 
 
@@ -231,21 +231,21 @@ class UnidadesListView(CustomListView):
     model = Unidade
     template_name = 'cadastro/produto/unidade_list.html'
     context_object_name = 'all_unidades'
-    success_url = reverse_lazy('cadastro:listaunidadesview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listaunidadesview')
     permission_codename = 'view_unidade'
 
 
 class EditarUnidadeView(EditarOutrosBaseView):
     form_class = UnidadeForm
     model = Unidade
-    success_url = reverse_lazy('cadastro:listaunidadesview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listaunidadesview')
     permission_codename = 'change_unidade'
 
 
 class AdicionarMarcaView(AdicionarOutrosBaseView):
     form_class = MarcaForm
     model = Marca
-    success_url = reverse_lazy('cadastro:addmarcaview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:addmarcaview')
     permission_codename = 'add_marca'
 
 
@@ -253,12 +253,12 @@ class MarcasListView(CustomListView):
     model = Marca
     template_name = 'cadastro/produto/marca_list.html'
     context_object_name = 'all_marcas'
-    success_url = reverse_lazy('cadastro:listamarcasview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listamarcasview')
     permission_codename = 'view_marca'
 
 
 class EditarMarcaView(EditarOutrosBaseView):
     form_class = MarcaForm
     model = Marca
-    success_url = reverse_lazy('cadastro:listamarcasview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listamarcasview')
     permission_codename = 'change_marca'

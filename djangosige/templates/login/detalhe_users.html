@@ -14,12 +14,12 @@
       <div class="card">
         <div class="header">
           <h2>
-            <a href="{%url 'login:usuariosview'%}"><i class="material-icons">&#xE5C4;</i></a>
+            <a href="{%url 'djangosige.apps.login:usuariosview'%}"><i class="material-icons">&#xE5C4;</i></a>
             <span><b>Usuário: </b>{{user_match.username}}{% if user_match.is_superuser %} (Admin){% endif %}</span>
           </h2>
           <div class="header-btn">
             {%if not user_match.is_superuser%} 
-            <form action="{% url 'login:deletarusuarioview' user_match.id %}" method="post">
+            <form action="{% url 'djangosige.apps.login:deletarusuarioview' user_match.id %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="user_id" value="{{user_match.id}}">
               <button class="btn btn-red" type="submit"><i class="material-icons">&#xE872;</i><span> REMOVER</span></button>
@@ -63,7 +63,7 @@
               </table>
 
             </div>
-            <a href="{% url 'login:permissoesusuarioview' user_match.id %}" style="margin:15px;float:right;" class="btn btn-primary">EDITAR PERMISSÕES</a>
+            <a href="{% url 'djangosige.apps.login:permissoesusuarioview' user_match.id %}" style="margin:15px;float:right;" class="btn btn-primary">EDITAR PERMISSÕES</a>
         </div>
       </div>
     </div>

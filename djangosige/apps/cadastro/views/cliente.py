@@ -10,14 +10,14 @@ from .base import AdicionarPessoaView, PessoasListView, EditarPessoaView
 
 class AdicionarClienteView(AdicionarPessoaView):
     template_name = "cadastro/pessoa_add.html"
-    success_url = reverse_lazy('cadastro:listaclientesview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listaclientesview')
     success_message = "Cliente <b>%(nome_razao_social)s </b>adicionado com sucesso."
     permission_codename = 'add_cliente'
 
     def get_context_data(self, **kwargs):
         context = super(AdicionarClienteView, self).get_context_data(**kwargs)
         context['title_complete'] = 'CADASTRAR CLIENTE'
-        context['return_url'] = reverse_lazy('cadastro:listaclientesview')
+        context['return_url'] = reverse_lazy('djangosige.apps.cadastro:listaclientesview')
         context['tipo_pessoa'] = 'cliente'
         return context
 
@@ -39,13 +39,13 @@ class ClientesListView(PessoasListView):
     template_name = 'cadastro/pessoa_list.html'
     model = Cliente
     context_object_name = 'all_clientes'
-    success_url = reverse_lazy('cadastro:listaclientesview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listaclientesview')
     permission_codename = 'view_cliente'
 
     def get_context_data(self, **kwargs):
         context = super(ClientesListView, self).get_context_data(**kwargs)
         context['title_complete'] = 'CLIENTES CADASTRADOS'
-        context['add_url'] = reverse_lazy('cadastro:addclienteview')
+        context['add_url'] = reverse_lazy('djangosige.apps.cadastro:addclienteview')
         context['tipo_pessoa'] = 'cliente'
         return context
 
@@ -54,13 +54,13 @@ class EditarClienteView(EditarPessoaView):
     form_class = ClienteForm
     model = Cliente
     template_name = "cadastro/pessoa_edit.html"
-    success_url = reverse_lazy('cadastro:listaclientesview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listaclientesview')
     success_message = "Cliente <b>%(nome_razao_social)s </b>editado com sucesso."
     permission_codename = 'change_cliente'
 
     def get_context_data(self, **kwargs):
         context = super(EditarClienteView, self).get_context_data(**kwargs)
-        context['return_url'] = reverse_lazy('cadastro:listaclientesview')
+        context['return_url'] = reverse_lazy('djangosige.apps.cadastro:listaclientesview')
         context['tipo_pessoa'] = 'cliente'
         return context
 

@@ -11,7 +11,7 @@ from djangosige.apps.financeiro.forms import PlanoContasGrupoForm, PlanoContasSu
 
 class PlanoContasView(CustomTemplateView):
     template_name = "financeiro/plano/plano.html"
-    success_url = reverse_lazy('financeiro:planocontasview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:planocontasview')
     permission_codename = 'view_planocontasgrupo'
 
     def get_context_data(self, **kwargs):
@@ -73,7 +73,7 @@ class PlanoContasView(CustomTemplateView):
 class AdicionarGrupoPlanoContasView(CustomCreateView):
     form_class = PlanoContasGrupoForm
     template_name = "financeiro/plano/grupo_add.html"
-    success_url = reverse_lazy('financeiro:planocontasview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:planocontasview')
     success_message = "Grupo <b>%(descricao)s </b>adicionado com sucesso."
     permission_codename = 'add_planocontasgrupo'
 
@@ -123,7 +123,7 @@ class EditarGrupoPlanoContasView(CustomUpdateView):
     form_class = PlanoContasGrupoForm
     model = PlanoContasGrupo
     template_name = "financeiro/plano/grupo_edit.html"
-    success_url = reverse_lazy('financeiro:planocontasview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:planocontasview')
     success_message = "Grupo <b>%(descricao)s </b>editado com sucesso."
     permission_codename = 'change_planocontasgrupo'
 

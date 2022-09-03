@@ -18,22 +18,22 @@ AUT_XML_FORMSET_DATA = {
 class FiscalAdicionarViewsTestCase(BaseTestCase):
 
     def test_add_natureza_operacao_view_get_request(self):
-        url = reverse('fiscal:addnaturezaoperacaoview')
+        url = reverse('djangosige.apps.fiscal:addnaturezaoperacaoview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_grupo_fiscal_view_get_request(self):
-        url = reverse('fiscal:addgrupofiscalview')
+        url = reverse('djangosige.apps.fiscal:addgrupofiscalview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_nota_fiscal_saida_view_get_request(self):
-        url = reverse('fiscal:addnotafiscalsaidaview')
+        url = reverse('djangosige.apps.fiscal:addnotafiscalsaidaview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_natureza_operacao_view_post_request(self):
-        url = reverse('fiscal:addnaturezaoperacaoview')
+        url = reverse('djangosige.apps.fiscal:addnaturezaoperacaoview')
 
         data = {
             'cfop': '1116',
@@ -54,7 +54,7 @@ class FiscalAdicionarViewsTestCase(BaseTestCase):
             response, 'form', 'cfop', 'Este campo é obrigatório.')
 
     def test_add_grupo_fiscal_view_post_request(self):
-        url = reverse('fiscal:addgrupofiscalview')
+        url = reverse('djangosige.apps.fiscal:addgrupofiscalview')
 
         data = {
             'descricao': 'Grupo Fiscal Teste1',
@@ -84,11 +84,11 @@ class FiscalAdicionarViewsTestCase(BaseTestCase):
             response, 'form', 'descricao', 'Este campo é obrigatório.')
 
     def test_add_nota_fiscal_saida_view_post_request(self):
-        url = reverse('fiscal:addnotafiscalsaidaview')
+        url = reverse('djangosige.apps.fiscal:addnotafiscalsaidaview')
         dhatual = timezone.now().strftime('%d/%m/%Y %H:%M')
 
         data = {
-            'versao': '3.10',
+            'versao': '4.00',
             'natop': 'Natureza qualquer',
             'indpag': '0',
             'mod': '55',
@@ -123,7 +123,7 @@ class FiscalAdicionarViewsTestCase(BaseTestCase):
     def test_gerar_nota_fiscal_saida_por_pedido_venda(self):
         # Buscar objeto qualquer
         obj = PedidoVenda.objects.order_by('pk').last()
-        url = reverse('fiscal:gerarnotafiscalsaida',
+        url = reverse('djangosige.apps.fiscal:gerarnotafiscalsaida',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -136,23 +136,23 @@ class FiscalListarViewsTestCase(BaseTestCase):
     def test_list_natureza_operacao_view_deletar_objeto(self):
         obj = NaturezaOperacao.objects.create(cfop='9999')
         self.check_list_view_delete(url=reverse(
-            'fiscal:listanaturezaoperacaoview'), deleted_object=obj)
+            'djangosige.apps.fiscal:listanaturezaoperacaoview'), deleted_object=obj)
 
     def test_list_grupo_fiscal_view_deletar_objeto(self):
         obj = GrupoFiscal.objects.create(
             descricao='Grupo Fiscal Delete Teste', regime_trib='0')
         self.check_list_view_delete(url=reverse(
-            'fiscal:listagrupofiscalview'), deleted_object=obj)
+            'djangosige.apps.fiscal:listagrupofiscalview'), deleted_object=obj)
 
     def test_list_nota_fiscal_saida_view_deletar_objeto(self):
         obj = NotaFiscalSaida.objects.create(dhemi=timezone.now())
         self.check_list_view_delete(url=reverse(
-            'fiscal:listanotafiscalsaidaview'), deleted_object=obj)
+            'djangosige.apps.fiscal:listanotafiscalsaidaview'), deleted_object=obj)
 
     def test_list_nota_fiscal_entrada_view_deletar_objeto(self):
         obj = NotaFiscalEntrada.objects.create(dhemi=timezone.now())
         self.check_list_view_delete(url=reverse(
-            'fiscal:listanotafiscalentradaview'), deleted_object=obj)
+            'djangosige.apps.fiscal:listanotafiscalentradaview'), deleted_object=obj)
 
 
 class FiscalEditarViewsTestCase(BaseTestCase):
@@ -160,7 +160,7 @@ class FiscalEditarViewsTestCase(BaseTestCase):
     def test_edit_natureza_operacao_get_post_request(self):
         # Buscar objeto qualquer
         obj = NaturezaOperacao.objects.order_by('pk').last()
-        url = reverse('fiscal:editarnaturezaoperacaoview',
+        url = reverse('djangosige.apps.fiscal:editarnaturezaoperacaoview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -175,7 +175,7 @@ class FiscalEditarViewsTestCase(BaseTestCase):
     def test_edit_grupo_fiscal_get_post_request(self):
         # Buscar objeto qualquer
         obj = GrupoFiscal.objects.order_by('pk').last()
-        url = reverse('fiscal:editargrupofiscalview',
+        url = reverse('djangosige.apps.fiscal:editargrupofiscalview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -197,7 +197,7 @@ class FiscalEditarViewsTestCase(BaseTestCase):
     def test_edit_nota_fiscal_saida_get_post_request(self):
         # Buscar objeto qualquer
         obj = NotaFiscalSaida.objects.order_by('pk').last()
-        url = reverse('fiscal:editarnotafiscalsaidaview',
+        url = reverse('djangosige.apps.fiscal:editarnotafiscalsaidaview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -220,7 +220,7 @@ class FiscalEditarViewsTestCase(BaseTestCase):
     def test_edit_nota_fiscal_entrada_get_post_request(self):
         # Buscar objeto qualquer
         obj = NotaFiscalEntrada.objects.order_by('pk').last()
-        url = reverse('fiscal:editarnotafiscalentradaview',
+        url = reverse('djangosige.apps.fiscal:editarnotafiscalentradaview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -241,7 +241,7 @@ class FiscalEditarViewsTestCase(BaseTestCase):
 
 
 class FiscalConfiguracaoNotaFiscalViewTestCase(BaseTestCase):
-    url = reverse('fiscal:configuracaonotafiscal')
+    url = reverse('djangosige.apps.fiscal:configuracaonotafiscal')
 
     def test_configuracao_nfe_get_request(self):
         response = self.client.get(self.url)

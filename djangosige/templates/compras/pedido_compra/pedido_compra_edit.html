@@ -18,13 +18,13 @@
               <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>{{title_complete}}
             </h2>
             <div class="header-btn">
-              <a id="gerar_copia_pedido_compra" href="{% url 'compras:copiarpedidocompra' object.id %}" class="btn btn-primary">GERAR CÓPIA DO PEDIDO</a>
-              <a id="gerar_pdf_compra" href="{% url 'compras:gerarpdfpedidocompra' object.id %}" class="btn btn-primary">GERAR PDF</a>
+              <a id="gerar_copia_pedido_compra" href="{% url 'djangosige.apps.compras:copiarpedidocompra' object.id %}" class="btn btn-primary">GERAR CÓPIA DO PEDIDO</a>
+              <a id="gerar_pdf_compra" href="{% url 'djangosige.apps.compras:gerarpdfpedidocompra' object.id %}" class="btn btn-primary">GERAR PDF</a>
               {% if object.status == '0' %}
-              <a id="faturar_pedido" href="{% url 'financeiro:faturarpedidocompra' object.id %}" class="btn btn-success">REALIZAR PEDIDO</a>
-              <a id="cancelar_pedido_compra" href="{% url 'compras:cancelarpedidocompra' object.id %}" class="btn btn-red">CANCELAR</a>
+              <a id="faturar_pedido" href="{% url 'djangosige.apps.financeiro:faturarpedidocompra' object.id %}" class="btn btn-success">REALIZAR PEDIDO</a>
+              <a id="cancelar_pedido_compra" href="{% url 'djangosige.apps.compras:cancelarpedidocompra' object.id %}" class="btn btn-red">CANCELAR</a>
               {% elif object.status == '1'%}
-              <a id="receber_pedido" href="{% url 'compras:receberpedidocompra' object.id %}" class="btn btn-success">RECEBER PEDIDO</a>
+              <a id="receber_pedido" href="{% url 'djangosige.apps.compras:receberpedidocompra' object.id %}" class="btn btn-success">RECEBER PEDIDO</a>
               {% endif %}
             </div>
             <div><small>Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>

@@ -11,7 +11,7 @@ from djangosige.apps.estoque.models import LocalEstoque
 class AdicionarLocalEstoqueView(CustomCreateView):
     form_class = LocalEstoqueForm
     template_name = "base/popup_form.html"
-    success_url = reverse_lazy('estoque:listalocalview')
+    success_url = reverse_lazy('djangosige.apps.estoque:listalocalview')
     success_message = "Localização de estoque <b>%(descricao)s </b>adicionada com sucesso."
     permission_codename = 'add_localestoque'
 
@@ -32,12 +32,12 @@ class LocalEstoqueListView(CustomListView):
     template_name = 'estoque/local/local_list.html'
     model = LocalEstoque
     context_object_name = 'all_locais'
-    success_url = reverse_lazy('estoque:listalocalview')
+    success_url = reverse_lazy('djangosige.apps.estoque:listalocalview')
     permission_codename = 'view_localestoque'
 
     def view_context(self, context):
         context['title_complete'] = 'LOCAIS DE ESTOQUE'
-        context['add_url'] = reverse_lazy('estoque:addlocalview')
+        context['add_url'] = reverse_lazy('djangosige.apps.estoque:addlocalview')
         return context
 
     def get_context_data(self, **kwargs):
@@ -49,7 +49,7 @@ class EditarLocalEstoqueView(CustomUpdateView):
     form_class = LocalEstoqueForm
     model = LocalEstoque
     template_name = "base/popup_form.html"
-    success_url = reverse_lazy('estoque:listalocalview')
+    success_url = reverse_lazy('djangosige.apps.estoque:listalocalview')
     success_message = "Localização de estoque <b>%(descricao)s </b>editada com sucesso."
     permission_codename = 'change_localestoque'
 

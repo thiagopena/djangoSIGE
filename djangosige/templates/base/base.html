@@ -55,7 +55,7 @@
                 <a href="javascript:void(0);" class="bars"></a>
                 <div class="navbar-brand">
                 	<!-- Main icone, data e horario -->
-                    <span><a href="{% url 'base:index' %}">Django<b style="color:#e76d64;">SIGE</b></a></span>
+                    <span><a href="{% url 'djangosige.apps.base:index' %}">Django<b style="color:#e76d64;">SIGE</b></a></span>
                     <!--<span style="padding-left:30px;">Bem-vindo(a), <strong class="username-strong"></strong></span>-->
                     <span style="padding-left:25px;"><i class="material-icons">&#xE8DF;</i></span>
                     <span>{%now "l, j/m/Y"%}</span>
@@ -71,7 +71,7 @@
                 <ul class="nav navbar-nav navbar-right">
 
                     <li><a href="https://github.com/thiagopena/djangoSIGE" target="_blank" title="Ajuda" ><i class="material-icons">&#xE8FD;</i></a></li>
-                    <li><a id="logout-btn" href="{% url 'login:logoutview' %}" title="Sair" ><i class="material-icons">&#xE879;</i></a></li>
+                    <li><a id="logout-btn" href="{% url 'djangosige.apps.login:logoutview' %}" title="Sair" ><i class="material-icons">&#xE879;</i></a></li>
 
                 </ul>
             </div>
@@ -87,9 +87,9 @@
             <div class="user-info">
                 <div class="image">
                     {% if user_foto_sidebar %}
-                    <a href="{% url 'login:perfilview' %}"><img src="/media/{{user_foto_sidebar}}" width="48" height="48" alt="User" /></a>
+                    <a href="{% url 'djangosige.apps.login:perfilview' %}"><img src="/media/{{user_foto_sidebar}}" width="48" height="48" alt="User" /></a>
                     {%else%}
-                    <a href="{% url 'login:perfilview' %}"><img src="/media/imagens/user.png" width="48" height="48" alt="User" /></a>
+                    <a href="{% url 'djangosige.apps.login:perfilview' %}"><img src="/media/imagens/user.png" width="48" height="48" alt="User" /></a>
                     {%endif%}
                 </div>
                 <div class="info-container">
@@ -100,13 +100,13 @@
                     <div class="user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">&#xE313;</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="{% url 'login:perfilview' %}"><i class="material-icons">&#xE55A;</i>Perfil</a></li>
+                            <li><a href="{% url 'djangosige.apps.login:perfilview' %}"><i class="material-icons">&#xE55A;</i>Perfil</a></li>
                             <li role="seperator" class="divider"></li>
-                            <li><a {% if user_empresa %} href="{% url 'cadastro:editarempresaview' user_empresa.id %}"{%else%} class="popup" title="Selecionar Empresa" href="{% url 'login:selecionarempresaview' %}" {%endif%}><i class="material-icons">&#xE0AF;</i>Minha Empresa</a></li>
+                            <li><a {% if user_empresa %} href="{% url 'djangosige.apps.cadastro:editarempresaview' user_empresa.id %}"{%else%} class="popup" title="Selecionar Empresa" href="{% url 'djangosige.apps.login:selecionarempresaview' %}" {%endif%}><i class="material-icons">&#xE0AF;</i>Minha Empresa</a></li>
                             <li role="seperator" class="divider"></li>
-                            <li><a href="{% url 'login:usuariosview' %}"><i class="material-icons">&#xE7FB;</i>Usuários</a></li>
+                            <li><a href="{% url 'djangosige.apps.login:usuariosview' %}"><i class="material-icons">&#xE7FB;</i>Usuários</a></li>
                             <li role="seperator" class="divider"></li>
-                            <li><a id="logout-btn" href="{% url 'login:logoutview' %}" title="Sair" ><i class="material-icons">&#xE879;</i>Sair</a></li>
+                            <li><a id="logout-btn" href="{% url 'djangosige.apps.login:logoutview' %}" title="Sair" ><i class="material-icons">&#xE879;</i>Sair</a></li>
                         </ul>
                     </div>
                 </div>
@@ -117,7 +117,7 @@
             <div class="menu">
                 <ul class="list">
                     <li>
-                        <a href="{% url 'base:index' %}">
+                        <a href="{% url 'djangosige.apps.base:index' %}">
                             <i class="material-icons">&#xE88A;</i>
                             <span>Página Inicial</span>
                         </a>
@@ -130,17 +130,17 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="{% url 'cadastro:listaclientesview' %}">
+                                <a href="{% url 'djangosige.apps.cadastro:listaclientesview' %}">
                                     Clientes
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'cadastro:listafornecedoresview' %}">
+                                <a href="{% url 'djangosige.apps.cadastro:listafornecedoresview' %}">
                                     Fornecedores
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'cadastro:listaprodutosview' %}">
+                                <a href="{% url 'djangosige.apps.cadastro:listaprodutosview' %}">
                                     Produtos
                                 </a>
                             </li>
@@ -152,12 +152,12 @@
                             </li>
                             -->
                             <li>
-                                <a href="{% url 'cadastro:listaempresasview' %}">
+                                <a href="{% url 'djangosige.apps.cadastro:listaempresasview' %}">
                                     Empresas
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'cadastro:listatransportadorasview' %}">
+                                <a href="{% url 'djangosige.apps.cadastro:listatransportadorasview' %}">
                                     Transportadoras
                                 </a>
                             </li>
@@ -167,17 +167,17 @@
                                 </a>
                                 <ul class="ml-menu">
                                     <li>
-                                        <a href="{% url 'cadastro:listacategoriasview' %}">
+                                        <a href="{% url 'djangosige.apps.cadastro:listacategoriasview' %}">
                                             Categorias
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'cadastro:listaunidadesview' %}">
+                                        <a href="{% url 'djangosige.apps.cadastro:listaunidadesview' %}">
                                             Unidades
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'cadastro:listamarcasview' %}">
+                                        <a href="{% url 'djangosige.apps.cadastro:listamarcasview' %}">
                                             Marcas
                                         </a>
                                     </li>
@@ -194,19 +194,19 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="{% url 'vendas:listaorcamentovendaview' %}">
+                                <a href="{% url 'djangosige.apps.vendas:listaorcamentovendaview' %}">
                                     Orçamentos de venda
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{% url 'vendas:listapedidovendaview' %}">
+                                <a href="{% url 'djangosige.apps.vendas:listapedidovendaview' %}">
                                     Pedidos de venda
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{% url 'vendas:listacondicaopagamentoview' %}">
+                                <a href="{% url 'djangosige.apps.vendas:listacondicaopagamentoview' %}">
                                     Condições de pagamento
                                 </a>
                             </li>
@@ -221,17 +221,17 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="{% url 'compras:listaorcamentocompraview' %}">
+                                <a href="{% url 'djangosige.apps.compras:listaorcamentocompraview' %}">
                                     Orçamentos de Compra
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'compras:listapedidocompraview' %}">
+                                <a href="{% url 'djangosige.apps.compras:listapedidocompraview' %}">
                                     Pedidos de Compra
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'vendas:listacondicaopagamentoview' %}">
+                                <a href="{% url 'djangosige.apps.vendas:listacondicaopagamentoview' %}">
                                     Condições de pagamento
                                 </a>
                             </li>
@@ -252,29 +252,29 @@
                                 </a>
                                 <ul class="ml-menu">
                                     <li>
-                                        <a href="{% url 'fiscal:listanotafiscalsaidaview' %}">
+                                        <a href="{% url 'djangosige.apps.fiscal:listanotafiscalsaidaview' %}">
                                             Notas Fiscais
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'fiscal:listanotafiscalentradaview' %}">
+                                        <a href="{% url 'djangosige.apps.fiscal:listanotafiscalentradaview' %}">
                                             Notas de Fornecedores
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'fiscal:configuracaonotafiscal' %}">
+                                        <a href="{% url 'djangosige.apps.fiscal:configuracaonotafiscal' %}">
                                             Configuração NF-e
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                             <li>
-                                <a href="{% url 'fiscal:listanaturezaoperacaoview' %}">
+                                <a href="{% url 'djangosige.apps.fiscal:listanaturezaoperacaoview' %}">
                                     Natureza da operação
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'fiscal:listagrupofiscalview' %}">
+                                <a href="{% url 'djangosige.apps.fiscal:listagrupofiscalview' %}">
                                     Grupo fiscal
                                 </a>
                             </li>
@@ -284,27 +284,27 @@
                                 </a>
                                 <ul class="ml-menu">
                                     <li>
-                                        <a href="{% url 'fiscal:consultarcadastro' %}">
+                                        <a href="{% url 'djangosige.apps.fiscal:consultarcadastro' %}">
                                             Consultar cadastro
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'fiscal:inutilizarnotas' %}">
+                                        <a href="{% url 'djangosige.apps.fiscal:inutilizarnotas' %}">
                                             Inutilizar notas
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'fiscal:consultarnota' %}">
+                                        <a href="{% url 'djangosige.apps.fiscal:consultarnota' %}">
                                             Consultar nota
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'fiscal:baixarnota' %}">
+                                        <a href="{% url 'djangosige.apps.fiscal:baixarnota' %}">
                                             Baixar nota
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'fiscal:manifestacaodestinatario' %}">
+                                        <a href="{% url 'djangosige.apps.fiscal:manifestacaodestinatario' %}">
                                             Manifestação do destinatário
                                         </a>
                                     </li>
@@ -321,18 +321,18 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="{% url 'financeiro:planocontasview' %}">
+                                <a href="{% url 'djangosige.apps.financeiro:planocontasview' %}">
                                     Plano de contas
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'financeiro:fluxodecaixaview' %}">
+                                <a href="{% url 'djangosige.apps.financeiro:fluxodecaixaview' %}">
                                     Fluxo de caixa
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{% url 'financeiro:listalancamentoview' %}">
+                                <a href="{% url 'djangosige.apps.financeiro:listalancamentoview' %}">
                                     Lançamentos
                                 </a>
                             </li>
@@ -343,12 +343,12 @@
                                 </a>
                                 <ul class="ml-menu">
                                     <li>
-                                        <a href="{% url 'financeiro:listarecebimentosview' %}">
+                                        <a href="{% url 'djangosige.apps.financeiro:listarecebimentosview' %}">
                                             Recebimentos
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'financeiro:listacontareceberview' %}">
+                                        <a href="{% url 'djangosige.apps.financeiro:listacontareceberview' %}">
                                             Contas a receber
                                         </a>
                                     </li>
@@ -361,12 +361,12 @@
                                 </a>
                                 <ul class="ml-menu">
                                     <li>
-                                        <a href="{% url 'financeiro:listapagamentosview' %}">
+                                        <a href="{% url 'djangosige.apps.financeiro:listapagamentosview' %}">
                                             Pagamentos
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'financeiro:listacontapagarview' %}">
+                                        <a href="{% url 'djangosige.apps.financeiro:listacontapagarview' %}">
                                             Contas a pagar
                                         </a>
                                     </li>
@@ -383,12 +383,12 @@
                         </a>
                         <ul class="ml-menu">
                             <li>
-                                <a href="{% url 'estoque:consultaestoqueview' %}">
+                                <a href="{% url 'djangosige.apps.estoque:consultaestoqueview' %}">
                                     Consultar estoque
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'estoque:listalocalview' %}">
+                                <a href="{% url 'djangosige.apps.estoque:listalocalview' %}">
                                     Locais de estoque
                                 </a>
                             </li>
@@ -398,22 +398,22 @@
                                 </a>
                                 <ul class="ml-menu">
                                     <li>
-                                        <a href="{% url 'estoque:listamovimentoestoqueview' %}">
+                                        <a href="{% url 'djangosige.apps.estoque:listamovimentoestoqueview' %}">
                                             Todas movimentações
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'estoque:listaentradasestoqueview' %}">
+                                        <a href="{% url 'djangosige.apps.estoque:listaentradasestoqueview' %}">
                                             Entradas
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'estoque:listasaidasestoqueview' %}">
+                                        <a href="{% url 'djangosige.apps.estoque:listasaidasestoqueview' %}">
                                             Saídas
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{% url 'estoque:listatransferenciasestoqueview' %}">
+                                        <a href="{% url 'djangosige.apps.estoque:listatransferenciasestoqueview' %}">
                                             Transferências
                                         </a>
                                     </li>

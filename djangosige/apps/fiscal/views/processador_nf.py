@@ -11,10 +11,10 @@ from djangosige.apps.vendas.models import PedidoVenda, ItensVenda
 from djangosige.apps.vendas.models import Pagamento as PagamentoVenda
 
 from pysignfe.nf_e import nf_e
-from pysignfe.nfe.manual_600.nfe_310 import NFe as NFe_310
-from pysignfe.nfe.manual_600.nfe_310 import Det as Det_310
-from pysignfe.nfe.manual_600.nfe_310 import autXML as autXML_310
-from pysignfe.nfe.manual_600.nfe_310 import Dup as Dup_310
+from pysignfe.nfe.manual_700.nfe_400 import NFe as NFe_400
+from pysignfe.nfe.manual_700.nfe_400 import Det as Det_400
+from pysignfe.nfe.manual_700.nfe_400 import autXML as autXML_400
+from pysignfe.nfe.manual_700.nfe_400 import Dup as Dup_400
 
 from ssl import SSLError
 
@@ -34,9 +34,9 @@ class ProcessadorNotaFiscal(object):
         self.message = message
         return erro
 
-    def montar_nota(self, nota_obj, versao='3.10'):
-        if versao == '3.10':
-            nfe = NFe_310()
+    def montar_nota(self, nota_obj, versao='4.00'):
+        if versao == '4.00':
+            nfe = NFe_400()
 
         nfe.infNFe.ide.natOp.valor = nota_obj.natop
         nfe.infNFe.ide.indPag.valor = nota_obj.indpag
@@ -119,7 +119,7 @@ class ProcessadorNotaFiscal(object):
 
         # Autorização para obter XML
         for aut in AutXML.objects.filter(nfe=nota_obj):
-            a = autXML_310()
+            a = autXML_400()
             if len(aut.get_cpf_cnpj_apenas_digitos()) <= 11:
                 a.CPF.valor = aut.get_cpf_cnpj_apenas_digitos()
             else:
@@ -130,7 +130,7 @@ class ProcessadorNotaFiscal(object):
         # Detalhamento dos produtos e servicos
         if nota_obj.venda:
             for index, item in enumerate(nota_obj.venda.itens_venda.all(), 1):
-                det = Det_310()
+                det = Det_400()
                 det.nItem.valor = index
                 det.infAdProd.valor = item.inf_ad_prod
 
@@ -336,7 +336,7 @@ class ProcessadorNotaFiscal(object):
             nfe.infNFe.cobr.fat.vLiq.valor = nota_obj.v_liq
 
             for pagamento in nota_obj.venda.parcela_pagamento.all():
-                d = Dup_310()
+                d = Dup_400()
                 d.nDup.valor = str(pagamento.id)
                 d.dVenc.valor = pagamento.vencimento
                 d.vDup.valor = pagamento.valor_parcela
@@ -363,7 +363,7 @@ class ProcessadorNotaFiscal(object):
             self.importar_xml_cliente(request)
 
     def importar_xml_cliente(self, request):
-        nfe = NFe_310()
+        nfe = NFe_400()
         nota_saida = NotaFiscalSaida()
         venda = PedidoVenda()
 
@@ -800,7 +800,7 @@ class ProcessadorNotaFiscal(object):
             pagamento.save()
 
     def importar_xml_fornecedor(self, request):
-        nfe = NFe_310()
+        nfe = NFe_400()
         nota_entrada = NotaFiscalEntrada()
         compra = PedidoCompra()
 
@@ -1523,7 +1523,7 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message=u'CNPJ do emitente não foi preenchido.', erro=True)
         else:
             try:
-                processo = self.nova_nfe.consultar_cadastro(cert=self.info_certificado['cert'], key=self.info_certificado['key'], cpf_cnpj=empresa.cpf_cnpj_apenas_digitos, versao=u'3.10',
+                processo = self.nova_nfe.consultar_cadastro(cert=self.info_certificado['cert'], key=self.info_certificado['key'], cpf_cnpj=empresa.cpf_cnpj_apenas_digitos, versao=u'4.00',
                                                             ambiente=2, estado=empresa.uf_padrao, contingencia=False, salvar_arquivos=salvar_arquivos, caminho=MEDIA_ROOT)
 
                 self.processo = processo
@@ -1557,7 +1557,7 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message=u'CNPJ do emitente não foi preenchido.', erro=True)
         else:
             processo = self.nova_nfe.inutilizar_faixa_numeracao(cnpj=empresa.cpf_cnpj_apenas_digitos, serie=serie, numero_inicial=numero_inicial, numero_final=numero_final, justificativa=justificativa,
-                                                                cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10', ambiente=int(ambiente), estado=empresa.uf_padrao, nfce=nfce, contingencia=False, caminho=MEDIA_ROOT)
+                                                                cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'4.00', ambiente=int(ambiente), estado=empresa.uf_padrao, nfce=nfce, contingencia=False, caminho=MEDIA_ROOT)
 
             self.processo = processo
 
@@ -1581,7 +1581,7 @@ class ProcessadorNotaFiscal(object):
         except KeyError:
             return self.salvar_mensagem(message=u'Chave com código da UF incorreto.', erro=True)
 
-        processo = self.nova_nfe.consultar_nfe(chave=chave, cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10', ambiente=int(
+        processo = self.nova_nfe.consultar_nfe(chave=chave, cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'4.00', ambiente=int(
             ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
 
         self.processo = processo
@@ -1609,7 +1609,7 @@ class ProcessadorNotaFiscal(object):
         cnpj = chave[6:20]
 
         processo = self.nova_nfe.download_notas(cnpj=cnpj, lista_chaves=[chave, ], ambiente_nacional=ambiente_nacional, cert=self.info_certificado['cert'], key=self.info_certificado['key'],
-                                                versao=u'3.10', ambiente=int(ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
+                                                versao=u'4.00', ambiente=int(ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
 
         self.processo = processo
 
@@ -1633,7 +1633,7 @@ class ProcessadorNotaFiscal(object):
         except KeyError:
             return self.salvar_mensagem(message=u'Chave com código da UF incorreto.', erro=True)
 
-        processo = self.nova_nfe.efetuar_manifesto(cnpj=cnpj, tipo_manifesto=tipo_manifesto, chave=chave, ambiente_nacional=ambiente_nacional, cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10',
+        processo = self.nova_nfe.efetuar_manifesto(cnpj=cnpj, tipo_manifesto=tipo_manifesto, chave=chave, ambiente_nacional=ambiente_nacional, cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'4.00',
                                                    ambiente=int(ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
 
         self.processo = processo

@@ -151,21 +151,21 @@ class AdicionarLancamentoBaseView(CustomCreateView, MovimentoCaixaMixin):
 class AdicionarContaPagarView(AdicionarLancamentoBaseView):
     form_class = ContaPagarForm
     template_name = "financeiro/lancamento/lancamento_add.html"
-    success_url = reverse_lazy('financeiro:listacontapagarview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listacontapagarview')
     success_message = "Conta a pagar <b>%(descricao)s </b>adicionada com sucesso."
 
     def get_context_data(self, **kwargs):
         context = super(AdicionarContaPagarView,
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'ADICIONAR CONTA A PAGAR'
-        context['return_url'] = reverse_lazy('financeiro:listacontapagarview')
+        context['return_url'] = reverse_lazy('djangosige.apps.financeiro:listacontapagarview')
         return context
 
 
 class AdicionarContaReceberView(AdicionarLancamentoBaseView):
     form_class = ContaReceberForm
     template_name = "financeiro/lancamento/lancamento_add.html"
-    success_url = reverse_lazy('financeiro:listacontareceberview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listacontareceberview')
     success_message = "Conta a receber <b>%(descricao)s </b>adicionada com sucesso."
 
     def get_context_data(self, **kwargs):
@@ -173,34 +173,34 @@ class AdicionarContaReceberView(AdicionarLancamentoBaseView):
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'ADICIONAR CONTA A RECEBER'
         context['return_url'] = reverse_lazy(
-            'financeiro:listacontareceberview')
+            'djangosige.apps.financeiro:listacontareceberview')
         return context
 
 
 class AdicionarEntradaView(AdicionarLancamentoBaseView):
     form_class = EntradaForm
     template_name = "financeiro/lancamento/lancamento_add.html"
-    success_url = reverse_lazy('financeiro:listarecebimentosview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listarecebimentosview')
     success_message = "Recebimento <b>%(descricao)s </b>adicionado com sucesso."
 
     def get_context_data(self, **kwargs):
         context = super(AdicionarEntradaView, self).get_context_data(**kwargs)
         context['title_complete'] = 'ADICIONAR RECEBIMENTO'
         context['return_url'] = reverse_lazy(
-            'financeiro:listarecebimentosview')
+            'djangosige.apps.financeiro:listarecebimentosview')
         return context
 
 
 class AdicionarSaidaView(AdicionarLancamentoBaseView):
     form_class = SaidaForm
     template_name = "financeiro/lancamento/lancamento_add.html"
-    success_url = reverse_lazy('financeiro:listapagamentosview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listapagamentosview')
     success_message = "Pagamento <b>%(descricao)s </b>adicionado com sucesso."
 
     def get_context_data(self, **kwargs):
         context = super(AdicionarSaidaView, self).get_context_data(**kwargs)
         context['title_complete'] = 'ADICIONAR PAGAMENTO'
-        context['return_url'] = reverse_lazy('financeiro:listapagamentosview')
+        context['return_url'] = reverse_lazy('djangosige.apps.financeiro:listapagamentosview')
         return context
 
 
@@ -323,12 +323,12 @@ class EditarContaPagarView(EditarLancamentoBaseView):
     form_class = ContaPagarForm
     model = Saida
     template_name = "financeiro/lancamento/lancamento_edit.html"
-    success_url = reverse_lazy('financeiro:listacontapagarview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listacontapagarview')
     success_message = "Conta a pagar <b>%(descricao)s </b>editada com sucesso."
 
     def get_context_data(self, **kwargs):
         context = super(EditarContaPagarView, self).get_context_data(**kwargs)
-        context['return_url'] = reverse_lazy('financeiro:listacontapagarview')
+        context['return_url'] = reverse_lazy('djangosige.apps.financeiro:listacontapagarview')
         return context
 
 
@@ -336,14 +336,14 @@ class EditarContaReceberView(EditarLancamentoBaseView):
     form_class = ContaReceberForm
     model = Entrada
     template_name = "financeiro/lancamento/lancamento_edit.html"
-    success_url = reverse_lazy('financeiro:listacontareceberview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listacontareceberview')
     success_message = "Conta a receber <b>%(descricao)s </b>editada com sucesso."
 
     def get_context_data(self, **kwargs):
         context = super(EditarContaReceberView,
                         self).get_context_data(**kwargs)
         context['return_url'] = reverse_lazy(
-            'financeiro:listacontareceberview')
+            'djangosige.apps.financeiro:listacontareceberview')
         return context
 
 
@@ -351,13 +351,13 @@ class EditarEntradaView(EditarLancamentoBaseView):
     form_class = EntradaForm
     model = Entrada
     template_name = "financeiro/lancamento/lancamento_edit.html"
-    success_url = reverse_lazy('financeiro:listarecebimentosview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listarecebimentosview')
     success_message = "Recebimento <b>%(descricao)s </b>editado com sucesso."
 
     def get_context_data(self, **kwargs):
         context = super(EditarEntradaView, self).get_context_data(**kwargs)
         context['return_url'] = reverse_lazy(
-            'financeiro:listarecebimentosview')
+            'djangosige.apps.financeiro:listarecebimentosview')
         return context
 
 
@@ -365,12 +365,12 @@ class EditarSaidaView(EditarLancamentoBaseView):
     form_class = SaidaForm
     model = Saida
     template_name = "financeiro/lancamento/lancamento_edit.html"
-    success_url = reverse_lazy('financeiro:listapagamentosview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listapagamentosview')
     success_message = "Pagamento <b>%(descricao)s </b>editado com sucesso."
 
     def get_context_data(self, **kwargs):
         context = super(EditarSaidaView, self).get_context_data(**kwargs)
-        context['return_url'] = reverse_lazy('financeiro:listapagamentosview')
+        context['return_url'] = reverse_lazy('djangosige.apps.financeiro:listapagamentosview')
         return context
 
 
@@ -398,7 +398,7 @@ class LancamentoListBaseView(CustomListView, MovimentoCaixaMixin):
 class LancamentoListView(LancamentoListBaseView):
     template_name = 'financeiro/lancamento/lancamento_list.html'
     context_object_name = 'all_lancamentos'
-    success_url = reverse_lazy('financeiro:listalancamentoview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listalancamentoview')
 
     def get_context_data(self, **kwargs):
         context = super(LancamentoListView, self).get_context_data(**kwargs)
@@ -436,12 +436,12 @@ class ContaPagarListView(LancamentoListBaseView):
     template_name = 'financeiro/lancamento/lancamento_list.html'
     model = Saida
     context_object_name = 'all_contaspagar'
-    success_url = reverse_lazy('financeiro:listacontapagarview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listacontapagarview')
 
     def get_context_data(self, **kwargs):
         context = super(ContaPagarListView, self).get_context_data(**kwargs)
         context['title_complete'] = 'CONTAS A PAGAR'
-        context['add_url'] = reverse_lazy('financeiro:addcontapagarview')
+        context['add_url'] = reverse_lazy('djangosige.apps.financeiro:addcontapagarview')
         return context
 
     def get_queryset(self):
@@ -452,13 +452,13 @@ class ContaPagarAtrasadasListView(LancamentoListBaseView):
     template_name = 'financeiro/lancamento/lancamento_list.html'
     model = Saida
     context_object_name = 'all_contaspagar'
-    success_url = reverse_lazy('financeiro:listacontapagaratrasadasview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listacontapagaratrasadasview')
 
     def get_context_data(self, **kwargs):
         context = super(ContaPagarAtrasadasListView,
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'CONTAS A PAGAR ATRASADAS'
-        context['add_url'] = reverse_lazy('financeiro:addcontapagarview')
+        context['add_url'] = reverse_lazy('djangosige.apps.financeiro:addcontapagarview')
         return context
 
     def get_queryset(self):
@@ -466,14 +466,14 @@ class ContaPagarAtrasadasListView(LancamentoListBaseView):
 
 
 class ContaPagarHojeListView(ContaPagarAtrasadasListView):
-    success_url = reverse_lazy('financeiro:listacontapagarhojeview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listacontapagarhojeview')
 
     def get_context_data(self, **kwargs):
         context = super(ContaPagarHojeListView,
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'CONTAS A PAGAR DO DIA ' + \
             datetime.now().date().strftime('%d/%m/%Y')
-        context['add_url'] = reverse_lazy('financeiro:addcontapagarview')
+        context['add_url'] = reverse_lazy('djangosige.apps.financeiro:addcontapagarview')
         return context
 
     def get_queryset(self):
@@ -484,12 +484,12 @@ class ContaReceberListView(LancamentoListBaseView):
     template_name = 'financeiro/lancamento/lancamento_list.html'
     model = Entrada
     context_object_name = 'all_contasreceber'
-    success_url = reverse_lazy('financeiro:listacontareceberview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listacontareceberview')
 
     def get_context_data(self, **kwargs):
         context = super(ContaReceberListView, self).get_context_data(**kwargs)
         context['title_complete'] = 'CONTAS A RECEBER'
-        context['add_url'] = reverse_lazy('financeiro:addcontareceberview')
+        context['add_url'] = reverse_lazy('djangosige.apps.financeiro:addcontareceberview')
         return context
 
     def get_queryset(self):
@@ -500,13 +500,13 @@ class ContaReceberAtrasadasListView(LancamentoListBaseView):
     template_name = 'financeiro/lancamento/lancamento_list.html'
     model = Entrada
     context_object_name = 'all_contasreceber'
-    success_url = reverse_lazy('financeiro:listacontareceberatrasadasview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listacontareceberatrasadasview')
 
     def get_context_data(self, **kwargs):
         context = super(ContaReceberAtrasadasListView,
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'CONTAS A RECEBER ATRASADAS'
-        context['add_url'] = reverse_lazy('financeiro:addcontareceberview')
+        context['add_url'] = reverse_lazy('djangosige.apps.financeiro:addcontareceberview')
         return context
 
     def get_queryset(self):
@@ -514,14 +514,14 @@ class ContaReceberAtrasadasListView(LancamentoListBaseView):
 
 
 class ContaReceberHojeListView(ContaReceberAtrasadasListView):
-    success_url = reverse_lazy('financeiro:listacontareceberhojeview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listacontareceberhojeview')
 
     def get_context_data(self, **kwargs):
         context = super(ContaReceberHojeListView,
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'CONTAS A RECEBER DO DIA ' + \
             datetime.now().date().strftime('%d/%m/%Y')
-        context['add_url'] = reverse_lazy('financeiro:addcontareceberview')
+        context['add_url'] = reverse_lazy('djangosige.apps.financeiro:addcontareceberview')
         return context
 
     def get_queryset(self):
@@ -532,12 +532,12 @@ class EntradaListView(LancamentoListBaseView):
     template_name = 'financeiro/lancamento/lancamento_list.html'
     model = Entrada
     context_object_name = 'all_entradas'
-    success_url = reverse_lazy('financeiro:listarecebimentosview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listarecebimentosview')
 
     def get_context_data(self, **kwargs):
         context = super(EntradaListView, self).get_context_data(**kwargs)
         context['title_complete'] = 'RECEBIMENTOS'
-        context['add_url'] = reverse_lazy('financeiro:addrecebimentoview')
+        context['add_url'] = reverse_lazy('djangosige.apps.financeiro:addrecebimentoview')
         return context
 
     def get_queryset(self):
@@ -548,12 +548,12 @@ class SaidaListView(LancamentoListBaseView):
     template_name = 'financeiro/lancamento/lancamento_list.html'
     model = Saida
     context_object_name = 'all_saidas'
-    success_url = reverse_lazy('financeiro:listapagamentosview')
+    success_url = reverse_lazy('djangosige.apps.financeiro:listapagamentosview')
 
     def get_context_data(self, **kwargs):
         context = super(SaidaListView, self).get_context_data(**kwargs)
         context['title_complete'] = 'PAGAMENTOS'
-        context['add_url'] = reverse_lazy('financeiro:addpagamentoview')
+        context['add_url'] = reverse_lazy('djangosige.apps.financeiro:addpagamentoview')
         return context
 
     def get_queryset(self):
@@ -571,7 +571,7 @@ class GerarLancamentoView(CustomView, MovimentoCaixaMixin):
         if request.POST['tipoConta'] == '0':
             obj = Entrada.objects.get(id=conta_id)
             data['url'] = reverse_lazy(
-                'financeiro:editarrecebimentoview', kwargs={'pk': obj.id})
+                'djangosige.apps.financeiro:editarrecebimentoview', kwargs={'pk': obj.id})
             obj.status = '0'
             obj.data_pagamento = datetime.strptime(
                 request.POST['dataPagamento'], '%d/%m/%Y').strftime('%Y-%m-%d')
@@ -581,7 +581,7 @@ class GerarLancamentoView(CustomView, MovimentoCaixaMixin):
         elif request.POST['tipoConta'] == '1':
             obj = Saida.objects.get(id=conta_id)
             data['url'] = reverse_lazy(
-                'financeiro:editarpagamentoview', kwargs={'pk': obj.id})
+                'djangosige.apps.financeiro:editarpagamentoview', kwargs={'pk': obj.id})
             obj.status = '0'
             obj.data_pagamento = datetime.strptime(
                 request.POST['dataPagamento'], '%d/%m/%Y').strftime('%Y-%m-%d')
@@ -727,7 +727,7 @@ class FaturarPedidoVendaView(CustomView, MovimentoCaixaMixin):
         messages.success(
             request, "<b>Pedido de venda {0} </b>faturado com sucesso.".format(str(pedido.id)))
 
-        return redirect(reverse_lazy('vendas:listapedidovendaview'))
+        return redirect(reverse_lazy('djangosige.apps.vendas:listapedidovendaview'))
 
 
 class FaturarPedidoCompraView(CustomView, MovimentoCaixaMixin):
@@ -774,4 +774,4 @@ class FaturarPedidoCompraView(CustomView, MovimentoCaixaMixin):
         messages.success(
             request, "<b>Pedido de compra {0} </b>realizado com sucesso.".format(str(pedido.id)))
 
-        return redirect(reverse_lazy('compras:listapedidocompraview'))
+        return redirect(reverse_lazy('djangosige.apps.compras:listapedidocompraview'))

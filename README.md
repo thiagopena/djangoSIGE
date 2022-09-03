@@ -7,8 +7,8 @@ Projeto independente open-source desenvolvido em Python 3 no Windows, testado no
 
 ## Dependências
 
-- [Python](https://www.python.org/downloads/) - Versão 3.5+
-- [django](http://www.djangoproject.com) == 3.1.7
+- [Python](https://www.python.org/downloads/) - Versão 4.00+
+- [django](http://www.djangoproject.com) == 4.1
 - [geraldo](https://github.com/thiagopena/geraldo) - Geração de PDF para pedidos de venda/compra
 - [PySIGNFe](https://github.com/thiagopena/PySIGNFe) (Opcional) - Necessário para a geração de NF-e, NFC-e, comunicação com SEFAZ, geração do DANFE, etc.
 - [apache2](https://www.apache.org/) (Opcional)

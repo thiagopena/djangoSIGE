@@ -18,12 +18,12 @@
               <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>{{title_complete}}
             </h2>
             <div class="header-btn">
-              <a id="gerar_pdf_venda" href="{% url 'vendas:gerarpdforcamentovenda' object.id %}" class="btn btn-primary">GERAR PDF</a>
+              <a id="gerar_pdf_venda" href="{% url 'djangosige.apps.vendas:gerarpdforcamentovenda' object.id %}" class="btn btn-primary">GERAR PDF</a>
               {% if object.status == '0' %}
-              <a id="gerar_pedido_venda" href="{% url 'vendas:gerarpedidovenda' object.id %}" class="btn btn-success">GERAR PEDIDO</a>
-              <a id="cancelar_orcamento_venda" href="{% url 'vendas:cancelarorcamentovenda' object.id %}" class="btn btn-red">CANCELAR</a>
+              <a id="gerar_pedido_venda" href="{% url 'djangosige.apps.vendas:gerarpedidovenda' object.id %}" class="btn btn-success">GERAR PEDIDO</a>
+              <a id="cancelar_orcamento_venda" href="{% url 'djangosige.apps.vendas:cancelarorcamentovenda' object.id %}" class="btn btn-red">CANCELAR</a>
               {% else %}
-              <a id="gerar_copia_orcamento_venda" href="{% url 'vendas:copiarorcamentovenda' object.id %}" class="btn btn-primary">GERAR CÓPIA DO ORÇAMENTO</a>
+              <a id="gerar_copia_orcamento_venda" href="{% url 'djangosige.apps.vendas:copiarorcamentovenda' object.id %}" class="btn btn-primary">GERAR CÓPIA DO ORÇAMENTO</a>
               {% endif %}
             </div>
             <div><small>Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>

@@ -18,7 +18,7 @@
             PLANO DE CONTAS
           </h2>
           <div class="header-btn">
-            <a href="{% url 'financeiro:addgrupoview' %}" class="btn btn-success"><i class="material-icons">&#xE148;</i><span> ADICIONAR</span></a>
+            <a href="{% url 'djangosige.apps.financeiro:addgrupoview' %}" class="btn btn-success"><i class="material-icons">&#xE148;</i><span> ADICIONAR</span></a>
             <button class="btn btn-red btn-remove"><i class="material-icons">&#xE872;</i></button>
           </div>
           <div>
@@ -51,7 +51,7 @@
                   <tbody>
                   {% if all_grupos_entrada %}
                   {% for ge in all_grupos_entrada %}
-                  <tr class="clickable-row plano-grupo-row" data-href="{% url 'financeiro:editargrupoview' ge.id %}">
+                  <tr class="clickable-row plano-grupo-row" data-href="{% url 'djangosige.apps.financeiro:editargrupoview' ge.id %}">
                     <td class="prevent-click-row" data-toggle="collapse" data-target=".accordion-{{ge.id}}"><i style="vertical-align:inherit;" class="material-icons">&#xE5C5;</i>{{ge.codigo}}</td>
                     <td>{{ge.descricao}}</td>
                     <td>{{ge.get_tipo_grupo_display}}</td>
@@ -97,7 +97,7 @@
                   <tbody>
                   {% if all_grupos_saida %}
                   {% for gs in all_grupos_saida %}
-                  <tr class="clickable-row plano-grupo-row" data-href="{% url 'financeiro:editargrupoview' gs.id %}">
+                  <tr class="clickable-row plano-grupo-row" data-href="{% url 'djangosige.apps.financeiro:editargrupoview' gs.id %}">
                     <td class="prevent-click-row" data-toggle="collapse" data-target=".accordion-{{gs.id}}"><i style="vertical-align:inherit;" class="material-icons">&#xE5C5;</i>{{gs.codigo}}</td>
                     <td>{{gs.descricao}}</td>
                     <td>{{gs.get_tipo_grupo_display}}</td>
