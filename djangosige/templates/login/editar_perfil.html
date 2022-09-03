@@ -14,7 +14,7 @@
       <div class="card">
         <div class="header">
           <h2>
-            <a href="{% url 'login:perfilview' %}"><i class="material-icons">&#xE5C4;</i></a>
+            <a href="{% url 'djangosige.apps.login:perfilview' %}"><i class="material-icons">&#xE5C4;</i></a>
             EDITAR PERFIL
           </h2>
         </div>
@@ -40,7 +40,7 @@
               <div class="form-line">
                 {{minha_empresa_form.m_empresa}}
               </div>
-              <a class="input-group-addon" style="color: green;" href="{% url 'cadastro:addempresaview' %}"><i class="material-icons add-new-icon" title="Adicionar empresa">&#xE147;</i></a>
+              <a class="input-group-addon" style="color: green;" href="{% url 'djangosige.apps.cadastro:addempresaview' %}"><i class="material-icons add-new-icon" title="Adicionar empresa">&#xE147;</i></a>
             </div>
           </div>
 

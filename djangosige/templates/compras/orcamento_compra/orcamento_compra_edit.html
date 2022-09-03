@@ -18,12 +18,12 @@
               <a href="{{return_url}}"><i class="material-icons">&#xE5C4;</i></a>{{title_complete}}
             </h2>
             <div class="header-btn">
-              <a id="gerar_pdf_compra" href="{% url 'compras:gerarpdforcamentocompra' object.id %}" class="btn btn-primary">GERAR PDF</a>
+              <a id="gerar_pdf_compra" href="{% url 'djangosige.apps.compras:gerarpdforcamentocompra' object.id %}" class="btn btn-primary">GERAR PDF</a>
               {% if object.status == '0' %}
-              <a id="gerar_pedido_compra" href="{% url 'compras:gerarpedidocompra' object.id %}" class="btn btn-success">GERAR PEDIDO</a>
-              <a id="cancelar_orcamento_compra" href="{% url 'compras:cancelarorcamentocompra' object.id %}" class="btn btn-red">CANCELAR</a>
+              <a id="gerar_pedido_compra" href="{% url 'djangosige.apps.compras:gerarpedidocompra' object.id %}" class="btn btn-success">GERAR PEDIDO</a>
+              <a id="cancelar_orcamento_compra" href="{% url 'djangosige.apps.compras:cancelarorcamentocompra' object.id %}" class="btn btn-red">CANCELAR</a>
               {% else %}
-              <a id="gerar_copia_orcamento_compra" href="{% url 'compras:copiarorcamentocompra' object.id %}" class="btn btn-primary">GERAR CÓPIA DO ORÇAMENTO</a>
+              <a id="gerar_copia_orcamento_compra" href="{% url 'djangosige.apps.compras:copiarorcamentocompra' object.id %}" class="btn btn-primary">GERAR CÓPIA DO ORÇAMENTO</a>
               {% endif %}
             </div>
             <div><small>Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>

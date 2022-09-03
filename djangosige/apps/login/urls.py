@@ -2,6 +2,7 @@ from django.urls import re_path as url
 from . import views
 
 app_name = 'djangosige.apps.login'
+
 urlpatterns = [
     # login/
     url(r'^$', views.UserFormView.as_view(), name='loginview'),

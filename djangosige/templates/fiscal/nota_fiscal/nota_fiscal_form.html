@@ -242,7 +242,7 @@
                 <div class="form-line">
                   {{form.emit_saida}}
                 </div>
-                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Empresa" href="{% url 'cadastro:addempresaview' %}"><i class="material-icons add-new-icon" title="Adicionar Empresa">&#xE147;</i></a>
+                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Empresa" href="{% url 'djangosige.apps.cadastro:addempresaview' %}"><i class="material-icons add-new-icon" title="Adicionar Empresa">&#xE147;</i></a>
               </div>
 
               {% elif entrada %}
@@ -253,7 +253,7 @@
                 <div class="form-line">
                   {{form.emit_entrada}}
                 </div>
-                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Fornecedor" href="{% url 'cadastro:addfornecedorview' %}"><i class="material-icons add-new-icon" title="Adicionar Fornecedor">&#xE147;</i></a>
+                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Fornecedor" href="{% url 'djangosige.apps.cadastro:addfornecedorview' %}"><i class="material-icons add-new-icon" title="Adicionar Fornecedor">&#xE147;</i></a>
               </div>
 
               {% endif %}
@@ -385,7 +385,7 @@
                   <div class="form-line">
                     {{form.dest_saida}}
                   </div>
-                  <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Cliente" href="{% url 'cadastro:addclienteview' %}"><i class="material-icons add-new-icon" title="Adicionar Cliente">&#xE147;</i></a>
+                  <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Cliente" href="{% url 'djangosige.apps.cadastro:addclienteview' %}"><i class="material-icons add-new-icon" title="Adicionar Cliente">&#xE147;</i></a>
                 </div>
 
                 {% elif entrada %}
@@ -396,7 +396,7 @@
                   <div class="form-line">
                     {{form.dest_entrada}}
                   </div>
-                  <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Empresa" href="{% url 'cadastro:addempresaview' %}"><i class="material-icons add-new-icon" title="Adicionar Empresa">&#xE147;</i></a>
+                  <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Empresa" href="{% url 'djangosige.apps.cadastro:addempresaview' %}"><i class="material-icons add-new-icon" title="Adicionar Empresa">&#xE147;</i></a>
                 </div>
 
                 {% endif %}
@@ -550,7 +550,7 @@
                 <div class="form-line">
                   {{form.venda}}
                 </div>
-                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Venda" href="{% url 'vendas:addpedidovendaview' %}"><i class="material-icons add-new-icon" title="Adicionar Venda">&#xE147;</i></a>
+                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Venda" href="{% url 'djangosige.apps.vendas:addpedidovendaview' %}"><i class="material-icons add-new-icon" title="Adicionar Venda">&#xE147;</i></a>
               </div>
             </div>
           </div>
@@ -781,7 +781,7 @@
                 <div class="form-line">
                   {{form.compra}}
                 </div>
-                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Compra" href="{% url 'compras:addpedidocompraview' %}"><i class="material-icons add-new-icon" title="Adicionar Compra">&#xE147;</i></a>
+                <a class="input-group-addon newwindow" style="color: green;" title="Adicionar Compra" href="{% url 'djangosige.apps.compras:addpedidocompraview' %}"><i class="material-icons add-new-icon" title="Adicionar Compra">&#xE147;</i></a>
               </div>
             </div>
           </div>

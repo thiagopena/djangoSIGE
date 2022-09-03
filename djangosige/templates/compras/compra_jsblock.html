@@ -10,8 +10,8 @@
 
  <script type="text/javascript">
     var req_urls = {}
-    req_urls.info_fornecedor_url = "{% url 'cadastro:infofornecedor' %}"
-    req_urls.info_produto_url = "{% url 'cadastro:infoproduto' %}"
-    req_urls.info_pagamento_url = "{% url 'vendas:infocondpagamento' %}"
+    req_urls.info_fornecedor_url = "{% url 'djangosige.apps.cadastro:infofornecedor' %}"
+    req_urls.info_produto_url = "{% url 'djangosige.apps.cadastro:infoproduto' %}"
+    req_urls.info_pagamento_url = "{% url 'djangosige.apps.vendas:infocondpagamento' %}"
     $.Admin.compraForm.init(req_urls);
   </script>

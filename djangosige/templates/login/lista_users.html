@@ -19,7 +19,7 @@
               USUÁRIOS CADASTRADOS
             </h2>
               <div class="header-btn">
-                <a href="{% url 'login:registrarview' %}" class="btn btn-success"><i class="material-icons">&#xE7FE;</i><span> CRIAR NOVO</span></a>
+                <a href="{% url 'djangosige.apps.login:registrarview' %}" class="btn btn-success"><i class="material-icons">&#xE7FE;</i><span> CRIAR NOVO</span></a>
                 <button class="btn btn-red btn-remove"><i class="material-icons">&#xE872;</i></button>
               </div>
           </div>
@@ -44,7 +44,7 @@
               <tbody>
                {% if all_users%}
                {% for usr in all_users %}
-               <tr class="clickable-row" data-href="{% url 'login:usuariodetailview' usr.id %}">
+               <tr class="clickable-row" data-href="{% url 'djangosige.apps.login:usuariodetailview' usr.id %}">
                 <td>{{usr.id}}</td>
                 <td>{{usr.username}}</td>
                 <td>{{usr.first_name|default_if_none:""}}</td>

@@ -15,7 +15,7 @@
     <tbody>
      {% if all_saidas %}
      {% for saida in all_saidas %}
-     <tr class="clickable-row" data-href="{% url 'financeiro:editarpagamentoview' saida.id %}">
+     <tr class="clickable-row" data-href="{% url 'djangosige.apps.financeiro:editarpagamentoview' saida.id %}">
       <td>{{saida.id}}</td>
       <td>{{saida.descricao}}</td>
       <td>{{saida.format_data_pagamento|default_if_none:""}}</td>

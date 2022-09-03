@@ -16,7 +16,7 @@
     <tbody>
      {% if all_contaspagar%}
      {% for conta in all_contaspagar %}
-     <tr class="clickable-row" data-href="{% url 'financeiro:editarcontapagarview' conta.id %}">
+     <tr class="clickable-row" data-href="{% url 'djangosige.apps.financeiro:editarcontapagarview' conta.id %}">
       <td>{{conta.id}}</td>
       <td>{{conta.descricao}}</td>
       <td>{{conta.format_data_vencimento|default_if_none:""}}</td>

@@ -20,7 +20,7 @@
               UNIDADES CADASTRADAS
             </h2>
               <div class="header-btn">
-                <a href="{% url 'cadastro:addunidadeview' %}" class="btn btn-success popup" title="Adicionar unidade"><i class="material-icons">&#xE148;</i><span> ADICIONAR</span></a>
+                <a href="{% url 'djangosige.apps.cadastro:addunidadeview' %}" class="btn btn-success popup" title="Adicionar unidade"><i class="material-icons">&#xE148;</i><span> ADICIONAR</span></a>
                 <button class="btn btn-red btn-remove"><i class="material-icons">&#xE872;</i></button>
               </div>
           </div>
@@ -43,7 +43,7 @@
               <tbody>
                {% if all_unidades%}
                {% for unidade in all_unidades %}
-               <tr class="clickable-row popup" href="{% url 'cadastro:editarunidadeview' unidade.id %}">
+               <tr class="clickable-row popup" href="{% url 'djangosige.apps.cadastro:editarunidadeview' unidade.id %}">
                 <td>{{unidade.id}}</td>
                 <td>{{unidade.sigla_unidade}}</td>
                 <td>{{unidade.unidade_desc}}</td>

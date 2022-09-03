@@ -10,9 +10,9 @@
 
  <script type="text/javascript">
     var req_urls = {}
-    req_urls.info_produto_url = "{% url 'cadastro:infoproduto' %}"
-    req_urls.info_venda_url = "{% url 'vendas:infovenda' %}"
-    req_urls.info_compra_url = "{% url 'compras:infocompra' %}"
+    req_urls.info_produto_url = "{% url 'djangosige.apps.cadastro:infoproduto' %}"
+    req_urls.info_venda_url = "{% url 'djangosige.apps.vendas:infovenda' %}"
+    req_urls.info_compra_url = "{% url 'djangosige.apps.compras:infocompra' %}"
     $.Admin.movimentoEstoqueForm.init(req_urls);
     $.Admin.maskInput.maskMovimentoEstoque();
     

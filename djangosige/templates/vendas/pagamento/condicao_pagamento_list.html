@@ -43,7 +43,7 @@
               <tbody>
                {% if all_cond_pagamento%}
                {% for cond in all_cond_pagamento %}
-               <tr class="clickable-row" data-href="{% url 'vendas:editarcondicaopagamentoview' cond.id %}">
+               <tr class="clickable-row" data-href="{% url 'djangosige.apps.vendas:editarcondicaopagamentoview' cond.id %}">
                 <td>{{cond.id}}</td>
                 <td>{{cond.descricao}}</td>
                 <td>{{cond.n_parcelas}}</td>

@@ -25,9 +25,9 @@
                   <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Adicionar
                   <span class="caret"></span></button>
                   <ul class="dropdown-menu pull-right">
-                    <li><a href="{% url 'estoque:addentradaestoqueview' %}">Entrada em estoque</a></li>
-                    <li><a href="{% url 'estoque:addsaidaestoqueview' %}">Saída de estoque</a></li>
-                    <li><a href="{% url 'estoque:addtransferenciaestoqueview' %}">Transferência de estoque</a></li>
+                    <li><a href="{% url 'djangosige.apps.estoque:addentradaestoqueview' %}">Entrada em estoque</a></li>
+                    <li><a href="{% url 'djangosige.apps.estoque:addsaidaestoqueview' %}">Saída de estoque</a></li>
+                    <li><a href="{% url 'djangosige.apps.estoque:addtransferenciaestoqueview' %}">Transferência de estoque</a></li>
                   </ul>
                 </div>
                 {% endif %}
@@ -79,7 +79,7 @@
 
   <script type="text/javascript">
     var req_urls = {}
-    req_urls.gerar_lancamento_url = "{% url 'financeiro:gerarlancamento' %}"
+    req_urls.gerar_lancamento_url = "{% url 'djangosige.apps.financeiro:gerarlancamento' %}"
 
     $.Admin.maskInput.maskLancamento();
     $.Admin.lancamentoList.init(req_urls);

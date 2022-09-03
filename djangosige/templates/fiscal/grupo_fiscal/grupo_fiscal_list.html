@@ -40,7 +40,7 @@
               <tbody>
                {% if all_grupos%}
                {% for grupo in all_grupos %}
-               <tr class="clickable-row" data-href="{% url 'fiscal:editargrupofiscalview' grupo.id %}">
+               <tr class="clickable-row" data-href="{% url 'djangosige.apps.fiscal:editargrupofiscalview' grupo.id %}">
                 <td>{{grupo.id}}</td>
                 <td>{{grupo.descricao}}</td>
                 <td class="lista-remove">

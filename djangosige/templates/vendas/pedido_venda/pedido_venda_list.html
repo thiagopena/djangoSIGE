@@ -43,7 +43,7 @@
               <tbody>
                {% if all_pedidos%}
                {% for pedido in all_pedidos %}
-               <tr class="clickable-row" data-href="{% url 'vendas:editarpedidovendaview' pedido.id %}">
+               <tr class="clickable-row" data-href="{% url 'djangosige.apps.vendas:editarpedidovendaview' pedido.id %}">
                 <td>{{pedido.id}}</td>
                 <td><b>{{pedido.get_status_display}}</b></td>
                 <td>{{pedido.cliente|default_if_none:""}}</td>

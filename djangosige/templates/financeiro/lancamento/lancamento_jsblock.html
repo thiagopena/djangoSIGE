@@ -10,7 +10,7 @@
 
  <script type="text/javascript">
  	var req_urls = {}
- 	req_urls.gerar_lancamento_url = "{% url 'financeiro:gerarlancamento' %}"
+ 	req_urls.gerar_lancamento_url = "{% url 'djangosige.apps.financeiro:gerarlancamento' %}"
 
     $.Admin.maskInput.maskLancamento();
     $.Admin.lancamentoForm.init(req_urls);

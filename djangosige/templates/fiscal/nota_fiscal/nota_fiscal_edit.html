@@ -24,16 +24,16 @@
                 <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">Ações
                 <span class="caret"></span></button>
                 <ul class="dropdown-menu pull-right">
-                  <li><a href="{% url 'fiscal:validarnotafiscal' object.id %}">Validar XML</a></li>
-                  <li><a href="{% url 'fiscal:emitirnotafiscal' object.id %}">Emitir Nota</a></li>
-                  <li><a href="{% url 'fiscal:consultarnota' object.id %}">Consultar Nota</a></li>
-                  <li><a href="{% url 'fiscal:baixarnota' object.id %}">Baixar Nota</a></li>
-                  <li><a href="{% url 'fiscal:cancelarnotafiscal' object.id %}">Cancelar Nota</a></li>
-                  <li><a href="{% url 'fiscal:copiarnotafiscal' object.id %}">Clonar Nota</a></li>
+                  <li><a href="{% url 'djangosige.apps.fiscal:validarnotafiscal' object.id %}">Validar XML</a></li>
+                  <li><a href="{% url 'djangosige.apps.fiscal:emitirnotafiscal' object.id %}">Emitir Nota</a></li>
+                  <li><a href="{% url 'djangosige.apps.fiscal:consultarnota' object.id %}">Consultar Nota</a></li>
+                  <li><a href="{% url 'djangosige.apps.fiscal:baixarnota' object.id %}">Baixar Nota</a></li>
+                  <li><a href="{% url 'djangosige.apps.fiscal:cancelarnotafiscal' object.id %}">Cancelar Nota</a></li>
+                  <li><a href="{% url 'djangosige.apps.fiscal:copiarnotafiscal' object.id %}">Clonar Nota</a></li>
                   {% if object.mod == '55' %}
-                  <li><a href="{% url 'fiscal:gerardanfe' object.id %}">Gerar DANFE</a></li>
+                  <li><a href="{% url 'djangosige.apps.fiscal:gerardanfe' object.id %}">Gerar DANFE</a></li>
                   {% elif object.mod == '65' %}
-                  <li><a href="{% url 'fiscal:gerardanfce' object.id %}">Gerar DANFCE</a></li>
+                  <li><a href="{% url 'djangosige.apps.fiscal:gerardanfce' object.id %}">Gerar DANFCE</a></li>
                   {% endif %}
                 </ul>
               </div>

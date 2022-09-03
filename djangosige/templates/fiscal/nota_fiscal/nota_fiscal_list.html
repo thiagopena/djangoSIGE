@@ -53,9 +53,9 @@
                {% if all_notas%}
                {% for nota in all_notas %}
                {% if saida %}
-               <tr class="clickable-row" data-href="{% url 'fiscal:editarnotafiscalsaidaview' nota.id %}">
+               <tr class="clickable-row" data-href="{% url 'djangosige.apps.fiscal:editarnotafiscalsaidaview' nota.id %}">
                {% elif entrada %}
-               <tr class="clickable-row" data-href="{% url 'fiscal:editarnotafiscalentradaview' nota.id %}">
+               <tr class="clickable-row" data-href="{% url 'djangosige.apps.fiscal:editarnotafiscalentradaview' nota.id %}">
                {% endif %}
                 <td>{{nota.id}}</td>
                 <td>{{nota.get_mod_display}}</td>

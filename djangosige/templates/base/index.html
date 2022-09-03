@@ -23,7 +23,7 @@
             {% if perms.cadastro.view_cliente %}
             <tr>
               <td> 
-                <a href="{% url 'cadastro:listaclientesview' %}">
+                <a href="{% url 'djangosige.apps.cadastro:listaclientesview' %}">
                   <div style="height:100%;width:100%;">
                     <b>{{quantidade_cadastro.clientes}}</b> Clientes cadastrados
                   </div>
@@ -34,7 +34,7 @@
             {% if perms.cadastro.view_fornecedor %}
             <tr>
               <td> 
-                <a href="{% url 'cadastro:listafornecedoresview' %}">
+                <a href="{% url 'djangosige.apps.cadastro:listafornecedoresview' %}">
                   <div style="height:100%;width:100%;">
                     <b>{{quantidade_cadastro.fornecedores}}</b> Fornecedores cadastrados
                   </div>
@@ -45,7 +45,7 @@
             {% if perms.cadastro.view_produto %}
             <tr>
               <td> 
-                <a href="{% url 'cadastro:listaprodutosview' %}">
+                <a href="{% url 'djangosige.apps.cadastro:listaprodutosview' %}">
                   <div style="height:100%;width:100%;">
                     <b>{{quantidade_cadastro.produtos}}</b> Produtos cadastrados
                   </div>
@@ -56,7 +56,7 @@
             {% if perms.cadastro.view_empresa %}
             <tr>
               <td> 
-                <a href="{% url 'cadastro:listaempresasview' %}">
+                <a href="{% url 'djangosige.apps.cadastro:listaempresasview' %}">
                   <div style="height:100%;width:100%;">
                     <b>{{quantidade_cadastro.empresas}}</b> Empresas cadastradas
                   </div>
@@ -67,7 +67,7 @@
             {% if perms.cadastro.view_transportadora %}
             <tr>
               <td> 
-                <a href="{% url 'cadastro:listatransportadorasview' %}">
+                <a href="{% url 'djangosige.apps.cadastro:listatransportadorasview' %}">
                   <div style="height:100%;width:100%;">
                     <b>{{quantidade_cadastro.transportadoras}}</b> Transportadoras cadastradas
                   </div>
@@ -93,7 +93,7 @@
           {% if perms.cadastro.view_transportadora %}
           <tr {% if agenda_hoje.orcamento_venda_hoje %}class="hoje"{% endif %}>
             <td> 
-              <a href="{% url 'vendas:listaorcamentovendahojeview' %}">
+              <a href="{% url 'djangosige.apps.vendas:listaorcamentovendahojeview' %}">
                 <div style="height:100%;width:100%;">
                   <b>{{agenda_hoje.orcamento_venda_hoje}}</b> Orçamentos de venda a vencer hoje 
                 </div>
@@ -104,7 +104,7 @@
           {% if perms.compras.view_orcamentocompra %}
           <tr {% if agenda_hoje.orcamento_compra_hoje %}class="hoje"{% endif %}>
             <td> 
-              <a href="{% url 'compras:listaorcamentocomprahojeview' %}">
+              <a href="{% url 'djangosige.apps.compras:listaorcamentocomprahojeview' %}">
                 <div style="height:100%;width:100%;">
                   <b>{{agenda_hoje.orcamento_compra_hoje}}</b> Orçamentos de compra a vencer hoje 
                 </div>
@@ -115,7 +115,7 @@
           {% if perms.vendas.view_pedidovenda %}
           <tr {% if agenda_hoje.pedido_venda_hoje %}class="hoje"{% endif %}>
             <td> 
-              <a href="{% url 'vendas:listapedidovendahojeview' %}">
+              <a href="{% url 'djangosige.apps.vendas:listapedidovendahojeview' %}">
                 <div style="height:100%;width:100%;">
                   <b>{{agenda_hoje.pedido_venda_hoje}}</b> Pedidos de venda com entrega hoje 
                 </div>
@@ -126,7 +126,7 @@
           {% if perms.compras.view_pedidocompra %}
           <tr {% if agenda_hoje.pedido_compra_hoje %}class="hoje"{% endif %}>
             <td> 
-              <a href="{% url 'compras:listapedidocomprahojeview' %}">
+              <a href="{% url 'djangosige.apps.compras:listapedidocomprahojeview' %}">
                 <div style="height:100%;width:100%;">
                   <b>{{agenda_hoje.pedido_compra_hoje}}</b> Pedidos de compra com entrega hoje 
                 </div>
@@ -137,7 +137,7 @@
           {% if perms.financeiro.view_lancamento %}
           <tr {% if agenda_hoje.contas_receber_hoje %}class="hoje"{% endif %}>
             <td> 
-              <a href="{% url 'financeiro:listacontareceberhojeview' %}">
+              <a href="{% url 'djangosige.apps.financeiro:listacontareceberhojeview' %}">
                 <div style="height:100%;width:100%;">
                   <b>{{agenda_hoje.contas_receber_hoje}}</b> Contas a receber
                 </div>
@@ -146,7 +146,7 @@
           </tr> 
           <tr {% if agenda_hoje.contas_pagar_hoje %}class="hoje"{% endif %}>
             <td> 
-              <a href="{% url 'financeiro:listacontapagarhojeview' %}">
+              <a href="{% url 'djangosige.apps.financeiro:listacontapagarhojeview' %}">
                 <div style="height:100%;width:100%;">
                   <b>{{agenda_hoje.contas_pagar_hoje}}</b> Contas a pagar
                 </div>
@@ -172,7 +172,7 @@
         {% if perms.cadastro.view_transportadora %}
         <tr {% if alertas.produtos_baixo_estoque %}class="alerta"{% endif %}>
           <td> 
-            <a href="{% url 'cadastro:listaprodutosbaixoestoqueview' %}">
+            <a href="{% url 'djangosige.apps.cadastro:listaprodutosbaixoestoqueview' %}">
               <div style="height:100%;width:100%;">
                 <b>{{alertas.produtos_baixo_estoque}}</b> Produtos com baixo estoque
               </div>
@@ -183,7 +183,7 @@
         {% if perms.vendas.view_orcamentovenda %}
         <tr {% if alertas.orcamentos_venda_vencidos %}class="alerta"{% endif %}>
           <td> 
-            <a href="{% url 'vendas:listaorcamentovendavencidoview' %}">
+            <a href="{% url 'djangosige.apps.vendas:listaorcamentovendavencidoview' %}">
               <div style="height:100%;width:100%;">
                 <b>{{alertas.orcamentos_venda_vencidos}}</b> Orçamentos de venda vencidos
               </div>
@@ -194,7 +194,7 @@
         {% if perms.compras.view_orcamentocompra %}
         <tr {% if alertas.orcamentos_compra_vencidos %}class="alerta"{% endif %}>
           <td> 
-            <a href="{% url 'compras:listaorcamentocompravencidosview' %}">
+            <a href="{% url 'djangosige.apps.compras:listaorcamentocompravencidosview' %}">
               <div style="height:100%;width:100%;">
                 <b>{{alertas.orcamentos_compra_vencidos}}</b> Orçamentos de compra vencidos
               </div>
@@ -205,7 +205,7 @@
         {% if perms.vendas.view_pedidovenda %}
         <tr {% if alertas.pedidos_venda_atrasados %}class="alerta"{% endif %}>
           <td> 
-            <a href="{% url 'vendas:listapedidovendaatrasadosview' %}">
+            <a href="{% url 'djangosige.apps.vendas:listapedidovendaatrasadosview' %}">
               <div style="height:100%;width:100%;">
                 <b>{{alertas.pedidos_venda_atrasados}}</b> Pedidos de venda atrasados
               </div>
@@ -216,7 +216,7 @@
         {% if perms.compras.view_pedidocompra %}
         <tr {% if alertas.pedidos_compra_atrasados %}class="alerta"{% endif %}>
           <td> 
-            <a href="{% url 'compras:listapedidocompraatrasadosview' %}">
+            <a href="{% url 'djangosige.apps.compras:listapedidocompraatrasadosview' %}">
               <div style="height:100%;width:100%;">
                 <b>{{alertas.pedidos_compra_atrasados}}</b> Pedidos de compra atrasados
               </div>
@@ -227,7 +227,7 @@
         {% if perms.financeiro.view_lancamento %}
         <tr {% if alertas.contas_receber_atrasadas %}class="alerta"{% endif %}>
           <td> 
-            <a href="{% url 'financeiro:listacontareceberatrasadasview' %}">
+            <a href="{% url 'djangosige.apps.financeiro:listacontareceberatrasadasview' %}">
               <div style="height:100%;width:100%;">
                 <b>{{alertas.contas_receber_atrasadas}}</b> Contas a receber atrasadas
               </div>
@@ -236,7 +236,7 @@
         </tr> 
         <tr {% if alertas.contas_pagar_atrasadas %}class="alerta"{% endif %}>
           <td> 
-            <a href="{% url 'financeiro:listacontapagaratrasadasview' %}">
+            <a href="{% url 'djangosige.apps.financeiro:listacontapagaratrasadasview' %}">
               <div style="height:100%;width:100%;">
                 <b>{{alertas.contas_pagar_atrasadas}}</b> Contas a pagar atrasadas
               </div>
@@ -262,7 +262,7 @@
           FLUXO DE CAIXA<b style="padding-left:4px;">(DIA {{data_atual}})</b>
         </h2>
         <div class="header-btn">
-          <a href="{% url 'financeiro:fluxodecaixaview' %}" class="btn btn-primary"><i class="material-icons">&#xE8A0;</i><span> FLUXO DE CAIXA</span></a>
+          <a href="{% url 'djangosige.apps.financeiro:fluxodecaixaview' %}" class="btn btn-primary"><i class="material-icons">&#xE8A0;</i><span> FLUXO DE CAIXA</span></a>
         </div>
       </div>
 

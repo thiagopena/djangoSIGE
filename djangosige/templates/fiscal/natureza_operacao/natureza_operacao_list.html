@@ -41,7 +41,7 @@
               <tbody>
                {% if all_natops%}
                {% for natop in all_natops %}
-               <tr class="clickable-row" data-href="{% url 'fiscal:editarnaturezaoperacaoview' natop.id %}">
+               <tr class="clickable-row" data-href="{% url 'djangosige.apps.fiscal:editarnaturezaoperacaoview' natop.id %}">
                 <td>{{natop.id}}</td>
                 <td>{{natop.cfop|default_if_none:""}}</td>
                 <td>{{natop.descricao|default_if_none:""}}</td>
