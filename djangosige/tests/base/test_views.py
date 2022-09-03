@@ -14,7 +14,7 @@ class BaseViewsTestCase(BaseTestCase):
                          IndexView.as_view().__name__)
 
     def test_home_page_get_request(self):
-        url = reverse('base:index')
+        url = reverse('djangosige.apps.base:index')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 

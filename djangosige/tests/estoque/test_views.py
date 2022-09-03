@@ -20,7 +20,7 @@ MOVIMENTO_ESTOQUE_FORMSET_DATA = {
 
 
 class EstoqueConsultaViewTestCase(BaseTestCase):
-    url = reverse('estoque:consultaestoqueview')
+    url = reverse('djangosige.apps.estoque:consultaestoqueview')
 
     def test_consulta_estoque_get_request(self):
         response = self.client.get(self.url)
@@ -48,27 +48,27 @@ class EstoqueConsultaViewTestCase(BaseTestCase):
 class EstoqueAdicionarViewsTestCase(BaseTestCase):
 
     def test_add_local_estoque_view_get_request(self):
-        url = reverse('estoque:addlocalview')
+        url = reverse('djangosige.apps.estoque:addlocalview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_entrada_estoque_view_get_request(self):
-        url = reverse('estoque:addentradaestoqueview')
+        url = reverse('djangosige.apps.estoque:addentradaestoqueview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_saida_estoque_view_get_request(self):
-        url = reverse('estoque:addsaidaestoqueview')
+        url = reverse('djangosige.apps.estoque:addsaidaestoqueview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_transferencia_estoque_view_get_request(self):
-        url = reverse('estoque:addtransferenciaestoqueview')
+        url = reverse('djangosige.apps.estoque:addtransferenciaestoqueview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_local_estoque_view_post_request(self):
-        url = reverse('estoque:addlocalview')
+        url = reverse('djangosige.apps.estoque:addlocalview')
 
         data = {
             'descricao': 'Local Estoque Teste 1',
@@ -84,7 +84,7 @@ class EstoqueAdicionarViewsTestCase(BaseTestCase):
             response, 'form', 'descricao', 'Este campo é obrigatório.')
 
     def test_add_entrada_estoque_view_post_request(self):
-        url = reverse('estoque:addentradaestoqueview')
+        url = reverse('djangosige.apps.estoque:addentradaestoqueview')
         local = LocalEstoque.objects.get(pk=DEFAULT_LOCAL_ID)
 
         data = {
@@ -108,7 +108,7 @@ class EstoqueAdicionarViewsTestCase(BaseTestCase):
             response, 'form', 'tipo_movimento', 'Este campo é obrigatório.')
 
     def test_add_saida_estoque_view_post_request(self):
-        url = reverse('estoque:addsaidaestoqueview')
+        url = reverse('djangosige.apps.estoque:addsaidaestoqueview')
         local = LocalEstoque.objects.get(pk=DEFAULT_LOCAL_ID)
 
         data = {
@@ -155,7 +155,7 @@ class EstoqueAdicionarViewsTestCase(BaseTestCase):
             response, 'itens_form', 2, 'quantidade', 'Quantidade retirada do estoque maior que o estoque atual (' + str(prod1.estoque_atual).replace('.', ',') + ') do produto.')
 
     def test_add_transferencia_estoque_view_post_request(self):
-        url = reverse('estoque:addtransferenciaestoqueview')
+        url = reverse('djangosige.apps.estoque:addtransferenciaestoqueview')
         local1 = LocalEstoque.objects.get(pk=DEFAULT_LOCAL_ID)
         local2 = LocalEstoque.objects.create(descricao='Novo Local Estoque 2')
 
@@ -194,35 +194,35 @@ class EstoqueListarViewsTestCase(BaseTestCase):
     def test_list_entrada_estoque_view_deletar_objeto(self):
         obj = EntradaEstoque.objects.create()
         self.check_list_view_delete(url=reverse(
-            'estoque:listaentradasestoqueview'), deleted_object=obj)
+            'djangosige.apps.estoque:listaentradasestoqueview'), deleted_object=obj)
 
     def test_list_saida_estoque_view_deletar_objeto(self):
         obj = SaidaEstoque.objects.create()
         self.check_list_view_delete(url=reverse(
-            'estoque:listasaidasestoqueview'), deleted_object=obj)
+            'djangosige.apps.estoque:listasaidasestoqueview'), deleted_object=obj)
 
     def test_list_transferencia_estoque_view_deletar_objeto(self):
         obj = TransferenciaEstoque.objects.create(local_estoque_orig=LocalEstoque.objects.order_by(
             'id').first(), local_estoque_dest=LocalEstoque.objects.order_by('id').last())
         self.check_list_view_delete(url=reverse(
-            'estoque:listatransferenciasestoqueview'), deleted_object=obj)
+            'djangosige.apps.estoque:listatransferenciasestoqueview'), deleted_object=obj)
 
     def test_list_todas_movimentacoes_estoque_view_deletar_objetos(self):
         obj = SaidaEstoque.objects.create()
         self.check_list_view_delete(url=reverse(
-            'estoque:listamovimentoestoqueview'), deleted_object=obj)
+            'djangosige.apps.estoque:listamovimentoestoqueview'), deleted_object=obj)
         obj = EntradaEstoque.objects.create()
         self.check_list_view_delete(url=reverse(
-            'estoque:listamovimentoestoqueview'), deleted_object=obj)
+            'djangosige.apps.estoque:listamovimentoestoqueview'), deleted_object=obj)
         obj = TransferenciaEstoque.objects.create(local_estoque_orig=LocalEstoque.objects.order_by(
             'id').first(), local_estoque_dest=LocalEstoque.objects.order_by('id').last())
         self.check_list_view_delete(url=reverse(
-            'estoque:listamovimentoestoqueview'), deleted_object=obj)
+            'djangosige.apps.estoque:listamovimentoestoqueview'), deleted_object=obj)
 
     def test_list_local_estoque_view_deletar_objeto(self):
         obj = LocalEstoque.objects.create()
         self.check_list_view_delete(url=reverse(
-            'estoque:listalocalview'), deleted_object=obj)
+            'djangosige.apps.estoque:listalocalview'), deleted_object=obj)
 
 
 class EstoqueEditarViewsTestCase(BaseTestCase):
@@ -230,7 +230,7 @@ class EstoqueEditarViewsTestCase(BaseTestCase):
     def test_detalhar_entrada_estoque_get_request(self):
         # Buscar objeto qualquer
         obj = EntradaEstoque.objects.order_by('pk').last()
-        url = reverse('estoque:detalharentradaestoqueview',
+        url = reverse('djangosige.apps.estoque:detalharentradaestoqueview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -240,7 +240,7 @@ class EstoqueEditarViewsTestCase(BaseTestCase):
     def test_detalhar_saida_estoque_get_request(self):
         # Buscar objeto qualquer
         obj = SaidaEstoque.objects.order_by('pk').last()
-        url = reverse('estoque:detalharsaidaestoqueview',
+        url = reverse('djangosige.apps.estoque:detalharsaidaestoqueview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -250,7 +250,7 @@ class EstoqueEditarViewsTestCase(BaseTestCase):
     def test_detalhar_transferencia_estoque_get_request(self):
         # Buscar objeto qualquer
         obj = TransferenciaEstoque.objects.order_by('pk').last()
-        url = reverse('estoque:detalhartransferenciaestoqueview',
+        url = reverse('djangosige.apps.estoque:detalhartransferenciaestoqueview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -260,7 +260,7 @@ class EstoqueEditarViewsTestCase(BaseTestCase):
     def test_edit_local_estoque_get_post_request(self):
         # Buscar objeto qualquer
         obj = LocalEstoque.objects.order_by('pk').last()
-        url = reverse('estoque:editarlocalview',
+        url = reverse('djangosige.apps.estoque:editarlocalview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)

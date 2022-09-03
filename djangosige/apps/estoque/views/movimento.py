@@ -134,38 +134,38 @@ class AdicionarMovimentoEstoqueBaseView(CustomCreateView, MovimentoEstoqueMixin)
 class AdicionarEntradaEstoqueView(AdicionarMovimentoEstoqueBaseView):
     form_class = EntradaEstoqueForm
     template_name = "estoque/movimento/movimento_estoque_add.html"
-    success_url = reverse_lazy('estoque:listaentradasestoqueview')
+    success_url = reverse_lazy('djangosige.apps.estoque:listaentradasestoqueview')
     success_message = "<b>Movimento de estoque de entrada nº%(pk)s</b> adicionado com sucesso."
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR ENTRADA EM ESTOQUE'
         context['return_url'] = reverse_lazy(
-            'estoque:listaentradasestoqueview')
+            'djangosige.apps.estoque:listaentradasestoqueview')
         return context
 
 
 class AdicionarSaidaEstoqueView(AdicionarMovimentoEstoqueBaseView):
     form_class = SaidaEstoqueForm
     template_name = "estoque/movimento/movimento_estoque_add.html"
-    success_url = reverse_lazy('estoque:listasaidasestoqueview')
+    success_url = reverse_lazy('djangosige.apps.estoque:listasaidasestoqueview')
     success_message = "<b>Movimento de estoque de saída nº%(pk)s</b> adicionado com sucesso."
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR SAÍDA EM ESTOQUE'
-        context['return_url'] = reverse_lazy('estoque:listasaidasestoqueview')
+        context['return_url'] = reverse_lazy('djangosige.apps.estoque:listasaidasestoqueview')
         return context
 
 
 class AdicionarTransferenciaEstoqueView(AdicionarMovimentoEstoqueBaseView):
     form_class = TransferenciaEstoqueForm
     template_name = "estoque/movimento/movimento_estoque_add.html"
-    success_url = reverse_lazy('estoque:listatransferenciasestoqueview')
+    success_url = reverse_lazy('djangosige.apps.estoque:listatransferenciasestoqueview')
     success_message = "<b>Movimento de estoque de transferência nº%(pk)s</b> adicionado com sucesso."
 
     def view_context(self, context):
         context['title_complete'] = 'ADICIONAR TRANSFERÊNCIA EM ESTOQUE'
         context['return_url'] = reverse_lazy(
-            'estoque:listatransferenciasestoqueview')
+            'djangosige.apps.estoque:listatransferenciasestoqueview')
         return context
 
 
@@ -181,7 +181,7 @@ class MovimentoEstoqueBaseListView(CustomListView):
 class MovimentoEstoqueListView(MovimentoEstoqueBaseListView):
     template_name = 'estoque/movimento/movimento_estoque_list.html'
     context_object_name = 'all_movimentos'
-    success_url = reverse_lazy('estoque:listamovimentoestoqueview')
+    success_url = reverse_lazy('djangosige.apps.estoque:listamovimentoestoqueview')
 
     def view_context(self, context):
         context['title_complete'] = 'TODAS AS MOVIMENTAÇÕES DE ESTOQUE'
@@ -214,11 +214,11 @@ class EntradaEstoqueListView(MovimentoEstoqueBaseListView):
     template_name = 'estoque/movimento/movimento_estoque_list.html'
     model = EntradaEstoque
     context_object_name = 'all_entradas'
-    success_url = reverse_lazy('estoque:listaentradasestoqueview')
+    success_url = reverse_lazy('djangosige.apps.estoque:listaentradasestoqueview')
 
     def view_context(self, context):
         context['title_complete'] = 'ENTRADAS EM ESTOQUE'
-        context['add_url'] = reverse_lazy('estoque:addentradaestoqueview')
+        context['add_url'] = reverse_lazy('djangosige.apps.estoque:addentradaestoqueview')
         return context
 
 
@@ -226,11 +226,11 @@ class SaidaEstoqueListView(MovimentoEstoqueBaseListView):
     template_name = 'estoque/movimento/movimento_estoque_list.html'
     model = SaidaEstoque
     context_object_name = 'all_saidas'
-    success_url = reverse_lazy('estoque:listasaidasestoqueview')
+    success_url = reverse_lazy('djangosige.apps.estoque:listasaidasestoqueview')
 
     def view_context(self, context):
         context['title_complete'] = 'SAÍDAS EM ESTOQUE'
-        context['add_url'] = reverse_lazy('estoque:addsaidaestoqueview')
+        context['add_url'] = reverse_lazy('djangosige.apps.estoque:addsaidaestoqueview')
         return context
 
 
@@ -238,12 +238,12 @@ class TransferenciaEstoqueListView(MovimentoEstoqueBaseListView):
     template_name = 'estoque/movimento/movimento_estoque_list.html'
     model = TransferenciaEstoque
     context_object_name = 'all_transferencias'
-    success_url = reverse_lazy('estoque:listatransferenciasestoqueview')
+    success_url = reverse_lazy('djangosige.apps.estoque:listatransferenciasestoqueview')
 
     def view_context(self, context):
         context['title_complete'] = 'TRANSFERÊNCIAS EM ESTOQUE'
         context['add_url'] = reverse_lazy(
-            'estoque:addtransferenciaestoqueview')
+            'djangosige.apps.estoque:addtransferenciaestoqueview')
         return context
 
 
@@ -264,7 +264,7 @@ class DetalharEntradaEstoqueView(DetalharMovimentoEstoqueBaseView):
         context['title_complete'] = 'MOVIMENTO DE ENTRADA EM ESTOQUE N°' + \
             str(self.object.id)
         context['return_url'] = reverse_lazy(
-            'estoque:listaentradasestoqueview')
+            'djangosige.apps.estoque:listaentradasestoqueview')
         return context
 
 
@@ -274,7 +274,7 @@ class DetalharSaidaEstoqueView(DetalharMovimentoEstoqueBaseView):
     def view_context(self, context):
         context['title_complete'] = 'MOVIMENTO DE SAÍDA EM ESTOQUE N°' + \
             str(self.object.id)
-        context['return_url'] = reverse_lazy('estoque:listasaidasestoqueview')
+        context['return_url'] = reverse_lazy('djangosige.apps.estoque:listasaidasestoqueview')
         return context
 
 
@@ -285,5 +285,5 @@ class DetalharTransferenciaEstoqueView(DetalharMovimentoEstoqueBaseView):
         context['title_complete'] = 'MOVIMENTO DE TRANSFERÊNCIA EM ESTOQUE N°' + \
             str(self.object.id)
         context['return_url'] = reverse_lazy(
-            'estoque:listatransferenciasestoqueview')
+            'djangosige.apps.estoque:listatransferenciasestoqueview')
         return context

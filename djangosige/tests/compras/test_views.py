@@ -34,17 +34,17 @@ COMPRA_FORMSET_DATA = {
 class ComprasAdicionarViewsTestCase(BaseTestCase):
 
     def test_add_orcamento_compra_view_get_request(self):
-        url = reverse('compras:addorcamentocompraview')
+        url = reverse('djangosige.apps.compras:addorcamentocompraview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_pedido_compra_view_get_request(self):
-        url = reverse('compras:addpedidocompraview')
+        url = reverse('djangosige.apps.compras:addpedidocompraview')
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
 
     def test_add_orcamento_compra_view_post_request(self):
-        url = reverse('compras:addorcamentocompraview')
+        url = reverse('djangosige.apps.compras:addorcamentocompraview')
         fornecedor = Fornecedor.objects.order_by('id').last()
         local_dest = LocalEstoque.objects.get(pk=DEFAULT_LOCAL_ID)
 
@@ -78,7 +78,7 @@ class ComprasAdicionarViewsTestCase(BaseTestCase):
             response, 'form', 'fornecedor', 'Este campo é obrigatório.')
 
     def test_add_pedido_compra_view_post_request(self):
-        url = reverse('compras:addpedidocompraview')
+        url = reverse('djangosige.apps.compras:addpedidocompraview')
         fornecedor = Fornecedor.objects.order_by('id').last()
         local_dest = LocalEstoque.objects.get(pk=DEFAULT_LOCAL_ID)
 
@@ -118,41 +118,41 @@ class ComprasListarViewsTestCase(BaseTestCase):
         fornecedor = Fornecedor.objects.order_by('id').last()
         obj = OrcamentoCompra.objects.create(fornecedor=fornecedor)
         self.check_list_view_delete(url=reverse(
-            'compras:listaorcamentocompraview'), deleted_object=obj)
+            'djangosige.apps.compras:listaorcamentocompraview'), deleted_object=obj)
 
     def test_list_orcamento_compra_vencido_view_deletar_objeto(self):
         fornecedor = Fornecedor.objects.order_by('id').last()
         obj = OrcamentoCompra.objects.create(
             fornecedor=fornecedor, data_vencimento=datetime.now().date() - timedelta(days=1))
         self.check_list_view_delete(url=reverse(
-            'compras:listaorcamentocompravencidosview'), deleted_object=obj)
+            'djangosige.apps.compras:listaorcamentocompravencidosview'), deleted_object=obj)
 
     def test_list_orcamento_compra_vence_hoje_view_deletar_objeto(self):
         fornecedor = Fornecedor.objects.order_by('id').last()
         obj = OrcamentoCompra.objects.create(
             fornecedor=fornecedor, data_vencimento=datetime.now().date())
         self.check_list_view_delete(url=reverse(
-            'compras:listaorcamentocomprahojeview'), deleted_object=obj)
+            'djangosige.apps.compras:listaorcamentocomprahojeview'), deleted_object=obj)
 
     def test_list_pedido_compra_view_deletar_objeto(self):
         fornecedor = Fornecedor.objects.order_by('id').last()
         obj = PedidoCompra.objects.create(fornecedor=fornecedor)
         self.check_list_view_delete(url=reverse(
-            'compras:listapedidocompraview'), deleted_object=obj)
+            'djangosige.apps.compras:listapedidocompraview'), deleted_object=obj)
 
     def test_list_pedido_compra_atrasado_view_deletar_objeto(self):
         fornecedor = Fornecedor.objects.order_by('id').last()
         obj = PedidoCompra.objects.create(
             fornecedor=fornecedor, data_entrega=datetime.now().date() - timedelta(days=1))
         self.check_list_view_delete(url=reverse(
-            'compras:listapedidocompraatrasadosview'), deleted_object=obj)
+            'djangosige.apps.compras:listapedidocompraatrasadosview'), deleted_object=obj)
 
     def test_list_pedido_compra_entrega_hoje_view_deletar_objeto(self):
         fornecedor = Fornecedor.objects.order_by('id').last()
         obj = PedidoCompra.objects.create(
             fornecedor=fornecedor, data_entrega=datetime.now().date())
         self.check_list_view_delete(url=reverse(
-            'compras:listapedidocomprahojeview'), deleted_object=obj)
+            'djangosige.apps.compras:listapedidocomprahojeview'), deleted_object=obj)
 
 
 class ComprasEditarViewsTestCase(BaseTestCase):
@@ -160,7 +160,7 @@ class ComprasEditarViewsTestCase(BaseTestCase):
     def test_edit_orcamento_compra_get_post_request(self):
         # Buscar objeto qualquer
         obj = OrcamentoCompra.objects.order_by('pk').last()
-        url = reverse('compras:editarorcamentocompraview',
+        url = reverse('djangosige.apps.compras:editarorcamentocompraview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -176,7 +176,7 @@ class ComprasEditarViewsTestCase(BaseTestCase):
     def test_edit_pedido_compra_get_post_request(self):
         # Buscar objeto qualquer
         obj = PedidoCompra.objects.order_by('pk').last()
-        url = reverse('compras:editarpedidocompraview',
+        url = reverse('djangosige.apps.compras:editarpedidocompraview',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -199,7 +199,7 @@ class VendasAjaxRequestViewsTestCase(BaseTestCase):
         # Buscar objeto qualquer
         obj = PedidoCompra.objects.order_by('pk').last()
         obj_pk = obj.pk
-        url = reverse('compras:infocompra')
+        url = reverse('djangosige.apps.compras:infocompra')
         data = {'compraId': obj_pk}
         self.check_json_response(
             url, data, obj_pk, model='compras.pedidocompra')
@@ -210,7 +210,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_gerar_pdf_orcamento_compra(self):
         # Buscar objeto qualquer
         obj = OrcamentoCompra.objects.order_by('pk').last()
-        url = reverse('compras:gerarpdforcamentocompra',
+        url = reverse('djangosige.apps.compras:gerarpdforcamentocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -219,7 +219,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_gerar_pdf_pedido_compra(self):
         # Buscar objeto qualquer
         obj = PedidoCompra.objects.order_by('pk').last()
-        url = reverse('compras:gerarpdfpedidocompra',
+        url = reverse('djangosige.apps.compras:gerarpdfpedidocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -229,7 +229,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
         # Criar novo orcamento e gerar pedido
         fornecedor = Fornecedor.objects.order_by('id').last()
         obj = OrcamentoCompra.objects.create(fornecedor=fornecedor)
-        url = reverse('compras:gerarpedidocompra',
+        url = reverse('djangosige.apps.compras:gerarpedidocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -241,7 +241,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_copiar_pedido_compra(self):
         # Buscar objeto qualquer
         obj = PedidoCompra.objects.order_by('pk').last()
-        url = reverse('compras:copiarpedidocompra',
+        url = reverse('djangosige.apps.compras:copiarpedidocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -252,7 +252,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_copiar_orcamento_compra(self):
         # Buscar objeto qualquer
         obj = OrcamentoCompra.objects.order_by('pk').last()
-        url = reverse('compras:copiarorcamentocompra',
+        url = reverse('djangosige.apps.compras:copiarorcamentocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -264,7 +264,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_cancelar_pedido_compra(self):
         # Buscar objeto qualquer
         obj = PedidoCompra.objects.order_by('pk').last()
-        url = reverse('compras:cancelarpedidocompra',
+        url = reverse('djangosige.apps.compras:cancelarpedidocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -277,7 +277,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
     def test_cancelar_orcamento_compra(self):
         # Buscar objeto qualquer
         obj = OrcamentoCompra.objects.order_by('pk').last()
-        url = reverse('compras:cancelarorcamentocompra',
+        url = reverse('djangosige.apps.compras:cancelarorcamentocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)
@@ -310,7 +310,7 @@ class ComprasAcoesUsuarioViewsTestCase(BaseTestCase):
                             valor_unit='20.00', subtotal='40.00')
         item2.compra_id = obj
         item2.save()
-        url = reverse('compras:receberpedidocompra',
+        url = reverse('djangosige.apps.compras:receberpedidocompra',
                       kwargs={'pk': obj.pk})
         response = self.client.get(url, follow=True)
         self.assertEqual(response.status_code, 200)

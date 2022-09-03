@@ -65,9 +65,9 @@ class Entrada(Lancamento):
 
     def get_edit_url(self):
         if self.status == '0':
-            return reverse_lazy('financeiro:editarrecebimentoview', kwargs={'pk': self.id})
+            return reverse_lazy('djangosige.apps.financeiro:editarrecebimentoview', kwargs={'pk': self.id})
         else:
-            return reverse_lazy('financeiro:editarcontareceberview', kwargs={'pk': self.id})
+            return reverse_lazy('djangosige.apps.financeiro:editarcontareceberview', kwargs={'pk': self.id})
 
     def get_tipo(self):
         return 'Entrada'
@@ -83,9 +83,9 @@ class Saida(Lancamento):
 
     def get_edit_url(self):
         if self.status == '0':
-            return reverse_lazy('financeiro:editarpagamentoview', kwargs={'pk': self.id})
+            return reverse_lazy('djangosige.apps.financeiro:editarpagamentoview', kwargs={'pk': self.id})
         else:
-            return reverse_lazy('financeiro:editarcontapagarview', kwargs={'pk': self.id})
+            return reverse_lazy('djangosige.apps.financeiro:editarcontapagarview', kwargs={'pk': self.id})
 
     def get_tipo(self):
         return 'Saida'

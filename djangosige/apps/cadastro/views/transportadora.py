@@ -10,7 +10,7 @@ from .base import AdicionarPessoaView, PessoasListView, EditarPessoaView
 
 class AdicionarTransportadoraView(AdicionarPessoaView):
     template_name = "cadastro/pessoa_add.html"
-    success_url = reverse_lazy('cadastro:listatransportadorasview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listatransportadorasview')
     success_message = "Transportadora <b>%(nome_razao_social)s</b>adicionada com sucesso."
     permission_codename = 'add_transportadora'
 
@@ -19,7 +19,7 @@ class AdicionarTransportadoraView(AdicionarPessoaView):
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'CADASTRAR TRANSPORTADORA'
         context['return_url'] = reverse_lazy(
-            'cadastro:listatransportadorasview')
+            'djangosige.apps.cadastro:listatransportadorasview')
         context['tipo_pessoa'] = 'transportadora'
         return context
 
@@ -43,14 +43,14 @@ class TransportadorasListView(PessoasListView):
     template_name = 'cadastro/pessoa_list.html'
     model = Transportadora
     context_object_name = 'all_transportadoras'
-    success_url = reverse_lazy('cadastro:listatransportadorasview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listatransportadorasview')
     permission_codename = 'view_transportadora'
 
     def get_context_data(self, **kwargs):
         context = super(TransportadorasListView,
                         self).get_context_data(**kwargs)
         context['title_complete'] = 'TRANSPORTADORAS CADASTRADAS'
-        context['add_url'] = reverse_lazy('cadastro:addtransportadoraview')
+        context['add_url'] = reverse_lazy('djangosige.apps.cadastro:addtransportadoraview')
         context['tipo_pessoa'] = 'transportadora'
         return context
 
@@ -59,7 +59,7 @@ class EditarTransportadoraView(EditarPessoaView):
     form_class = TransportadoraForm
     model = Transportadora
     template_name = "cadastro/pessoa_edit.html"
-    success_url = reverse_lazy('cadastro:listatransportadorasview')
+    success_url = reverse_lazy('djangosige.apps.cadastro:listatransportadorasview')
     success_message = "Transportadora <b>%(nome_razao_social)s</b>editada com sucesso."
     permission_codename = 'change_transportadora'
 
@@ -67,7 +67,7 @@ class EditarTransportadoraView(EditarPessoaView):
         context = super(EditarTransportadoraView,
                         self).get_context_data(**kwargs)
         context['return_url'] = reverse_lazy(
-            'cadastro:listatransportadorasview')
+            'djangosige.apps.cadastro:listatransportadorasview')
         context['tipo_pessoa'] = 'transportadora'
         return context
 

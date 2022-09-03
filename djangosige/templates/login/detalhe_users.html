@@ -14,7 +14,7 @@
       <div class="card">
         <div class="header">
           <h2>
-            <a href="{%url 'login:usuariosview'%}"><i class="material-icons">&#xE5C4;</i></a>
+            <a href="{%url 'djangosige.apps.login:usuariosview'%}"><i class="material-icons">&#xE5C4;</i></a>
             <span><b>Usuário: </b>{{user_match.username}}{% if user_match.is_superuser %} (Admin){% endif %}</span>
           </h2>
           <div class="header-btn">

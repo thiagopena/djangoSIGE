@@ -422,7 +422,7 @@ class OrcamentoVenda(Venda):
         return 'Orçamento'
 
     def edit_url(self):
-        return reverse_lazy('vendas:editarorcamentovendaview', kwargs={'pk': self.id})
+        return reverse_lazy('djangosige.apps.vendas:editarorcamentovendaview', kwargs={'pk': self.id})
 
     def __unicode__(self):
         s = u'Orçamento de venda nº %s' % (self.id)
@@ -455,7 +455,7 @@ class PedidoVenda(Venda):
         return 'Pedido'
 
     def edit_url(self):
-        return reverse_lazy('vendas:editarpedidovendaview', kwargs={'pk': self.id})
+        return reverse_lazy('djangosige.apps.vendas:editarpedidovendaview', kwargs={'pk': self.id})
 
     def __unicode__(self):
         s = u'Pedido de venda nº %s (%s)' % (

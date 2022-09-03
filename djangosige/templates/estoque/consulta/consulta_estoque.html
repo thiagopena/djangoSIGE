@@ -36,7 +36,7 @@
                       <select class="form-control" id="produto_id" name="produto">
                         <option value="">Todos</option>
                       {% for produto in todos_produtos %}
-                          <option value="{{ produto.id }}" {% ifequal produto.id|stringformat:"s" request.GET.produto %}selected{% endifequal %}>{{ produto }}</option>
+                          <option value="{{ produto.id }}" {% if produto.id|stringformat:"s" == request.GET.produto %}selected{% endif %}>{{ produto }}</option>
                       {% endfor %}
                       </select>
                     </div>
@@ -50,7 +50,7 @@
                       <select class="form-control" id="local_id" name="local">
                         <option value="">Todos</option>
                       {% for local in todos_locais %}
-                          <option value="{{ local.id }}" {% ifequal local.id|stringformat:"s" request.GET.local %}selected{% endifequal %}>{{ local }}</option>
+                          <option value="{{ local.id }}" {% if local.id|stringformat:"s" == request.GET.local %}selected{% endif %}>{{ local }}</option>
                       {% endfor %}
                       </select>
                     </div>

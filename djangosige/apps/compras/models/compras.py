@@ -255,7 +255,7 @@ class OrcamentoCompra(Compra):
         return 'Orçamento'
 
     def edit_url(self):
-        return reverse_lazy('compras:editarorcamentocompraview', kwargs={'pk': self.id})
+        return reverse_lazy('djangosige.apps.compras:editarorcamentocompraview', kwargs={'pk': self.id})
 
     def __unicode__(self):
         s = u'Orçamento nº %s' % (self.id)
@@ -288,7 +288,7 @@ class PedidoCompra(Compra):
         return 'Pedido'
 
     def edit_url(self):
-        return reverse_lazy('compras:editarpedidocompraview', kwargs={'pk': self.id})
+        return reverse_lazy('djangosige.apps.compras:editarpedidocompraview', kwargs={'pk': self.id})
 
     def __unicode__(self):
         s = u'Pedido de compra nº %s (%s)' % (
