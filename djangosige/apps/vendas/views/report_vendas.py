@@ -5,15 +5,15 @@ from djangosige.apps.vendas.models import ItensVenda, Pagamento
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import cm
 
-from geraldo import Report, ReportBand, SubReport
-from geraldo.widgets import Label, SystemField, ObjectValue
-from geraldo.graphics import Image, Line
+#from geraldo import Report, ReportBand, SubReport
+#from geraldo.widgets import Label, SystemField, ObjectValue
+#from geraldo.graphics import Image, Line
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
 
 REPORT_FONT = 'Times'
 REPORT_FONT_BOLD = REPORT_FONT + '-Bold'
 
-
+"""
 class VendaReport(Report):
 
     def __init__(self, *args, **kargs):
@@ -568,3 +568,4 @@ class BandaFoot(ReportBand):
         txt.style = {'fontName': REPORT_FONT, 'fontSize': 9,
                      'alignment': TA_CENTER, 'leading': 9}
         self.elements.append(txt)
+"""

@@ -12,11 +12,11 @@ from djangosige.apps.cadastro.models import MinhaEmpresa
 from djangosige.apps.login.models import Usuario
 from djangosige.configs.settings import MEDIA_ROOT
 
-from geraldo.generators import PDFGenerator
+# from geraldo.generators import PDFGenerator
 from datetime import datetime
 import io
 
-from .report_vendas import VendaReport
+#from .report_vendas import VendaReport
 
 
 class AdicionarVendaView(CustomCreateView):
