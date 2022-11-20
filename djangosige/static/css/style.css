@@ -40,16 +40,16 @@
 
 /* Theme =======================================*/
 .theme .navbar {
-  background-color:#248fbf; }
+  background-color:rgb(255, 255, 255); }
 
 .theme .navbar-brand {
-  color: #fff; }
+  color: rgb(0, 0, 0); }
   .theme .navbar-brand:hover {
-    color: #fff; }
+    color: rgb(0, 0, 0); }
   .theme .navbar-brand:active {
-    color: #fff; }
+    color: rgb(0, 0, 0); }
   .theme .navbar-brand:focus {
-    color: #fff; }
+    color: rgb(0, 0, 0); }
 
 .theme .nav > li > a {
   color: #fff; }
@@ -101,7 +101,9 @@
   top: 0;
   left: 0;
   z-index: 12;
-  width: 100%; }
+  width: 100%; 
+  height: 70px;}
+
   .navbar .navbar-brand {
     white-space: nowrap;
     -ms-text-overflow: ellipsis;
@@ -181,7 +183,7 @@
   transform: scale(1); }
 
 .navbar-header {
-  padding: 10px 7px; }
+  padding: 7px 7px; }
   .navbar-header .bars {
     float: left;
     text-decoration: none; }
@@ -192,32 +194,32 @@
   margin-left: 5px; }
 
 .navbar-nav .dropdown-menu {
-  margin-top: -40px !important; }
+  margin-top: -30px !important; }
 
 
 /* Top bar ===================================== */
 .topbar .navbar-brand span, .topbar .navbar-brand span>i{
   vertical-align: middle;
   display: inline-flex;
-  font-size: 13px; }
+  font-size: 17px; }
   .topbar .navbar-brand>span>a{
-    color: #fff;
+    color: rgb(255, 255, 255);
     font-size: 20px; }
 
 @media (max-width: 767px) {
   .navbar > .container .navbar-brand,
   .navbar > .container-fluid .navbar-brand {
-    margin-left: 35px;
+    margin-left: 15px;
     width: 73%; }
   .navbar .navbar-header {
     display: inline-block;
-    margin-bottom: -6px;
-    width: calc(100% + 30px); }
+    margin-bottom: -3px;
+    width: calc(120% + 30px); }
   .navbar .nav > li {
     display: inline-block; }
   .navbar .navbar-nav {
-    margin-top: -10px;
-    margin-bottom: 1px;
+    margin-top: -1px;
+    margin-bottom: -1px;
     margin-left: -7px; }
     .navbar .navbar-nav .open .dropdown-menu {
       background-color: #fff;
@@ -265,7 +267,7 @@
   transition: all 0.5s;
   font-family: "Roboto", sans-serif;
   background: #fdfdfd;
-  width: 300px;
+  width: 250px;
   overflow: hidden;
   display: inline-block;
   height: calc(100vh - 70px);

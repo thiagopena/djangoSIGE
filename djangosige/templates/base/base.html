@@ -23,7 +23,7 @@
     <script src="{% static 'js/jquery/jquery-3.0.0.min.js' %}"></script>
 
 
-    <title>DjangoSIGE | {%block title%}Bem-vindo{%endblock%}</title>
+    <title>Instituto TETRIS | {%block title%}Bem-vindo{%endblock%}</title>
 </head>
 
 <body class="{%block body_class%}theme{%endblock%}">
@@ -55,9 +55,11 @@
                 <a href="javascript:void(0);" class="bars"></a>
                 <div class="navbar-brand">
                 	<!-- Main icone, data e horario -->
-                    <span><a href="{% url 'base:index' %}">Instituto<b style="color:#e76d64;">TETRIS</b></a></span>
+                    <span><a href="{% url 'base:index' %}"><img src="/media/imagens/Logo_tetris.webp" width="100" alt="logo"></a>
+                    <span style="padding-left:50px;"></span>    
+                     <!--<span><a href="{% url 'base:index' %}">Instituto<b style="color:#e76d64;">TETRIS</b></a></span>-->                   
                     <!--<span style="padding-left:30px;">Bem-vindo(a), <strong class="username-strong"></strong></span>-->
-                    <span style="padding-left:25px;"><i class="material-icons">&#xE8DF;</i></span>
+                    <span style="padding-left:20px;"><i class="material-icons">&#xE8DF;</i></span>
                     <span>{%now "l, j/m/Y"%}</span>
                     <span style="padding-left:10px;"><i class="material-icons ">&#xE8B5;</i></span>
                     <span>{% now "H:i" %}</span>
@@ -70,7 +72,7 @@
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
 
-                    <li><a href="https://github.com/thiagopena/djangoSIGE" target="_blank" title="Ajuda" ><i class="material-icons">&#xE8FD;</i></a></li>
+                    <li><a href="https://github.com/drimarcon/djangoSIGE" target="_blank" title="Ajuda" ><i class="material-icons">&#xE8FD;</i></a></li>
                     <li><a id="logout-btn" href="{% url 'login:logoutview' %}" title="Sair" ><i class="material-icons">&#xE879;</i></a></li>
 
                 </ul>
