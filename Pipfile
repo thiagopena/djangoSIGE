@@ -18,4 +18,4 @@ pyopenssl = "==17.5.*"
 signxml = "==2.5.*"
 
 [requires]
-python_version = "3.10.4"
+python_version = "3.10.8"
