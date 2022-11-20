@@ -3,6 +3,8 @@ from decouple import config, Csv
 from dj_database_url import parse as dburl
 from .configs import DEFAULT_DATABASE_URL, DEFAULT_FROM_EMAIL, EMAIL_HOST, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD, EMAIL_PORT, EMAIL_USE_TLS
 
+import django_heroku
+
 APP_ROOT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
 PROJECT_ROOT = os.path.abspath(os.path.dirname(APP_ROOT))
 
@@ -16,7 +18,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())
+#ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=[], cast=Csv())   versao original
+ALLOWED_HOSTS = ['https://tetris-sistema-gestao.herokuapp.com/']
 
 if not DEFAULT_DATABASE_URL:
     DEFAULT_DATABASE_URL = 'sqlite:///' + os.path.join(APP_ROOT, 'db.sqlite3')
@@ -145,3 +148,5 @@ LOGIN_NOT_REQUIRED = (
     r'/login/trocarsenha/',
     r'/logout/',
 )
+
+django_heroku.settings(locals())
