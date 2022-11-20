@@ -149,4 +149,4 @@ LOGIN_NOT_REQUIRED = (
     r'/logout/',
 )
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
