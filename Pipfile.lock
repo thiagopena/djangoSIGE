@@ -5,7 +5,11 @@
         },
         "pipfile-spec": 6,
         "requires": {
+<<<<<<< HEAD
             "python_version": "3.10.4"
+=======
+            "python_version": "3.10.8"
+>>>>>>> parent of 87c887f (mais um teste de deploy)
         },
         "sources": [
             {
