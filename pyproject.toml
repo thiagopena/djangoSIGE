@@ -27,6 +27,11 @@ mock = "2.0.0"
 flake8 = "3.6.0"
 pre-commit = "^3.0.4"
 
+
+[tool.poetry.group.docker.dependencies]
+gunicorn = "^20.1.0"
+psycopg2-binary = "^2.9.5"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

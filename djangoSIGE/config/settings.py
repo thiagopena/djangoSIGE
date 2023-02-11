@@ -175,7 +175,7 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # === Static Files === #
 STATIC_URL = "static/"
 
-# STATIC_ROOT = PROJECT_ROOT / "static"
+STATIC_ROOT = PROJECT_ROOT / "staticfiles"
 
 STATICFILES_DIRS = [
     PROJECT_ROOT / "static",

@@ -1,32 +1,60 @@
-version: '3'
+version: '3.9'
+
+volumes:
+  storage: {}
+  staticfiles: {}
+  mediafiles: {}
+
+networks:
+  internals:
 
 services:
-  postgres:
-    image: postgres:alpine
-    environment:
-      POSTGRES_USER: sige
-      POSTGRES_PASSWORD: pass
+  djangosige:
+    build:
+      context: .
+      dockerfile: ./docker/djangosige/Dockerfile
+    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
     volumes:
-      - ./database:/var/lib/postgresql/data
-  gunicorn:
-    image: djangosige
-    command: gunicorn -b 0.0.0.0:8000 djangosige.wsgi:application
-    environment:
-      - SECRET_KEY=0#pny4oox9s#+#5dkde25dj79b-o^sdbz4kiumg#e1qx3ky
-      - ALLOWED_HOSTS='gunicorn'
-      - DATABASE_URL=postgres://sige:pass@postgres/sige
+      - ./djangoSIGE:/usr/src/app
+      # Nota:
+      # Tanto os diretórios staticfiles como o mediafiles deverão ser criados manualmentes já que o
+      # build desse serviço não o faz. Mais ainda, para que os arquivos estáticos seja lidos pelo
+      # nginx, o comando `docker-compsoe exec djangosige python manage.py collectstatic` deverá
+      # ser executado depois que esse serviço estiver de pé.
+      - staticfiles:/usr/src/app/staticfiles
+      - mediafiles:/usr/src/app/mediafiles
+    expose:
+      - 8000
+    env_file:
+      - ./.env
+    depends_on:
+      - database
+    networks:
+      - internals
+
+  database:
+    image: postgres:15.1
+    restart: always
     volumes:
-      - ./:/opt/djangoSIGE/
-    links:
-      - postgres
-    working_dir: /opt/djangoSIGE/
-  nginx:
-    image: nginx:alpine
-    volumes:
-      - ./default.conf:/etc/nginx/conf.d/default.conf
-      - ./djangosige/static/:/opt/djangoSIGE/static/
-      - ./djangosige/media/:/opt/djangoSIGE/media/
+      - storage:/var/lib/postgresql/data/
     ports:
-      - 80:80
-    links:
-      - gunicorn
+      - 5432:5432
+    environment:
+      POSTGRES_DB: djangosige
+      POSTGRES_PASSWORD: djangosige
+      POSTGRES_USER: djangosige
+    networks:
+      - internals
+
+  server:
+    image: nginx:1.23
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - staticfiles:/usr/src/app/staticfiles
+      - mediafiles:/usr/src/app/mediafiles
+    ports:
+      - 1337:80
+    depends_on:
+      - djangosige
+    networks:
+      - internals

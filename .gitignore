@@ -163,4 +163,6 @@ cython_debug/
 # djangoSige
 ArquivosXML/
 arquivos/
-**media/imagens/usuarios/
+**/media/
+**/staticfiles
+**/mediafiles
