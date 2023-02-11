@@ -26,7 +26,7 @@
 
           <form role="form" action="" method="post">
             {% csrf_token %}
-            
+
             {% include 'financeiro/plano/grupo_form.html' %}
 
           </form>
@@ -42,9 +42,9 @@
 {%endblock%}
 
 {% block js %}
-    
+
   {% include 'base/load_jqueryui.html' %}
 
   {% include 'base/tooltip_js.html' %}
-  
+
 {% endblock %}

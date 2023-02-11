@@ -1,7 +1,7 @@
 <!-- Body-->
 <div class="body">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    
+
     <ul class="nav nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="#tab_informacoes" data-toggle="tab">INFORMAÇÕES</a></li>
       <li role="presentation"><a href="#tab_fornecedor" data-toggle="tab">FORNECEDOR</a></li>
@@ -204,7 +204,7 @@
             </div>
           </div>
         </div>
-        
+
       </div>
       <!-- #Tab FORNECEDOR -->
 
@@ -296,7 +296,7 @@
         </div>
 
         <div class="col-sm-12" style="padding:0px;">
-          
+
         <h4 style="border-bottom: 1px solid #afabab;">Produtos</h4>
 
         {% include 'formset/formset_table.html' with formset=produtos_form title='Itens' %}
@@ -382,10 +382,10 @@
 
       </div>
       <!-- #Tab ESTOQUE -->
-        
-      
+
+
     </div>
-      
+
   </div>
   {% if object.status == '0' or not object%}
   <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>

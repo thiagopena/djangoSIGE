@@ -4,9 +4,9 @@
 {%block content%}
 <section class="content">
   <div class="container-fluid lista">
-  
+
     {% include 'base/title_header.html' %}
-    
+
     {% include 'base/msg_sucesso.html' %}
 
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lista-content">
@@ -28,7 +28,7 @@
 
         <div class="body">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    
+
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#tab_entradas" data-toggle="tab">ENTRADA</a></li>
             <li role="presentation"><a href="#tab_saidas" data-toggle="tab">SAIDA</a></li>
@@ -130,7 +130,7 @@
             </div>
           </div>
 
-         
+
 
         </div>
 
@@ -146,9 +146,9 @@
 {%endblock%}
 
 {% block js %}
-    
+
   {% include 'base/load_jqueryui.html' %}
 
   {% include 'base/tooltip_js.html' %}
-  
+
 {% endblock %}

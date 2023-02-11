@@ -24,7 +24,7 @@
 
           <form role="form" action="" method="post">
             {% csrf_token %}
-            
+
             {% include 'estoque/movimento/movimento_estoque_form.html' %}
 
           </form>
@@ -40,7 +40,7 @@
 {%endblock%}
 
 {% block js %}
-    
+
   {% include 'estoque/movimento/movimento_estoque_jsblock.html' %}
-  
+
 {% endblock %}

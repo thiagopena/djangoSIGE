@@ -24,7 +24,7 @@
 
           <form role="form" action="" method="post">
             {% csrf_token %}
-            
+
             {% include 'fiscal/nota_fiscal/nota_fiscal_form.html' %}
 
           </form>
@@ -46,7 +46,7 @@
 {%endblock%}
 
 {% block js %}
-    
+
   {% include 'fiscal/nota_fiscal/nota_fiscal_jsblock.html' %}
-  
+
 {% endblock %}

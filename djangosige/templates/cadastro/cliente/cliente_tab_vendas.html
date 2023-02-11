@@ -6,7 +6,7 @@
     <thead>
       <tr>
         <th>#ID</th>
-        <th>Tipo</th>                   
+        <th>Tipo</th>
         <th>Status</th>
         <th>Data de vencimento</th>
         <th>Total</th>
@@ -20,7 +20,7 @@
         <td><b>{{venda.get_child.tipo_venda}}</b></td>
         <td><b>{{venda.get_child.get_status_display}}</b></td>
         <td>{% if  venda.data_vencimento %}{{venda.format_data_vencimento}}{% endif %}</td>
-        <td>{{venda.format_valor_total}}</td>        
+        <td>{{venda.format_valor_total}}</td>
       </tr>
       {% endfor %}
     </tbody>

@@ -16,7 +16,7 @@
             <form id="sign_up" method="POST">
             	{% csrf_token %}
                 <div class="msg">Criar um novo usuário
-                    
+
                 {% include 'base/form_error_msg.html' %}
 
                 </div>
@@ -30,7 +30,7 @@
                         {{field}}
                     </div>
                 </div>
-                {% endfor %}                
+                {% endfor %}
 
                 <button class="btn btn-block btn-red" type="submit">REGISTRAR</button>
 
@@ -38,7 +38,7 @@
                     <a href="{% url 'login:usuariosview' %}">Voltar</a>
                 </div>
             </form>
-            
+
 
         </div>
     </div>

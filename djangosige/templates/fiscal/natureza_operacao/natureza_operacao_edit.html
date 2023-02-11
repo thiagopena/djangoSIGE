@@ -28,7 +28,7 @@
             <!-- Body-->
             <div class="body">
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-               
+
                 {% for field in form %}
                 <div class="col-sm-6">
                   <div class="form-group">
@@ -40,13 +40,13 @@
                   </div>
                 </div>
                 {% endfor %}
-                
+
               </div>
               <button class="btn btn-success foot-btn" type="submit"><i class="material-icons">&#xE148;</i><span> SALVAR</span></button>
             </div>
             <!--#Body-->
           </form>
-          
+
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
 {%endblock%}
 
 {% block js %}
-    
+
   {% load static %}
   <!-- JQuery UI Css/Js -->
   <link href="{% static 'css/jquery-ui/jquery-ui.min.css' %}" rel="stylesheet">
@@ -67,7 +67,7 @@
   <script type="text/javascript">
     var cfop_path = '{% static 'tabelas/cfop/cfop_2015_002.csv' %}'
     $.Admin.autocompleteField.autocompleteCfop(cfop_path);
-    
+
   </script>
-  
+
 {% endblock %}

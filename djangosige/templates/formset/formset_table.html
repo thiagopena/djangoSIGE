@@ -7,7 +7,7 @@
       <thead>
         <tr>
           {% for field in form.visible_fields %}
-          <th>{{field.label}}{% if field.errors %}<label class="error error-table">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}</th>      
+          <th>{{field.label}}{% if field.errors %}<label class="error error-table">{% for error in field.errors %}{{error}}{% endfor %}</label>{% endif %}</th>
           {% endfor %}
           <th><a class="remove-formset"></a></th>
         </tr>

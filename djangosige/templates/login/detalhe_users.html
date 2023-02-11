@@ -4,7 +4,7 @@
 {%block content%}
 <section class="content">
   <div class="container-fluid block">
-    
+
     {% include 'base/msg_sucesso.html' %}
 
     <div class="block-header">
@@ -18,7 +18,7 @@
             <span><b>Usuário: </b>{{user_match.username}}{% if user_match.is_superuser %} (Admin){% endif %}</span>
           </h2>
           <div class="header-btn">
-            {%if not user_match.is_superuser%} 
+            {%if not user_match.is_superuser%}
             <form action="{% url 'login:deletarusuarioview' user_match.id %}" method="post">
               {% csrf_token %}
               <input type="hidden" name="user_id" value="{{user_match.id}}">
@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="body perfil-user">
-            <div class="col-md-3 foto-perfil">  
+            <div class="col-md-3 foto-perfil">
               {% if user_foto %}
               <img src="/media/{{user_foto}}"/>
               {%else%}
@@ -68,7 +68,7 @@
       </div>
     </div>
 
-    
+
   </div>
 </section>
 
