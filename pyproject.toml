@@ -25,6 +25,7 @@ signxml = ">=2.5.0,<2.6.0"
 [tool.poetry.group.dev.dependencies]
 mock = "2.0.0"
 flake8 = "3.6.0"
+pre-commit = "^3.0.4"
 
 [build-system]
 requires = ["poetry-core"]
