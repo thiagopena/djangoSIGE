@@ -1,12 +1,20 @@
-https://github.com/thiagopena/geraldo/archive/master.zip
-https://github.com/thiagopena/PySIGNFe/archive/master.zip
-Django==3.1.*
-dj-database-url==0.5.*
-python-decouple==3.1
-pytz==2018.3
-reportlab==3.4.*
-six==1.11.*
-cryptography>=2.3
-lxml==4.2.*
-pyOpenSSL==17.5.*
-signxml==2.5.*
+asgiref==3.6.0 ; python_full_version == "3.8.16"
+backports-zoneinfo==0.2.1 ; python_full_version == "3.8.16"
+certifi==2022.12.7 ; python_full_version == "3.8.16"
+cffi==1.15.1 ; python_full_version == "3.8.16"
+cryptography==40.0.1 ; python_full_version == "3.8.16"
+dj-database-url==1.2.0 ; python_full_version == "3.8.16"
+django==4.1.7 ; python_full_version == "3.8.16"
+geraldo @ https://github.com/thiagopena/geraldo/archive/master.zip ; python_full_version == "3.8.16"
+lxml==4.9.2 ; python_full_version == "3.8.16"
+pillow==9.4.0 ; python_full_version == "3.8.16"
+pycparser==2.21 ; python_full_version == "3.8.16"
+pyopenssl==23.1.0 ; python_full_version == "3.8.16"
+pysignfe @ https://github.com/thiagopena/PySIGNFe/archive/master.zip ; python_full_version == "3.8.16"
+python-decouple==3.8 ; python_full_version == "3.8.16"
+pytz==2023.2 ; python_full_version == "3.8.16"
+reportlab==3.6.12 ; python_full_version == "3.8.16"
+signxml==3.1.0 ; python_full_version == "3.8.16"
+six==1.16.0 ; python_full_version == "3.8.16"
+sqlparse==0.4.3 ; python_full_version == "3.8.16"
+tzdata==2023.2 ; sys_platform == "win32" and python_full_version == "3.8.16"

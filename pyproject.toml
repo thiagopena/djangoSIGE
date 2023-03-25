@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "djangosige"
+version = "2.1.0"
+description = "Sistema Integrado para Gestão Empresarial baseado em Django"
+authors = ["Thiago Pena <thiagopena01@gmail.com>"]
+license = "mit"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.8.16"
+geraldo = {url = "https://github.com/thiagopena/geraldo/archive/master.zip"}
+pysignfe = {url = "https://github.com/thiagopena/PySIGNFe/archive/master.zip"}
+django = "^4.1.7"
+dj-database-url = "^1.2.0"
+python-decouple = "^3.8"
+pytz = "^2023.2"
+reportlab = "^3.6.12"
+six = "^1.16.0"
+cryptography = "^40.0.1"
+lxml = "^4.9.2"
+pyopenssl = "^23.1.0"
+signxml = "^3.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
