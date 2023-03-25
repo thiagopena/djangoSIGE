@@ -1,12 +1,13 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+
 from djangosige.apps.cadastro.models import Empresa, MinhaEmpresa
 
 
 class EmpresaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
-        super(EmpresaForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     class Meta:
         model = Empresa
@@ -39,7 +40,7 @@ class EmpresaForm(forms.ModelForm):
         }
 
     def save(self, commit=True):
-        instance = super(EmpresaForm, self).save(commit=False)
+        instance = super().save(commit=False)
         instance.tipo_pessoa = "PJ"
         instance.criado_por = self.request.user
         if "empresa_form-logo_file" in self.request.FILES:

@@ -6,7 +6,7 @@
   <div class="container-fluid lista">
 
     {% include 'base/title_header.html' %}
-    
+
     {% include 'base/msg_sucesso.html' %}
     {% include 'base/msg_error.html' %}
 
@@ -93,7 +93,7 @@
   {% include 'base/load_jqueryui.html' %}
 
   {% include 'base/tooltip_js.html' %}
-    
+
    <script type="text/javascript">
     $('body').on('click', '#importar_nota', function(){
       $('.importar_nota_modal').modal('show');
@@ -108,5 +108,5 @@
         {% endif %}
     });
   </script>
-  
+
 {% endblock %}

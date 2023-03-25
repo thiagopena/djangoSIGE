@@ -116,10 +116,10 @@
 {%endblock%}
 
 {% block js %}
-  
+
   {% if tipo_pessoa == 'cliente' %}
 
-  {% include 'cadastro/cliente/cliente_blockjs.html' %} 
+  {% include 'cadastro/cliente/cliente_blockjs.html' %}
 
   {% elif tipo_pessoa == 'empresa' %}
 
@@ -136,5 +136,5 @@
   {% endif %}
 
   {% include 'cadastro/pessoa_blockjs.html' %}
-  
+
 {% endblock %}

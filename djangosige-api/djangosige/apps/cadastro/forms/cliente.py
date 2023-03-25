@@ -1,12 +1,13 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+
 from djangosige.apps.cadastro.models import Cliente
 
 
 class ClienteForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
-        super(ClienteForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["limite_de_credito"].localize = True
 
     class Meta:
@@ -42,7 +43,7 @@ class ClienteForm(forms.ModelForm):
         }
 
     def save(self, commit=True):
-        instance = super(ClienteForm, self).save(commit=False)
+        instance = super().save(commit=False)
         instance.criado_por = self.request.user
         if commit:
             instance.save()

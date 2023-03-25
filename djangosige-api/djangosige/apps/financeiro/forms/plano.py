@@ -1,8 +1,8 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
-from djangosige.apps.financeiro.models import (PlanoContasGrupo,
-                                               PlanoContasSubgrupo)
+
+from djangosige.apps.financeiro.models import PlanoContasGrupo, PlanoContasSubgrupo
 
 
 class PlanoContasGrupoForm(forms.ModelForm):

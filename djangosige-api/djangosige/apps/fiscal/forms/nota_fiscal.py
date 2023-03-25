@@ -1,15 +1,24 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
+
 from djangosige.apps.cadastro.models import Empresa
-from djangosige.apps.fiscal.models import (MOD_NFE_ESCOLHAS, TP_AMB_ESCOLHAS,
-                                           AutXML, ConfiguracaoNotaFiscal,
-                                           NotaFiscalEntrada, NotaFiscalSaida)
+from djangosige.apps.fiscal.models import (
+    MOD_NFE_ESCOLHAS,
+    TP_AMB_ESCOLHAS,
+    AutXML,
+    ConfiguracaoNotaFiscal,
+    NotaFiscalEntrada,
+    NotaFiscalSaida,
+)
 
 try:
     from pysignfe.nfe.manifestacao_destinatario import (
-        MD_CIENCIA_OPERACAO, MD_CONFIRMACAO_OPERACAO,
-        MD_DESCONHECIMENTO_OPERACAO, MD_OPERACAO_NAO_REALIZADA)
+        MD_CIENCIA_OPERACAO,
+        MD_CONFIRMACAO_OPERACAO,
+        MD_DESCONHECIMENTO_OPERACAO,
+        MD_OPERACAO_NAO_REALIZADA,
+    )
 except ImportError:
     MD_CONFIRMACAO_OPERACAO = "210200"
     MD_DESCONHECIMENTO_OPERACAO = "210220"
@@ -26,7 +35,7 @@ TP_MANIFESTO_OPCOES = (
 
 class NotaFiscalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(NotaFiscalForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["dhemi"].input_formats = ("%d/%m/%Y %H:%M",)
 
     class Meta:
@@ -104,7 +113,7 @@ class NotaFiscalForm(forms.ModelForm):
 
 class NotaFiscalSaidaForm(NotaFiscalForm):
     def __init__(self, *args, **kwargs):
-        super(NotaFiscalSaidaForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["v_orig"].localize = True
         self.fields["v_desc"].localize = True
         self.fields["v_liq"].localize = True
@@ -179,7 +188,7 @@ class NotaFiscalEntradaForm(NotaFiscalForm):
 
 class EmissaoNotaFiscalForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(EmissaoNotaFiscalForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["dhemi"].input_formats = ("%d/%m/%Y %H:%M",)
 
     class Meta:

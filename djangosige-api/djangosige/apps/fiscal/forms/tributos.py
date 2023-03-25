@@ -1,7 +1,15 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from djangosige.apps.fiscal.models import (COFINS, ICMS, ICMSSN, IPI, PIS,
-                                           GrupoFiscal, ICMSUFDest)
+
+from djangosige.apps.fiscal.models import (
+    COFINS,
+    ICMS,
+    ICMSSN,
+    IPI,
+    PIS,
+    GrupoFiscal,
+    ICMSUFDest,
+)
 
 
 class GrupoFiscalForm(forms.ModelForm):
@@ -31,9 +39,9 @@ class ICMSForm(forms.ModelForm):
         if "grupo_fiscal" in kwargs:
             grupo_fiscal = kwargs.pop("grupo_fiscal")
             instance = ICMS.objects.get(grupo_fiscal=grupo_fiscal)
-            super(ICMSForm, self).__init__(instance=instance, *args, **kwargs)
+            super().__init__(instance=instance, *args, **kwargs)
         else:
-            super(ICMSForm, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
         self.fields["cst"].required = False
 
@@ -110,9 +118,9 @@ class ICMSSNForm(forms.ModelForm):
         if "grupo_fiscal" in kwargs:
             grupo_fiscal = kwargs.pop("grupo_fiscal")
             instance = ICMSSN.objects.get(grupo_fiscal=grupo_fiscal)
-            super(ICMSSNForm, self).__init__(instance=instance, *args, **kwargs)
+            super().__init__(instance=instance, *args, **kwargs)
         else:
-            super(ICMSSNForm, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
         self.fields["csosn"].required = False
 
@@ -183,9 +191,9 @@ class ICMSUFDestForm(forms.ModelForm):
         if "grupo_fiscal" in kwargs:
             grupo_fiscal = kwargs.pop("grupo_fiscal")
             instance = ICMSUFDest.objects.get(grupo_fiscal=grupo_fiscal)
-            super(ICMSUFDestForm, self).__init__(instance=instance, *args, **kwargs)
+            super().__init__(instance=instance, *args, **kwargs)
         else:
-            super(ICMSUFDestForm, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
         self.fields["p_fcp_dest"].localize = True
         self.fields["p_icms_dest"].localize = True
@@ -223,9 +231,9 @@ class IPIForm(forms.ModelForm):
         if "grupo_fiscal" in kwargs:
             grupo_fiscal = kwargs.pop("grupo_fiscal")
             instance = IPI.objects.get(grupo_fiscal=grupo_fiscal)
-            super(IPIForm, self).__init__(instance=instance, *args, **kwargs)
+            super().__init__(instance=instance, *args, **kwargs)
         else:
-            super(IPIForm, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
         self.fields["p_ipi"].localize = True
         self.fields["valor_fixo"].localize = True
@@ -275,9 +283,9 @@ class PISForm(forms.ModelForm):
         if "grupo_fiscal" in kwargs:
             grupo_fiscal = kwargs.pop("grupo_fiscal")
             instance = PIS.objects.get(grupo_fiscal=grupo_fiscal)
-            super(PISForm, self).__init__(instance=instance, *args, **kwargs)
+            super().__init__(instance=instance, *args, **kwargs)
         else:
-            super(PISForm, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
         self.fields["p_pis"].localize = True
         self.fields["valiq_pis"].localize = True
@@ -306,9 +314,9 @@ class COFINSForm(forms.ModelForm):
         if "grupo_fiscal" in kwargs:
             grupo_fiscal = kwargs.pop("grupo_fiscal")
             instance = COFINS.objects.get(grupo_fiscal=grupo_fiscal)
-            super(COFINSForm, self).__init__(instance=instance, *args, **kwargs)
+            super().__init__(instance=instance, *args, **kwargs)
         else:
-            super(COFINSForm, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
         self.fields["p_cofins"].localize = True
         self.fields["valiq_cofins"].localize = True

@@ -2,8 +2,14 @@ from decimal import Decimal
 
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from djangosige.apps.cadastro.models import (Categoria, Fornecedor, Marca,
-                                             Produto, Unidade)
+
+from djangosige.apps.cadastro.models import (
+    Categoria,
+    Fornecedor,
+    Marca,
+    Produto,
+    Unidade,
+)
 from djangosige.apps.estoque.models import LocalEstoque
 
 
@@ -56,7 +62,7 @@ class ProdutoForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        super(ProdutoForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["estoque_minimo"].localize = True
         self.fields["fornecedor"].choices = list(self.fields["fornecedor"].choices) + [
             (fornecedor.id, fornecedor) for fornecedor in Fornecedor.objects.all()

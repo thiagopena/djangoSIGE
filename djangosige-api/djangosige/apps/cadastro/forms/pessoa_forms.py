@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+
 from djangosige.apps.cadastro.models import PessoaFisica, PessoaJuridica
 
 
@@ -8,9 +9,9 @@ class PessoaJuridicaForm(forms.ModelForm):
         if "instance" in kwargs:
             instance = kwargs.pop("instance")
             instance = PessoaJuridica.objects.get(pk=instance.pk)
-            super(PessoaJuridicaForm, self).__init__(instance=instance, *args, **kwargs)
+            super().__init__(instance=instance, *args, **kwargs)
         else:
-            super(PessoaJuridicaForm, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
     class Meta:
         model = PessoaJuridica
@@ -46,9 +47,9 @@ class PessoaFisicaForm(forms.ModelForm):
         if "instance" in kwargs:
             instance = kwargs.pop("instance")
             instance = PessoaFisica.objects.get(pk=instance.pk)
-            super(PessoaFisicaForm, self).__init__(instance=instance, *args, **kwargs)
+            super().__init__(instance=instance, *args, **kwargs)
         else:
-            super(PessoaFisicaForm, self).__init__(*args, **kwargs)
+            super().__init__(*args, **kwargs)
 
     class Meta:
         model = PessoaFisica

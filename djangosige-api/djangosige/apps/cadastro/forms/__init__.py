@@ -1,11 +1,14 @@
-# -*- coding: utf-8 -*-
-
-from .pessoa_forms import PessoaJuridicaForm, PessoaFisicaForm
-from .inline_formsets import EnderecoFormSet, TelefoneFormSet, EmailFormSet, SiteFormSet, BancoFormSet, DocumentoFormSet
-
-from .empresa import EmpresaForm, MinhaEmpresaForm
 from .cliente import ClienteForm
+from .empresa import EmpresaForm, MinhaEmpresaForm
 from .fornecedor import FornecedorForm
+from .inline_formsets import (
+    BancoFormSet,
+    DocumentoFormSet,
+    EmailFormSet,
+    EnderecoFormSet,
+    SiteFormSet,
+    TelefoneFormSet,
+)
+from .pessoa_forms import PessoaFisicaForm, PessoaJuridicaForm
+from .produto import CategoriaForm, MarcaForm, ProdutoForm, UnidadeForm
 from .transportadora import TransportadoraForm, VeiculoFormSet
-
-from .produto import ProdutoForm, CategoriaForm, UnidadeForm, MarcaForm

@@ -1,13 +1,14 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
+
 from djangosige.apps.cadastro.models import Transportadora, Veiculo
 
 
 class TransportadoraForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
-        super(TransportadoraForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     class Meta:
         model = Transportadora
@@ -28,7 +29,7 @@ class TransportadoraForm(forms.ModelForm):
         }
 
     def save(self, commit=True):
-        instance = super(TransportadoraForm, self).save(commit=False)
+        instance = super().save(commit=False)
         instance.criado_por = self.request.user
         if commit:
             instance.save()

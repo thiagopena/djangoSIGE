@@ -7,7 +7,7 @@
     <div class="block-header">
       <h2>PERFIL</h2>
     </div>
-      
+
     {% include 'base/form_error_alert.html' %}
 
     <div class="block-content">
@@ -22,7 +22,7 @@
         <div class="body">
           <form role="form" action="" method="post" enctype="multipart/form-data" >
            {% csrf_token %}
-           
+
            {% for field in form %}
 
            <div class="form-group">
@@ -31,7 +31,7 @@
               {{field}}
             </div>
           </div>
-          
+
           {% endfor %}
 
           <div class="form-group">
@@ -46,12 +46,12 @@
 
           <button class="btn btn-success foot-btn" style="margin-right:0px;" type="submit"><i class="material-icons">&#xE3C9;</i><span> ALTERAR</span></button>
         </form>
-        
+
       </div>
 
     </div>
   </div>
-  
+
 </div>
 </section>
 

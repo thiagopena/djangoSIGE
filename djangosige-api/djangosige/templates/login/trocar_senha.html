@@ -16,11 +16,11 @@
             <form method="POST">
                 {% csrf_token %}
                 <div class="msg">Escolha uma nova senha de acesso
-                
+
                 {% include 'base/form_error_msg.html' %}
 
                 </div>
-                                
+
                 {% for field in form %}
                 <div class="input-group">
                     <div class="form-line">
@@ -32,7 +32,7 @@
                 <div style="text-align: center;">
                     <button class="btn btn-red" type="submit">TROCAR SENHA</button>
                 </div>
-                
+
                 <div class="msg" style="margin-top:20px;margin-bottom:15px;">
                     <a href="{% url 'login:usuariosview' %}">Voltar</a>
                 </div>

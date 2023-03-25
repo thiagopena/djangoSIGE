@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import re
 
 from django.conf import settings
@@ -12,9 +10,7 @@ class LoginRequiredMiddleware(MiddlewareMixin):
         self.exceptions = tuple(re.compile(url) for url in settings.LOGIN_NOT_REQUIRED)
         self.get_response = get_response
 
-        return super(LoginRequiredMiddleware, self).__init__(
-            get_response, *args, **kwargs
-        )
+        return super().__init__(get_response, *args, **kwargs)
 
     def process_view(self, request, view_func, view_args, view_kwargs):
         # Caso o user ja esteja logado:

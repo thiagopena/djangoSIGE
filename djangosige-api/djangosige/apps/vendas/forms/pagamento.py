@@ -1,12 +1,13 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
+
 from djangosige.apps.vendas.models import CondicaoPagamento, Pagamento, Venda
 
 
 class PagamentoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(PagamentoForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["valor_parcela"].localize = True
 
     class Meta:

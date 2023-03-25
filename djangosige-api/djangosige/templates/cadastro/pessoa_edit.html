@@ -28,7 +28,7 @@
             <!-- Body-->
             <div class="body">
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                
+
                 {% include 'cadastro/pessoa_tab_list.html' %}
 
                 <div class="tab-content">
@@ -61,7 +61,7 @@
                   <div role="tabpanel" class="tab-pane formset-tab" id="tab_endereco">
 
                     {% include 'formset/formset.html' with formset=endereco_form title='Endereço' %}
-                    
+
                   </div>
                   <!-- #Tab endereco -->
 
@@ -124,7 +124,7 @@
             </div>
             <!--#Body-->
           </form>
-          
+
           {% include 'cadastro/obj_info.html' %}
 
         </div>
@@ -138,10 +138,10 @@
 {%endblock%}
 
 {% block js %}
-    
+
   {% if tipo_pessoa == 'cliente' %}
 
-  {% include 'cadastro/cliente/cliente_blockjs.html' %} 
+  {% include 'cadastro/cliente/cliente_blockjs.html' %}
 
   {% elif tipo_pessoa == 'empresa' %}
 
@@ -158,5 +158,5 @@
   {% endif %}
 
   {% include 'cadastro/pessoa_blockjs.html' %}
-  
+
 {% endblock %}

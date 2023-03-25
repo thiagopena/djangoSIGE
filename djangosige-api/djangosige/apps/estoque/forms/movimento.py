@@ -1,15 +1,20 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
+
 from djangosige.apps.cadastro.models import Produto
-from djangosige.apps.estoque.models import (EntradaEstoque, ItensMovimento,
-                                            MovimentoEstoque, SaidaEstoque,
-                                            TransferenciaEstoque)
+from djangosige.apps.estoque.models import (
+    EntradaEstoque,
+    ItensMovimento,
+    MovimentoEstoque,
+    SaidaEstoque,
+    TransferenciaEstoque,
+)
 
 
 class MovimentoForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(MovimentoForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["quantidade_itens"].localize = True
         self.fields["valor_total"].localize = True
 
@@ -39,7 +44,7 @@ class MovimentoForm(forms.ModelForm):
 
 class EntradaEstoqueForm(MovimentoForm):
     def __init__(self, *args, **kwargs):
-        super(EntradaEstoqueForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     class Meta(MovimentoForm.Meta):
         model = EntradaEstoque
@@ -64,7 +69,7 @@ class EntradaEstoqueForm(MovimentoForm):
 
 class SaidaEstoqueForm(MovimentoForm):
     def __init__(self, *args, **kwargs):
-        super(SaidaEstoqueForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     class Meta(MovimentoForm.Meta):
         model = SaidaEstoque
@@ -86,7 +91,7 @@ class SaidaEstoqueForm(MovimentoForm):
 
 class TransferenciaEstoqueForm(MovimentoForm):
     def __init__(self, *args, **kwargs):
-        super(TransferenciaEstoqueForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     class Meta(MovimentoForm.Meta):
         model = TransferenciaEstoque
@@ -111,7 +116,7 @@ class ItensMovimentoForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        super(ItensMovimentoForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         new_order = ["produto", "quantidade", "estoque_atual", "valor_unit", "subtotal"]
         self.fields = type(self.fields)((f, self.fields[f]) for f in new_order)
 
@@ -150,7 +155,7 @@ class ItensMovimentoForm(forms.ModelForm):
         }
 
     def is_valid(self):
-        valid = super(ItensMovimentoForm, self).is_valid()
+        valid = super().is_valid()
         if self.cleaned_data.get("produto", None) is None:
             self.cleaned_data = {}
         return valid

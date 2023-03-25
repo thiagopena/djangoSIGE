@@ -7,7 +7,9 @@ urlpatterns = [
     # login/
     re_path(r"^$", views.UserFormView.as_view(), name="loginview"),
     # login/registrar/
-    re_path(r"registrar/$", views.UserRegistrationFormView.as_view(), name="registrarview"),
+    re_path(
+        r"registrar/$", views.UserRegistrationFormView.as_view(), name="registrarview"
+    ),
     # login/esqueceu/:
     re_path(r"^esqueceu/$", views.ForgotPasswordView.as_view(), name="esqueceuview"),
     # login/trocarsenha/:
@@ -21,7 +23,9 @@ urlpatterns = [
     # login/perfil/
     re_path(r"^perfil/$", views.MeuPerfilView.as_view(), name="perfilview"),
     # login/editarperfil/
-    re_path(r"^editarperfil/$", views.EditarPerfilView.as_view(), name="editarperfilview"),
+    re_path(
+        r"^editarperfil/$", views.EditarPerfilView.as_view(), name="editarperfilview"
+    ),
     # login/usuarios/
     re_path(r"^usuarios/$", views.UsuariosListView.as_view(), name="usuariosview"),
     # login/usuarios/(id_usuario)

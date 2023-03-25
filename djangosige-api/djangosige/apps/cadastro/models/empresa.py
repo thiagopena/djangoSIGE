@@ -4,6 +4,7 @@ from django.conf import settings
 from django.db import models
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
+
 from djangosige.apps.login.models import Usuario
 
 from .base import Pessoa
@@ -11,7 +12,7 @@ from .base import Pessoa
 
 def logo_directory_path(instance, filename):
     extension = os.path.splitext(filename)[1]
-    return "imagens/empresas/logo_{0}_{1}{2}".format(
+    return "imagens/empresas/logo_{}_{}{}".format(
         instance.nome_razao_social, instance.id, extension
     )
 
@@ -41,7 +42,7 @@ class Empresa(Pessoa):
                 obj.logo_file.delete(save=False)
         except:
             pass
-        super(Empresa, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     def __unicode__(self):
         return "%s" % self.nome_razao_social

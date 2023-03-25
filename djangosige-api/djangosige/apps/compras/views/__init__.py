@@ -1,9 +1,21 @@
-# -*- coding: utf-8 -*-
-
-from .compras import (AdicionarOrcamentoCompraView, AdicionarPedidoCompraView, OrcamentoCompraListView,
-                      OrcamentoCompraVencidosListView, OrcamentoCompraVencimentoHojeListView, PedidoCompraListView,
-                      PedidoCompraAtrasadosListView, PedidoCompraEntregaHojeListView, EditarOrcamentoCompraView,
-                      EditarPedidoCompraView, GerarPedidoCompraView, CancelarOrcamentoCompraView,
-                      CancelarPedidoCompraView, GerarCopiaOrcamentoCompraView, GerarCopiaPedidoCompraView,
-                      ReceberPedidoCompraView, GerarPDFOrcamentoCompra, GerarPDFPedidoCompra)
 from .ajax_views import InfoCompra
+from .compras import (
+    AdicionarOrcamentoCompraView,
+    AdicionarPedidoCompraView,
+    CancelarOrcamentoCompraView,
+    CancelarPedidoCompraView,
+    EditarOrcamentoCompraView,
+    EditarPedidoCompraView,
+    GerarCopiaOrcamentoCompraView,
+    GerarCopiaPedidoCompraView,
+    GerarPDFOrcamentoCompra,
+    GerarPDFPedidoCompra,
+    GerarPedidoCompraView,
+    OrcamentoCompraListView,
+    OrcamentoCompraVencidosListView,
+    OrcamentoCompraVencimentoHojeListView,
+    PedidoCompraAtrasadosListView,
+    PedidoCompraEntregaHojeListView,
+    PedidoCompraListView,
+    ReceberPedidoCompraView,
+)

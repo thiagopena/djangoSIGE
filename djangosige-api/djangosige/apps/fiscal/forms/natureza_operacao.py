@@ -1,5 +1,6 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+
 from djangosige.apps.fiscal.models import NaturezaOperacao
 
 

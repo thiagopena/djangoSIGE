@@ -7,7 +7,7 @@
     ```
 
 - Realizar testes:
-    
+
     ```bash
     python manage.py test
     ```

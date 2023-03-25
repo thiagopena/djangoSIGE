@@ -1,41 +1,55 @@
-# -*- coding: utf-8 -*-
-
-from django.urls import reverse_lazy
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.http import JsonResponse
-
-from djangosige.apps.base.custom_views import CustomView, CustomCreateView, CustomListView, CustomUpdateView
-
-from djangosige.apps.financeiro.forms import ContaPagarForm, ContaReceberForm, SaidaForm, EntradaForm
-from djangosige.apps.financeiro.models import Lancamento, Saida, Entrada, MovimentoCaixa
-from djangosige.apps.vendas.models import PedidoVenda
-from djangosige.apps.compras.models import PedidoCompra
-from djangosige.apps.estoque.models import SaidaEstoque, ItensMovimento, ProdutoEstocado
-
-from itertools import chain
 from datetime import datetime
+from itertools import chain
+
+from django.contrib import messages
+from django.http import JsonResponse
+from django.shortcuts import redirect
+from django.urls import reverse_lazy
+
+from djangosige.apps.base.custom_views import (
+    CustomCreateView,
+    CustomListView,
+    CustomUpdateView,
+    CustomView,
+)
+from djangosige.apps.compras.models import PedidoCompra
+from djangosige.apps.estoque.models import ItensMovimento, ProdutoEstocado, SaidaEstoque
+from djangosige.apps.financeiro.forms import (
+    ContaPagarForm,
+    ContaReceberForm,
+    EntradaForm,
+    SaidaForm,
+)
+from djangosige.apps.financeiro.models import Entrada, Lancamento, MovimentoCaixa, Saida
+from djangosige.apps.vendas.models import PedidoVenda
 
 
-class MovimentoCaixaMixin(object):
-
+class MovimentoCaixaMixin:
     def adicionar_novo_movimento_caixa(self, lancamento, novo_movimento):
         if isinstance(lancamento, Entrada):
             novo_movimento.entradas = novo_movimento.entradas + lancamento.valor_liquido
-            novo_movimento.saldo_final = novo_movimento.saldo_final + lancamento.valor_liquido
+            novo_movimento.saldo_final = (
+                novo_movimento.saldo_final + lancamento.valor_liquido
+            )
             novo_movimento.save()
             # Atualizar os saldos dos proximos movimentos
-            for m in MovimentoCaixa.objects.filter(data_movimento__gt=novo_movimento.data_movimento):
+            for m in MovimentoCaixa.objects.filter(
+                data_movimento__gt=novo_movimento.data_movimento
+            ):
                 m.saldo_inicial = m.saldo_inicial + lancamento.valor_liquido
                 m.saldo_final = m.saldo_final + lancamento.valor_liquido
                 m.save()
 
         elif isinstance(lancamento, Saida):
             novo_movimento.saidas = novo_movimento.saidas + lancamento.valor_liquido
-            novo_movimento.saldo_final = novo_movimento.saldo_final - lancamento.valor_liquido
+            novo_movimento.saldo_final = (
+                novo_movimento.saldo_final - lancamento.valor_liquido
+            )
             novo_movimento.save()
             # Atualizar os saldos dos proximos movimentos
-            for m in MovimentoCaixa.objects.filter(data_movimento__gt=novo_movimento.data_movimento):
+            for m in MovimentoCaixa.objects.filter(
+                data_movimento__gt=novo_movimento.data_movimento
+            ):
                 m.saldo_inicial = m.saldo_inicial - lancamento.valor_liquido
                 m.saldo_final = m.saldo_final - lancamento.valor_liquido
                 m.save()
@@ -45,7 +59,9 @@ class MovimentoCaixaMixin(object):
             movimento.entradas = movimento.entradas - valor
             movimento.saldo_final = movimento.saldo_final - valor
             movimento.save()
-            for m in MovimentoCaixa.objects.filter(data_movimento__gt=movimento.data_movimento):
+            for m in MovimentoCaixa.objects.filter(
+                data_movimento__gt=movimento.data_movimento
+            ):
                 m.saldo_inicial = m.saldo_inicial - valor
                 m.saldo_final = m.saldo_final - valor
                 m.save()
@@ -53,7 +69,9 @@ class MovimentoCaixaMixin(object):
             movimento.saidas = movimento.saidas - valor
             movimento.saldo_final = movimento.saldo_final + valor
             movimento.save()
-            for m in MovimentoCaixa.objects.filter(data_movimento__gt=movimento.data_movimento):
+            for m in MovimentoCaixa.objects.filter(
+                data_movimento__gt=movimento.data_movimento
+            ):
                 m.saldo_inicial = m.saldo_inicial + valor
                 m.saldo_final = m.saldo_final + valor
                 m.save()
@@ -63,7 +81,9 @@ class MovimentoCaixaMixin(object):
             movimento.entradas = movimento.entradas + valor
             movimento.saldo_final = movimento.saldo_final + valor
             movimento.save()
-            for m in MovimentoCaixa.objects.filter(data_movimento__gt=movimento.data_movimento):
+            for m in MovimentoCaixa.objects.filter(
+                data_movimento__gt=movimento.data_movimento
+            ):
                 m.saldo_inicial = m.saldo_inicial + valor
                 m.saldo_final = m.saldo_final + valor
                 m.save()
@@ -71,20 +91,25 @@ class MovimentoCaixaMixin(object):
             movimento.saidas = movimento.saidas + valor
             movimento.saldo_final = movimento.saldo_final - valor
             movimento.save()
-            for m in MovimentoCaixa.objects.filter(data_movimento__gt=movimento.data_movimento):
+            for m in MovimentoCaixa.objects.filter(
+                data_movimento__gt=movimento.data_movimento
+            ):
                 m.saldo_inicial = m.saldo_inicial - valor
                 m.saldo_final = m.saldo_final - valor
                 m.save()
 
     def verificar_remocao_movimento(self, movimento):
         # Deletar Caso essa seja a unica transacao do movimento antigo
-        if ((movimento.saldo_final == movimento.saldo_inicial) and (movimento.entradas == 0)):
+        if (movimento.saldo_final == movimento.saldo_inicial) and (
+            movimento.entradas == 0
+        ):
             movimento.delete()
 
     def atualizar_saldos(self, movimento):
         try:
             ultimo_mvmt = MovimentoCaixa.objects.filter(
-                data_movimento__lt=movimento.data_movimento).latest('data_movimento')
+                data_movimento__lt=movimento.data_movimento
+            ).latest("data_movimento")
             movimento.saldo_inicial = ultimo_mvmt.saldo_final
             movimento.saldo_final = movimento.saldo_inicial
             movimento.save()
@@ -93,16 +118,18 @@ class MovimentoCaixaMixin(object):
 
 
 class AdicionarLancamentoBaseView(CustomCreateView, MovimentoCaixaMixin):
-    permission_codename = 'add_lancamento'
+    permission_codename = "add_lancamento"
 
     def get_success_message(self, cleaned_data):
-        return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
+        return self.success_message % dict(
+            cleaned_data, descricao=self.object.descricao
+        )
 
     def get(self, request, *args, **kwargs):
         self.object = None
         form_class = self.get_form_class()
         form = form_class(user=request.user)
-        form.initial['data_pagamento'] = datetime.today().strftime('%d/%m/%Y')
+        form.initial["data_pagamento"] = datetime.today().strftime("%d/%m/%Y")
         return self.render_to_response(self.get_context_data(form=form))
 
     def post(self, request, *args, **kwargs):
@@ -110,10 +137,8 @@ class AdicionarLancamentoBaseView(CustomCreateView, MovimentoCaixaMixin):
         # Tirar . dos campos decimais
         req_post = request.POST.copy()
         for key in req_post:
-            if ('valor' in key or
-                'juros' in key or
-                    'abatimento' in key):
-                req_post[key] = req_post[key].replace('.', '')
+            if "valor" in key or "juros" in key or "abatimento" in key:
+                req_post[key] = req_post[key].replace(".", "")
 
         request.POST = req_post
 
@@ -128,17 +153,20 @@ class AdicionarLancamentoBaseView(CustomCreateView, MovimentoCaixaMixin):
                 created = None
                 if self.object.data_pagamento:
                     mvmt, created = MovimentoCaixa.objects.get_or_create(
-                        data_movimento=self.object.data_pagamento)
+                        data_movimento=self.object.data_pagamento
+                    )
                 elif self.object.data_vencimento:
                     mvmt, created = MovimentoCaixa.objects.get_or_create(
-                        data_movimento=self.object.data_vencimento)
+                        data_movimento=self.object.data_vencimento
+                    )
 
                 if mvmt:
                     if created:
                         self.atualizar_saldos(mvmt)
 
                     self.adicionar_novo_movimento_caixa(
-                        lancamento=self.object, novo_movimento=mvmt)
+                        lancamento=self.object, novo_movimento=mvmt
+                    )
                     mvmt.save()
                     self.object.movimento_caixa = mvmt
 
@@ -151,64 +179,62 @@ class AdicionarLancamentoBaseView(CustomCreateView, MovimentoCaixaMixin):
 class AdicionarContaPagarView(AdicionarLancamentoBaseView):
     form_class = ContaPagarForm
     template_name = "financeiro/lancamento/lancamento_add.html"
-    success_url = reverse_lazy('financeiro:listacontapagarview')
+    success_url = reverse_lazy("financeiro:listacontapagarview")
     success_message = "Conta a pagar <b>%(descricao)s </b>adicionada com sucesso."
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarContaPagarView,
-                        self).get_context_data(**kwargs)
-        context['title_complete'] = 'ADICIONAR CONTA A PAGAR'
-        context['return_url'] = reverse_lazy('financeiro:listacontapagarview')
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "ADICIONAR CONTA A PAGAR"
+        context["return_url"] = reverse_lazy("financeiro:listacontapagarview")
         return context
 
 
 class AdicionarContaReceberView(AdicionarLancamentoBaseView):
     form_class = ContaReceberForm
     template_name = "financeiro/lancamento/lancamento_add.html"
-    success_url = reverse_lazy('financeiro:listacontareceberview')
+    success_url = reverse_lazy("financeiro:listacontareceberview")
     success_message = "Conta a receber <b>%(descricao)s </b>adicionada com sucesso."
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarContaReceberView,
-                        self).get_context_data(**kwargs)
-        context['title_complete'] = 'ADICIONAR CONTA A RECEBER'
-        context['return_url'] = reverse_lazy(
-            'financeiro:listacontareceberview')
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "ADICIONAR CONTA A RECEBER"
+        context["return_url"] = reverse_lazy("financeiro:listacontareceberview")
         return context
 
 
 class AdicionarEntradaView(AdicionarLancamentoBaseView):
     form_class = EntradaForm
     template_name = "financeiro/lancamento/lancamento_add.html"
-    success_url = reverse_lazy('financeiro:listarecebimentosview')
+    success_url = reverse_lazy("financeiro:listarecebimentosview")
     success_message = "Recebimento <b>%(descricao)s </b>adicionado com sucesso."
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarEntradaView, self).get_context_data(**kwargs)
-        context['title_complete'] = 'ADICIONAR RECEBIMENTO'
-        context['return_url'] = reverse_lazy(
-            'financeiro:listarecebimentosview')
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "ADICIONAR RECEBIMENTO"
+        context["return_url"] = reverse_lazy("financeiro:listarecebimentosview")
         return context
 
 
 class AdicionarSaidaView(AdicionarLancamentoBaseView):
     form_class = SaidaForm
     template_name = "financeiro/lancamento/lancamento_add.html"
-    success_url = reverse_lazy('financeiro:listapagamentosview')
+    success_url = reverse_lazy("financeiro:listapagamentosview")
     success_message = "Pagamento <b>%(descricao)s </b>adicionado com sucesso."
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarSaidaView, self).get_context_data(**kwargs)
-        context['title_complete'] = 'ADICIONAR PAGAMENTO'
-        context['return_url'] = reverse_lazy('financeiro:listapagamentosview')
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "ADICIONAR PAGAMENTO"
+        context["return_url"] = reverse_lazy("financeiro:listapagamentosview")
         return context
 
 
 class EditarLancamentoBaseView(CustomUpdateView, MovimentoCaixaMixin):
-    permission_codename = 'change_lancamento'
+    permission_codename = "change_lancamento"
 
     def get_success_message(self, cleaned_data):
-        return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
+        return self.success_message % dict(
+            cleaned_data, descricao=self.object.descricao
+        )
 
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
@@ -220,18 +246,15 @@ class EditarLancamentoBaseView(CustomUpdateView, MovimentoCaixaMixin):
         # Tirar . dos campos decimais
         req_post = request.POST.copy()
         for key in req_post:
-            if ('valor' in key or
-                'juros' in key or
-                    'abatimento' in key):
-                req_post[key] = req_post[key].replace('.', '')
+            if "valor" in key or "juros" in key or "abatimento" in key:
+                req_post[key] = req_post[key].replace(".", "")
 
         request.POST = req_post
 
         self.object = self.get_object()
         vliquido_previo = self.object.valor_liquido
         form_class = self.get_form_class()
-        form = form_class(request.POST, instance=self.object,
-                          user=request.user)
+        form = form_class(request.POST, instance=self.object, user=request.user)
 
         if form.is_valid():
             self.object = form.save(commit=False)
@@ -245,32 +268,40 @@ class EditarLancamentoBaseView(CustomUpdateView, MovimentoCaixaMixin):
                     created = None
                     if self.object.data_pagamento:
                         mvmt, created = MovimentoCaixa.objects.get_or_create(
-                            data_movimento=self.object.data_pagamento)
+                            data_movimento=self.object.data_pagamento
+                        )
                     elif self.object.data_vencimento:
                         mvmt, created = MovimentoCaixa.objects.get_or_create(
-                            data_movimento=self.object.data_vencimento)
+                            data_movimento=self.object.data_vencimento
+                        )
 
                     # Inseriu uma data de pagamento ou vencimento
                     if mvmt:
                         # Caso seja o mesmo mvmt(mesmo id e data)
                         if mvmt.id == self.object.movimento_caixa.id:
                             self.adicionar_valor_movimento_caixa(
-                                self.object, self.object.movimento_caixa, variacao_valor)
+                                self.object, self.object.movimento_caixa, variacao_valor
+                            )
 
                         # Caso tenha mudado a data, criar outro objeto e checar
                         # se o antigo pode ser deletado
                         else:
                             self.remover_valor_movimento_caixa(
-                                self.object, self.object.movimento_caixa, vliquido_previo)
+                                self.object,
+                                self.object.movimento_caixa,
+                                vliquido_previo,
+                            )
                             if created:
                                 self.atualizar_saldos(mvmt)
                             else:
                                 mvmt.refresh_from_db()
 
                             self.adicionar_novo_movimento_caixa(
-                                lancamento=self.object, novo_movimento=mvmt)
+                                lancamento=self.object, novo_movimento=mvmt
+                            )
                             self.verificar_remocao_movimento(
-                                self.object.movimento_caixa)
+                                self.object.movimento_caixa
+                            )
 
                             mvmt.save()
                             self.object.movimento_caixa = mvmt
@@ -278,17 +309,17 @@ class EditarLancamentoBaseView(CustomUpdateView, MovimentoCaixaMixin):
                     # Nao inseriu(removeu) data de vencimento ou pagamento
                     else:
                         self.remover_valor_movimento_caixa(
-                            self.object, self.object.movimento_caixa, vliquido_previo)
-                        self.verificar_remocao_movimento(
-                            self.object.movimento_caixa)
+                            self.object, self.object.movimento_caixa, vliquido_previo
+                        )
+                        self.verificar_remocao_movimento(self.object.movimento_caixa)
                         self.object.movimento_caixa = None
 
                 # Retirou opcao de movimentar o caixa
                 else:
                     self.remover_valor_movimento_caixa(
-                        self.object, self.object.movimento_caixa, vliquido_previo)
-                    self.verificar_remocao_movimento(
-                        self.object.movimento_caixa)
+                        self.object, self.object.movimento_caixa, vliquido_previo
+                    )
+                    self.verificar_remocao_movimento(self.object.movimento_caixa)
                     self.object.movimento_caixa = None
 
             # Nao possui movimento de caixa previo
@@ -299,17 +330,20 @@ class EditarLancamentoBaseView(CustomUpdateView, MovimentoCaixaMixin):
                     created = None
                     if self.object.data_pagamento:
                         mvmt, created = MovimentoCaixa.objects.get_or_create(
-                            data_movimento=self.object.data_pagamento)
+                            data_movimento=self.object.data_pagamento
+                        )
                     elif self.object.data_vencimento:
                         mvmt, created = MovimentoCaixa.objects.get_or_create(
-                            data_movimento=self.object.data_vencimento)
+                            data_movimento=self.object.data_vencimento
+                        )
 
                     if mvmt:
                         if created:
                             self.atualizar_saldos(mvmt)
 
                         self.adicionar_novo_movimento_caixa(
-                            lancamento=self.object, novo_movimento=mvmt)
+                            lancamento=self.object, novo_movimento=mvmt
+                        )
                         mvmt.save()
                         self.object.movimento_caixa = mvmt
 
@@ -323,12 +357,12 @@ class EditarContaPagarView(EditarLancamentoBaseView):
     form_class = ContaPagarForm
     model = Saida
     template_name = "financeiro/lancamento/lancamento_edit.html"
-    success_url = reverse_lazy('financeiro:listacontapagarview')
+    success_url = reverse_lazy("financeiro:listacontapagarview")
     success_message = "Conta a pagar <b>%(descricao)s </b>editada com sucesso."
 
     def get_context_data(self, **kwargs):
-        context = super(EditarContaPagarView, self).get_context_data(**kwargs)
-        context['return_url'] = reverse_lazy('financeiro:listacontapagarview')
+        context = super().get_context_data(**kwargs)
+        context["return_url"] = reverse_lazy("financeiro:listacontapagarview")
         return context
 
 
@@ -336,14 +370,12 @@ class EditarContaReceberView(EditarLancamentoBaseView):
     form_class = ContaReceberForm
     model = Entrada
     template_name = "financeiro/lancamento/lancamento_edit.html"
-    success_url = reverse_lazy('financeiro:listacontareceberview')
+    success_url = reverse_lazy("financeiro:listacontareceberview")
     success_message = "Conta a receber <b>%(descricao)s </b>editada com sucesso."
 
     def get_context_data(self, **kwargs):
-        context = super(EditarContaReceberView,
-                        self).get_context_data(**kwargs)
-        context['return_url'] = reverse_lazy(
-            'financeiro:listacontareceberview')
+        context = super().get_context_data(**kwargs)
+        context["return_url"] = reverse_lazy("financeiro:listacontareceberview")
         return context
 
 
@@ -351,13 +383,12 @@ class EditarEntradaView(EditarLancamentoBaseView):
     form_class = EntradaForm
     model = Entrada
     template_name = "financeiro/lancamento/lancamento_edit.html"
-    success_url = reverse_lazy('financeiro:listarecebimentosview')
+    success_url = reverse_lazy("financeiro:listarecebimentosview")
     success_message = "Recebimento <b>%(descricao)s </b>editado com sucesso."
 
     def get_context_data(self, **kwargs):
-        context = super(EditarEntradaView, self).get_context_data(**kwargs)
-        context['return_url'] = reverse_lazy(
-            'financeiro:listarecebimentosview')
+        context = super().get_context_data(**kwargs)
+        context["return_url"] = reverse_lazy("financeiro:listarecebimentosview")
         return context
 
 
@@ -365,17 +396,17 @@ class EditarSaidaView(EditarLancamentoBaseView):
     form_class = SaidaForm
     model = Saida
     template_name = "financeiro/lancamento/lancamento_edit.html"
-    success_url = reverse_lazy('financeiro:listapagamentosview')
+    success_url = reverse_lazy("financeiro:listapagamentosview")
     success_message = "Pagamento <b>%(descricao)s </b>editado com sucesso."
 
     def get_context_data(self, **kwargs):
-        context = super(EditarSaidaView, self).get_context_data(**kwargs)
-        context['return_url'] = reverse_lazy('financeiro:listapagamentosview')
+        context = super().get_context_data(**kwargs)
+        context["return_url"] = reverse_lazy("financeiro:listapagamentosview")
         return context
 
 
 class LancamentoListBaseView(CustomListView, MovimentoCaixaMixin):
-    permission_codename = 'view_lancamento'
+    permission_codename = "view_lancamento"
 
     def get_queryset(self, object, status):
         return object.objects.filter(status__in=status)
@@ -386,24 +417,24 @@ class LancamentoListBaseView(CustomListView, MovimentoCaixaMixin):
             for key, value in request.POST.items():
                 if value == "on":
                     instance = self.model.objects.get(id=key)
-                    if(instance.movimento_caixa):
+                    if instance.movimento_caixa:
                         self.remover_valor_movimento_caixa(
-                            instance, instance.movimento_caixa, instance.valor_liquido)
-                        self.verificar_remocao_movimento(
-                            instance.movimento_caixa)
+                            instance, instance.movimento_caixa, instance.valor_liquido
+                        )
+                        self.verificar_remocao_movimento(instance.movimento_caixa)
                     instance.delete()
         return redirect(self.success_url)
 
 
 class LancamentoListView(LancamentoListBaseView):
-    template_name = 'financeiro/lancamento/lancamento_list.html'
-    context_object_name = 'all_lancamentos'
-    success_url = reverse_lazy('financeiro:listalancamentoview')
+    template_name = "financeiro/lancamento/lancamento_list.html"
+    context_object_name = "all_lancamentos"
+    success_url = reverse_lazy("financeiro:listalancamentoview")
 
     def get_context_data(self, **kwargs):
-        context = super(LancamentoListView, self).get_context_data(**kwargs)
-        context['title_complete'] = 'TODOS OS LANÇAMENTOS'
-        context['all_lancamentos_saidas'] = Saida.objects.all()
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "TODOS OS LANÇAMENTOS"
+        context["all_lancamentos_saidas"] = Saida.objects.all()
         return context
 
     def get_queryset(self):
@@ -422,169 +453,190 @@ class LancamentoListView(LancamentoListBaseView):
                         instance = Saida.objects.get(id=key)
                     else:
                         raise ValueError(
-                            'Entrada/Saida para o lancamento escolhido nao existe.')
-                    if(instance.movimento_caixa):
+                            "Entrada/Saida para o lancamento escolhido nao existe."
+                        )
+                    if instance.movimento_caixa:
                         self.remover_valor_movimento_caixa(
-                            instance, instance.movimento_caixa, instance.valor_liquido)
-                        self.verificar_remocao_movimento(
-                            instance.movimento_caixa)
+                            instance, instance.movimento_caixa, instance.valor_liquido
+                        )
+                        self.verificar_remocao_movimento(instance.movimento_caixa)
                     instance.delete()
         return redirect(self.success_url)
 
 
 class ContaPagarListView(LancamentoListBaseView):
-    template_name = 'financeiro/lancamento/lancamento_list.html'
+    template_name = "financeiro/lancamento/lancamento_list.html"
     model = Saida
-    context_object_name = 'all_contaspagar'
-    success_url = reverse_lazy('financeiro:listacontapagarview')
+    context_object_name = "all_contaspagar"
+    success_url = reverse_lazy("financeiro:listacontapagarview")
 
     def get_context_data(self, **kwargs):
-        context = super(ContaPagarListView, self).get_context_data(**kwargs)
-        context['title_complete'] = 'CONTAS A PAGAR'
-        context['add_url'] = reverse_lazy('financeiro:addcontapagarview')
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "CONTAS A PAGAR"
+        context["add_url"] = reverse_lazy("financeiro:addcontapagarview")
         return context
 
     def get_queryset(self):
-        return super(ContaPagarListView, self).get_queryset(object=Saida, status=['1', '2'])
+        return super().get_queryset(object=Saida, status=["1", "2"])
 
 
 class ContaPagarAtrasadasListView(LancamentoListBaseView):
-    template_name = 'financeiro/lancamento/lancamento_list.html'
+    template_name = "financeiro/lancamento/lancamento_list.html"
     model = Saida
-    context_object_name = 'all_contaspagar'
-    success_url = reverse_lazy('financeiro:listacontapagaratrasadasview')
+    context_object_name = "all_contaspagar"
+    success_url = reverse_lazy("financeiro:listacontapagaratrasadasview")
 
     def get_context_data(self, **kwargs):
-        context = super(ContaPagarAtrasadasListView,
-                        self).get_context_data(**kwargs)
-        context['title_complete'] = 'CONTAS A PAGAR ATRASADAS'
-        context['add_url'] = reverse_lazy('financeiro:addcontapagarview')
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "CONTAS A PAGAR ATRASADAS"
+        context["add_url"] = reverse_lazy("financeiro:addcontapagarview")
         return context
 
     def get_queryset(self):
-        return Saida.objects.filter(data_vencimento__lt=datetime.now().date(), status__in=['1', '2'])
+        return Saida.objects.filter(
+            data_vencimento__lt=datetime.now().date(), status__in=["1", "2"]
+        )
 
 
 class ContaPagarHojeListView(ContaPagarAtrasadasListView):
-    success_url = reverse_lazy('financeiro:listacontapagarhojeview')
+    success_url = reverse_lazy("financeiro:listacontapagarhojeview")
 
     def get_context_data(self, **kwargs):
-        context = super(ContaPagarHojeListView,
-                        self).get_context_data(**kwargs)
-        context['title_complete'] = 'CONTAS A PAGAR DO DIA ' + \
-            datetime.now().date().strftime('%d/%m/%Y')
-        context['add_url'] = reverse_lazy('financeiro:addcontapagarview')
+        context = super().get_context_data(**kwargs)
+        context[
+            "title_complete"
+        ] = "CONTAS A PAGAR DO DIA " + datetime.now().date().strftime("%d/%m/%Y")
+        context["add_url"] = reverse_lazy("financeiro:addcontapagarview")
         return context
 
     def get_queryset(self):
-        return Saida.objects.filter(data_vencimento=datetime.now().date(), status__in=['1', '2'])
+        return Saida.objects.filter(
+            data_vencimento=datetime.now().date(), status__in=["1", "2"]
+        )
 
 
 class ContaReceberListView(LancamentoListBaseView):
-    template_name = 'financeiro/lancamento/lancamento_list.html'
+    template_name = "financeiro/lancamento/lancamento_list.html"
     model = Entrada
-    context_object_name = 'all_contasreceber'
-    success_url = reverse_lazy('financeiro:listacontareceberview')
+    context_object_name = "all_contasreceber"
+    success_url = reverse_lazy("financeiro:listacontareceberview")
 
     def get_context_data(self, **kwargs):
-        context = super(ContaReceberListView, self).get_context_data(**kwargs)
-        context['title_complete'] = 'CONTAS A RECEBER'
-        context['add_url'] = reverse_lazy('financeiro:addcontareceberview')
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "CONTAS A RECEBER"
+        context["add_url"] = reverse_lazy("financeiro:addcontareceberview")
         return context
 
     def get_queryset(self):
-        return super(ContaReceberListView, self).get_queryset(object=Entrada, status=['1', '2'])
+        return super().get_queryset(object=Entrada, status=["1", "2"])
 
 
 class ContaReceberAtrasadasListView(LancamentoListBaseView):
-    template_name = 'financeiro/lancamento/lancamento_list.html'
+    template_name = "financeiro/lancamento/lancamento_list.html"
     model = Entrada
-    context_object_name = 'all_contasreceber'
-    success_url = reverse_lazy('financeiro:listacontareceberatrasadasview')
+    context_object_name = "all_contasreceber"
+    success_url = reverse_lazy("financeiro:listacontareceberatrasadasview")
 
     def get_context_data(self, **kwargs):
-        context = super(ContaReceberAtrasadasListView,
-                        self).get_context_data(**kwargs)
-        context['title_complete'] = 'CONTAS A RECEBER ATRASADAS'
-        context['add_url'] = reverse_lazy('financeiro:addcontareceberview')
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "CONTAS A RECEBER ATRASADAS"
+        context["add_url"] = reverse_lazy("financeiro:addcontareceberview")
         return context
 
     def get_queryset(self):
-        return Entrada.objects.filter(data_vencimento__lt=datetime.now().date(), status__in=['1', '2'])
+        return Entrada.objects.filter(
+            data_vencimento__lt=datetime.now().date(), status__in=["1", "2"]
+        )
 
 
 class ContaReceberHojeListView(ContaReceberAtrasadasListView):
-    success_url = reverse_lazy('financeiro:listacontareceberhojeview')
+    success_url = reverse_lazy("financeiro:listacontareceberhojeview")
 
     def get_context_data(self, **kwargs):
-        context = super(ContaReceberHojeListView,
-                        self).get_context_data(**kwargs)
-        context['title_complete'] = 'CONTAS A RECEBER DO DIA ' + \
-            datetime.now().date().strftime('%d/%m/%Y')
-        context['add_url'] = reverse_lazy('financeiro:addcontareceberview')
+        context = super().get_context_data(**kwargs)
+        context[
+            "title_complete"
+        ] = "CONTAS A RECEBER DO DIA " + datetime.now().date().strftime("%d/%m/%Y")
+        context["add_url"] = reverse_lazy("financeiro:addcontareceberview")
         return context
 
     def get_queryset(self):
-        return Entrada.objects.filter(data_vencimento=datetime.now().date(), status__in=['1', '2'])
+        return Entrada.objects.filter(
+            data_vencimento=datetime.now().date(), status__in=["1", "2"]
+        )
 
 
 class EntradaListView(LancamentoListBaseView):
-    template_name = 'financeiro/lancamento/lancamento_list.html'
+    template_name = "financeiro/lancamento/lancamento_list.html"
     model = Entrada
-    context_object_name = 'all_entradas'
-    success_url = reverse_lazy('financeiro:listarecebimentosview')
+    context_object_name = "all_entradas"
+    success_url = reverse_lazy("financeiro:listarecebimentosview")
 
     def get_context_data(self, **kwargs):
-        context = super(EntradaListView, self).get_context_data(**kwargs)
-        context['title_complete'] = 'RECEBIMENTOS'
-        context['add_url'] = reverse_lazy('financeiro:addrecebimentoview')
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "RECEBIMENTOS"
+        context["add_url"] = reverse_lazy("financeiro:addrecebimentoview")
         return context
 
     def get_queryset(self):
-        return super(EntradaListView, self).get_queryset(object=Entrada, status=['0', ])
+        return super().get_queryset(
+            object=Entrada,
+            status=[
+                "0",
+            ],
+        )
 
 
 class SaidaListView(LancamentoListBaseView):
-    template_name = 'financeiro/lancamento/lancamento_list.html'
+    template_name = "financeiro/lancamento/lancamento_list.html"
     model = Saida
-    context_object_name = 'all_saidas'
-    success_url = reverse_lazy('financeiro:listapagamentosview')
+    context_object_name = "all_saidas"
+    success_url = reverse_lazy("financeiro:listapagamentosview")
 
     def get_context_data(self, **kwargs):
-        context = super(SaidaListView, self).get_context_data(**kwargs)
-        context['title_complete'] = 'PAGAMENTOS'
-        context['add_url'] = reverse_lazy('financeiro:addpagamentoview')
+        context = super().get_context_data(**kwargs)
+        context["title_complete"] = "PAGAMENTOS"
+        context["add_url"] = reverse_lazy("financeiro:addpagamentoview")
         return context
 
     def get_queryset(self):
-        return super(SaidaListView, self).get_queryset(object=Saida, status=['0', ])
+        return super().get_queryset(
+            object=Saida,
+            status=[
+                "0",
+            ],
+        )
 
 
 class GerarLancamentoView(CustomView, MovimentoCaixaMixin):
-    permission_codename = ['add_lancamento', 'change_lancamento']
+    permission_codename = ["add_lancamento", "change_lancamento"]
 
     def post(self, request, *args, **kwargs):
-        conta_id = request.POST['contaId']
+        conta_id = request.POST["contaId"]
         data = {}
 
         # Tipo conta: 0 = Receber, 1 = Pagar
-        if request.POST['tipoConta'] == '0':
+        if request.POST["tipoConta"] == "0":
             obj = Entrada.objects.get(id=conta_id)
-            data['url'] = reverse_lazy(
-                'financeiro:editarrecebimentoview', kwargs={'pk': obj.id})
-            obj.status = '0'
+            data["url"] = reverse_lazy(
+                "financeiro:editarrecebimentoview", kwargs={"pk": obj.id}
+            )
+            obj.status = "0"
             obj.data_pagamento = datetime.strptime(
-                request.POST['dataPagamento'], '%d/%m/%Y').strftime('%Y-%m-%d')
+                request.POST["dataPagamento"], "%d/%m/%Y"
+            ).strftime("%Y-%m-%d")
             obj.save()
             if obj.movimentar_caixa:
                 self.atualizar_movimento_caixa(obj)
-        elif request.POST['tipoConta'] == '1':
+        elif request.POST["tipoConta"] == "1":
             obj = Saida.objects.get(id=conta_id)
-            data['url'] = reverse_lazy(
-                'financeiro:editarpagamentoview', kwargs={'pk': obj.id})
-            obj.status = '0'
+            data["url"] = reverse_lazy(
+                "financeiro:editarpagamentoview", kwargs={"pk": obj.id}
+            )
+            obj.status = "0"
             obj.data_pagamento = datetime.strptime(
-                request.POST['dataPagamento'], '%d/%m/%Y').strftime('%Y-%m-%d')
+                request.POST["dataPagamento"], "%d/%m/%Y"
+            ).strftime("%Y-%m-%d")
             obj.save()
             if obj.movimentar_caixa:
                 self.atualizar_movimento_caixa(obj)
@@ -596,14 +648,16 @@ class GerarLancamentoView(CustomView, MovimentoCaixaMixin):
         created = None
         if object.data_pagamento:
             mvmt, created = MovimentoCaixa.objects.get_or_create(
-                data_movimento=object.data_pagamento)
+                data_movimento=object.data_pagamento
+            )
 
         if mvmt:
             # Caso a data esteja trocada
             if mvmt.id != object.movimento_caixa.id:
                 # Atualizar os valores sem o movimento antigo
                 self.remover_valor_movimento_caixa(
-                    object, object.movimento_caixa, object.valor_liquido)
+                    object, object.movimento_caixa, object.valor_liquido
+                )
                 if created:
                     self.atualizar_saldos(mvmt)
                 else:
@@ -611,7 +665,8 @@ class GerarLancamentoView(CustomView, MovimentoCaixaMixin):
 
                 self.verificar_remocao_movimento(object.movimento_caixa)
                 self.adicionar_novo_movimento_caixa(
-                    lancamento=object, novo_movimento=mvmt)
+                    lancamento=object, novo_movimento=mvmt
+                )
 
                 mvmt.save()
                 object.movimento_caixa = mvmt
@@ -619,10 +674,12 @@ class GerarLancamentoView(CustomView, MovimentoCaixaMixin):
 
 
 class FaturarPedidoVendaView(CustomView, MovimentoCaixaMixin):
-    permission_codename = 'vendas.faturar_pedidovenda'
+    permission_codename = "vendas.faturar_pedidovenda"
 
     def get_success_message(self, cleaned_data):
-        return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
+        return self.success_message % dict(
+            cleaned_data, descricao=self.object.descricao
+        )
 
     def atualizar_estoque(self, request, pedido):
         erros = False
@@ -635,15 +692,28 @@ class FaturarPedidoVendaView(CustomView, MovimentoCaixaMixin):
             if item.produto.controlar_estoque:
                 try:
                     prod_estocado = ProdutoEstocado.objects.get(
-                        local=pedido.local_orig, produto=item.produto)
+                        local=pedido.local_orig, produto=item.produto
+                    )
                     if item.quantidade > item.produto.estoque_atual:
                         erros = True
-                        messages.warning(request, 'Aviso: A venda não pode ser faturada. O estoque atual do produto ' + str(item.produto.descricao) +
-                                         ' é de apenas ' + str(item.produto.estoque_atual))
+                        messages.warning(
+                            request,
+                            "Aviso: A venda não pode ser faturada. O estoque atual do produto "
+                            + str(item.produto.descricao)
+                            + " é de apenas "
+                            + str(item.produto.estoque_atual),
+                        )
                     elif item.quantidade > prod_estocado.quantidade:
                         erros = True
-                        messages.warning(request, 'Aviso: A venda não pode ser faturada. O estoque atual do produto ' + str(item.produto.descricao) +
-                                         ' no local ' + str(pedido.local_orig) + ' é de apenas ' + str(prod_estocado.quantidade))
+                        messages.warning(
+                            request,
+                            "Aviso: A venda não pode ser faturada. O estoque atual do produto "
+                            + str(item.produto.descricao)
+                            + " no local "
+                            + str(pedido.local_orig)
+                            + " é de apenas "
+                            + str(prod_estocado.quantidade),
+                        )
                     elif not erros:
                         item_mvmt = ItensMovimento()
                         item_mvmt.produto = item.produto
@@ -658,17 +728,24 @@ class FaturarPedidoVendaView(CustomView, MovimentoCaixaMixin):
 
                 except ProdutoEstocado.DoesNotExist:
                     erros = True
-                    messages.warning(request, 'Aviso: A venda não pode ser faturada. O estoque atual do produto ' + str(item.produto.descricao) +
-                                     ' no local ' + str(pedido.local_orig) + ' é 0,00')
+                    messages.warning(
+                        request,
+                        "Aviso: A venda não pode ser faturada. O estoque atual do produto "
+                        + str(item.produto.descricao)
+                        + " no local "
+                        + str(pedido.local_orig)
+                        + " é 0,00",
+                    )
 
         # Salvar se nao ocorreu erros
         if not erros:
             saida_estoque = SaidaEstoque()
             saida_estoque.data_movimento = pedido.data_entrega
             saida_estoque.quantidade_itens = pedido.itens_venda.count()
-            saida_estoque.observacoes = 'Saída de estoque pelo pedido de venda nº{}'.format(
-                str(pedido.id))
-            saida_estoque.tipo_movimento = u'1'
+            saida_estoque.observacoes = (
+                f"Saída de estoque pelo pedido de venda nº{str(pedido.id)}"
+            )
+            saida_estoque.tipo_movimento = "1"
             saida_estoque.valor_total = pedido.get_total_produtos_estoque()
             saida_estoque.pedido_venda = pedido
             saida_estoque.local_orig = pedido.local_orig
@@ -686,22 +763,23 @@ class FaturarPedidoVendaView(CustomView, MovimentoCaixaMixin):
         return erros
 
     def get(self, request, *args, **kwargs):
-        pedido_id = kwargs.get('pk', None)
+        pedido_id = kwargs.get("pk", None)
         pedido = PedidoVenda.objects.get(id=pedido_id)
         pagamentos = pedido.parcela_pagamento.all()
         n_parcelas = pagamentos.count()
 
         if pedido.movimentar_estoque:
             if self.atualizar_estoque(request, pedido):
-                return redirect(request.META['HTTP_REFERER'])
+                return redirect(request.META["HTTP_REFERER"])
 
         for pagamento in pagamentos:
             entrada = Entrada()
             entrada.cliente = pedido.cliente
-            entrada.status = '1'
+            entrada.status = "1"
             entrada.data_vencimento = pagamento.vencimento
-            entrada.descricao = 'Parcela {0}/{1} - Pedido de venda nº{2}'.format(
-                str(pagamento.indice_parcela), str(n_parcelas), str(pedido.id))
+            entrada.descricao = "Parcela {}/{} - Pedido de venda nº{}".format(
+                str(pagamento.indice_parcela), str(n_parcelas), str(pedido.id)
+            )
             entrada.valor_total = pagamento.valor_parcela
             entrada.valor_liquido = pagamento.valor_parcela
             entrada.save()
@@ -709,35 +787,41 @@ class FaturarPedidoVendaView(CustomView, MovimentoCaixaMixin):
             created = None
             if pagamento.vencimento:
                 mvmt, created = MovimentoCaixa.objects.get_or_create(
-                    data_movimento=pagamento.vencimento)
+                    data_movimento=pagamento.vencimento
+                )
 
             if mvmt:
                 if created:
                     self.atualizar_saldos(mvmt)
 
                 self.adicionar_novo_movimento_caixa(
-                    lancamento=entrada, novo_movimento=mvmt)
+                    lancamento=entrada, novo_movimento=mvmt
+                )
                 mvmt.save()
                 entrada.movimento_caixa = mvmt
                 entrada.save()
 
-        pedido.status = '1'
+        pedido.status = "1"
         pedido.save()
 
         messages.success(
-            request, "<b>Pedido de venda {0} </b>faturado com sucesso.".format(str(pedido.id)))
+            request,
+            f"<b>Pedido de venda {str(pedido.id)} </b>faturado com sucesso.",
+        )
 
-        return redirect(reverse_lazy('vendas:listapedidovendaview'))
+        return redirect(reverse_lazy("vendas:listapedidovendaview"))
 
 
 class FaturarPedidoCompraView(CustomView, MovimentoCaixaMixin):
-    permission_codename = 'compras.faturar_pedidocompra'
+    permission_codename = "compras.faturar_pedidocompra"
 
     def get_success_message(self, cleaned_data):
-        return self.success_message % dict(cleaned_data, descricao=self.object.descricao)
+        return self.success_message % dict(
+            cleaned_data, descricao=self.object.descricao
+        )
 
     def get(self, request, *args, **kwargs):
-        pedido_id = kwargs.get('pk', None)
+        pedido_id = kwargs.get("pk", None)
         pedido = PedidoCompra.objects.get(id=pedido_id)
         pagamentos = pedido.parcela_pagamento.all()
         n_parcelas = pagamentos.count()
@@ -745,10 +829,11 @@ class FaturarPedidoCompraView(CustomView, MovimentoCaixaMixin):
         for pagamento in pagamentos:
             saida = Saida()
             saida.fornecedor = pedido.fornecedor
-            saida.status = '1'
+            saida.status = "1"
             saida.data_vencimento = pagamento.vencimento
-            saida.descricao = 'Parcela {0}/{1} - Pedido de compra nº{2}'.format(
-                str(pagamento.indice_parcela), str(n_parcelas), str(pedido.id))
+            saida.descricao = "Parcela {}/{} - Pedido de compra nº{}".format(
+                str(pagamento.indice_parcela), str(n_parcelas), str(pedido.id)
+            )
             saida.valor_total = pagamento.valor_parcela
             saida.valor_liquido = pagamento.valor_parcela
             saida.save()
@@ -756,22 +841,26 @@ class FaturarPedidoCompraView(CustomView, MovimentoCaixaMixin):
             created = None
             if pagamento.vencimento:
                 mvmt, created = MovimentoCaixa.objects.get_or_create(
-                    data_movimento=pagamento.vencimento)
+                    data_movimento=pagamento.vencimento
+                )
 
             if mvmt:
                 if created:
                     self.atualizar_saldos(mvmt)
 
                 self.adicionar_novo_movimento_caixa(
-                    lancamento=saida, novo_movimento=mvmt)
+                    lancamento=saida, novo_movimento=mvmt
+                )
                 mvmt.save()
                 saida.movimento_caixa = mvmt
                 saida.save()
 
-        pedido.status = '1'
+        pedido.status = "1"
         pedido.save()
 
         messages.success(
-            request, "<b>Pedido de compra {0} </b>realizado com sucesso.".format(str(pedido.id)))
+            request,
+            f"<b>Pedido de compra {str(pedido.id)} </b>realizado com sucesso.",
+        )
 
-        return redirect(reverse_lazy('compras:listapedidocompraview'))
+        return redirect(reverse_lazy("compras:listapedidocompraview"))

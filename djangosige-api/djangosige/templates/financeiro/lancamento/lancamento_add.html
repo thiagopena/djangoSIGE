@@ -24,7 +24,7 @@
 
           <form role="form" action="" method="post">
             {% csrf_token %}
-            
+
             {% include 'financeiro/lancamento/lancamento_form.html' %}
 
           </form>
@@ -40,7 +40,7 @@
 {%endblock%}
 
 {% block js %}
-    
+
   {% include 'financeiro/lancamento/lancamento_jsblock.html' %}
-  
+
 {% endblock %}

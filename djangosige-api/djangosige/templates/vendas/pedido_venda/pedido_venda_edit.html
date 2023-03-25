@@ -35,7 +35,7 @@
 
           <form id="venda_form_edit" role="form" action="" method="post">
             {% csrf_token %}
-            
+
             {% include 'vendas/venda_form.html' %}
 
           </form>
@@ -51,7 +51,7 @@
 {%endblock%}
 
 {% block js %}
-    
-  {% include 'vendas/venda_jsblock.html' %} 
-  
+
+  {% include 'vendas/venda_jsblock.html' %}
+
 {% endblock %}

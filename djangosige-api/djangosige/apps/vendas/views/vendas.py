@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import io
 from datetime import datetime
 
@@ -7,17 +5,28 @@ from django.conf import settings
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from djangosige.apps.base.custom_views import (CustomCreateView,
-                                               CustomListView,
-                                               CustomUpdateView, CustomView)
+from geraldo.generators import PDFGenerator
+
+from djangosige.apps.base.custom_views import (
+    CustomCreateView,
+    CustomListView,
+    CustomUpdateView,
+    CustomView,
+)
 from djangosige.apps.cadastro.models import MinhaEmpresa
 from djangosige.apps.login.models import Usuario
-from djangosige.apps.vendas.forms import (ItensVendaFormSet,
-                                          OrcamentoVendaForm, PagamentoFormSet,
-                                          PedidoVendaForm)
-from djangosige.apps.vendas.models import (ItensVenda, OrcamentoVenda,
-                                           Pagamento, PedidoVenda)
-from geraldo.generators import PDFGenerator
+from djangosige.apps.vendas.forms import (
+    ItensVendaFormSet,
+    OrcamentoVendaForm,
+    PagamentoFormSet,
+    PedidoVendaForm,
+)
+from djangosige.apps.vendas.models import (
+    ItensVenda,
+    OrcamentoVenda,
+    Pagamento,
+    PedidoVenda,
+)
 
 from .report_vendas import VendaReport
 
@@ -27,7 +36,7 @@ class AdicionarVendaView(CustomCreateView):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarVendaView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         return self.view_context(context)
 
     def get(self, request, form_class, *args, **kwargs):
@@ -104,15 +113,11 @@ class AdicionarOrcamentoVendaView(AdicionarVendaView):
 
     def get(self, request, *args, **kwargs):
         form_class = self.get_form_class()
-        return super(AdicionarOrcamentoVendaView, self).get(
-            request, form_class, *args, **kwargs
-        )
+        return super().get(request, form_class, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
-        return super(AdicionarOrcamentoVendaView, self).post(
-            request, form_class, *args, **kwargs
-        )
+        return super().post(request, form_class, *args, **kwargs)
 
 
 class AdicionarPedidoVendaView(AdicionarVendaView):
@@ -129,20 +134,16 @@ class AdicionarPedidoVendaView(AdicionarVendaView):
 
     def get(self, request, *args, **kwargs):
         form_class = self.get_form_class()
-        return super(AdicionarPedidoVendaView, self).get(
-            request, form_class, *args, **kwargs
-        )
+        return super().get(request, form_class, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
-        return super(AdicionarPedidoVendaView, self).post(
-            request, form_class, *args, **kwargs
-        )
+        return super().post(request, form_class, *args, **kwargs)
 
 
 class VendaListView(CustomListView):
     def get_context_data(self, **kwargs):
-        context = super(VendaListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         return self.view_context(context)
 
 
@@ -241,7 +242,7 @@ class EditarVendaView(CustomUpdateView):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
 
     def get_context_data(self, **kwargs):
-        context = super(EditarVendaView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         return self.view_context(context)
 
     def get(self, request, form_class, *args, **kwargs):
@@ -335,16 +336,12 @@ class EditarOrcamentoVendaView(EditarVendaView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        return super(EditarOrcamentoVendaView, self).get(
-            request, form_class, *args, **kwargs
-        )
+        return super().get(request, form_class, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        return super(EditarOrcamentoVendaView, self).post(
-            request, form_class, *args, **kwargs
-        )
+        return super().post(request, form_class, *args, **kwargs)
 
 
 class EditarPedidoVendaView(EditarVendaView):
@@ -363,16 +360,12 @@ class EditarPedidoVendaView(EditarVendaView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        return super(EditarPedidoVendaView, self).get(
-            request, form_class, *args, **kwargs
-        )
+        return super().get(request, form_class, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        return super(EditarPedidoVendaView, self).post(
-            request, form_class, *args, **kwargs
-        )
+        return super().post(request, form_class, *args, **kwargs)
 
 
 class GerarPedidoVendaView(CustomView):
@@ -475,9 +468,7 @@ class GerarCopiaOrcamentoVendaView(GerarCopiaVendaView):
         venda_id = kwargs.get("pk", None)
         instance = OrcamentoVenda.objects.get(id=venda_id)
         redirect_url = "vendas:editarorcamentovendaview"
-        return super(GerarCopiaOrcamentoVendaView, self).get(
-            request, instance, redirect_url, *args, **kwargs
-        )
+        return super().get(request, instance, redirect_url, *args, **kwargs)
 
 
 class GerarCopiaPedidoVendaView(GerarCopiaVendaView):
@@ -487,9 +478,7 @@ class GerarCopiaPedidoVendaView(GerarCopiaVendaView):
         venda_id = kwargs.get("pk", None)
         instance = PedidoVenda.objects.get(id=venda_id)
         redirect_url = "vendas:editarpedidovendaview"
-        return super(GerarCopiaPedidoVendaView, self).get(
-            request, instance, redirect_url, *args, **kwargs
-        )
+        return super().get(request, instance, redirect_url, *args, **kwargs)
 
 
 class GerarPDFVenda(CustomView):
@@ -510,7 +499,7 @@ class GerarPDFVenda(CustomView):
             usuario = Usuario.objects.get(pk=user_id)
             m_empresa = MinhaEmpresa.objects.get(m_usuario=usuario)
             flogo = m_empresa.m_empresa.logo_file
-            logo_path = "{0}{1}".format(settings.MEDIA_ROOT, flogo.name)
+            logo_path = f"{settings.MEDIA_ROOT}{flogo.name}"
             if flogo != "imagens/logo.png":
                 venda_report.topo_pagina.inserir_logo(logo_path)
 
@@ -583,7 +572,7 @@ class GerarPDFOrcamentoVenda(GerarPDFVenda):
             return HttpResponse("Objeto não encontrado.")
 
         obj = OrcamentoVenda.objects.get(pk=venda_id)
-        title = "Orçamento de venda nº {}".format(venda_id)
+        title = f"Orçamento de venda nº {venda_id}"
 
         return self.gerar_pdf(title, obj, request.user.id)
 
@@ -598,6 +587,6 @@ class GerarPDFPedidoVenda(GerarPDFVenda):
             return HttpResponse("Objeto não encontrado.")
 
         obj = PedidoVenda.objects.get(pk=venda_id)
-        title = "Pedido de venda nº {}".format(venda_id)
+        title = f"Pedido de venda nº {venda_id}"
 
         return self.gerar_pdf(title, obj, request.user.id)

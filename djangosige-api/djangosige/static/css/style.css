@@ -523,7 +523,7 @@
     .btn-red:hover,
     .btn-red:active,
     .btn-red:focus {
-      background-color: #ff968e !important; 
+      background-color: #ff968e !important;
       color: #fff !important; }
 
 .btn{
@@ -774,14 +774,14 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   border: 1px solid transparent;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button.current, 
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
   color: #fff !important;
   background-color: #248fbf;
 }
 
-.dataTables_wrapper .dataTables_paginate .paginate_button.disabled, 
-.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover, 
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover,
 .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:active {
   cursor: default;
   color: #666 !important;
@@ -802,7 +802,7 @@ div.dataTables_wrapper div.dataTables_paginate ul.pagination {
   outline: none;
   background-color: #878787;
 }
-.dataTables_wrapper .dataTables_paginate .paginate_button.next:hover, 
+.dataTables_wrapper .dataTables_paginate .paginate_button.next:hover,
 .dataTables_wrapper .dataTables_paginate .paginate_button.previous:hover {
   text-decoration: underline;
 }
@@ -961,7 +961,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
     font-size: 18px;
     font-weight: normal;
     color: #111;
-    display: inline-flex; 
+    display: inline-flex;
     align-items: center;}
     .card .header h2>i{
       vertical-align:text-bottom;
@@ -980,16 +980,16 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 
     .card .header a span{
       vertical-align: 2px; }
-      
+
 
 .card .body {
   font-size: 14px;
   color: #555;
-  padding: 20px; 
+  padding: 20px;
   overflow: hidden; }
   .card .body .foot-btn{
     float: right;
-    margin-bottom: 10px; 
+    margin-bottom: 10px;
     margin-right: 30px; }
 
 .obj-info{
@@ -1036,7 +1036,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
     .input-group .form-line + .input-group-addon {
       padding-right: 0;
       padding-left: 10px; }
-  
+
   .input-group .form-line.focused .form-label {
     bottom: 25px;
     left: 0;
@@ -1166,7 +1166,7 @@ fieldset[disabled] .form-control {
   background-color: transparent; }
 
 .form-table thead{
-  background-color: lightblue; 
+  background-color: lightblue;
   font-size: 12px;}
 .form-table .field-td{
   min-width: 110px; }
@@ -1178,7 +1178,7 @@ fieldset[disabled] .form-control {
 .form-table label.error-table{
   color: red;
   font-weight: 100;
-  font-size: 0.8em; 
+  font-size: 0.8em;
   margin-left: 6px; }
 
 /* Checkbox & Radio ============================ */
@@ -1255,7 +1255,7 @@ fieldset[disabled] .form-control {
 .modal-lg{
   width: 80% !important; }
 
-.error-msg, 
+.error-msg,
 .error-msg>strong{
   color: red;
   font-size: 13px;
@@ -1278,7 +1278,7 @@ fieldset[disabled] .form-control {
     font-weight: normal;
     font-size: 20px; }
 
-.block .block-content, 
+.block .block-content,
 .block .block-alert,
 .block .alert{
   width: 70%; }
@@ -1287,7 +1287,7 @@ fieldset[disabled] .form-control {
   .block{
     width: 100%;
     padding: 0px; }
-    .block .block-content, 
+    .block .block-content,
     .block .block-alert,
     .block .alert{
       width: 100%; }
@@ -1324,7 +1324,7 @@ fieldset[disabled] .form-control {
       font-size: 20px; }
   .lista .lista-table thead th{
     background-color: lightblue !important; }
-  .lista .lista-content, 
+  .lista .lista-content,
   .lista .lista-alert{
     padding: 0px; }
   .lista .lista-content .lista-table tbody tr td{
@@ -1360,7 +1360,7 @@ fieldset[disabled] .form-control {
   margin-bottom: 15px; }
   .formset .formset-header{
   border-bottom: 1px solid #9E9E9E;
-  margin-bottom: 25px; 
+  margin-bottom: 25px;
   color: #4f4e4e;
   background-color: lightblue; }
 
@@ -1371,7 +1371,7 @@ fieldset[disabled] .form-control {
   height: 16px;
   display: inline-table;
   float: right;
-  cursor: pointer; 
+  cursor: pointer;
   cursor: hand; }
 
 .formset-tab:not(.formset-edit) .formset:first-child .remove-formset{
@@ -1391,8 +1391,8 @@ fieldset[disabled] .form-control {
 .add-formset{
   background-color: #3cabbd;
   color: white;
-  cursor: pointer; 
-  cursor: hand; 
+  cursor: pointer;
+  cursor: hand;
   float: left;
   margin-bottom: 15px; }
 
@@ -1420,7 +1420,7 @@ fieldset[disabled] .form-control {
 .inicial-card .header h2, .inicial-card .header small{
   color:white; }
 .inicial-card .body{
-  padding:0px; 
+  padding:0px;
   overflow: visible; }
 .inicial-card .body table.table-hover{
   width:100%; }
@@ -1434,7 +1434,7 @@ fieldset[disabled] .form-control {
   background-color: #a5da67; }
   .inicial-card .body table.table-hover tbody tr.hoje:hover{
     background-color: #9fb584;}
-.inicial-card .body table.table-hover tbody tr td a{  
+.inicial-card .body table.table-hover tbody tr td a{
   color: #555;
   text-decoration: none; }
 .inicial-card .body table.table-hover tbody tr td{
@@ -1477,7 +1477,7 @@ fieldset[disabled] .form-control {
 /* Pagina perfil usuario ======================= */
 .perfil-user .foto-perfil>img{
   display: block;
-  margin:auto; 
+  margin:auto;
   max-height:150px;
   max-width:150px;
   padding-bottom:10px; }
@@ -1534,13 +1534,13 @@ h6 {
 .imposto-icon{
   margin-left: 33%;
   color: #577888;
-  cursor: pointer; 
+  cursor: pointer;
   cursor: hand; }
 
 .detalhes-icon{
   margin-left: 33%;
   color: #577888;
-  cursor: pointer; 
+  cursor: pointer;
   cursor: hand; }
 
 button,

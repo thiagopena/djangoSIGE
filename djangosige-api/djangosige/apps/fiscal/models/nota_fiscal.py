@@ -103,7 +103,7 @@ RETORNO_SEFAZ_TIPOS = (
 
 
 def arquivo_proc_path(instance, filename):
-    return "ArquivosXML/ProcNFeUpload/{0}".format(filename)
+    return f"ArquivosXML/ProcNFeUpload/{filename}"
 
 
 class NotaFiscal(models.Model):
@@ -241,11 +241,11 @@ class NotaFiscalSaida(NotaFiscal):
         return ""
 
     def __unicode__(self):
-        s = "Série %s,  Nº %s, Chave %s" % (self.serie, self.n_nf_saida, self.chave)
+        s = f"Série {self.serie},  Nº {self.n_nf_saida}, Chave {self.chave}"
         return s
 
     def __str__(self):
-        s = "Série %s,  Nº %s, Chave %s" % (self.serie, self.n_nf_saida, self.chave)
+        s = f"Série {self.serie},  Nº {self.n_nf_saida}, Chave {self.chave}"
         return s
 
 
@@ -286,11 +286,15 @@ class NotaFiscalEntrada(NotaFiscal):
         return ""
 
     def __unicode__(self):
-        s = "Série %s,  Nº %s, Chave %s" % (self.serie, self.n_nf_entrada, self.chave)
+        s = "Série {},  Nº {}, Chave {}".format(
+            self.serie, self.n_nf_entrada, self.chave
+        )
         return s
 
     def __str__(self):
-        s = "Série %s,  Nº %s, Chave %s" % (self.serie, self.n_nf_entrada, self.chave)
+        s = "Série {},  Nº {}, Chave {}".format(
+            self.serie, self.n_nf_entrada, self.chave
+        )
         return s
 
 

@@ -1,12 +1,13 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
+
 from djangosige.apps.cadastro.models import Fornecedor
 
 
 class FornecedorForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop("request", None)
-        super(FornecedorForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     class Meta:
         model = Fornecedor
@@ -33,7 +34,7 @@ class FornecedorForm(forms.ModelForm):
         }
 
     def save(self, commit=True):
-        instance = super(FornecedorForm, self).save(commit=False)
+        instance = super().save(commit=False)
         instance.criado_por = self.request.user
         if commit:
             instance.save()

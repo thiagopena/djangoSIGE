@@ -25,11 +25,11 @@
 
           <form role="form" action="" method="post">
             {% csrf_token %}
-            
+
             {% include 'fiscal/grupo_fiscal/grupo_fiscal_form.html' %}
 
           </form>
-          
+
         </div>
       </div>
     </div>
@@ -41,7 +41,7 @@
 {%endblock%}
 
 {% block js %}
-    
+
   {% include 'fiscal/grupo_fiscal/grupo_fiscal_jsblock.html' %}
-  
+
 {% endblock %}

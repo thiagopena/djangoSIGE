@@ -1,13 +1,18 @@
 from django import forms
 from django.forms import inlineformset_factory
 from django.utils.translation import gettext_lazy as _
-from djangosige.apps.compras.models import (Compra, ItensCompra,
-                                            OrcamentoCompra, PedidoCompra)
+
+from djangosige.apps.compras.models import (
+    Compra,
+    ItensCompra,
+    OrcamentoCompra,
+    PedidoCompra,
+)
 
 
 class CompraForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(CompraForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["status"].initial = "0"
 
         self.fields["valor_total"].localize = True
@@ -188,7 +193,7 @@ class ItensCompraForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        super(ItensCompraForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["quantidade"].localize = True
         self.fields["valor_unit"].localize = True
         self.fields["desconto"].localize = True
@@ -254,7 +259,7 @@ class ItensCompraForm(forms.ModelForm):
         }
 
     def is_valid(self):
-        valid = super(ItensCompraForm, self).is_valid()
+        valid = super().is_valid()
         if self.cleaned_data.get("produto", None) is None:
             self.cleaned_data = {}
         return valid

@@ -25,11 +25,11 @@
 
           <form role="form" action="" method="post">
             {% csrf_token %}
-               
+
             {% include 'vendas/pagamento/condicao_pagamento_form.html' %}
-                
+
           </form>
-          
+
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@
 {% block js %}
 
   {% include 'base/load_jqueryui.html' %}
-    
+
   {% include 'base/tooltip_js.html' %}
-  
+
 {% endblock %}

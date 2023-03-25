@@ -1,4 +1,2 @@
-# -*- coding: utf-8 -*-
-
-from .vendas import *
 from .pagamento import *
+from .vendas import *

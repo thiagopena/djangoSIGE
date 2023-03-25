@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import io
 from datetime import datetime
 
@@ -8,19 +6,33 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from djangosige.apps.base.custom_views import (CustomCreateView,
-                                               CustomListView,
-                                               CustomUpdateView, CustomView)
-from djangosige.apps.cadastro.models import MinhaEmpresa
-from djangosige.apps.compras.forms import (ItensCompraFormSet,
-                                           OrcamentoCompraForm,
-                                           PagamentoFormSet, PedidoCompraForm)
-from djangosige.apps.compras.models import (ItensCompra, OrcamentoCompra,
-                                            Pagamento, PedidoCompra)
-from djangosige.apps.estoque.models import (EntradaEstoque, ItensMovimento,
-                                            ProdutoEstocado)
-from djangosige.apps.login.models import Usuario
 from geraldo.generators import PDFGenerator
+
+from djangosige.apps.base.custom_views import (
+    CustomCreateView,
+    CustomListView,
+    CustomUpdateView,
+    CustomView,
+)
+from djangosige.apps.cadastro.models import MinhaEmpresa
+from djangosige.apps.compras.forms import (
+    ItensCompraFormSet,
+    OrcamentoCompraForm,
+    PagamentoFormSet,
+    PedidoCompraForm,
+)
+from djangosige.apps.compras.models import (
+    ItensCompra,
+    OrcamentoCompra,
+    Pagamento,
+    PedidoCompra,
+)
+from djangosige.apps.estoque.models import (
+    EntradaEstoque,
+    ItensMovimento,
+    ProdutoEstocado,
+)
+from djangosige.apps.login.models import Usuario
 
 from .report_compras import CompraReport
 
@@ -30,7 +42,7 @@ class AdicionarCompraView(CustomCreateView):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
 
     def get_context_data(self, **kwargs):
-        context = super(AdicionarCompraView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         return self.view_context(context)
 
     def get(self, request, form_class, *args, **kwargs):
@@ -106,15 +118,11 @@ class AdicionarOrcamentoCompraView(AdicionarCompraView):
 
     def get(self, request, *args, **kwargs):
         form_class = self.get_form_class()
-        return super(AdicionarOrcamentoCompraView, self).get(
-            request, form_class, *args, **kwargs
-        )
+        return super().get(request, form_class, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
-        return super(AdicionarOrcamentoCompraView, self).post(
-            request, form_class, *args, **kwargs
-        )
+        return super().post(request, form_class, *args, **kwargs)
 
 
 class AdicionarPedidoCompraView(AdicionarCompraView):
@@ -131,20 +139,16 @@ class AdicionarPedidoCompraView(AdicionarCompraView):
 
     def get(self, request, *args, **kwargs):
         form_class = self.get_form_class()
-        return super(AdicionarPedidoCompraView, self).get(
-            request, form_class, *args, **kwargs
-        )
+        return super().get(request, form_class, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         form_class = self.get_form_class()
-        return super(AdicionarPedidoCompraView, self).post(
-            request, form_class, *args, **kwargs
-        )
+        return super().post(request, form_class, *args, **kwargs)
 
 
 class CompraListView(CustomListView):
     def get_context_data(self, **kwargs):
-        context = super(CompraListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         return self.view_context(context)
 
 
@@ -243,7 +247,7 @@ class EditarCompraView(CustomUpdateView):
         return self.success_message % dict(cleaned_data, id=self.object.pk)
 
     def get_context_data(self, **kwargs):
-        context = super(EditarCompraView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         return self.view_context(context)
 
     def get(self, request, form_class, *args, **kwargs):
@@ -339,16 +343,12 @@ class EditarOrcamentoCompraView(EditarCompraView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        return super(EditarOrcamentoCompraView, self).get(
-            request, form_class, *args, **kwargs
-        )
+        return super().get(request, form_class, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        return super(EditarOrcamentoCompraView, self).post(
-            request, form_class, *args, **kwargs
-        )
+        return super().post(request, form_class, *args, **kwargs)
 
 
 class EditarPedidoCompraView(EditarCompraView):
@@ -367,16 +367,12 @@ class EditarPedidoCompraView(EditarCompraView):
     def get(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        return super(EditarPedidoCompraView, self).get(
-            request, form_class, *args, **kwargs
-        )
+        return super().get(request, form_class, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form_class = self.get_form_class()
-        return super(EditarPedidoCompraView, self).post(
-            request, form_class, *args, **kwargs
-        )
+        return super().post(request, form_class, *args, **kwargs)
 
 
 class GerarPedidoCompraView(CustomView):
@@ -483,9 +479,7 @@ class GerarCopiaOrcamentoCompraView(GerarCopiaCompraView):
         compra_id = kwargs.get("pk", None)
         instance = OrcamentoCompra.objects.get(id=compra_id)
         redirect_url = "compras:editarorcamentocompraview"
-        return super(GerarCopiaOrcamentoCompraView, self).get(
-            request, instance, redirect_url, *args, **kwargs
-        )
+        return super().get(request, instance, redirect_url, *args, **kwargs)
 
 
 class GerarCopiaPedidoCompraView(GerarCopiaCompraView):
@@ -495,9 +489,7 @@ class GerarCopiaPedidoCompraView(GerarCopiaCompraView):
         compra_id = kwargs.get("pk", None)
         instance = PedidoCompra.objects.get(id=compra_id)
         redirect_url = "compras:editarpedidocompraview"
-        return super(GerarCopiaPedidoCompraView, self).get(
-            request, instance, redirect_url, *args, **kwargs
-        )
+        return super().get(request, instance, redirect_url, *args, **kwargs)
 
 
 class ReceberPedidoCompraView(CustomView):
@@ -536,7 +528,7 @@ class ReceberPedidoCompraView(CustomView):
 
             entrada_estoque.quantidade_itens = pedido.itens_compra.count()
             entrada_estoque.observacoes = (
-                "Entrada de estoque pelo pedido de compra nº{}".format(str(pedido.id))
+                f"Entrada de estoque pelo pedido de compra nº{str(pedido.id)}"
             )
             entrada_estoque.tipo_movimento = "1"
             entrada_estoque.valor_total = pedido.get_total_produtos_estoque()
@@ -558,7 +550,7 @@ class ReceberPedidoCompraView(CustomView):
 
         messages.success(
             request,
-            "<b>Pedido de compra {0} </b>recebido com sucesso.".format(str(pedido.id)),
+            f"<b>Pedido de compra {str(pedido.id)} </b>recebido com sucesso.",
         )
 
         return redirect(reverse_lazy("compras:listapedidocompraview"))
@@ -582,7 +574,7 @@ class GerarPDFCompra(CustomView):
             usuario = Usuario.objects.get(pk=user_id)
             m_empresa = MinhaEmpresa.objects.get(m_usuario=usuario)
             flogo = m_empresa.m_empresa.logo_file
-            logo_path = "{0}{1}".format(settings.MEDIA_ROOT, flogo.name)
+            logo_path = f"{settings.MEDIA_ROOT}{flogo.name}"
             if flogo != "imagens/logo.png":
                 compra_report.topo_pagina.inserir_logo(logo_path)
 
@@ -656,7 +648,7 @@ class GerarPDFOrcamentoCompra(GerarPDFCompra):
             return HttpResponse("Objeto não encontrado.")
 
         obj = OrcamentoCompra.objects.get(pk=compra_id)
-        title = "Orçamento de compra nº {}".format(compra_id)
+        title = f"Orçamento de compra nº {compra_id}"
 
         return self.gerar_pdf(title, obj, request.user.id)
 
@@ -671,6 +663,6 @@ class GerarPDFPedidoCompra(GerarPDFCompra):
             return HttpResponse("Objeto não encontrado.")
 
         obj = PedidoCompra.objects.get(pk=compra_id)
-        title = "Pedido de compra nº {}".format(compra_id)
+        title = f"Pedido de compra nº {compra_id}"
 
         return self.gerar_pdf(title, obj, request.user.id)

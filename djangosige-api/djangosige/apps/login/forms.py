@@ -137,7 +137,7 @@ class PerfilUsuarioForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        super(PerfilUsuarioForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["username"].initial = self.instance.user.username
         self.fields["first_name"].initial = self.instance.user.first_name
         self.fields["last_name"].initial = self.instance.user.last_name

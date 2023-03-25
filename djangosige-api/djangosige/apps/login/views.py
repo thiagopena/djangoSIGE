@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import operator
 from functools import reduce
 
@@ -18,15 +16,20 @@ from django.template import loader
 from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.views.generic import (DeleteView, FormView, ListView, TemplateView,
-                                  View)
+from django.views.generic import DeleteView, FormView, ListView, TemplateView, View
 from django.views.generic.edit import UpdateView
+
 from djangosige.apps.base.views_mixins import SuperUserRequiredMixin
 from djangosige.apps.cadastro.forms import MinhaEmpresaForm
 from djangosige.apps.cadastro.models import MinhaEmpresa
 
-from .forms import (PasswordResetForm, PerfilUsuarioForm, SetPasswordForm,
-                    UserLoginForm, UserRegistrationForm)
+from .forms import (
+    PasswordResetForm,
+    PerfilUsuarioForm,
+    SetPasswordForm,
+    UserLoginForm,
+    UserRegistrationForm,
+)
 from .models import Usuario
 
 settings.DEFAULT_PERMISSION_MODELS = [
@@ -289,7 +292,7 @@ class EditarPerfilView(UpdateView):
         return self.success_url
 
     def get(self, request, *args, **kwargs):
-        super(EditarPerfilView, self).get(request, *args, **kwargs)
+        super().get(request, *args, **kwargs)
         form_class = self.get_form_class()
         form = self.get_form(form_class)
 
@@ -430,7 +433,7 @@ class UsuarioDetailView(SuperUserRequiredMixin, TemplateView):
     template_name = "login/detalhe_users.html"
 
     def get_context_data(self, **kwargs):
-        context = super(UsuarioDetailView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         try:
             usr = User.objects.get(pk=self.kwargs["pk"])
             context["user_match"] = usr
@@ -449,7 +452,7 @@ class EditarPermissoesUsuarioView(SuperUserRequiredMixin, TemplateView):
     template_name = "login/editar_permissoes_user.html"
 
     def get_context_data(self, **kwargs):
-        context = super(EditarPermissoesUsuarioView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         user = User.objects.get(pk=self.kwargs["pk"])
         context["user"] = user
         condition = reduce(
@@ -475,7 +478,7 @@ class EditarPermissoesUsuarioView(SuperUserRequiredMixin, TemplateView):
                 user.user_permissions.add(nova_permissao)
         messages.success(
             self.request,
-            "Permissões do usuário <b>{0}</b> atualizadas com sucesso.".format(
+            "Permissões do usuário <b>{}</b> atualizadas com sucesso.".format(
                 user.username
             ),
         )

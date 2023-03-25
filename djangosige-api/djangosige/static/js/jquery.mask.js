@@ -468,7 +468,7 @@
                     return $(this).data('mask', new Mask(this, mask, options));
                 }
             };
-        
+
         $(this).each(maskFunction);
 
         if (selector && selector !== '' && watchInputs) {
@@ -538,4 +538,3 @@
         }
     }, globals.watchInterval);
 }, window.jQuery, window.Zepto));
-
