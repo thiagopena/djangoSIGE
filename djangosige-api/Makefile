@@ -1,23 +1,23 @@
-install:
-	pip install -r requirements.txt
+COMMAND=python manage.py
 
-run:
-	python manage.py runserver
+r:
+	${COMMAND} runserver
 
-migrate:
-	python manage.py migrate
+m:
+	${COMMAND} migrate
 
-makemigrations:
-	python manage.py makemigrations
+mm:
+	${COMMAND} makemigrations
 
-test:
-	python manage.py test
+t:
+	pytest --cov --cov-report html
 
-shell:
+s:
+	${COMMAND} shell
 	python manage.py shell
 
-dbshell:
-	python manage.py dbshell
+dbs:
+	${COMMAND} dbshell
 
-backup:
-	python manage.py dumpdata > db_backup.json
+bkp:
+	${COMMAND} dumpdata > db_backup.json
