@@ -66,7 +66,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "djangosige.middleware.LoginRequiredMiddleware",
 ]
 WSGI_APPLICATION = "config.wsgi.application"
 
@@ -82,7 +81,10 @@ DJANGO_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 ]
-THIRD_APPS = []
+THIRD_APPS = [
+    "rest_framework",
+    "drf_yasg",
+]
 LOCAL_APPS = [
     "djangosige.apps.base",
     "djangosige.apps.login",
@@ -102,9 +104,7 @@ SECRET_KEY = config("SECRET_KEY")
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            APP_ROOT / "templates",
-        ],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -112,8 +112,6 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "djangosige.apps.base.context_version.sige_version",
-                "djangosige.apps.login.context_user.foto_usuario",
             ],
         },
     },
@@ -127,12 +125,6 @@ AUTH_USER_MODEL = "auth.User"
 LOGIN_REDIRECT_URL = "/"
 LOGIN_URL = "/login/"
 LOGOUT_REDIRECT_URL = "/login/"
-LOGIN_NOT_REQUIRED = (
-    r"^/login/$",
-    r"/login/esqueceu/",
-    r"/login/trocarsenha/",
-    r"/logout/",
-)
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.PBKDF2PasswordHasher",
     "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
@@ -156,7 +148,3 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # === Arquivos Estpaticos === #
 STATIC_URL = "static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [
-    APP_ROOT / "static",
-]

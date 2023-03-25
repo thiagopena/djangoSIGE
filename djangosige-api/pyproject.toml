@@ -20,6 +20,8 @@ cryptography = "^40.0.1"
 lxml = "^4.9.2"
 pyopenssl = "^23.1.0"
 signxml = "^3.1.0"
+djangorestframework = "^3.14.0"
+drf-yasg = {extras = ["validation"], version = "^1.21.5"}
 
 
 [tool.poetry.group.dev.dependencies]
