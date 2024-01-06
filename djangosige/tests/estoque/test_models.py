@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from django.test import TestCase
-from djangosige.apps.cadastro.models import Produto
-from djangosige.apps.estoque.models import (
+from djangosige.cadastro.models import Produto
+from djangosige.estoque.models import (
     LocalEstoque,
     ItensMovimento,
     EntradaEstoque,

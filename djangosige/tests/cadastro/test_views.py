@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from djangosige.tests.test_case import BaseTestCase, replace_none_values_in_dictionary
-from djangosige.apps.cadastro.models import Produto, Unidade, Marca, Categoria, Transportadora, Fornecedor, Cliente, Empresa
+from tests.test_case import BaseTestCase, replace_none_values_in_dictionary
+from djangosige.cadastro.models import Produto, Unidade, Marca, Categoria, Transportadora, Fornecedor, Cliente, Empresa
 from django.urls import reverse
 
 

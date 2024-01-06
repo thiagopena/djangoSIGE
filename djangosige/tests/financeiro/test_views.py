@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from djangosige.tests.test_case import BaseTestCase, replace_none_values_in_dictionary
-from djangosige.apps.financeiro.models import MovimentoCaixa, Entrada, Saida, PlanoContasGrupo, PlanoContasSubgrupo
-from djangosige.apps.estoque.models import SaidaEstoque
+from tests.test_case import BaseTestCase, replace_none_values_in_dictionary
+from djangosige.financeiro.models import MovimentoCaixa, Entrada, Saida, PlanoContasGrupo, PlanoContasSubgrupo
+from djangosige.estoque.models import SaidaEstoque
 
 from django.urls import reverse
 from django.db.models import Q
