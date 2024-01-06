@@ -1,159 +1,151 @@
 # -*- coding: utf-8 -*-
 
-from django.db import models
-from django.core.validators import RegexValidator, MinValueValidator
-from django.template.defaultfilters import date
-
-from decimal import Decimal
 import os
 import re
+from decimal import Decimal
 
 from django.conf import settings
-
+from django.core.validators import MinValueValidator, RegexValidator
+from django.db import models
+from django.template.defaultfilters import date
 
 IND_PAG_ESCOLHAS = (
-    (u'0', u'Pagamento à vista'),
-    (u'1', u'Pagamento a prazo'),
-    (u'2', u'Outros'),
+    ("0", "Pagamento à vista"),
+    ("1", "Pagamento a prazo"),
+    ("2", "Outros"),
 )
 
 MOD_NFE_ESCOLHAS = (
-    (u'55', u'NF-e (55)'),
-    (u'65', u'NFC-e (65)'),
+    ("55", "NF-e (55)"),
+    ("65", "NFC-e (65)"),
 )
 
 TP_NFE_ESCOLHAS = (
-    (u'0', u'Entrada'),
-    (u'1', u'Saída'),
+    ("0", "Entrada"),
+    ("1", "Saída"),
 )
 
 IDDEST_ESCOLHAS = (
-    (u'1', u'Operação interna'),
-    (u'2', u'Operação interestadual'),
-    (u'3', u'Operação com exterior'),
+    ("1", "Operação interna"),
+    ("2", "Operação interestadual"),
+    ("3", "Operação com exterior"),
 )
 
 TP_IMP_ESCOLHAS = (
-    (u'0', u'Sem geração de DANFE'),
-    (u'1', u'DANFE normal, Retrato'),
-    (u'2', u'DANFE normal, Paisagem'),
-    (u'4', u'DANFE NFC-e'),
+    ("0", "Sem geração de DANFE"),
+    ("1", "DANFE normal, Retrato"),
+    ("2", "DANFE normal, Paisagem"),
+    ("4", "DANFE NFC-e"),
 )
 
 TP_EMIS_ESCOLHAS = (
-    (u'1', u'Emissão normal'),
-    (u'2', u'Emissão em contingência'),
+    ("1", "Emissão normal"),
+    ("2", "Emissão em contingência"),
 )
 
 TP_AMB_ESCOLHAS = (
-    (u'1', 'Produção'),
-    (u'2', 'Homologação'),
+    ("1", "Produção"),
+    ("2", "Homologação"),
 )
 
 FIN_NFE_ESCOLHAS = (
-    (u'1', u'NF-e normal'),
-    (u'2', u'NF-e complementar'),
-    (u'3', u'NF-e de ajuste'),
-    (u'4', u'Devolução de mercadoria'),
+    ("1", "NF-e normal"),
+    ("2", "NF-e complementar"),
+    ("3", "NF-e de ajuste"),
+    ("4", "Devolução de mercadoria"),
 )
 
 IND_FINAL_ESCOLHAS = (
-    (u'0', u'0 - Não'),
-    (u'1', u'1 - Sim'),
+    ("0", "0 - Não"),
+    ("1", "1 - Sim"),
 )
 
 IND_PRES_ESCOLHAS = (
-    (u'0', u'Não se aplica'),
-    (u'1', u'Operação presencial'),
-    (u'2', u'Operação não presencial, pela Internet'),
-    (u'3', u'Operação não presencial, Teleatendimento'),
-    (u'4', u'NFC-e em operação com entrega a domicílio'),
-    (u'5', u'Operação presencial, fora do estabelecimento'),
-    (u'9', u'Operação não presencial, outros.'),
+    ("0", "Não se aplica"),
+    ("1", "Operação presencial"),
+    ("2", "Operação não presencial, pela Internet"),
+    ("3", "Operação não presencial, Teleatendimento"),
+    ("4", "NFC-e em operação com entrega a domicílio"),
+    ("5", "Operação presencial, fora do estabelecimento"),
+    ("9", "Operação não presencial, outros."),
 )
 
-VERSOES = (
-    ('3.10', 'v3.10'),
-)
+VERSOES = (("3.10", "v3.10"),)
 
 ORIENTACAO_LOGO_DANFE = (
-    (u'H', u'Horizontal'),
-    (u'V', u'Vertical'),
+    ("H", "Horizontal"),
+    ("V", "Vertical"),
 )
 
 STATUS_NFE_ESCOLHAS = (
-    (u'0', u'Assinada'),
-    (u'1', u'Autorizada'),
-    (u'2', u'Denegada'),
-    (u'3', u'Em Digitação'),
-    (u'4', u'Em Processamento na SEFAZ'),
-    (u'5', u'Rejeitada'),
-    (u'6', u'Validada'),
-    (u'7', u'Pendente'),
-    (u'8', u'Cancelada'),
-    (u'9', u'Importada por XML')
+    ("0", "Assinada"),
+    ("1", "Autorizada"),
+    ("2", "Denegada"),
+    ("3", "Em Digitação"),
+    ("4", "Em Processamento na SEFAZ"),
+    ("5", "Rejeitada"),
+    ("6", "Validada"),
+    ("7", "Pendente"),
+    ("8", "Cancelada"),
+    ("9", "Importada por XML"),
 )
 
 ERROS_NFE_TIPOS = (
-    (u'0', 'Erro'),
-    (u'1', 'Alerta'),
+    ("0", "Erro"),
+    ("1", "Alerta"),
 )
 
 RETORNO_SEFAZ_TIPOS = (
-    (u'0', u'Erro'),
-    (u'1', u'Resultado do processamento'),
-    (u'2', u'Rejeição'),
-    (u'3', u'Motivo denegação'),
-    (u'4', u'Alerta'),
+    ("0", "Erro"),
+    ("1", "Resultado do processamento"),
+    ("2", "Rejeição"),
+    ("3", "Motivo denegação"),
+    ("4", "Alerta"),
 )
 
 
 def arquivo_proc_path(instance, filename):
-    return 'ArquivosXML/ProcNFeUpload/{0}'.format(filename)
+    return "ArquivosXML/ProcNFeUpload/{0}".format(filename)
 
 
 class NotaFiscal(models.Model):
     chave = models.CharField(max_length=44)
-    versao = models.CharField(max_length=4, choices=VERSOES, default='3.10')
+    versao = models.CharField(max_length=4, choices=VERSOES, default="3.10")
     natop = models.CharField(max_length=60)
     indpag = models.CharField(max_length=1, choices=IND_PAG_ESCOLHAS)
-    mod = models.CharField(
-        max_length=2, choices=MOD_NFE_ESCOLHAS, default=u'55')
+    mod = models.CharField(max_length=2, choices=MOD_NFE_ESCOLHAS, default="55")
     serie = models.CharField(max_length=3)
     dhemi = models.DateTimeField()
     dhsaient = models.DateTimeField(null=True, blank=True)
     iddest = models.CharField(max_length=1, choices=IDDEST_ESCOLHAS)
     tp_imp = models.CharField(max_length=1, choices=TP_IMP_ESCOLHAS)
-    tp_emis = models.CharField(
-        max_length=1, choices=TP_EMIS_ESCOLHAS, default=u'1')
+    tp_emis = models.CharField(max_length=1, choices=TP_EMIS_ESCOLHAS, default="1")
     tp_amb = models.CharField(max_length=1, choices=TP_AMB_ESCOLHAS)
-    fin_nfe = models.CharField(
-        max_length=1, choices=FIN_NFE_ESCOLHAS, default=u'1')
-    ind_final = models.CharField(
-        max_length=1, choices=IND_FINAL_ESCOLHAS, default=u'0')
-    ind_pres = models.CharField(
-        max_length=1, choices=IND_PRES_ESCOLHAS, default=u'0')
+    fin_nfe = models.CharField(max_length=1, choices=FIN_NFE_ESCOLHAS, default="1")
+    ind_final = models.CharField(max_length=1, choices=IND_FINAL_ESCOLHAS, default="0")
+    ind_pres = models.CharField(max_length=1, choices=IND_PRES_ESCOLHAS, default="0")
 
     inf_ad_fisco = models.CharField(max_length=2000, null=True, blank=True)
     inf_cpl = models.CharField(max_length=5000, null=True, blank=True)
 
     status_nfe = models.CharField(max_length=1, choices=STATUS_NFE_ESCOLHAS)
     arquivo_proc = models.FileField(
-        max_length=2055, upload_to=arquivo_proc_path, null=True, blank=True)
+        max_length=2055, upload_to=arquivo_proc_path, null=True, blank=True
+    )
     numero_lote = models.CharField(max_length=16, null=True, blank=True)
     numero_protocolo = models.CharField(max_length=16, null=True, blank=True)
     just_canc = models.CharField(max_length=255, null=True, blank=True)
 
     @property
     def consumidor(self):
-        if self.mod == '65':
+        if self.mod == "65":
             return True
         else:
             return False
 
     @property
     def contingencia(self):
-        if self.tp_emis == '1':
+        if self.tp_emis == "1":
             return False
         else:
             return True
@@ -166,32 +158,62 @@ class NotaFiscal(models.Model):
             else:
                 return os.path.join(settings.BASE_DIR, self.arquivo_proc.url)
         else:
-            return ''
+            return ""
 
     def format_data_emissao(self):
-        return '%s' % date(self.dhemi.date(), "d/m/Y")
+        return "%s" % date(self.dhemi.date(), "d/m/Y")
 
 
 class NotaFiscalSaida(NotaFiscal):
-    tpnf = models.CharField(
-        max_length=1, choices=TP_NFE_ESCOLHAS, default=u'1')
-    n_nf_saida = models.CharField(max_length=9, validators=[
-                                  RegexValidator(r'^\d{1,10}$')], unique=True)
-    venda = models.ForeignKey('vendas.PedidoVenda', related_name="venda_nfe",
-                              on_delete=models.SET_NULL, null=True, blank=True)
+    tpnf = models.CharField(max_length=1, choices=TP_NFE_ESCOLHAS, default="1")
+    n_nf_saida = models.CharField(
+        max_length=9, validators=[RegexValidator(r"^\d{1,10}$")], unique=True
+    )
+    venda = models.ForeignKey(
+        "vendas.PedidoVenda",
+        related_name="venda_nfe",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     emit_saida = models.ForeignKey(
-        'cadastro.Empresa', related_name="emit_nfe_saida", on_delete=models.SET_NULL, null=True, blank=True)
+        "cadastro.Empresa",
+        related_name="emit_nfe_saida",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     dest_saida = models.ForeignKey(
-        'cadastro.Cliente', related_name="dest_nfe_saida", on_delete=models.SET_NULL, null=True, blank=True)
+        "cadastro.Cliente",
+        related_name="dest_nfe_saida",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
 
     # Cobranca Fatura(NF-e)
     n_fat = models.CharField(max_length=60, null=True, blank=True, unique=True)
-    v_orig = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                 MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    v_desc = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                 MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    v_liq = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    v_orig = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
+    v_desc = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
+    v_liq = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
     grupo_cobr = models.BooleanField(default=True)
 
     class Meta:
@@ -212,34 +234,48 @@ class NotaFiscalSaida(NotaFiscal):
         if self.emit_saida:
             if self.emit_saida.endereco_padrao:
                 return self.emit_saida.endereco_padrao.uf
-        return ''
+        return ""
 
     def get_emit_cmun(self):
         if self.emit_saida:
             if self.emit_saida.endereco_padrao:
                 return self.emit_saida.endereco_padrao.cmun
-        return ''
+        return ""
 
     def __unicode__(self):
-        s = u'Série %s,  Nº %s, Chave %s' % (
-            self.serie, self.n_nf_saida, self.chave)
+        s = "Série %s,  Nº %s, Chave %s" % (self.serie, self.n_nf_saida, self.chave)
         return s
 
     def __str__(self):
-        s = u'Série %s,  Nº %s, Chave %s' % (
-            self.serie, self.n_nf_saida, self.chave)
+        s = "Série %s,  Nº %s, Chave %s" % (self.serie, self.n_nf_saida, self.chave)
         return s
 
 
 class NotaFiscalEntrada(NotaFiscal):
-    n_nf_entrada = models.CharField(max_length=9, validators=[
-                                    RegexValidator(r'^\d{1,10}$')])
-    compra = models.ForeignKey('compras.PedidoCompra', related_name="compra_nfe",
-                               on_delete=models.SET_NULL, null=True, blank=True)
+    n_nf_entrada = models.CharField(
+        max_length=9, validators=[RegexValidator(r"^\d{1,10}$")]
+    )
+    compra = models.ForeignKey(
+        "compras.PedidoCompra",
+        related_name="compra_nfe",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     emit_entrada = models.ForeignKey(
-        'cadastro.Fornecedor', related_name="emit_nfe_entrada", on_delete=models.SET_NULL, null=True, blank=True)
+        "cadastro.Fornecedor",
+        related_name="emit_nfe_entrada",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     dest_entrada = models.ForeignKey(
-        'cadastro.Empresa', related_name="dest_nfe_entrada", on_delete=models.SET_NULL, null=True, blank=True)
+        "cadastro.Empresa",
+        related_name="dest_nfe_entrada",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         verbose_name = "Nota Fiscal de Fornecedor"
@@ -249,41 +285,40 @@ class NotaFiscalEntrada(NotaFiscal):
         if self.emit_entrada:
             if self.emit_entrada.endereco_padrao:
                 return self.emit_entrada.endereco_padrao.uf
-        return ''
+        return ""
 
     def __unicode__(self):
-        s = u'Série %s,  Nº %s, Chave %s' % (
-            self.serie, self.n_nf_entrada, self.chave)
+        s = "Série %s,  Nº %s, Chave %s" % (self.serie, self.n_nf_entrada, self.chave)
         return s
 
     def __str__(self):
-        s = u'Série %s,  Nº %s, Chave %s' % (
-            self.serie, self.n_nf_entrada, self.chave)
+        s = "Série %s,  Nº %s, Chave %s" % (self.serie, self.n_nf_entrada, self.chave)
         return s
 
 
 class AutXML(models.Model):
-    nfe = models.ForeignKey('fiscal.NotaFiscalSaida',
-                            related_name="aut_xml", on_delete=models.CASCADE)
+    nfe = models.ForeignKey(
+        "fiscal.NotaFiscalSaida", related_name="aut_xml", on_delete=models.CASCADE
+    )
     cpf_cnpj = models.CharField(max_length=32, null=True, blank=True)
 
     def get_cpf_cnpj_apenas_digitos(self):
-        return re.sub('[./-]', '', self.cpf_cnpj)
+        return re.sub("[./-]", "", self.cpf_cnpj)
 
 
 class ConfiguracaoNotaFiscal(models.Model):
     arquivo_certificado_a1 = models.FileField(
-        upload_to='arquivos/certificado/', null=True, blank=True)
+        upload_to="arquivos/certificado/", null=True, blank=True
+    )
     senha_certificado = models.CharField(max_length=255, null=True, blank=True)
-    serie_atual = models.CharField(max_length=3, default='101')
-    ambiente = models.CharField(
-        max_length=1, choices=TP_AMB_ESCOLHAS, default=u'2')
-    imp_danfe = models.CharField(
-        max_length=1, choices=TP_IMP_ESCOLHAS, default=u'1')
+    serie_atual = models.CharField(max_length=3, default="101")
+    ambiente = models.CharField(max_length=1, choices=TP_AMB_ESCOLHAS, default="2")
+    imp_danfe = models.CharField(max_length=1, choices=TP_IMP_ESCOLHAS, default="1")
 
     inserir_logo_danfe = models.BooleanField(default=True)
     orientacao_logo_danfe = models.CharField(
-        max_length=1, choices=ORIENTACAO_LOGO_DANFE, default=u'H')
+        max_length=1, choices=ORIENTACAO_LOGO_DANFE, default="H"
+    )
 
     csc = models.CharField(max_length=64, null=True, blank=True)
     cidtoken = models.CharField(max_length=8, null=True, blank=True)
@@ -291,13 +326,11 @@ class ConfiguracaoNotaFiscal(models.Model):
     class Meta:
         default_permissions = ()
         verbose_name = "Configuração NF-e"
-        permissions = (
-            ("configurar_nfe", "Pode modificar configuração de NF-e"),
-        )
+        permissions = (("configurar_nfe", "Pode modificar configuração de NF-e"),)
 
     @property
     def leiaute_logo_vertical(self):
-        if self.orientacao_logo_danfe == 'H':
+        if self.orientacao_logo_danfe == "H":
             return False
         else:
             return True
@@ -307,17 +340,23 @@ class ConfiguracaoNotaFiscal(models.Model):
 
 
 class ErrosValidacaoNotaFiscal(models.Model):
-    nfe = models.ForeignKey('fiscal.NotaFiscalSaida',
-                            related_name="erros_nfe", on_delete=models.CASCADE)
+    nfe = models.ForeignKey(
+        "fiscal.NotaFiscalSaida", related_name="erros_nfe", on_delete=models.CASCADE
+    )
     tipo = models.CharField(
-        max_length=1, choices=ERROS_NFE_TIPOS, null=True, blank=True)
+        max_length=1, choices=ERROS_NFE_TIPOS, null=True, blank=True
+    )
     descricao = models.CharField(max_length=255, null=True, blank=True)
 
 
 class RespostaSefazNotaFiscal(models.Model):
-    nfe = models.ForeignKey('fiscal.NotaFiscalSaida',
-                            related_name="erros_nfe_sefaz", on_delete=models.CASCADE)
+    nfe = models.ForeignKey(
+        "fiscal.NotaFiscalSaida",
+        related_name="erros_nfe_sefaz",
+        on_delete=models.CASCADE,
+    )
     tipo = models.CharField(
-        max_length=1, choices=RETORNO_SEFAZ_TIPOS, null=True, blank=True)
+        max_length=1, choices=RETORNO_SEFAZ_TIPOS, null=True, blank=True
+    )
     codigo = models.CharField(max_length=3, null=True, blank=True)
     descricao = models.CharField(max_length=255, null=True, blank=True)

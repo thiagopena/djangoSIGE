@@ -7,13 +7,12 @@ from djangosige.estoque.models import LocalEstoque
 
 
 class LocalEstoqueForm(forms.ModelForm):
-
     class Meta:
         model = LocalEstoque
-        fields = ('descricao',)
+        fields = ("descricao",)
         widgets = {
-            'descricao': forms.TextInput(attrs={'class': 'form-control'}),
+            "descricao": forms.TextInput(attrs={"class": "form-control"}),
         }
         labels = {
-            'descricao': _('Descrição'),
+            "descricao": _("Descrição"),
         }

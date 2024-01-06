@@ -1,58 +1,108 @@
 # -*- coding: utf-8 -*-
 
-from django.db import models
-from django.template.defaultfilters import date
-from django.core.validators import MinValueValidator
-from django.urls import reverse_lazy
-
+import locale
 from decimal import Decimal
 
-from djangosige.vendas.models import TIPOS_DESCONTO_ESCOLHAS, MOD_FRETE_ESCOLHAS, STATUS_ORCAMENTO_ESCOLHAS
-from djangosige.estoque.models import DEFAULT_LOCAL_ID
+from django.core.validators import MinValueValidator
+from django.db import models
+from django.template.defaultfilters import date
+from django.urls import reverse_lazy
 
-import locale
-locale.setlocale(locale.LC_ALL, '')
+from djangosige.estoque.models import DEFAULT_LOCAL_ID
+from djangosige.vendas.models import (
+    MOD_FRETE_ESCOLHAS,
+    STATUS_ORCAMENTO_ESCOLHAS,
+    TIPOS_DESCONTO_ESCOLHAS,
+)
+
+locale.setlocale(locale.LC_ALL, "")
 
 STATUS_PEDIDO_COMPRA_ESCOLHAS = (
-    (u'0', u'Aberto'),
-    (u'1', u'Realizado'),
-    (u'2', u'Cancelado'),
-    (u'3', u'Importado por XML'),
-    (u'4', u'Recebido')
+    ("0", "Aberto"),
+    ("1", "Realizado"),
+    ("2", "Cancelado"),
+    ("3", "Importado por XML"),
+    ("4", "Recebido"),
 )
 
 
 class ItensCompra(models.Model):
-    produto = models.ForeignKey('cadastro.Produto', related_name="compra_produto",
-                                on_delete=models.CASCADE, null=True, blank=True)
+    produto = models.ForeignKey(
+        "cadastro.Produto",
+        related_name="compra_produto",
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+    )
     compra_id = models.ForeignKey(
-        'compras.Compra', related_name="itens_compra", on_delete=models.CASCADE)
-    quantidade = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                     MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    valor_unit = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                     MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+        "compras.Compra", related_name="itens_compra", on_delete=models.CASCADE
+    )
+    quantidade = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
+    valor_unit = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
     tipo_desconto = models.CharField(
-        max_length=1, choices=TIPOS_DESCONTO_ESCOLHAS, null=True, blank=True)
-    desconto = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                   MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    subtotal = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                   MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+        max_length=1, choices=TIPOS_DESCONTO_ESCOLHAS, null=True, blank=True
+    )
+    desconto = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
+    subtotal = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
     inf_ad_prod = models.CharField(max_length=500, null=True, blank=True)
 
-    vicms = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    vipi = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                               MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    p_icms = models.DecimalField(max_digits=5, decimal_places=2, validators=[
-                                 MinValueValidator(Decimal('0.00'))], null=True, blank=True)
-    p_ipi = models.DecimalField(max_digits=5, decimal_places=2, validators=[
-                                MinValueValidator(Decimal('0.00'))], null=True, blank=True)
+    vicms = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
+    vipi = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
+    p_icms = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
+    p_ipi = models.DecimalField(
+        max_digits=5,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        null=True,
+        blank=True,
+    )
 
     # Opcoes
     icms_incluido_preco = models.BooleanField(default=False)
     ipi_incluido_preco = models.BooleanField(default=False)
-    incluir_bc_icms = models.BooleanField(
-        default=False)  # incluir IPI na BC do ICMS
+    incluir_bc_icms = models.BooleanField(default=False)  # incluir IPI na BC do ICMS
     auto_calcular_impostos = models.BooleanField(default=True)
 
     @property
@@ -60,14 +110,14 @@ class ItensCompra(models.Model):
         return round(self.quantidade * self.valor_unit, 2)
 
     def get_total_sem_desconto(self):
-        if self.tipo_desconto == '0':
+        if self.tipo_desconto == "0":
             return self.subtotal + self.desconto
         else:
             tot_sem_desc = (self.subtotal * 100) / (100 - self.desconto)
             return tot_sem_desc
 
     def get_valor_desconto(self):
-        if self.tipo_desconto == '0':
+        if self.tipo_desconto == "0":
             return self.desconto
         else:
             tot_sem_desc = self.get_total_sem_desconto()
@@ -82,63 +132,103 @@ class ItensCompra(models.Model):
         return total_com_impostos
 
     def format_total_impostos(self):
-        return locale.format(u'%.2f', self.get_total_impostos(), 1)
+        return locale.format("%.2f", self.get_total_impostos(), 1)
 
     def format_total_com_imposto(self):
-        return locale.format(u'%.2f', self.get_total_com_impostos(), 1)
+        return locale.format("%.2f", self.get_total_com_impostos(), 1)
 
     def format_desconto(self):
-        return '{0}'.format(locale.format(u'%.2f', self.get_valor_desconto(), 1))
+        return "{0}".format(locale.format("%.2f", self.get_valor_desconto(), 1))
 
     def format_quantidade(self):
-        return locale.format(u'%.2f', self.quantidade, 1)
+        return locale.format("%.2f", self.quantidade, 1)
 
     def format_valor_unit(self):
-        return locale.format(u'%.2f', self.valor_unit, 1)
+        return locale.format("%.2f", self.valor_unit, 1)
 
     def format_total(self):
-        return locale.format(u'%.2f', self.subtotal, 1)
+        return locale.format("%.2f", self.subtotal, 1)
 
     def format_vprod(self):
-        return locale.format(u'%.2f', self.vprod, 1)
+        return locale.format("%.2f", self.vprod, 1)
 
     def format_valor_attr(self, nome_attr):
         valor = getattr(self, nome_attr)
         if valor is not None:
-            return locale.format(u'%.2f', valor, 1)
+            return locale.format("%.2f", valor, 1)
 
 
 class Compra(models.Model):
     # Fornecedor
     fornecedor = models.ForeignKey(
-        'cadastro.Fornecedor', related_name="compra_fornecedor", on_delete=models.CASCADE)
+        "cadastro.Fornecedor",
+        related_name="compra_fornecedor",
+        on_delete=models.CASCADE,
+    )
     # Transporte
-    mod_frete = models.CharField(
-        max_length=1, choices=MOD_FRETE_ESCOLHAS, default='9')
+    mod_frete = models.CharField(max_length=1, choices=MOD_FRETE_ESCOLHAS, default="9")
     # Estoque
     local_dest = models.ForeignKey(
-        'estoque.LocalEstoque', related_name="compra_local_estoque", default=DEFAULT_LOCAL_ID, on_delete=models.PROTECT)
+        "estoque.LocalEstoque",
+        related_name="compra_local_estoque",
+        default=DEFAULT_LOCAL_ID,
+        on_delete=models.PROTECT,
+    )
     movimentar_estoque = models.BooleanField(default=True)
     # Info
     data_emissao = models.DateField(null=True, blank=True)
-    valor_total = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                      MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+    valor_total = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        default=Decimal("0.00"),
+    )
     tipo_desconto = models.CharField(
-        max_length=1, choices=TIPOS_DESCONTO_ESCOLHAS, default='0')
-    desconto = models.DecimalField(max_digits=15, decimal_places=4, validators=[
-                                   MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    despesas = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                   MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    frete = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    seguro = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                 MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    total_icms = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                     MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
-    total_ipi = models.DecimalField(max_digits=13, decimal_places=2, validators=[
-                                    MinValueValidator(Decimal('0.00'))], default=Decimal('0.00'))
+        max_length=1, choices=TIPOS_DESCONTO_ESCOLHAS, default="0"
+    )
+    desconto = models.DecimalField(
+        max_digits=15,
+        decimal_places=4,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        default=Decimal("0.00"),
+    )
+    despesas = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        default=Decimal("0.00"),
+    )
+    frete = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        default=Decimal("0.00"),
+    )
+    seguro = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        default=Decimal("0.00"),
+    )
+    total_icms = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        default=Decimal("0.00"),
+    )
+    total_ipi = models.DecimalField(
+        max_digits=13,
+        decimal_places=2,
+        validators=[MinValueValidator(Decimal("0.00"))],
+        default=Decimal("0.00"),
+    )
     cond_pagamento = models.ForeignKey(
-        'vendas.CondicaoPagamento', related_name="compra_pagamento", on_delete=models.SET_NULL, null=True, blank=True)
+        "vendas.CondicaoPagamento",
+        related_name="compra_pagamento",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     observacoes = models.CharField(max_length=1055, null=True, blank=True)
 
     def get_total_sem_imposto(self):
@@ -161,37 +251,37 @@ class Compra(models.Model):
         return tot
 
     def format_total_produtos(self):
-        return locale.format(u'%.2f', self.get_total_produtos(), 1)
+        return locale.format("%.2f", self.get_total_produtos(), 1)
 
     @property
     def impostos(self):
-        return (self.total_icms + self.total_ipi)
+        return self.total_icms + self.total_ipi
 
     @property
     def format_data_emissao(self):
-        return '%s' % date(self.data_emissao, "d/m/Y")
+        return "%s" % date(self.data_emissao, "d/m/Y")
 
     def format_valor_total(self):
-        return locale.format(u'%.2f', self.valor_total, 1)
+        return locale.format("%.2f", self.valor_total, 1)
 
     def format_frete(self):
-        return locale.format(u'%.2f', self.frete, 1)
+        return locale.format("%.2f", self.frete, 1)
 
     def format_impostos(self):
-        return locale.format(u'%.2f', self.impostos, 1)
+        return locale.format("%.2f", self.impostos, 1)
 
     def format_vicms(self):
-        return locale.format(u'%.2f', self.total_icms, 1)
+        return locale.format("%.2f", self.total_icms, 1)
 
     def format_vipi(self):
-        return locale.format(u'%.2f', self.total_ipi, 1)
+        return locale.format("%.2f", self.total_ipi, 1)
 
     def format_total_sem_imposto(self):
-        return locale.format(u'%.2f', self.get_total_sem_imposto(), 1)
+        return locale.format("%.2f", self.get_total_sem_imposto(), 1)
 
     def format_desconto(self):
-        if self.tipo_desconto == '0':
-            return locale.format(u'%.2f', self.desconto, 1)
+        if self.tipo_desconto == "0":
+            return locale.format("%.2f", self.desconto, 1)
         else:
             itens = ItensCompra.objects.filter(compra_id=self.id)
             tot = 0
@@ -199,17 +289,17 @@ class Compra(models.Model):
                 tot += it.get_total_sem_desconto()
 
             v_desconto = tot * (self.desconto / 100)
-            return locale.format(u'%.2f', v_desconto, 1)
+            return locale.format("%.2f", v_desconto, 1)
 
     def format_seguro(self):
-        return locale.format(u'%.2f', self.seguro, 1)
+        return locale.format("%.2f", self.seguro, 1)
 
     def format_despesas(self):
-        return locale.format(u'%.2f', self.despesas, 1)
+        return locale.format("%.2f", self.despesas, 1)
 
     def format_total_sem_desconto(self):
         total_sem_desconto = self.valor_total - self.desconto
-        return locale.format(u'%.2f', total_sem_desconto, 1)
+        return locale.format("%.2f", total_sem_desconto, 1)
 
     def get_forma_pagamento(self):
         if self.cond_pagamento:
@@ -230,72 +320,75 @@ class Compra(models.Model):
             return OrcamentoCompra.objects.get(id=self.id)
 
     def __unicode__(self):
-        s = u'Compra nº %s' % (self.id)
+        s = "Compra nº %s" % (self.id)
         return s
 
     def __str__(self):
-        s = u'Compra nº %s' % (self.id)
+        s = "Compra nº %s" % (self.id)
         return s
 
 
 class OrcamentoCompra(Compra):
     data_vencimento = models.DateField(null=True, blank=True)
     status = models.CharField(
-        max_length=1, choices=STATUS_ORCAMENTO_ESCOLHAS, default='0')
+        max_length=1, choices=STATUS_ORCAMENTO_ESCOLHAS, default="0"
+    )
 
     class Meta:
         verbose_name = "Orçamento de Compra"
 
     @property
     def format_data_vencimento(self):
-        return '%s' % date(self.data_vencimento, "d/m/Y")
+        return "%s" % date(self.data_vencimento, "d/m/Y")
 
     @property
     def tipo_compra(self):
-        return 'Orçamento'
+        return "Orçamento"
 
     def edit_url(self):
-        return reverse_lazy('compras:editarorcamentocompraview', kwargs={'pk': self.id})
+        return reverse_lazy("compras:editarorcamentocompraview", kwargs={"pk": self.id})
 
     def __unicode__(self):
-        s = u'Orçamento nº %s' % (self.id)
+        s = "Orçamento nº %s" % (self.id)
         return s
 
     def __str__(self):
-        s = u'Orçamento nº %s' % (self.id)
+        s = "Orçamento nº %s" % (self.id)
         return s
 
 
 class PedidoCompra(Compra):
     orcamento = models.ForeignKey(
-        'compras.OrcamentoCompra', related_name="orcamento_pedido", on_delete=models.SET_NULL, null=True, blank=True)
+        "compras.OrcamentoCompra",
+        related_name="orcamento_pedido",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+    )
     data_entrega = models.DateField(null=True, blank=True)
     status = models.CharField(
-        max_length=1, choices=STATUS_PEDIDO_COMPRA_ESCOLHAS, default='0')
+        max_length=1, choices=STATUS_PEDIDO_COMPRA_ESCOLHAS, default="0"
+    )
 
     class Meta:
         verbose_name = "Pedido de Compra"
-        permissions = (
-            ("faturar_pedidocompra", "Pode faturar Pedidos de Compra"),
-        )
+        permissions = (("faturar_pedidocompra", "Pode faturar Pedidos de Compra"),)
 
     @property
     def format_data_entrega(self):
-        return '%s' % date(self.data_entrega, "d/m/Y")
+        return "%s" % date(self.data_entrega, "d/m/Y")
 
     @property
     def tipo_compra(self):
-        return 'Pedido'
+        return "Pedido"
 
     def edit_url(self):
-        return reverse_lazy('compras:editarpedidocompraview', kwargs={'pk': self.id})
+        return reverse_lazy("compras:editarpedidocompraview", kwargs={"pk": self.id})
 
     def __unicode__(self):
-        s = u'Pedido de compra nº %s (%s)' % (
-            self.id, self.get_status_display())
+        s = "Pedido de compra nº %s (%s)" % (self.id, self.get_status_display())
         return s
 
     def __str__(self):
-        s = u'Pedido de compra nº %s (%s)' % (
-            self.id, self.get_status_display())
+        s = "Pedido de compra nº %s (%s)" % (self.id, self.get_status_display())
         return s

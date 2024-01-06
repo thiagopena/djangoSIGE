@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class CadastroConfig(AppConfig):
-    name = 'djangosige.cadastro'
+    name = "djangosige.cadastro"

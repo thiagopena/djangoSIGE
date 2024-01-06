@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class BaseConfig(AppConfig):
-    name = 'djangosige.base'
+    name = "djangosige.base"

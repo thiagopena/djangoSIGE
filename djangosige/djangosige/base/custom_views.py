@@ -1,34 +1,32 @@
 # -*- coding: utf-8 -*-
 
-from django.views.generic import TemplateView, ListView, View
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic.detail import DetailView
-
 from django.shortcuts import redirect
+from django.views.generic import ListView, TemplateView, View
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView
 
-from djangosige.base.views_mixins import CheckPermissionMixin, FormValidationMessageMixin
+from djangosige.base.views_mixins import (
+    CheckPermissionMixin,
+    FormValidationMessageMixin,
+)
 
 
 class CustomView(CheckPermissionMixin, View):
-
     def __init__(self, *args, **kwargs):
         super(CustomView, self).__init__(*args, **kwargs)
 
 
 class CustomTemplateView(CheckPermissionMixin, TemplateView):
-
     def __init__(self, *args, **kwargs):
         super(CustomTemplateView, self).__init__(*args, **kwargs)
 
 
 class CustomDetailView(CheckPermissionMixin, DetailView):
-
     def __init__(self, *args, **kwargs):
         super(CustomDetailView, self).__init__(*args, **kwargs)
 
 
 class CustomCreateView(CheckPermissionMixin, FormValidationMessageMixin, CreateView):
-
     def __init__(self, *args, **kwargs):
         super(CustomCreateView, self).__init__(*args, **kwargs)
 
@@ -43,7 +41,6 @@ class CustomCreateView(CheckPermissionMixin, FormValidationMessageMixin, CreateV
 
 
 class CustomListView(CheckPermissionMixin, ListView):
-
     def __init__(self, *args, **kwargs):
         super(CustomListView, self).__init__(*args, **kwargs)
 
@@ -61,7 +58,6 @@ class CustomListView(CheckPermissionMixin, ListView):
 
 
 class CustomUpdateView(CheckPermissionMixin, FormValidationMessageMixin, UpdateView):
-
     def __init__(self, *args, **kwargs):
         super(CustomUpdateView, self).__init__(*args, **kwargs)
 

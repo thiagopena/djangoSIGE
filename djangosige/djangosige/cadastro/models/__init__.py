@@ -1,9 +1,20 @@
 # -*- coding: utf-8 -*-
 
-from .base import Pessoa, PessoaFisica, PessoaJuridica, Endereco, Telefone, Email, Site, Banco, Documento, COD_UF, UF_SIGLA
-from .empresa import Empresa, MinhaEmpresa
+from .base import (
+    COD_UF,
+    UF_SIGLA,
+    Banco,
+    Documento,
+    Email,
+    Endereco,
+    Pessoa,
+    PessoaFisica,
+    PessoaJuridica,
+    Site,
+    Telefone,
+)
 from .cliente import Cliente
+from .empresa import Empresa, MinhaEmpresa
 from .fornecedor import Fornecedor
+from .produto import Categoria, Marca, Produto, Unidade
 from .transportadora import Transportadora, Veiculo
-
-from .produto import Produto, Unidade, Marca, Categoria

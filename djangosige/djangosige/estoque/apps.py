@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class EstoqueConfig(AppConfig):
-    name = 'djangosige.estoque'
+    name = "djangosige.estoque"

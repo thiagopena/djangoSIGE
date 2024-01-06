@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class FiscalConfig(AppConfig):
-    name = 'djangosige.fiscal'
+    name = "djangosige.fiscal"

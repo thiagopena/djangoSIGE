@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class LoginConfig(AppConfig):
-    name = 'djangosige.login'
+    name = "djangosige.login"
