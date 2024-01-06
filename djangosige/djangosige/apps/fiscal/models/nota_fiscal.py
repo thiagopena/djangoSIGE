@@ -8,7 +8,7 @@ from decimal import Decimal
 import os
 import re
 
-from djangosige.configs.settings import MEDIA_ROOT, APP_ROOT
+from django.conf import settings
 
 
 IND_PAG_ESCOLHAS = (
@@ -161,10 +161,10 @@ class NotaFiscal(models.Model):
     @property
     def caminho_proc_completo(self):
         if self.arquivo_proc:
-            if APP_ROOT in self.arquivo_proc.name:
+            if settings.BASE_DIR in self.arquivo_proc.name:
                 return self.arquivo_proc.name
             else:
-                return os.path.join(APP_ROOT, self.arquivo_proc.url)
+                return os.path.join(settings.BASE_DIR, self.arquivo_proc.url)
         else:
             return ''
 
@@ -303,7 +303,7 @@ class ConfiguracaoNotaFiscal(models.Model):
             return True
 
     def get_certificado_a1(self):
-        return os.path.join(MEDIA_ROOT, self.arquivo_certificado_a1.name)
+        return os.path.join(settings.MEDIA_ROOT, self.arquivo_certificado_a1.name)
 
 
 class ErrosValidacaoNotaFiscal(models.Model):

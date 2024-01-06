@@ -44,7 +44,7 @@ EMAIL_USE_TLS = config("EMAIL_USE_TLS")
 
 # File Uploads
 ################################################################################
-MEDIA_ROOT = str(BASE_DIR / "mediafiles/")
+MEDIA_ROOT = str(BASE_DIR / "djangosige/mediafiles/")
 MEDIA_URL = "media/"
 
 # Globalization
@@ -77,14 +77,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "djangosige.base",
-    "djangosige.login",
-    "djangosige.cadastro",
-    "djangosige.vendas",
-    "djangosige.compras",
-    "djangosige.fiscal",
-    "djangosige.financeiro",
-    "djangosige.estoque",
+    "djangosige.apps.base",
+    "djangosige.apps.login",
+    "djangosige.apps.cadastro",
+    "djangosige.apps.vendas",
+    "djangosige.apps.compras",
+    "djangosige.apps.fiscal",
+    "djangosige.apps.financeiro",
+    "djangosige.apps.estoque",
 ]
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -102,7 +102,7 @@ DEFAULT_CHARSET = "utf-8"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [BASE_DIR / "djangosige/templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -110,8 +110,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "djangosige.base.context_version.sige_version",
-                "djangosige.login.context_user.foto_usuario",
+                "djangosige.apps.base.context_version.sige_version",
+                "djangosige.apps.login.context_user.foto_usuario",
             ],
         },
     },
@@ -160,4 +160,4 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 ################################################################################
 STATIC_ROOT = str(BASE_DIR / "staticfiles")
 STATIC_URL = "static/"
-STATICFILES_DIRS = [str(BASE_DIR / "static")]
+STATICFILES_DIRS = [str(BASE_DIR / "djangosige/static")]

@@ -24,7 +24,7 @@ from djangosige.apps.base.views_mixins import SuperUserRequiredMixin
 
 from .forms import UserLoginForm, UserRegistrationForm, PasswordResetForm, SetPasswordForm, PerfilUsuarioForm
 from .models import Usuario
-from djangosige.configs.settings import DEFAULT_FROM_EMAIL
+from django.conf import settings
 
 from djangosige.apps.cadastro.forms import MinhaEmpresaForm
 from djangosige.apps.cadastro.models import MinhaEmpresa
@@ -114,7 +114,7 @@ class ForgotPasswordView(FormView):
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
 
-        if not DEFAULT_FROM_EMAIL:
+        if not settings.DEFAULT_FROM_EMAIL:
             form.add_error(
                 field=None, error=u"Envio de email não configurado.")
             return self.form_invalid(form)
@@ -140,7 +140,7 @@ class ForgotPasswordView(FormView):
                         email_template_name = 'login/trocar_senha_email.html'
                         email_mensagem = loader.render_to_string(
                             email_template_name, c)
-                        sended = send_mail(subject, email_mensagem, DEFAULT_FROM_EMAIL, [
+                        sended = send_mail(subject, email_mensagem, settings.DEFAULT_FROM_EMAIL, [
                                            associated_user.email, ], fail_silently=False)
 
                         if sended == 1:

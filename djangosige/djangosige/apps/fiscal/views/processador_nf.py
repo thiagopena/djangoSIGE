@@ -3,7 +3,7 @@
 from djangosige.apps.fiscal.models import NotaFiscalSaida, NotaFiscalEntrada, ConfiguracaoNotaFiscal, AutXML, \
     ErrosValidacaoNotaFiscal, RespostaSefazNotaFiscal, NaturezaOperacao, GrupoFiscal, \
     ICMS, ICMSUFDest, ICMSSN, IPI, PIS, COFINS
-from djangosige.configs.settings import MEDIA_ROOT
+from django.conf import settings
 from djangosige.apps.cadastro.models import COD_UF, PessoaJuridica, PessoaFisica, Fornecedor, Cliente, Empresa, Transportadora, Endereco, Telefone, Produto, Unidade
 from djangosige.apps.compras.models import PedidoCompra, ItensCompra
 from djangosige.apps.vendas.models import PedidoVenda, ItensVenda
@@ -1181,7 +1181,7 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message=e.descricao, erro=True)
         else:
             processo = self.nova_nfe.gerar_xml(xml_nfe=nfe.xml, cert=self.info_certificado['cert'], key=self.info_certificado['key'],
-                                               versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, consumidor=nota_obj.consumidor, caminho=MEDIA_ROOT)
+                                               versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, consumidor=nota_obj.consumidor, caminho=settings.MEDIA_ROOT)
         temp_list = []
         for err in processo.envio.erros:
             e = ErrosValidacaoNotaFiscal(nfe=nota_obj)
@@ -1249,7 +1249,7 @@ class ProcessadorNotaFiscal(object):
             try:
                 processos = self.nova_nfe.processar_nota(xml_nfe=nfe.xml, cert=self.info_certificado['cert'], key=self.info_certificado['key'],
                                                          versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, consumidor=nota_obj.consumidor, contingencia=nota_obj.contingencia,
-                                                         consultar_servico=False, numero_lote=nota_obj.numero_lote, caminho=MEDIA_ROOT)
+                                                         consultar_servico=False, numero_lote=nota_obj.numero_lote, caminho=settings.MEDIA_ROOT)
 
                 # HTTP 200 - OK
                 if processos['lote'].resposta.status in (u'200', 200):
@@ -1394,7 +1394,7 @@ class ProcessadorNotaFiscal(object):
         else:
             try:
                 processo = self.nova_nfe.cancelar_nota(chave=nota_obj.chave, protocolo=nota_obj.numero_protocolo, justificativa=nota_obj.just_canc, cert=self.info_certificado['cert'], key=self.info_certificado['key'],
-                                                       versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, contingencia=nota_obj.contingencia, caminho=MEDIA_ROOT)
+                                                       versao=nota_obj.versao, ambiente=int(nota_obj.tp_amb), estado=nota_obj.estado, contingencia=nota_obj.contingencia, caminho=settings.MEDIA_ROOT)
 
                 # HTTP 200 - OK
                 if processo.resposta.status in (u'200', 200):
@@ -1524,7 +1524,7 @@ class ProcessadorNotaFiscal(object):
         else:
             try:
                 processo = self.nova_nfe.consultar_cadastro(cert=self.info_certificado['cert'], key=self.info_certificado['key'], cpf_cnpj=empresa.cpf_cnpj_apenas_digitos, versao=u'3.10',
-                                                            ambiente=2, estado=empresa.uf_padrao, contingencia=False, salvar_arquivos=salvar_arquivos, caminho=MEDIA_ROOT)
+                                                            ambiente=2, estado=empresa.uf_padrao, contingencia=False, salvar_arquivos=salvar_arquivos, caminho=settings.MEDIA_ROOT)
 
                 self.processo = processo
 
@@ -1557,7 +1557,7 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message=u'CNPJ do emitente não foi preenchido.', erro=True)
         else:
             processo = self.nova_nfe.inutilizar_faixa_numeracao(cnpj=empresa.cpf_cnpj_apenas_digitos, serie=serie, numero_inicial=numero_inicial, numero_final=numero_final, justificativa=justificativa,
-                                                                cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10', ambiente=int(ambiente), estado=empresa.uf_padrao, nfce=nfce, contingencia=False, caminho=MEDIA_ROOT)
+                                                                cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10', ambiente=int(ambiente), estado=empresa.uf_padrao, nfce=nfce, contingencia=False, caminho=settings.MEDIA_ROOT)
 
             self.processo = processo
 
@@ -1582,7 +1582,7 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message=u'Chave com código da UF incorreto.', erro=True)
 
         processo = self.nova_nfe.consultar_nfe(chave=chave, cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10', ambiente=int(
-            ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
+            ambiente), estado=uf, contingencia=False, caminho=settings.MEDIA_ROOT)
 
         self.processo = processo
 
@@ -1609,7 +1609,7 @@ class ProcessadorNotaFiscal(object):
         cnpj = chave[6:20]
 
         processo = self.nova_nfe.download_notas(cnpj=cnpj, lista_chaves=[chave, ], ambiente_nacional=ambiente_nacional, cert=self.info_certificado['cert'], key=self.info_certificado['key'],
-                                                versao=u'3.10', ambiente=int(ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
+                                                versao=u'3.10', ambiente=int(ambiente), estado=uf, contingencia=False, caminho=settings.MEDIA_ROOT)
 
         self.processo = processo
 
@@ -1634,7 +1634,7 @@ class ProcessadorNotaFiscal(object):
             return self.salvar_mensagem(message=u'Chave com código da UF incorreto.', erro=True)
 
         processo = self.nova_nfe.efetuar_manifesto(cnpj=cnpj, tipo_manifesto=tipo_manifesto, chave=chave, ambiente_nacional=ambiente_nacional, cert=self.info_certificado['cert'], key=self.info_certificado['key'], versao=u'3.10',
-                                                   ambiente=int(ambiente), estado=uf, contingencia=False, caminho=MEDIA_ROOT)
+                                                   ambiente=int(ambiente), estado=uf, contingencia=False, caminho=settings.MEDIA_ROOT)
 
         self.processo = processo
 

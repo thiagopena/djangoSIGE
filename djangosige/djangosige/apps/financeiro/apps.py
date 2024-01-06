@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class FinanceiroConfig(AppConfig):
-    name = 'financeiro'
+    name = 'djangosige.apps.financeiro'

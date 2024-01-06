@@ -4,4 +4,4 @@ from django.apps import AppConfig
 
 
 class ComprasConfig(AppConfig):
-    name = 'compras'
+    name = 'djangosige.apps.compras'
