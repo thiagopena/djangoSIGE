@@ -4,8 +4,8 @@ from djangosige.tests.test_case import BaseTestCase, replace_none_values_in_dict
 from django.urls import reverse
 from django.utils import timezone
 
-from djangosige.apps.fiscal.models import NaturezaOperacao, GrupoFiscal, NotaFiscalSaida, NotaFiscalEntrada
-from djangosige.apps.vendas.models import PedidoVenda
+from djangosige.fiscal.models import NaturezaOperacao, GrupoFiscal, NotaFiscalSaida, NotaFiscalEntrada
+from djangosige.vendas.models import PedidoVenda
 
 
 AUT_XML_FORMSET_DATA = {

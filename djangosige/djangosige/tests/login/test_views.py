@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from djangosige.tests.test_case import BaseTestCase, TEST_USERNAME, TEST_PASSWORD
-from djangosige.apps.cadastro.models import Empresa, MinhaEmpresa
-from djangosige.apps.login.models import Usuario
+from djangosige.cadastro.models import Empresa, MinhaEmpresa
+from djangosige.login.models import Usuario
 
 from django.contrib.auth.models import User
 from django.urls import reverse
