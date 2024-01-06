@@ -18,6 +18,10 @@ pyopenssl = "==17.5.*"
 signxml = "==2.5.*"
 
 [dev-packages]
+black = "*"
+isort = "*"
+flake8 = "*"
+pre-commit = "*"
 
 [requires]
 python_version = "3.8"
