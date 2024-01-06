@@ -44,7 +44,7 @@ EMAIL_USE_TLS = config("EMAIL_USE_TLS")
 
 # File Uploads
 ################################################################################
-MEDIA_ROOT = str(BASE_DIR / "djangosige/mediafiles/")
+MEDIA_ROOT = str(BASE_DIR / "mediafiles/")
 MEDIA_URL = "media/"
 
 # Globalization
@@ -102,7 +102,7 @@ DEFAULT_CHARSET = "utf-8"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "djangosige/templates"],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -160,4 +160,4 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 ################################################################################
 STATIC_ROOT = str(BASE_DIR / "staticfiles")
 STATIC_URL = "static/"
-STATICFILES_DIRS = [str(BASE_DIR / "djangosige/static")]
+STATICFILES_DIRS = [str(BASE_DIR / "static")]

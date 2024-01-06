@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from djangosige.tests.test_case import BaseTestCase, replace_none_values_in_dictionary
+from tests.test_case import BaseTestCase, replace_none_values_in_dictionary
 from djangosige.cadastro.models import Fornecedor, Produto
 from djangosige.compras.models import OrcamentoCompra, PedidoCompra, ItensCompra
 from djangosige.estoque.models import LocalEstoque, DEFAULT_LOCAL_ID

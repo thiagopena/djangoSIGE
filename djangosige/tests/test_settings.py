@@ -8,5 +8,5 @@ warnings.filterwarnings(
 )
 
 settings.FIXTURE_DIRS.append(
-    str(settings.BASE_DIR / 'djangosige/tests/fixtures')
+    str(settings.BASE_DIR / 'tests/fixtures')
 )

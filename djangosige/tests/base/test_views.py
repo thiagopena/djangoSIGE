@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from djangosige.tests.test_case import BaseTestCase
+from tests.test_case import BaseTestCase
 from django.urls import resolve, reverse
 from djangosige.base.views import IndexView
 from django.conf import settings
