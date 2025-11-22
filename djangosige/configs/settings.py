@@ -24,7 +24,7 @@ if not DEFAULT_DATABASE_URL:
 DATABASES = {
     'default': config('DATABASE_URL', default=DEFAULT_DATABASE_URL, cast=dburl),
 }
-
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Application definition
 

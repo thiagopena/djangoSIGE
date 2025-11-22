@@ -1,21 +1,17 @@
 [[source]]
-name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
+name = "pypi"
+
+[packages]
+python-decouple = "==3.8"
+dj-database-url = "==0.5.0"
+geraldo = {file = "https://github.com/thiagopena/geraldo/archive/master.zip"}
+pysignfe = {file = "https://github.com/thiagopena/PySIGNFe/archive/master.zip"}
+signxml = "==4.2.0"
+django = "<=4.3,>=4.2"
 
 [dev-packages]
 
-[packages]
-django = ">=2.1.6"
-dj-database-url = "==0.5.*"
-python-decouple = "==3.1"
-pytz = "==2018.3"
-reportlab = "==3.4.*"
-six = "==1.11.*"
-cryptography = ">=2.3"
-lxml = "==4.2.*"
-pyopenssl = "==17.5.*"
-signxml = "==2.5.*"
-
 [requires]
-python_version = "3.6"
+python_version = "3.9"
