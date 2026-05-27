@@ -283,6 +283,7 @@
     width: 100%;
     border-top: 1px solid #eee;
     padding: 15px;
+    text-align: center;
     overflow: hidden; }
     .sidebar .legal .copyright {
       font-size: 13px;
@@ -309,7 +310,7 @@
     border-bottom: 1px solid #e9e9e9;
     /*background: url("../images/user-img-background.jpg") no-repeat no-repeat;*/
     background: #7899a9;
-    height: 135px; }
+    height: 90px; }
     .sidebar .user-info .image {
       margin-right: 12px;
       display: inline-block; }
@@ -321,10 +322,9 @@
         vertical-align: bottom !important; }
     .sidebar .user-info .info-container {
       cursor: default;
-      display: block;
+      display: inline-block;
       position: relative;
-      /*top: 25px;*/
-      top:12px; }
+      }
       .sidebar .user-info .info-container .name {
         white-space: nowrap;
         -ms-text-overflow: ellipsis;
@@ -345,7 +345,7 @@
         color: #fff; }
       .sidebar .user-info .info-container .user-helper-dropdown {
         position: absolute;
-        right: -3px;
+        right: -100px;
         bottom: -10px;
         -webkit-box-shadow: none;
         -moz-box-shadow: none;
@@ -356,9 +356,9 @@
   .sidebar .menu {
     position: relative;
     overflow-y: auto;
-    height: 90vh;
+    height: calc(100% - 160px);
     overflow-y: scroll;
-    height: 450px; }
+    }
     .sidebar .menu .list {
       list-style: none;
       padding-left: 0; }
