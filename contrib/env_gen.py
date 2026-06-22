@@ -12,6 +12,7 @@ CONFIG_STRING = """
 DEBUG=True
 SECRET_KEY=%s
 ALLOWED_HOSTS=127.0.0.1, .localhost
+CSRF_TRUSTED_ORIGINS=http://localhost:8000,http://127.0.0.1:8000
 #DATABASE_URL=postgres://USER:PASSWORD@HOST:PORT/NAME
 #DEFAULT_FROM_EMAIL=
 #EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
