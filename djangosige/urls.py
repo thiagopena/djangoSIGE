@@ -3,7 +3,7 @@
 from django.urls import re_path as url, include
 from django.contrib import admin
 from django.conf.urls.static import static
-from .configs.settings import DEBUG, MEDIA_ROOT, MEDIA_URL
+from django.conf import settings
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -17,5 +17,5 @@ urlpatterns = [
     url(r'^estoque/', include('djangosige.apps.estoque.urls')),
 ]
 
-if DEBUG is True:
-    urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)
+if settings.DEBUG is True:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
