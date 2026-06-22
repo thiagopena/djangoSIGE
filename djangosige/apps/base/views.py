@@ -17,7 +17,7 @@ class IndexView(TemplateView):
     template_name = 'base/index.html'
 
     def get_context_data(self, **kwargs):
-        context = super(IndexView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         quantidade_cadastro = {}
         agenda_hoje = {}
         alertas = {}
@@ -64,15 +64,13 @@ class IndexView(TemplateView):
         context['alertas'] = alertas
 
         try:
-            context['movimento_dia'] = MovimentoCaixa.objects.get(
-                data_movimento=data_atual)
-        except (MovimentoCaixa.DoesNotExist, ObjectDoesNotExist):
-            ultimo_mvmt = MovimentoCaixa.objects.filter(
-                data_movimento__lt=data_atual)
-            if ultimo_mvmt:
-                context['saldo'] = ultimo_mvmt.latest(
-                    'data_movimento').saldo_final
-            else:
+            context['movimento_dia'] = MovimentoCaixa.objects.get(data_movimento=data_atual)
+        except MovimentoCaixa.DoesNotExist:
+            try:
+                context['saldo'] = MovimentoCaixa.objects.filter(
+                    data_movimento__lt=data_atual
+                ).latest('data_movimento').saldo_final
+            except MovimentoCaixa.DoesNotExist:
                 context['saldo'] = '0,00'
 
         return context
