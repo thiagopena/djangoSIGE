@@ -13,7 +13,7 @@ from djangosige.apps.vendas.forms import OrcamentoVendaForm, PedidoVendaForm, It
 from djangosige.apps.vendas.models import OrcamentoVenda, PedidoVenda, ItensVenda, Pagamento
 from djangosige.apps.cadastro.models import MinhaEmpresa
 from djangosige.apps.login.models import Usuario
-from djangosige.configs.settings import MEDIA_ROOT
+from django.conf import settings
 
 from datetime import datetime
 from pathlib import Path
@@ -457,7 +457,7 @@ class GerarPDFVenda(CustomView):
                 empresa_info['telefone'] = empresa.telefone_padrao.telefone
             flogo = empresa.logo_file
             if flogo and flogo.name != 'imagens/logo.png':
-                candidato = Path(MEDIA_ROOT) / flogo.name
+                candidato = Path(settings.MEDIA_ROOT) / flogo.name
                 if candidato.exists():
                     logo_path = candidato.as_uri()
         except (Usuario.DoesNotExist, MinhaEmpresa.DoesNotExist):
@@ -481,7 +481,7 @@ class GerarPDFVenda(CustomView):
             'hoje': timezone.now(),
         }
         html_string = render_to_string('base/pdf/relatorio_documento.html', context)
-        pdf_bytes = HTML(string=html_string, base_url=MEDIA_ROOT).write_pdf()
+        pdf_bytes = HTML(string=html_string, base_url=settings.MEDIA_ROOT).write_pdf()
 
         resp = HttpResponse(pdf_bytes, content_type='application/pdf')
         return resp

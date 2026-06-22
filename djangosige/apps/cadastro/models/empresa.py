@@ -8,7 +8,7 @@ from django.dispatch import receiver
 
 from .base import Pessoa
 from djangosige.apps.login.models import Usuario
-from djangosige.configs.settings import MEDIA_ROOT
+from django.conf import settings
 
 
 def logo_directory_path(instance, filename):
@@ -28,7 +28,7 @@ class Empresa(Pessoa):
     @property
     def caminho_completo_logo(self):
         if self.logo_file.name != 'imagens/logo.png':
-            return os.path.join(MEDIA_ROOT, self.logo_file.name)
+            return os.path.join(settings.MEDIA_ROOT, self.logo_file.name)
         else:
             return ''
 
