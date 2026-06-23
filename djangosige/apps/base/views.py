@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 
+from http import HTTPStatus
+
+from django.http import HttpRequest, HttpResponse
 from django.views.generic import TemplateView
 from django.shortcuts import render
 from django.core.exceptions import ObjectDoesNotExist
@@ -78,13 +81,11 @@ class IndexView(TemplateView):
         return context
 
 
-def handler404(request):
-    response = render(request, '404.html', {})
-    response.status_code = 404
-    return response
+def handler404(request: HttpRequest, exception=None) -> HttpResponse:
+    """Handler personalizado para erro 404 (Not Found) com argumento de exceção obrigatório."""
+    return render(request, '404.html', status=HTTPStatus.NOT_FOUND)
 
 
-def handler500(request):
-    response = render(request, '500.html', {})
-    response.status_code = 500
-    return response
+def handler500(request: HttpRequest) -> HttpResponse:
+    """Handler personalizado para erro 500 (Internal Server Error)."""
+    return render(request, '500.html', status=HTTPStatus.INTERNAL_SERVER_ERROR)
