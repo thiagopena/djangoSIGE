@@ -21,7 +21,10 @@
               <a id="gerar_pdf_venda" href="{% url 'vendas:gerarpdforcamentovenda' object.id %}" class="btn btn-primary">GERAR PDF</a>
               {% if object.status == '0' %}
               <a id="gerar_pedido_venda" href="{% url 'vendas:gerarpedidovenda' object.id %}" class="btn btn-success">GERAR PEDIDO</a>
-              <a id="cancelar_orcamento_venda" href="{% url 'vendas:cancelarorcamentovenda' object.id %}" class="btn btn-red">CANCELAR</a>
+              <a id="cancelar_orcamento_venda" href="#" class="btn btn-red" onclick="document.getElementById('form-cancelar-orcamento-venda').submit(); return false;">CANCELAR</a>
+              <form id="form-cancelar-orcamento-venda" method="post" action="{% url 'vendas:cancelarorcamentovenda' object.id %}" style="display:none;">
+                {% csrf_token %}
+              </form>
               {% else %}
               <a id="gerar_copia_orcamento_venda" href="{% url 'vendas:copiarorcamentovenda' object.id %}" class="btn btn-primary">GERAR CÓPIA DO ORÇAMENTO</a>
               {% endif %}

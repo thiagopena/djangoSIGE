@@ -382,7 +382,7 @@ class GerarPedidoCompraView(CustomView):
 class CancelarOrcamentoCompraView(CustomView):
     permission_codename = 'change_orcamentocompra'
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
         instance = OrcamentoCompra.objects.get(id=compra_id)
         instance.status = '2'
@@ -393,7 +393,7 @@ class CancelarOrcamentoCompraView(CustomView):
 class CancelarPedidoCompraView(CustomView):
     permission_codename = 'change_pedidocompra'
 
-    def get(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         compra_id = kwargs.get('pk', None)
         instance = PedidoCompra.objects.get(id=compra_id)
         instance.status = '2'

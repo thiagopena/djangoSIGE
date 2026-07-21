@@ -23,7 +23,10 @@
               <a id="gerar_pdf_venda" href="{% url 'vendas:gerarpdfpedidovenda' object.id %}" class="btn btn-primary">GERAR PDF</a>
               {% if object.status == '0' or object.status == '3' %}
               <a id="faturar_pedido" href="{% url 'financeiro:faturarpedidovenda' object.id %}" class="btn btn-success">FATURAR PEDIDO</a>
-              <a id="cancelar_pedido_venda" href="{% url 'vendas:cancelarpedidovenda' object.id %}" class="btn btn-red">CANCELAR</a>
+              <a id="cancelar_pedido_venda" href="#" class="btn btn-red" onclick="document.getElementById('form-cancelar-pedido-venda').submit(); return false;">CANCELAR</a>
+              <form id="form-cancelar-pedido-venda" method="post" action="{% url 'vendas:cancelarpedidovenda' object.id %}" style="display:none;">
+                {% csrf_token %}
+              </form>
               {% elif object.status == '1'%}
               <a id="gerar_nota_fiscal" href="{% url 'fiscal:gerarnotafiscalsaida' object.id %}" class="btn btn-success">GERAR NOTA FISCAL</a>
               {% endif %}

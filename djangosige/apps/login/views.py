@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout, get_user_model
 from django.views.generic import View, TemplateView, FormView, ListView, DeleteView
@@ -28,6 +30,8 @@ from djangosige.configs.settings import DEFAULT_FROM_EMAIL
 
 from djangosige.apps.cadastro.forms import MinhaEmpresaForm
 from djangosige.apps.cadastro.models import MinhaEmpresa
+
+logger = logging.getLogger(__name__)
 
 import operator
 from functools import reduce
@@ -111,10 +115,17 @@ class ForgotPasswordView(FormView):
     success_url = reverse_lazy('login:loginview')
     form_class = PasswordResetForm
 
+    GENERIC_SUCCESS_MESSAGE = (
+        u'Se este e-mail/usuário estiver cadastrado em nossa base, você '
+        u'receberá um e-mail com instruções para redefinir sua senha.'
+    )
+
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
 
         if not DEFAULT_FROM_EMAIL:
+            # Isto é um erro de configuração do administrador, não revela
+            # nada sobre a existência de usuários.
             form.add_error(
                 field=None, error=u"Envio de email não configurado.")
             return self.form_invalid(form)
@@ -124,46 +135,38 @@ class ForgotPasswordView(FormView):
             associated_user = User.objects.filter(
                 Q(email=data) | Q(username=data)).first()
 
-            if associated_user:
+            # IMPORTANTE (correção de segurança): independentemente do
+            # usuário existir ou não, ou do email estar cadastrado ou não,
+            # sempre retornamos a mesma mensagem genérica de sucesso.
+            # Isso evita "user enumeration" (CWE-203), onde um atacante
+            # poderia descobrir quais usernames/emails existem no sistema
+            # apenas observando mensagens de erro diferentes.
+            if associated_user and associated_user.email:
                 try:
-                    if associated_user.email:
-                        c = {
-                            'email': associated_user.email,
-                            'domain': request.META['HTTP_HOST'],
-                            'site_name': 'djangoSIGE',
-                            'uid': urlsafe_base64_encode(force_bytes(associated_user.pk)).decode(encoding="utf-8"),
-                            'user': associated_user,
-                            'token': default_token_generator.make_token(associated_user),
-                            'protocol': 'http://',
-                        }
-                        subject = u"Redefinir sua senha - DjangoSIGE"
-                        email_template_name = 'login/trocar_senha_email.html'
-                        email_mensagem = loader.render_to_string(
-                            email_template_name, c)
-                        sended = send_mail(subject, email_mensagem, DEFAULT_FROM_EMAIL, [
-                                           associated_user.email, ], fail_silently=False)
+                    c = {
+                        'email': associated_user.email,
+                        'domain': request.get_host(),
+                        'site_name': 'djangoSIGE',
+                        'uid': urlsafe_base64_encode(force_bytes(associated_user.pk)),
+                        'user': associated_user,
+                        'token': default_token_generator.make_token(associated_user),
+                        'protocol': 'http://',
+                    }
+                    subject = u"Redefinir sua senha - DjangoSIGE"
+                    email_template_name = 'login/trocar_senha_email.html'
+                    email_mensagem = loader.render_to_string(
+                        email_template_name, c)
+                    send_mail(subject, email_mensagem, DEFAULT_FROM_EMAIL, [
+                              associated_user.email, ], fail_silently=True)
+                except Exception:
+                    # Registra o erro real para o administrador investigar,
+                    # mas NÃO expõe detalhes ao usuário (isso também
+                    # vazaria informação sobre a existência da conta).
+                    logger.exception(
+                        u"Erro ao enviar email de redefinição de senha para %s", data)
 
-                        if sended == 1:
-                            messages.success(request, u'Um email foi enviado para ' + data +
-                                             u'. Aguarde o recebimento da mensagem para trocar sua senha.')
-                            return self.form_valid(form)
-                        else:
-                            form.add_error(
-                                field=None, error=u"Erro ao enviar email de verificação.")
-                            return self.form_invalid(form)
-                    else:
-                        form.add_error(
-                            field=None, error=u"Este usuário não cadastrou um email.")
-                        return self.form_invalid(form)
-
-                except Exception as e:
-                    form.add_error(field=None, error=e)
-                    return self.form_invalid(form)
-
-            else:
-                form.add_error(
-                    field=None, error=u"Usuário/Email: {} não foi encontrado na database.".format(data))
-                return self.form_invalid(form)
+            messages.success(request, self.GENERIC_SUCCESS_MESSAGE)
+            return self.form_valid(form)
 
         form.add_error(field=None, error="Entrada inválida.")
         return self.form_invalid(form)

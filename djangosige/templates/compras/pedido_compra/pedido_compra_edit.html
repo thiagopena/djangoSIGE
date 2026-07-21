@@ -22,7 +22,10 @@
               <a id="gerar_pdf_compra" href="{% url 'compras:gerarpdfpedidocompra' object.id %}" class="btn btn-primary">GERAR PDF</a>
               {% if object.status == '0' %}
               <a id="faturar_pedido" href="{% url 'financeiro:faturarpedidocompra' object.id %}" class="btn btn-success">REALIZAR PEDIDO</a>
-              <a id="cancelar_pedido_compra" href="{% url 'compras:cancelarpedidocompra' object.id %}" class="btn btn-red">CANCELAR</a>
+              <a id="cancelar_pedido_compra" href="#" class="btn btn-red" onclick="document.getElementById('form-cancelar-pedido-compra').submit(); return false;">CANCELAR</a>
+              <form id="form-cancelar-pedido-compra" method="post" action="{% url 'compras:cancelarpedidocompra' object.id %}" style="display:none;">
+                {% csrf_token %}
+              </form>
               {% elif object.status == '1'%}
               <a id="receber_pedido" href="{% url 'compras:receberpedidocompra' object.id %}" class="btn btn-success">RECEBER PEDIDO</a>
               {% endif %}
