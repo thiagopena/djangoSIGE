@@ -322,7 +322,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
         obj = PedidoVenda.objects.order_by('pk').last()
         url = reverse('vendas:cancelarpedidovenda',
                       kwargs={'pk': obj.pk})
-        response = self.client.get(url, follow=True)
+        response = self.client.post(url, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(
             response, 'vendas/pedido_venda/pedido_venda_edit.html')
@@ -335,7 +335,7 @@ class VendasAcoesUsuarioViewsTestCase(BaseTestCase):
         obj = OrcamentoVenda.objects.order_by('pk').last()
         url = reverse('vendas:cancelarorcamentovenda',
                       kwargs={'pk': obj.pk})
-        response = self.client.get(url, follow=True)
+        response = self.client.post(url, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(
             response, 'vendas/orcamento_venda/orcamento_venda_edit.html')
