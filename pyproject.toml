@@ -26,7 +26,7 @@ dependencies = [
     "django>=5.2,<5.3",
     "dj-database-url>=2",
     "lxml>=4.9,<5",
-    "pillow>=12",
+    "pillow>=12.3.0",
     "python-decouple>=3.8",
     "sqlparse>=0.5",
 ]
