@@ -11,7 +11,7 @@ cryptography==2.9.2
 cssselect2==0.9.0
 defusedxml==0.7.1
 dj-database-url==3.1.2
-django==5.2.14
+django==5.2.16
 eight==0.4.2
 faker==40.19.1
 fonttools==4.63.0
