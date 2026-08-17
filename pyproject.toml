@@ -28,7 +28,7 @@ dependencies = [
     "lxml>=4.9,<5",
     "pillow>=12",
     "python-decouple>=3.8",
-    "sqlparse>=0.5",
+    "sqlparse>=0.6.0",
 ]
 
 [dependency-groups]
