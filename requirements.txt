@@ -27,7 +27,7 @@ python-decouple==3.8
 reportlab==4.5.1
 signxml==2.5.2
 six==1.11.0
-sqlparse==0.5.5
+sqlparse==0.6.0
 tinycss2==1.5.1
 tinyhtml5==2.1.0
 tzdata==2026.2 ; sys_platform == 'win32'
