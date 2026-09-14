@@ -31,6 +31,6 @@ sqlparse==0.5.5
 tinycss2==1.5.1
 tinyhtml5==2.1.0
 tzdata==2026.2 ; sys_platform == 'win32'
-weasyprint==68.1
+weasyprint==70.0
 webencodings==0.5.1
 zopfli==0.4.1
